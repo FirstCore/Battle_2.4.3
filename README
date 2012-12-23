@@ -1,6 +1,6 @@
 = BlizzLike Core -- General information =
 
-Copyright (C) BlizzLike Core (http://blizzlike.servegame.com)
+Copyright (C) BlizzLike Core (https://github.com/Vitasic/blizzlikecore)
 
 BlizzLike Core is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ so, delete this exception statement from your version.
 
 BlizzLike Core is a World of Warcraft game server emulator. It is derived
 from MaNGOS. For further information on the BlizzLike Core project, 
-please visit: http://blizzlike.servegame.com
+please visit: https://github.com/Vitasic/blizzlikecore
 
 SQL files to create the database can be found in the sql directory.
 
-Contact: blizzlikegroup@gmail.com
+Contact: vitasic-pokataev@yandex.ru

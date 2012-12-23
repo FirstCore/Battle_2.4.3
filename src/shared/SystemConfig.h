@@ -24,7 +24,7 @@
 #include "revision.h"
 
 
-#define _PACKAGENAME "BlizzLikeCore "
+#define _PACKAGENAME "Core: BlizzLikeCore\nDeveloper: Vitasic\n"
 #define _CODENAME "VELOCITY"
 
 #if BLIZZLIKE_ENDIAN == BLIZZLIKE_BIGENDIAN
@@ -35,12 +35,12 @@
 
 #if PLATFORM == PLATFORM_WINDOWS
 # ifdef _WIN64
-#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION  " Hash: " _HASH " (Win64," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME /*"Rev: " _REVISION  " Hash: " _HASH " (Win64," _ENDIAN_STRING ")"*/
 # else
-#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION  " Hash: " _HASH " (Win32," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME /*"Rev: " _REVISION  " Hash: " _HASH " (Win32," _ENDIAN_STRING ")"*/
 # endif
 #else
-#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION  " Hash: " _HASH " (Unix," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME /*"Rev: " _REVISION  " Hash: " _HASH " (Unix," _ENDIAN_STRING ")"*/
 #endif
 
 #define DEFAULT_PLAYER_LIMIT 100
