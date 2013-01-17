@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
  * Please, read the credits file.
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -581,7 +581,7 @@ void Channel::Say(uint64 p, const char *what, uint32 lang)
         data << p;
         data << messageLength;
         data << what;
-        data << uint8(plr ? plr->chatTag() : 0);
+        data << uint8(plr ? plr->GetChatTag() : CHAT_TAG_NONE);
 
         SendToAll(&data, !players[p].IsModerator() ? p : false);
     }

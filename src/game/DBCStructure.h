@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
  * Please, read the credits file.
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -503,6 +503,9 @@ struct MapEntry
         return !IsDungeon() ||
             MapID == 568 || MapID == 309 || MapID == 209 || MapID == 534 ||
             MapID == 560 || MapID == 509 || MapID == 269;
+            MapID == 209 || MapID==269 || MapID==309 ||     // TanarisInstance, CavernsOfTime, Zul'gurub
+            MapID == 509 || MapID==534 || MapID==560 ||     // AhnQiraj, HyjalPast, HillsbradPast
+            MapID == 568 || MapID==580;                     // ZulAman, Sunwell Plateau
     }
 
     bool IsContinent() const

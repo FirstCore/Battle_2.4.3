@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
  * Please, read the credits file.
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -666,6 +666,7 @@ bool IsPositiveEffect(uint32 spellId, uint32 effIndex)
         case SPELL_EFFECT_SKILL_STEP:
         case SPELL_EFFECT_HEAL_PCT:
         case SPELL_EFFECT_ENERGIZE_PCT:
+        case SPELL_EFFECT_QUEST_COMPLETE:
             return true;
 
             // non-positive aura use

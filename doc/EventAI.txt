@@ -2,7 +2,7 @@
 EventAI Documentation: (Last Updated: August 5, 2012)
 ======================================================
 
-Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 
 EventAI allows users to create new creature scripts entirely within the database.
 

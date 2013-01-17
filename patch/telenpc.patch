@@ -4,7 +4,7 @@ index 0000000..285dc0f
 --- /dev/null
 +++ b/sql/telenpc/remove_telenpc.sql
 @@ -0,0 +1,9 @@
-+-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +--
 +-- Remove TeleNPC
 +--
@@ -20,7 +20,7 @@ index 0000000..fb80caa
 --- /dev/null
 +++ b/sql/telenpc/spawn_telenpc.sql
 @@ -0,0 +1,47 @@
-+-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +--
 +-- Remove TeleNPC
 +--
@@ -74,7 +74,7 @@ index 0000000..5fc5aeb
 --- /dev/null
 +++ b/sql/telenpc/world_telenpc.sql
 @@ -0,0 +1,446 @@
-+-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +--
 +-- Dumping data for table `creature_template`
 +--

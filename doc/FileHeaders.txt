@@ -5,10 +5,10 @@ It makes it "prettier" as it's applied to any of the sourcefiles
 (or at least keeping in the same style licensewise).
 But remember we don't change the header of files in the /dep folder.
 
-Header for Core Files (even possible without MaNGOS or/and BlizzLike):
+Header for Core Files:
 --- SNIP ---
 /*
- * Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
  * Please, read the credits file.
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -28,7 +28,7 @@ Header for Core Files (even possible without MaNGOS or/and BlizzLike):
 Header for Script Files:
 --- SNIP ---
 /*
- * Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
  * Please, read the credits file.
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -47,8 +47,7 @@ Header for Script Files:
 
 Header for CMake Files:
 --- SNIP ---
-# Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
-# Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+# Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -60,7 +59,7 @@ Header for CMake Files:
 --- SNIP ---
 
 Please note that if several parties are involved in the creation of a file, you
-WILL need to expand the copyright headers accordingly.
+WILL need to register the copyright in the credits file.
 
 Thank you for using these headers when you add new files/modify already existing
 files!

@@ -1,5 +1,5 @@
 # Copyright (C) 2006 MySQL AB
-# Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+# Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without

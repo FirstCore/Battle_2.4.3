@@ -4,7 +4,7 @@ index 0000000..4dc2128
 --- /dev/null
 +++ b/sql/anticheat/world_anticheat.sql
 @@ -0,0 +1,2 @@
-+-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use Teleport to Plane Hack.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
 index 9927bb6..2334fe4 100644
@@ -682,7 +682,7 @@ index 44c1d55..a299ba8 100644
  }
  
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 57f487d..48b5f91 100644
+index 5242e1b..a267d32 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
 @@ -382,6 +382,27 @@ Player::Player (WorldSession *session): Unit()
@@ -713,7 +713,7 @@ index 57f487d..48b5f91 100644
      m_mailsLoaded = false;
      m_mailsUpdated = false;
      unReadMails = 0;
-@@ -20480,12 +20501,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
+@@ -20484,12 +20505,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
  
  void Player::HandleFallDamage(MovementInfo& movementInfo)
  {
@@ -733,10 +733,10 @@ index 57f487d..48b5f91 100644
      //Players with low fall distance, Feather Fall or physical immunity (charges used) are ignored
      // 14.57 can be calculated by resolving damageperc formular below to 0
 diff --git a/src/game/Player.h b/src/game/Player.h
-index 4f02362..f6d4018 100644
+index 4e67504..4540d26 100644
 --- a/src/game/Player.h
 +++ b/src/game/Player.h
-@@ -2294,6 +2294,24 @@ class Player : public Unit, public GridObject<Player>
+@@ -2303,6 +2303,24 @@ class Player : public Unit, public GridObject<Player>
          RestType rest_type;
          ////////////////////Rest System/////////////////////
  

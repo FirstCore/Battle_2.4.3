@@ -1,4 +1,4 @@
--- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 -- ---------------------------------------------------
 -- BlizzLike Script to Create MySQL User and Tables --
 -- ---------------------------------------------------
