@@ -35,12 +35,12 @@
 
 #if PLATFORM == PLATFORM_WINDOWS
 # ifdef _WIN64
-#  define _FULLVERSION _PACKAGENAME "Rev: 2013-01-17 18:14:00" /*_REVISION  " Hash: " _HASH*/ " (Win64" /*_ENDIAN_STRING*/ ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: 2013-03-07 12:09:00" /*_REVISION  " Hash: " _HASH*/ " (Win64" /*_ENDIAN_STRING*/ ")"
 # else
-#  define _FULLVERSION _PACKAGENAME "Rev: 2013-01-17 18:14:00 " /*_REVISION  " Hash: " _HASH*/ " (Win32" /*_ENDIAN_STRING*/ ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: 2013-03-07 12:09:00 " /*_REVISION  " Hash: " _HASH*/ " (Win32" /*_ENDIAN_STRING*/ ")"
 # endif
 #else
-#  define _FULLVERSION _PACKAGENAME "Rev: 2013-01-17 18:14:00 " /*_REVISION  " Hash: " _HASH*/ " (Unix" /*_ENDIAN_STRING*/ ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: 2013-03-07 12:09:00 " /*_REVISION  " Hash: " _HASH*/ " (Unix" /*_ENDIAN_STRING*/ ")"
 #endif
 
 /*
