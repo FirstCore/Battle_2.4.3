@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Sapphiron
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Naxxramas
+Name: Boss_Sapphiron
+Complete(%): 0
+Comment: Place Holder
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -67,7 +67,7 @@ struct boss_sapphironAI : public ScriptedAI
         me->RemoveUnitMovementFlag(MOVEFLAG_LEVITATING | MOVEFLAG_ONTRANSPORT);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -86,14 +86,14 @@ struct boss_sapphironAI : public ScriptedAI
 
                 if (LifeDrain_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                         DoCast(pTarget,SPELL_LIFE_DRAIN);
                     LifeDrain_Timer = 24000;
                 } else LifeDrain_Timer -= diff;
 
                 if (Blizzard_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                         DoCast(pTarget,SPELL_BLIZZARD);
                     Blizzard_Timer = 20000;
                 } else Blizzard_Timer -= diff;
@@ -119,7 +119,7 @@ struct boss_sapphironAI : public ScriptedAI
                 {
                     if (Icebolt_Timer <= diff && Icebolt_Count < 5)
                     {
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                         {
                             DoCast(pTarget,SPELL_ICEBOLT);
                             ++Icebolt_Count;

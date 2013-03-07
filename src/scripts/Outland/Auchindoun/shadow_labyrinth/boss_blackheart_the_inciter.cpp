@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Blackheart_the_Inciter
-SD%Complete: 75
-SDComment: Incite Chaos not functional since core lacks Mind Control support
-SDCategory: Auchindoun, Shadow Labyrinth
+Name: Boss_Blackheart_the_Inciter
+Complete(%): 75
+Comment: Incite Chaos not functional since core lacks Mind Control support
+Category: Auchindoun, Shadow Labyrinth
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -79,7 +79,7 @@ struct boss_blackheart_the_inciterAI : public ScriptedAI
             pInstance->SetData(DATA_BLACKHEARTTHEINCITEREVENT, NOT_STARTED);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -88,7 +88,7 @@ struct boss_blackheart_the_inciterAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -96,7 +96,7 @@ struct boss_blackheart_the_inciterAI : public ScriptedAI
             pInstance->SetData(DATA_BLACKHEARTTHEINCITEREVENT, DONE);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%3)
         {
@@ -133,7 +133,7 @@ struct boss_blackheart_the_inciterAI : public ScriptedAI
             std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
             for (std::list<HostileReference *>::iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
             {
-                Unit *pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+                Unit* pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                     pTarget->CastSpell(pTarget,SPELL_INCITE_CHAOS_B,true);
             }
@@ -147,7 +147,7 @@ struct boss_blackheart_the_inciterAI : public ScriptedAI
         //Charge_Timer
         if (Charge_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, SPELL_CHARGE);
             Charge_Timer = 25000;
         } else Charge_Timer -= diff;

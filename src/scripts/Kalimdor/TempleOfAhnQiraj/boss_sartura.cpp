@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Sartura
-SD%Complete: 95
-SDComment:
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Sartura
+Complete(%): 95
+Comment:
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -69,17 +69,17 @@ struct boss_sarturaAI : public ScriptedAI
 
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-     void JustDied(Unit* Killer)
+     void JustDied(Unit* /*Killer*/)
      {
          DoScriptText(SAY_DEATH, me);
      }
 
-     void KilledUnit(Unit* victim)
+     void KilledUnit(Unit* /*victim*/)
      {
          DoScriptText(SAY_SLAY, me);
      }
@@ -95,7 +95,7 @@ struct boss_sarturaAI : public ScriptedAI
             if (WhirlWindRandom_Timer <= diff)
             {
                 //Attack random Gamers
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                     AttackStart(pTarget);
 
                 WhirlWindRandom_Timer = 3000 + rand()%4000;
@@ -120,7 +120,7 @@ struct boss_sarturaAI : public ScriptedAI
             if (AggroReset_Timer <= diff)
             {
                 //Attack random Gamers
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                     me->TauntApply(pTarget);
 
                     AggroReset = true;
@@ -189,7 +189,7 @@ struct mob_sartura_royal_guardAI : public ScriptedAI
         AggroReset = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -212,7 +212,7 @@ struct mob_sartura_royal_guardAI : public ScriptedAI
             if (WhirlWindRandom_Timer <= diff)
             {
                 //Attack random Gamers
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                     me->TauntApply(pTarget);
 
                 WhirlWindRandom_Timer = 3000 + rand()%4000;
@@ -229,7 +229,7 @@ struct mob_sartura_royal_guardAI : public ScriptedAI
             if (AggroReset_Timer <= diff)
             {
                 //Attack random Gamers
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                     AttackStart(pTarget);
 
                 AggroReset = true;

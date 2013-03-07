@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Nethermancer_Sepethrea
-SD%Complete: 90
-SDComment: Need adjustments to initial summons
-SDCategory: Tempest Keep, The Mechanar
+Name: Boss_Nethermancer_Sepethrea
+Complete(%): 90
+Comment: Need adjustments to initial summons
+Category: Tempest Keep, The Mechanar
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -72,7 +72,7 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
             pInstance->SetData(DATA_NETHERMANCER_EVENT, NOT_STARTED);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         if (pInstance)
             pInstance->SetData(DATA_NETHERMANCER_EVENT, IN_PROGRESS);
@@ -82,7 +82,7 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         DoScriptText(SAY_SUMMON, me);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -91,7 +91,7 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -191,7 +191,7 @@ struct mob_ragin_flamesAI : public ScriptedAI
         me->SetSpeed(MOVE_RUN, HeroicMode ? 0.7f : 0.5f);
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -217,7 +217,7 @@ struct mob_ragin_flamesAI : public ScriptedAI
 
         if (!onlyonce)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 me->GetMotionMaster()->MoveChase(pTarget);
             onlyonce = true;
         }

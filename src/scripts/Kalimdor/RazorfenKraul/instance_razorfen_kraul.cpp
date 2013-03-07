@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Razorfen_Kraul
-SD%Complete:
-SDComment:
-SDCategory: Razorfen Kraul
+Name: Instance_Razorfen_Kraul
+Complete(%):
+Comment:
+Category: Razorfen Kraul
 EndScriptData */
 
 #include "ScriptPCH.h"

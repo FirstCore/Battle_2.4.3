@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Azuremyst_Isle
-SD%Complete: 75
-SDComment: Quest support: 9283, 9537, 9582, 9554, 9531, 9303(special flight path, proper model for mount missing). Injured Draenei cosmetic only, 9582.
-SDCategory: Azuremyst Isle
+Name: Azuremyst_Isle
+Complete(%): 75
+Comment: Quest support: 9283, 9537, 9582, 9554, 9531, 9303(special flight path, proper model for mount missing). Injured Draenei cosmetic only, 9582.
+Category: Azuremyst Isle
 EndScriptData */
 
 /* ContentData
@@ -87,9 +87,9 @@ struct npc_draenei_survivorAI : public ScriptedAI
         me->SetUInt32Value(UNIT_FIELD_BYTES_1, 3);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit*) {}
 
-    void MoveInLineOfSight(Unit *who)                       //MoveInLineOfSight is called if creature could see you, updated all 100 ms
+    void MoveInLineOfSight(Unit* who)                       //MoveInLineOfSight is called if creature could see you, updated all 100 ms
     {
         if (!who)
             return;
@@ -177,7 +177,7 @@ struct npc_draenei_survivorAI : public ScriptedAI
         } else SayingTimer -= diff;
     }
 
-    void SpellHit(Unit *Hitter, const SpellEntry *Spellkind)//Called if you cast a spell and do some things if Specified spell is true!
+    void SpellHit(Unit* Hitter, const SpellEntry *Spellkind)//Called if you cast a spell and do some things if Specified spell is true!
     {
         if (Hitter && Spellkind->Id == 28880)
         {
@@ -229,7 +229,7 @@ struct npc_engineer_spark_overgrindAI : public ScriptedAI
         me->setFaction(875);
     }
 
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit*) { }
 
     void UpdateAI(const uint32 diff)
     {
@@ -270,7 +270,7 @@ bool GossipHello_npc_engineer_spark_overgrind(Player *player, Creature* pCreatur
     return true;
 }
 
-bool GossipSelect_npc_engineer_spark_overgrind(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_engineer_spark_overgrind(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF)
     {
@@ -301,9 +301,9 @@ struct npc_injured_draeneiAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void MoveInLineOfSight(Unit * /*who*/)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
     }
 
@@ -538,7 +538,7 @@ struct mob_nestlewood_owlkinAI : public ScriptedAI
         Hitted = false;
     }
 
-    void EnterCombat(Unit *who){}
+    void EnterCombat(Unit* /*who*/){}
 
     void SpellHit(Unit* caster, const SpellEntry* spell)
     {

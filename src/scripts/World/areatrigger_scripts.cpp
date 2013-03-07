@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Areatrigger_Scripts
-SD%Complete: 100
-SDComment: Scripts for areatriggers
-SDCategory: Areatrigger
+Name: Areatrigger_Scripts
+Complete(%): 100
+Comment: Scripts for areatriggers
+Category: Areatrigger
 EndScriptData */
 
 /* ContentData

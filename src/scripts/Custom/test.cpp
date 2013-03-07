@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Test
-SD%Complete: 100
-SDComment: Script used for testing escortAI
-SDCategory: Script Examples
+Name: Test
+Complete(%): 100
+Comment: Script used for testing escortAI
+Category: Script Examples
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -106,7 +106,7 @@ struct npc_testAI : public npc_escortAI
                 //killer = me when player got to far from creature
                 if (killer == me)
                 {
-                    Unit *pTemp = Unit::GetUnit(*me, GetPlayerForEscort()->GetGUID());
+                    Unit* pTemp = Unit::GetUnit(*me, GetPlayerForEscort()->GetGUID());
                     if (pTemp)
                         me->MonsterWhisper(WHISPER_TOO_FAR, pTemp->GetGUID());
                 }
@@ -134,20 +134,22 @@ struct npc_testAI : public npc_escortAI
             {
                 //Out of combat but being escorted
                 if (HasEscortState(STATE_ESCORT_ESCORTING))
-                    if (ChatTimer <= diff)
                 {
-                    if (me->HasAura(3593, 0))
+                    if (ChatTimer <= diff)
                     {
-                        me->Say(SAY_FIREWORKS, LANG_UNIVERSAL, 0);
-                        me->CastSpell(me, 11540, false);
-                    } else
-                    {
-                        me->Say(SAY_BUFF, LANG_UNIVERSAL, 0);
-                        me->CastSpell(me, 3593, false);
-                    }
+                        if (me->HasAura(3593, 0))
+                        {
+                            me->Say(SAY_FIREWORKS, LANG_UNIVERSAL, 0);
+                            me->CastSpell(me, 11540, false);
+                        } else
+                        {
+                            me->Say(SAY_BUFF, LANG_UNIVERSAL, 0);
+                            me->CastSpell(me, 3593, false);
+                        }
 
-                    ChatTimer = 12000;
-                } else ChatTimer -= diff;
+                        ChatTimer = 12000;
+                    } else ChatTimer -= diff;
+                }
             }
         }
 };
@@ -178,7 +180,7 @@ bool GossipHello_npc_test(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_test(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_test(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {

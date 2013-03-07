@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Magistrate_Barthilas
-SD%Complete: 70
-SDComment:
-SDCategory: Stratholme
+Name: Boss_Magistrate_Barthilas
+Complete(%): 70
+Comment:
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -57,7 +57,7 @@ struct boss_magistrate_barthilasAI : public ScriptedAI
             me->SetDisplayId(MODEL_HUMAN);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         //nothing to see here yet
 
@@ -69,7 +69,7 @@ struct boss_magistrate_barthilasAI : public ScriptedAI
         me->SetDisplayId(MODEL_HUMAN);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

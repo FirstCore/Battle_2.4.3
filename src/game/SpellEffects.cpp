@@ -338,14 +338,6 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
 
                 switch(m_spellInfo->Id)                     // better way to check unknown
                 {
-                    case 35354: //Hand of Death
-                    {
-                        if (unitTarget && unitTarget->HasAura(38528,0)) //Protection of Elune
-                        {
-                            damage = 0;
-                        }
-                        break;
-                    }
                     // percent from health with min
                     case 25599:                             // Thundercrash
                     {
@@ -429,7 +421,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     for (Unit::AuraList::const_iterator i = mPeriodic.begin(); i != mPeriodic.end(); ++i)
                     {
                         if ((*i)->GetSpellProto()->SpellFamilyName == SPELLFAMILY_WARLOCK &&
-                            ((*i)->GetSpellProto()->SpellFamilyFlags & 4) &&
+                            ((*i)->GetSpellProto()->SpellFamilyFlags & 4 || (*i)->GetSpellProto()->SpellFamilyFlags & 0x0000000200000000LL) &&
                             (*i)->GetCasterGUID() == m_caster->GetGUID())
                         {
                             unitTarget->RemoveAurasByCasterSpell((*i)->GetId(), m_caster->GetGUID());
@@ -606,7 +598,8 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 //Explosive Trap Effect
                 else if (m_spellInfo->SpellFamilyFlags & 0x00000004)
                 {
-                    damage += int32(m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)*0.1);
+                    if (m_originalCaster)
+                    damage += int32(m_originalCaster->GetTotalAttackPowerValue(RANGED_ATTACK)*0.1);
                 }
                 break;
             }
@@ -1754,7 +1747,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                             sLog.outError("Spell::EffectDummy: Spell 28598 triggered by unhandled spell %u",m_triggeredByAuraSpell->Id);
                             return;
                     }
-                    m_caster->CastSpell(unitTarget, spellid, true, NULL);
+                    unitTarget->CastSpell(unitTarget, spellid, true, NULL);
                     return;
                 }
             }
@@ -2218,6 +2211,44 @@ void Spell::EffectTriggerSpell(SpellEffIndex effIndex)
             m_TriggerSpells.push_back(spellInfo);
             return;
         }
+
+       // Spell 22904 for quest 7509
+       case 22904:
+       {
+               CellPair p(BlizzLike::ComputeCellPair(m_caster->GetPositionX(), m_caster->GetPositionY()));
+               Cell cell(p);
+               cell.data.Part.reserved = ALL_DISTRICT;
+
+               GameObject* ok = NULL;
+               BlizzLike::GameObjectFocusCheck go_check(m_caster,1223);
+               BlizzLike::GameObjectSearcher<BlizzLike::GameObjectFocusCheck> checker(ok,go_check);
+
+               TypeContainerVisitor<BlizzLike::GameObjectSearcher<BlizzLike::GameObjectFocusCheck>, GridTypeMapContainer > object_checker(checker);
+                
+                Map& map = *m_caster->GetMap();
+               cell.Visit(p, object_checker, map, *m_caster, map.GetVisibilityDistance());
+   
+               if(!ok)
+               return;
+
+                // Need fix otherwise the core crash
+               Unit* owner = ok->GetOwner();
+                
+               if (!owner) //Obsolete when the GetOwner() function will fix
+                {
+                        Player* player = NULL;
+               BlizzLike::AnyPlayerInObjectRangeCheck checker(m_caster, m_caster->GetMap()->GetVisibilityDistance());
+               BlizzLike::PlayerSearcher<BlizzLike::AnyPlayerInObjectRangeCheck> searcher(player, checker);
+               m_caster->VisitNearbyWorldObject(m_caster->GetMap()->GetVisibilityDistance(), searcher);
+               owner = player;
+                }
+
+                GameObject* go = owner->SummonGameObject(179562, ok->GetPositionX(), ok->GetPositionY(), ok->GetPositionZ(), ok->GetOrientation(), 0, 0, 0, 0, ok->GetRespawnTime()-time(NULL));
+               go->SetOwnerGUID(owner->GetGUID());
+               owner->RemoveGameObject(ok, true);
+                return;
+       }
+
         // just skip
         case 23770:                                         // Sayge's Dark Fortune of *
             // not exist, common cooldown can be implemented in scripts if need.
@@ -2273,7 +2304,7 @@ void Spell::EffectTriggerSpell(SpellEffIndex effIndex)
         // Priest Shadowfiend (34433) need apply mana gain trigger aura on pet
         case 41967:
         {
-            if (Unit *pet = m_caster->GetGuardianPet())
+            if (Unit* pet = m_caster->GetGuardianPet())
                 pet->CastSpell(pet, 28305, true);
             return;
         }
@@ -2748,7 +2779,7 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
     if (unitTarget && unitTarget->isAlive() && damage >= 0)
     {
         // Try to get original caster
-        Unit *caster = m_originalCasterGUID ? m_originalCaster : m_caster;
+        Unit* caster = m_originalCasterGUID ? m_originalCaster : m_caster;
 
         // Skip if m_originalCaster not available
         if (!caster)
@@ -2825,7 +2856,7 @@ void Spell::EffectHealPct(SpellEffIndex effIndex)
     if (unitTarget && unitTarget->isAlive() && damage >= 0)
     {
         // Try to get original caster
-        Unit *caster = m_originalCasterGUID ? m_originalCaster : m_caster;
+        Unit* caster = m_originalCasterGUID ? m_originalCaster : m_caster;
 
         // Skip if m_originalCaster not available
         if (!caster)
@@ -2849,7 +2880,7 @@ void Spell::EffectHealMechanical(SpellEffIndex effIndex)
     if (unitTarget && unitTarget->isAlive() && damage >= 0)
     {
         // Try to get original caster
-        Unit *caster = m_originalCasterGUID ? m_originalCaster : m_caster;
+        Unit* caster = m_originalCasterGUID ? m_originalCaster : m_caster;
 
         // Skip if m_originalCaster not available
         if (!caster)
@@ -3012,7 +3043,7 @@ void Spell::EffectPersistentAA(SpellEffIndex effIndex)
     if (Player* modOwner = m_originalCaster->GetSpellModOwner())
         modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_RADIUS, radius);
 
-    Unit *caster = m_caster->GetEntry() == WORLD_TRIGGER ? m_originalCaster : m_caster;
+    Unit* caster = m_caster->GetEntry() == WORLD_TRIGGER ? m_originalCaster : m_caster;
     int32 duration = GetSpellDuration(m_spellInfo);
     DynamicObject* dynObj = new DynamicObject;
     if (!dynObj->Create(objmgr.GenerateLowGuid(HIGHGUID_DYNAMICOBJECT), caster, m_spellInfo->Id, effIndex, m_targets.m_dstPos, duration, radius))
@@ -3708,7 +3739,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
             // TODO: possible chance depend from spell level??
             int32 miss_chance = 0;
             // Apply dispel mod from aura caster
-            if (Unit *caster = aur->GetCaster())
+            if (Unit* caster = aur->GetCaster())
             {
                 if (Player* modOwner = caster->GetSpellModOwner())
                     modOwner->ApplySpellMod(spellInfo->Id, SPELLMOD_RESIST_DISPEL_CHANCE, miss_chance, this);
@@ -4839,6 +4870,33 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
         {
             switch(m_spellInfo->Id)
             {
+                //Giddyup! - I don't know how to fix it in any other way!
+                case 42924: 
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER || !m_caster)
+                         return;
+
+                     Player* player = m_caster->ToPlayer();
+                     if (Unit* pTarget = player->FindNearestCreature(24263, 12.0f, true))
+                        {
+                            if ((pTarget->GetEntry() == 24263) && ((player->GetQuestStatus(11318) == QUEST_STATUS_INCOMPLETE) || (player->GetQuestStatus(11409) == QUEST_STATUS_INCOMPLETE)))
+                            player->KilledMonsterCredit(24263,0);
+							player->CastSpell(m_caster, 42992, true);
+                        } 
+                        if (Unit* pTarget = player->FindNearestCreature(24264, 12.0f, true))
+                        {
+                            if ((pTarget->GetEntry() == 24264) && ((player->GetQuestStatus(11318) == QUEST_STATUS_INCOMPLETE) || (player->GetQuestStatus(11409) == QUEST_STATUS_INCOMPLETE)))
+                            player->KilledMonsterCredit(24264,0);
+                            player->CastSpell(m_caster, 42993, true);
+                        } 	
+                        if (Unit* pTarget = player->FindNearestCreature(24265, 12.0f, true))
+                        {
+                            if ((pTarget->GetEntry() == 24265) && ((player->GetQuestStatus(11318) == QUEST_STATUS_INCOMPLETE) || (player->GetQuestStatus(11409) == QUEST_STATUS_INCOMPLETE)))
+                            player->KilledMonsterCredit(24265,0);
+                            player->CastSpell(m_caster, 42994, true);
+                        } 	
+                        break;
+                }
                 // Improved Mana Gems (Serpent-Coil Braid)
                 case 5497:
                 {
@@ -5956,7 +6014,7 @@ void Spell::EffectAddExtraAttacks(SpellEffIndex effIndex)
     //if (unitTarget->m_extraAttacks)
     //    return;
 
-    Unit *victim = unitTarget->getVictim();
+    Unit* victim = unitTarget->getVictim();
 
     // attack prevented
     // fixme, some attacks may not target current victim, this is right now not handled
@@ -6136,7 +6194,7 @@ void Spell::EffectCharge(SpellEffIndex effIndex)
     if (!m_caster)
         return;
 
-    Unit *target = m_targets.getUnitTarget();
+    Unit* target = m_targets.getUnitTarget();
     if (!target)
         return;
 
@@ -6310,7 +6368,7 @@ void Spell::EffectSummonDeadPet(SpellEffIndex effIndex)
     pet->SetHealth(uint32(pet->GetMaxHealth()*(float(damage)/100)));
 
     //pet->AIM_Initialize();
-    // _player->PetSpellInitialize(); -- action bar not removed at death and not required send at revive
+    _player->PetSpellInitialize(); // -- action bar not removed at death and not required send at revive. new troble, non-controll pet.
     pet->SavePetToDB(PET_SAVE_AS_CURRENT);
 }
 
@@ -6328,7 +6386,12 @@ void Spell::EffectDestroyAllTotems(SpellEffIndex effIndex)
             uint32 spell_id = totem->GetUInt32Value(UNIT_CREATED_BY_SPELL);
             SpellEntry const* spellInfo = sSpellStore.LookupEntry(spell_id);
             if (spellInfo)
-                mana += spellInfo->manaCost * damage / 100;
+    {
+    float cost = spellInfo->manaCost;
+    if(spellInfo->ManaCostPercentage)
+       cost = spellInfo->ManaCostPercentage * m_caster->GetCreateMana() / 100;
+               mana += cost * damage / 100.0f;
+   }
             ((Totem*)totem)->UnSummon();
         }
     }
@@ -6627,7 +6690,7 @@ void Spell::EffectStealBeneficialBuff(SpellEffIndex effIndex)
             // TODO: possible chance depend from spell level??
             int32 miss_chance = 0;
             // Apply dispel mod from aura caster
-            if (Unit *caster = aur->GetCaster())
+            if (Unit* caster = aur->GetCaster())
             {
                 if ( Player* modOwner = caster->GetSpellModOwner())
                     modOwner->ApplySpellMod(aur->GetSpellProto()->Id, SPELLMOD_RESIST_DISPEL_CHANCE, miss_chance, this);
@@ -6739,7 +6802,7 @@ void Spell::EffectBind(SpellEffIndex effIndex)
 
 void Spell::SummonGuardian(uint32 i, uint32 entry, SummonPropertiesEntry const *properties)
 {
-    Unit *caster = m_originalCaster;
+    Unit* caster = m_originalCaster;
     if (caster && caster->GetTypeId() == TYPEID_UNIT && caster->ToCreature()->isTotem())
         caster = caster->GetOwner();
     if (!caster)
@@ -6795,6 +6858,7 @@ void Spell::SummonGuardian(uint32 i, uint32 entry, SummonPropertiesEntry const *
         if (summon->HasSummonMask(SUMMON_MASK_MINION) && m_targets.HasDst())
             ((Minion*)summon)->SetFollowAngle(m_caster->GetAngle(summon));
 
+        summon->GetMotionMaster()->MoveFollow(caster,PET_FOLLOW_DIST,summon->GetFollowAngle());
         summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);
         summon->AI()->EnterEvadeMode();
     }

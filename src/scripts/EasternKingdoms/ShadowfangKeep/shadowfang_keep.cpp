@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Shadowfang_Keep
-SD%Complete: 75
-SDComment: npc_shadowfang_prisoner using escortAI for movement to door. Might need additional code in case being attacked. Add proper texts/say().
-SDCategory: Shadowfang Keep
+Name: Shadowfang_Keep
+Complete(%): 75
+Comment: npc_shadowfang_prisoner using escortAI for movement to door. Might need additional code in case being attacked. Add proper texts/say().
+Category: Shadowfang Keep
 EndScriptData */
 
 /* ContentData

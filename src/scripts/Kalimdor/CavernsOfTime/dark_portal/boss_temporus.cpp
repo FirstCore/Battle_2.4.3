@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Temporus
-SD%Complete: 75
-SDComment: More abilities need to be implemented
-SDCategory: Caverns of Time, The Dark Portal
+Name: Boss_Temporus
+Complete(%): 75
+Comment: More abilities need to be implemented
+Category: Caverns of Time, The Dark Portal
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -58,12 +58,12 @@ struct boss_temporusAI : public ScriptedAI
         SpellReflection_Timer = 40000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -72,7 +72,7 @@ struct boss_temporusAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -80,7 +80,7 @@ struct boss_temporusAI : public ScriptedAI
             pInstance->SetData(TYPE_RIFT,SPECIAL);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         //Despawn Time Keeper
         if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == C_TIME_KEEPER)

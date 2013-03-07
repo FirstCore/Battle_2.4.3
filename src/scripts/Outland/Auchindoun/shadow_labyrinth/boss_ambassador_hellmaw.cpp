@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ambassador_Hellmaw
-SD%Complete: 75
-SDComment: Waypoints after Intro not implemented. Enrage spell missing/not known
-SDCategory: Auchindoun, Shadow Labyrinth
+Name: Boss_Ambassador_Hellmaw
+Complete(%): 75
+Comment: Waypoints after Intro not implemented. Enrage spell missing/not known
+Category: Auchindoun, Shadow Labyrinth
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -87,7 +87,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (me->HasAura(SPELL_BANISH,0))
             return;
@@ -95,7 +95,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void MovementInform(uint32 type, uint32 id)
+    void MovementInform(uint32 type, uint32 /*id*/)
     {
         if (type != POINT_MOTION_TYPE)
             return;
@@ -115,7 +115,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
             pInstance->SetData(TYPE_HELLMAW, IN_PROGRESS);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%3)
         {
@@ -125,7 +125,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -134,7 +134,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: FollowerAI
-SD%Complete: 50
-SDComment: This AI is under development
-SDCategory: Npc
+Name: FollowerAI
+Complete(%): 50
+Comment: This AI is under development
+Category: Npc
 EndScriptData */
 
 #include "ScriptPCH.h"

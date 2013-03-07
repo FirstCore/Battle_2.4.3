@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Kurinnaxx
-SD%Complete: 95
-SDComment: maybe wrong Timer
-SDCategory: Ruins of Ahn'Qiraj
+Name: Boss_Kurinnaxx
+Complete(%): 95
+Comment: maybe wrong Timer
+Category: Ruins of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -94,7 +94,7 @@ struct boss_kurinnaxxAI : public ScriptedAI
 
         if (SUMMON_Timer <= diff)
         {
-            Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,1,70,true);
+            Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,1,70,true);
             if (pTarget)
             {
                 DoCast(pTarget,SPELL_SUMMON);
@@ -107,7 +107,7 @@ struct boss_kurinnaxxAI : public ScriptedAI
         {
             if (!sandtrap)
             {
-                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,50,true);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,50,true);
 
                 if (pTarget)
                 {

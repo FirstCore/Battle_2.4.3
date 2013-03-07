@@ -153,6 +153,7 @@ void TicketMgr::LoadGMSurveys()
     else
         m_GMSurveyID = 0;
 
+    sLog.outString();
     sLog.outString(">> Loaded GM Survey count from database.");
 }
 

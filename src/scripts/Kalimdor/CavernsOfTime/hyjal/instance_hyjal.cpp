@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Mount_Hyjal
-SD%Complete: 100
-SDComment: Instance Data Scripts and functions to acquire mobs and set encounter status for use in various Hyjal Scripts
-SDCategory: Caverns of Time, Mount Hyjal
+Name: Instance_Mount_Hyjal
+Complete(%): 100
+Comment: Instance Data Scripts and functions to acquire mobs and set encounter status for use in various Hyjal Scripts
+Category: Caverns of Time, Mount Hyjal
 EndScriptData */
 
 #include "ScriptPCH.h"

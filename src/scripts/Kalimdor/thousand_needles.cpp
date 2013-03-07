@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Thousand Needles
-SD%Complete: 100
-SDComment: Support for Quest: 1950, 4770, 4904, 4966, 5151.
-SDCategory: Thousand Needles
+Name: Thousand Needles
+Complete(%): 100
+Comment: Support for Quest: 1950, 4770, 4904, 4966, 5151.
+Category: Thousand Needles
 EndScriptData */
 
 /* ContentData

@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Boss_Brutallus
-SD%Complete: 80
-SDComment: Find a way to start the intro, best code for the intro
+Name: Boss_Brutallus
+Complete(%): 80
+Comment: Find a way to start the intro, best code for the intro
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -108,7 +108,7 @@ struct boss_brutallusAI : public ScriptedAI
             pInstance->SetData(DATA_BRUTALLUS_EVENT, NOT_STARTED);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(YELL_AGGRO, me);
 
@@ -257,7 +257,7 @@ struct boss_brutallusAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who->isTargetableForAttack() || !me->IsHostileTo(who))
             return;

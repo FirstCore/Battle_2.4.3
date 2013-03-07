@@ -365,7 +365,7 @@ bool Guild::LoadMembersFromDB(QueryResult_AutoPtr guildMembersResult)
         newmember.accountId             = fields[24].GetUInt32();
 
         //this code will remove unexisting character guids from guild
-        if (newmember.Level < 1 || newmember.Level > STRONG_MAX_LEVEL) // can be at broken `data` field
+        if (newmember.Level < 1) // can be at broken `data` field
         {
             sLog.outError("Player (GUID: %u) has a broken data in field `characters`.`data`, deleting him from guild!", GUID_LOPART(guid));
             CharacterDatabase.PExecute("DELETE FROM guild_member WHERE guid = '%u'", GUID_LOPART(guid));
@@ -1572,8 +1572,8 @@ void Guild::LoadGuildBankEventLogFromDB()
             continue;
         }
 
-        if (NewEvent.isMoneyEvent() && m_GuildBankEventLog_Money.size() >= GUILD_BANK_MAX_LOGS ||
-            m_GuildBankEventLog_Item[TabId].size() >= GUILD_BANK_MAX_LOGS)
+        if ((NewEvent.isMoneyEvent() && m_GuildBankEventLog_Money.size() >= GUILD_BANK_MAX_LOGS) ||
+            (m_GuildBankEventLog_Item[TabId].size() >= GUILD_BANK_MAX_LOGS))
             continue;
 
         if (NewEvent.isMoneyEvent())

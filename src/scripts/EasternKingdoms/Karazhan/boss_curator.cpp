@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Curator
-SD%Complete: 100
-SDComment:
-SDCategory: Karazhan
+Name: Boss_Curator
+Complete(%): 100
+Comment:
+Category: Karazhan
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -64,17 +64,17 @@ struct boss_curatorAI : public ScriptedAI
         me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, true);
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoScriptText(RAND(SAY_KILL1,SAY_KILL2), me);
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
@@ -121,7 +121,7 @@ struct boss_curatorAI : public ScriptedAI
             {
                 //Summon Astral Flare
                 Creature* AstralFlare = DoSpawnCreature(17096, rand()%37, rand()%37, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                Unit *pTarget = NULL;
+                Unit* pTarget = NULL;
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                 if (AstralFlare && pTarget)
@@ -173,7 +173,7 @@ struct boss_curatorAI : public ScriptedAI
             else
                 HatefulBoltTimer = 15000;
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1))
                 DoCast(pTarget, SPELL_HATEFUL_BOLT);
 
         } else HatefulBoltTimer -= diff;

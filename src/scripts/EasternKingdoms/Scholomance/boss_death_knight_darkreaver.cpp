@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Death_knight_darkreaver
-SD%Complete: 100
-SDComment:
-SDCategory: Scholomance
+Name: Boss_Death_knight_darkreaver
+Complete(%): 100
+Comment:
+Category: Scholomance
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -32,13 +32,13 @@ struct boss_death_knight_darkreaverAI : public ScriptedAI
     {
     }
 
-    void DamageTaken(Unit * /*done_by*/, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
         if (me->GetHealth() <= damage)
             DoCast(me, 23261, true);   //Summon Darkreaver's Fallen Charger
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 };

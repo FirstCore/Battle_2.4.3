@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Deadmines
-SD%Complete: 100
-SDComment:
-SDCategory: Deadmines
+Name: Instance_Deadmines
+Complete(%): 100
+Comment:
+Category: Deadmines
 EndScriptData */
 
 #include "ScriptPCH.h"

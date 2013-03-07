@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Lady_Vashj
-SD%Complete: 99
-SDComment: Missing blizzlike Shield Generators coords
-SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
+Name: Boss_Lady_Vashj
+Complete(%): 99
+Comment: Missing blizzlike Shield Generators coords
+Category: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -190,7 +190,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             JustCreated = false;
         } else CanAttack = true;
 
-        Unit *remo;
+        Unit* remo;
         for (uint8 i = 0; i < 4; ++i)
         {
             remo = Unit::GetUnit(*me, ShieldGeneratorChannel[i]);
@@ -215,7 +215,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         if (TaintedElemental_Timer > 50000)
             TaintedElemental_Timer = 50000;
     }
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%3)
         {
@@ -225,7 +225,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -249,7 +249,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             pInstance->SetData(DATA_LADYVASHJEVENT, IN_PROGRESS);
     }
 
-    void EnterCombat(Unit * who)
+    void EnterCombat(Unit* who)
     {
         if (pInstance)
         {
@@ -270,7 +270,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             AttackStart(who);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!Intro)
         {
@@ -367,7 +367,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             {
                 //Static Charge
                 //Used on random people (only 1 person at any given time) in Phases 1 and 3, it's a debuff doing 2775 to 3225 Nature damage to the target and everybody in about 5 yards around it, every 1 seconds for 30 seconds. It can be removed by Cloak of Shadows, Iceblock, Divine Shield, etc, but not by Cleanse or Dispel Magic.
-                Unit *pTarget = NULL;
+                Unit* pTarget = NULL;
                 pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true);
 
                 if (pTarget && !pTarget->HasAura(SPELL_STATIC_CHARGE_TRIGGER, 0))
@@ -429,7 +429,7 @@ struct boss_lady_vashjAI : public ScriptedAI
 
                     if (Sporebat)
                     {
-                        Unit *pTarget = NULL;
+                        Unit* pTarget = NULL;
                         pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                         if (pTarget)
                             Sporebat->AI()->AttackStart(pTarget);
@@ -454,7 +454,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             if (Check_Timer <= diff)
             {
                 bool InMeleeRange = false;
-                Unit *pTarget;
+                Unit* pTarget;
                 std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
                 for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
                 {
@@ -482,7 +482,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             {
                 //Forked Lightning
                 //Used constantly in Phase 2, it shoots out completely randomly targeted bolts of lightning which hit everybody in a roughtly 60 degree cone in front of Vashj for 2313-2687 nature damage.
-                Unit *pTarget = NULL;
+                Unit* pTarget = NULL;
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                 if (!pTarget)
@@ -496,8 +496,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             //EnchantedElemental_Timer
             if (EnchantedElemental_Timer <= diff)
             {
-                Creature *Elemental;
-                Elemental = me->SummonCreature(ENCHANTED_ELEMENTAL, ElementPos[EnchantedElemental_Pos][0], ElementPos[EnchantedElemental_Pos][1], ElementPos[EnchantedElemental_Pos][2], ElementPos[EnchantedElemental_Pos][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
+                me->SummonCreature(ENCHANTED_ELEMENTAL, ElementPos[EnchantedElemental_Pos][0], ElementPos[EnchantedElemental_Pos][1], ElementPos[EnchantedElemental_Pos][2], ElementPos[EnchantedElemental_Pos][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
 
                 if (EnchantedElemental_Pos == 7)
                     EnchantedElemental_Pos = 0;
@@ -510,9 +509,8 @@ struct boss_lady_vashjAI : public ScriptedAI
             //TaintedElemental_Timer
             if (TaintedElemental_Timer <= diff)
             {
-                Creature *Tain_Elemental;
                 uint32 pos = rand()%8;
-                Tain_Elemental = me->SummonCreature(TAINTED_ELEMENTAL, ElementPos[pos][0], ElementPos[pos][1], ElementPos[pos][2], ElementPos[pos][3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                me->SummonCreature(TAINTED_ELEMENTAL, ElementPos[pos][0], ElementPos[pos][1], ElementPos[pos][2], ElementPos[pos][3], TEMPSUMMON_DEAD_DESPAWN, 0);
 
                 TaintedElemental_Timer = 120000;
             } else TaintedElemental_Timer -= diff;
@@ -525,7 +523,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 CoilfangElite = me->SummonCreature(COILFANG_ELITE, CoilfangElitePos[pos][0], CoilfangElitePos[pos][1], CoilfangElitePos[pos][2], CoilfangElitePos[pos][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                 if (CoilfangElite)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                     if (pTarget)
                         CoilfangElite->AI()->AttackStart(pTarget);
@@ -543,7 +541,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 CoilfangStrider = me->SummonCreature(COILFANG_STRIDER, CoilfangStriderPos[pos][0], CoilfangStriderPos[pos][1], CoilfangStriderPos[pos][2], CoilfangStriderPos[pos][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                  if (CoilfangStrider)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                     if (pTarget)
                         CoilfangStrider->AI()->AttackStart(pTarget);
@@ -579,7 +577,7 @@ struct boss_lady_vashjAI : public ScriptedAI
 class VashjSurgeAura : public Aura
 {
     public:
-        VashjSurgeAura(SpellEntry *spell, uint32 eff, int32 *bp, Unit *pTarget, Unit *caster) : Aura(spell, eff, bp, pTarget, caster, NULL)
+        VashjSurgeAura(SpellEntry *spell, uint32 eff, int32 *bp, Unit* pTarget, Unit* caster) : Aura(spell, eff, bp, pTarget, caster, NULL)
             {}
 };
 //Enchanted Elemental
@@ -629,9 +627,9 @@ struct mob_enchanted_elementalAI : public ScriptedAI
             VashjGUID = pInstance->GetData64(DATA_LADYVASHJ);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void MoveInLineOfSight(Unit * /*who*/) {}
+    void MoveInLineOfSight(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -708,7 +706,7 @@ struct mob_tainted_elementalAI : public ScriptedAI
         Despawn_Timer = 30000;
     }
 
-    void JustDied(Unit * /*killer*/)
+    void JustDied(Unit* /*killer*/)
     {
         if (pInstance)
         {
@@ -720,7 +718,7 @@ struct mob_tainted_elementalAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         me->AddThreat(who, 0.1f);
     }
@@ -730,7 +728,7 @@ struct mob_tainted_elementalAI : public ScriptedAI
         //PoisonBolt_Timer
         if (PoisonBolt_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
             if (pTarget && pTarget->IsWithinDistInMap(me, 30))
@@ -778,12 +776,12 @@ struct mob_toxic_sporebatAI : public ScriptedAI
         Check_Timer = 1000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
 
     }
 
-    void MoveInLineOfSight(Unit * /*who*/)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
 
     }
@@ -810,7 +808,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
         //toxic spores
         if (bolt_timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
             if (pTarget)
             {
@@ -831,7 +829,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
             if (pInstance)
             {
                 //check if vashj is death
-                Unit *Vashj = NULL;
+                Unit* Vashj = NULL;
                 Vashj = Unit::GetUnit((*me), pInstance->GetData64(DATA_LADYVASHJ));
                 if (!Vashj || (Vashj && !Vashj->isAlive()) || (Vashj && CAST_AI(boss_lady_vashjAI, CAST_CRE(Vashj)->AI())->Phase != 3))
                 {
@@ -884,7 +882,7 @@ struct mob_coilfang_striderAI : public ScriptedAI
         Blast_Timer = 8000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         DoCast(me,SPELL_PANIC,true);
     }
@@ -929,9 +927,9 @@ struct mob_shield_generator_channelAI : public ScriptedAI
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void MoveInLineOfSight(Unit * /*who*/) {}
+    void MoveInLineOfSight(Unit* /*who*/) {}
 
     void UpdateAI (const uint32 diff)
     {
@@ -940,7 +938,7 @@ struct mob_shield_generator_channelAI : public ScriptedAI
 
         if (Check_Timer <= diff)
         {
-            Unit *Vashj = NULL;
+            Unit* Vashj = NULL;
             Vashj = Unit::GetUnit((*me), pInstance->GetData64(DATA_LADYVASHJ));
 
             if (Vashj && Vashj->isAlive())
@@ -1004,7 +1002,7 @@ bool ItemUse_item_tainted_core(Player* pPlayer, Item* /*_Item*/, SpellCastTarget
             }
 
             //get and remove channel
-            Unit *Channel = NULL;
+            Unit* Channel = NULL;
             Channel = Unit::GetCreature(*Vashj, CAST_AI(boss_lady_vashjAI, Vashj->AI())->ShieldGeneratorChannel[channel_identifier]);
             if (Channel)
             {

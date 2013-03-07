@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Maexxna
-SD%Complete: 80
-SDComment:
-SDCategory: Naxxramas
+Name: Boss_Maexxna
+Complete(%): 80
+Comment:
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -68,7 +68,7 @@ struct mob_webwrapAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
         if (damage > me->GetHealth())
         {
@@ -82,15 +82,15 @@ struct mob_webwrapAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 /*diff*/)
     {
     }
 };
@@ -116,14 +116,14 @@ struct boss_maexxnaAI : public ScriptedAI
         Enraged = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
     void DoCastWebWrap()
     {
         std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
-        std::vector<Unit *> targets;
+        std::vector<Unit* > targets;
 
         //This spell doesn't work if we only have 1 player on threat list
         if (t_list.size() < 2)
@@ -134,7 +134,7 @@ struct boss_maexxnaAI : public ScriptedAI
         std::advance(itr, 1);
         for (; itr != t_list.end(); ++itr)                   //store the threat list in a different container
         {
-            Unit *pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+            Unit* pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
                                                             //only on alive players
             if (pTarget && pTarget->isAlive() && pTarget->GetTypeId() == TYPEID_PLAYER)
                 targets.push_back(pTarget);
@@ -145,10 +145,10 @@ struct boss_maexxnaAI : public ScriptedAI
             targets.erase(targets.begin()+rand()%targets.size());
 
         int i = 0;
-        for (std::vector<Unit *>::iterator itr = targets.begin(); itr != targets.end(); ++itr, ++i)
+        for (std::vector<Unit* >::iterator itr = targets.begin(); itr != targets.end(); ++itr, ++i)
         {
             // Teleport the 3 targets to a location on the wall and summon a Web Wrap on them
-            Unit *pTarget = *itr;
+            Unit* pTarget = *itr;
             Creature* Wrap = NULL;
             if (pTarget)
             {

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Blackwing_Lair
-SD%Complete: 0
-SDComment:
-SDCategory: Blackwing Lair
+Name: Instance_Blackwing_Lair
+Complete(%): 0
+Comment:
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"

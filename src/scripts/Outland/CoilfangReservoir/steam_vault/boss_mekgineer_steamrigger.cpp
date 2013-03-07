@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Mekgineer_Steamrigger
-SD%Complete: 60
-SDComment: Mechanics' interrrupt heal doesn't work very well, also a proper movement needs to be implemented -> summon further away and move towards pTarget to repair.
-SDCategory: Coilfang Resevoir, The Steamvault
+Name: Boss_Mekgineer_Steamrigger
+Complete(%): 60
+Comment: Mechanics' interrrupt heal doesn't work very well, also a proper movement needs to be implemented -> summon further away and move towards pTarget to repair.
+Category: Coilfang Resevoir, The Steamvault
 EndScriptData */
 
 /* ContentData
@@ -79,7 +79,7 @@ struct boss_mekgineer_steamriggerAI : public ScriptedAI
             pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER, NOT_STARTED);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -87,7 +87,7 @@ struct boss_mekgineer_steamriggerAI : public ScriptedAI
             pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER, DONE);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%3)
         {
@@ -97,7 +97,7 @@ struct boss_mekgineer_steamriggerAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch(rand()%3)
         {
@@ -138,7 +138,7 @@ struct boss_mekgineer_steamriggerAI : public ScriptedAI
 
         if (Saw_Blade_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(pTarget,SPELL_SAW_BLADE);
             else
                 DoCast(me->getVictim(),SPELL_SAW_BLADE);
@@ -214,13 +214,13 @@ struct mob_steamrigger_mechanicAI : public ScriptedAI
         Repair_Timer = 2000;
     }
 
-    void MoveInLineOfSight(Unit* who)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
         //react only if attacked
         return;
     }
 
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
     void UpdateAI(const uint32 diff)
     {

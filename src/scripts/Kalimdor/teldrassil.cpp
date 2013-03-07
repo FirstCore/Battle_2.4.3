@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Teldrassil
-SD%Complete: 100
-SDComment: Quest support: 938
-SDCategory: Teldrassil
+Name: Teldrassil
+Complete(%): 100
+Comment: Quest support: 938
+Category: Teldrassil
 EndScriptData */
 
 /* ContentData
@@ -63,7 +63,7 @@ struct npc_mistAI : public FollowerAI
         AryniaGUID = 0;
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -104,7 +104,7 @@ struct npc_mistAI : public FollowerAI
                 {
                     m_uiPostEventTimer = 3000;
 
-                    Unit *pArynia = Unit::GetUnit(*me, AryniaGUID);
+                    Unit* pArynia = Unit::GetUnit(*me, AryniaGUID);
                     if (!pArynia || !pArynia->isAlive())
                     {
                         SetFollowComplete();

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Mulgore
-SD%Complete: 100
-SDComment: Support for quest: 11129, 772
-SDCategory: Mulgore
+Name: Mulgore
+Complete(%): 100
+Comment: Support for quest: 11129, 772
+Category: Mulgore
 EndScriptData */
 
 /* ContentData

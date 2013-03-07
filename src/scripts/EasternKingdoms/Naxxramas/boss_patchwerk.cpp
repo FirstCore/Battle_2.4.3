@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Patchwerk
-SD%Complete: 100
-SDComment: Some issues with hateful strike inturrupting the melee swing timer. Probably core issue.
-SDCategory: Naxxramas
+Name: Boss_Patchwerk
+Complete(%): 100
+Comment: Some issues with hateful strike inturrupting the melee swing timer. Probably core issue.
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -55,7 +55,7 @@ struct boss_patchwerkAI : public ScriptedAI
         Enraged = false;
     }
 
-    void KilledUnit(Unit* Victim)
+    void KilledUnit(Unit* /*Victim*/)
     {
         if (rand()%5)
             return;
@@ -63,12 +63,12 @@ struct boss_patchwerkAI : public ScriptedAI
         DoScriptText(SAY_SLAY, me);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (rand()%2)
         {

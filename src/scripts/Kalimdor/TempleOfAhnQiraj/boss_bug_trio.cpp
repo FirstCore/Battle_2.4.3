@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: boss_kri, boss_yauj, boss_vem : The Bug Trio
-SD%Complete: 100
-SDComment:
-SDCategory: Temple of Ahn'Qiraj
+Name: boss_kri, boss_yauj, boss_vem : The Bug Trio
+Complete(%): 100
+Comment:
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -62,11 +62,11 @@ struct boss_kriAI : public ScriptedAI
         Death = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit* /*killer*/)
     {
         if (pInstance)
         {
@@ -145,7 +145,7 @@ struct boss_vemAI : public ScriptedAI
         Enraged = false;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (pInstance)
         {
@@ -157,7 +157,7 @@ struct boss_vemAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -170,7 +170,7 @@ struct boss_vemAI : public ScriptedAI
         //Charge_Timer
         if (Charge_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             if (pTarget)
             {
@@ -226,7 +226,7 @@ struct boss_yaujAI : public ScriptedAI
         VemDead = false;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (pInstance)
         {
@@ -238,14 +238,14 @@ struct boss_yaujAI : public ScriptedAI
 
         for (int i = 0; i < 10;i++)
         {
-            Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+            Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             Creature* Summoned = me->SummonCreature(15621,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN,90000);
             if (Summoned && pTarget)
                 ((CreatureAI*)Summoned->AI())->AttackStart(pTarget);
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -268,8 +268,8 @@ struct boss_yaujAI : public ScriptedAI
         {
             if (pInstance)
             {
-                Unit *pKri = Unit::GetUnit((*me), pInstance->GetData64(DATA_KRI));
-                Unit *pVem = Unit::GetUnit((*me), pInstance->GetData64(DATA_VEM));
+                Unit* pKri = Unit::GetUnit((*me), pInstance->GetData64(DATA_KRI));
+                Unit* pVem = Unit::GetUnit((*me), pInstance->GetData64(DATA_VEM));
 
                 switch(rand()%3)
                 {

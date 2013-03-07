@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Sunwell_Plateau
-SD%Complete: 25
-SDComment: VERIFY SCRIPT
-SDCategory: Sunwell_Plateau
+Name: Instance_Sunwell_Plateau
+Complete(%): 25
+Comment: VERIFY SCRIPT
+Category: Sunwell_Plateau
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -156,13 +156,13 @@ struct instance_sunwell_plateau : public ScriptedInstance
             case 188524: KalecgosWall[0] = pGo->GetGUID(); break;
             case 188075:
                 if (m_auiEncounter[2] == DONE)
-                    HandleGameObject(NULL, true, pGo);
+                    HandleGameObject(0, true, pGo);
                 FireBarrier = pGo->GetGUID();
                 break;
             case 187990: MurusGate[0]   = pGo->GetGUID(); break;
             case 188118:
                 if (m_auiEncounter[4] == DONE)
-                    HandleGameObject(NULL, true, pGo);
+                    HandleGameObject(0, true, pGo);
                 MurusGate[1]= pGo->GetGUID();
                 break;
         }

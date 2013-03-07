@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Deadmines
-SD%Complete: 0
-SDComment: Placeholder
-SDCategory: Deadmines
+Name: Deadmines
+Complete(%): 0
+Comment: Placeholder
+Category: Deadmines
 EndScriptData */
 
 #include "ScriptPCH.h"

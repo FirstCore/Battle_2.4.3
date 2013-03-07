@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Azuregos
-SD%Complete: 90
-SDComment: Teleport not included, spell reflect not effecting dots (Core problem)
-SDCategory: Azshara
+Name: Boss_Azuregos
+Complete(%): 90
+Comment: Teleport not included, spell reflect not effecting dots (Core problem)
+Category: Azshara
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -61,7 +61,7 @@ struct boss_azuregosAI : public ScriptedAI
         Enraged = false;
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -111,7 +111,7 @@ struct boss_azuregosAI : public ScriptedAI
         //ManaStorm_Timer
         if (ManaStorm_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget,SPELL_MANASTORM);
             ManaStorm_Timer = 7500 + rand()%5000;
         } else ManaStorm_Timer -= diff;

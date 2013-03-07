@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Ruins_of_Ahnqiraj
-SD%Complete: 0
-SDComment: Place holder
-SDCategory: Ruins of Ahn'Qiraj
+Name: Instance_Ruins_of_Ahnqiraj
+Complete(%): 0
+Comment: Place holder
+Category: Ruins of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"

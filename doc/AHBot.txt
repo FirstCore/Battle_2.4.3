@@ -33,7 +33,7 @@ AuctionHouseBot.EnableSeller enables (1) or disables (0) the Seller
 AuctionHouseBot.EnableBuyer enables (1) or disables (0) the Buyer
 AuctionHouseBot.UseBuyPriceForSeller Use SellPrice (0) or BuyPrice (1) for determining prices
 AuctionHouseBot.UseBuyPriceForBuyer Use SellPrice (0) or BuyPrice (1) for determining prices
-AuctionHouseBot.Account is the account number (in realmd->account table) of the player you want to run as the auction bot. Note: a value of 0 will disable the bot.
+AuctionHouseBot.Account is the account number (in auth->account table) of the player you want to run as the auction bot. Note: a value of 0 will disable the bot.
 AuctionHouseBot.GUID is the GUID (in characters->characters table) of the player you want to run as the auction bot. Note: a value of 0 will disable the bot.
 AuctionHouseBot.ItemsPerCycle determines how many items are added each time AHBot is run (once per minute, by default)
 

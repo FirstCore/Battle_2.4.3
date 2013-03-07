@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Sunwell_Plateau
-SD%Complete: 0
-SDComment: Placeholder, Epilogue after Kil'jaeden, Captain Selana Gossips
+Name: Sunwell_Plateau
+Complete(%): 0
+Comment: Placeholder, Epilogue after Kil'jaeden, Captain Selana Gossips
 EndScriptData */
 
 /* ContentData

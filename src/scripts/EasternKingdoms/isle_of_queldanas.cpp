@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Isle_of_Queldanas
-SD%Complete: 100
-SDComment: Quest support: 11524, 11525, 11532, 11533, 11542, 11543, 11541
-SDCategory: Isle Of Quel'Danas
+Name: Isle_of_Queldanas
+Complete(%): 100
+Comment: Quest support: 11524, 11525, 11532, 11533, 11542, 11543, 11541
+Category: Isle Of Quel'Danas
 EndScriptData */
 
 /* ContentData
@@ -54,7 +54,7 @@ struct npc_converted_sentryAI : public ScriptedAI
         Timer = 2500;
     }
 
-    void MoveInLineOfSight(Unit * /*who*/) {}
+    void MoveInLineOfSight(Unit* /*who*/) {}
     void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)

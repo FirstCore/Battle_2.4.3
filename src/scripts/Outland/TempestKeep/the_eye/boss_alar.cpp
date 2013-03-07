@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: boss_alar
-SD%Complete: 95
-SDComment:
-SDCategory: Tempest Keep, The Eye
+Name: boss_alar
+Complete(%): 95
+Comment:
+Category: Tempest Keep, The Eye
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -123,7 +123,7 @@ struct boss_alarAI : public ScriptedAI
         me->setActive(false);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_ALAREVENT, IN_PROGRESS);
@@ -133,7 +133,7 @@ struct boss_alarAI : public ScriptedAI
         me->setActive(true);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* /*victim*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_ALAREVENT, DONE);
@@ -142,13 +142,13 @@ struct boss_alarAI : public ScriptedAI
     void JustSummoned(Creature *summon)
     {
         if (summon->GetEntry() == CREATURE_EMBER_OF_ALAR)
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 summon->AI()->AttackStart(pTarget);
     }
 
-    void MoveInLineOfSight(Unit *who) {}
+    void MoveInLineOfSight(Unit* /*who*/) {}
 
-    void DamageTaken(Unit* pKiller, uint32 &damage)
+    void DamageTaken(Unit* /*pKiller*/, uint32 &damage)
     {
         if (damage >= me->GetHealth() && Phase1)
         {
@@ -180,7 +180,7 @@ struct boss_alarAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 type, uint32 id)
+    void MovementInform(uint32 type, uint32 /*id*/)
     {
         if (type == POINT_MOTION_TYPE)
         {
@@ -260,7 +260,7 @@ struct boss_alarAI : public ScriptedAI
                         WaitTimer = 4000;
                         return;
                     case WE_DIVE:
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         {
                             me->RemoveAurasDueToSpell(SPELL_DIVE_BOMB_VISUAL);
                             me->CastSpell(pTarget, SPELL_DIVE_BOMB, true);
@@ -345,7 +345,7 @@ struct boss_alarAI : public ScriptedAI
         {
             if (Charge_Timer <= diff)
             {
-                Unit *pTarget= SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true);
+                Unit* pTarget= SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true);
                 if (pTarget)
                     DoCast(pTarget, SPELL_CHARGE);
                 Charge_Timer = 30000+rand()%20000;
@@ -371,7 +371,7 @@ struct boss_alarAI : public ScriptedAI
 
             if (FlamePatch_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 {
                     Creature* Summoned = me->SummonCreature(CREATURE_FLAME_PATCH_ALAR, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 120000);
                     if (Summoned)
@@ -402,7 +402,7 @@ struct boss_alarAI : public ScriptedAI
             }
             else
             {
-                Unit *pTarget = NULL;
+                Unit* pTarget = NULL;
                 pTarget = me->SelectNearestTarget(5);
                 if (pTarget)
                 {
@@ -439,7 +439,7 @@ struct mob_ember_of_alarAI : public ScriptedAI
     bool toDie;
 
     void Reset() {toDie = false;}
-    void Aggro(Unit *who) {DoZoneInCombat();}
+    void Aggro(Unit* /*who*/) {DoZoneInCombat();}
     void EnterEvadeMode() {me->setDeathState(JUST_DIED);}
 
     void DamageTaken(Unit* pKiller, uint32 &damage)
@@ -466,7 +466,7 @@ struct mob_ember_of_alarAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 /*diff*/)
     {
         if (!UpdateVictim())
             return;
@@ -491,7 +491,7 @@ struct mob_flame_patch_alarAI : public ScriptedAI
 {
     mob_flame_patch_alarAI(Creature *c) : ScriptedAI(c) {}
     void Reset() {}
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
     void AttackStart(Unit* /*who*/) {}
     void MoveInLineOfSight(Unit* /*who*/) {}
     void UpdateAI(const uint32 /*diff*/) {}

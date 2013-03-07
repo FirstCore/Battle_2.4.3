@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Silver_Hand_Bosses
-SD%Complete: 40
-SDComment: Basic script to have support for Horde paladin epic mount (quest 9737). All 5 members of Order of the Silver Hand running this script (least for now)
-SDCategory: Stratholme
+Name: Boss_Silver_Hand_Bosses
+Complete(%): 40
+Comment: Basic script to have support for Horde paladin epic mount (quest 9737). All 5 members of Order of the Silver Hand running this script (least for now)
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"

@@ -242,10 +242,10 @@ index 7370d55..6d475c9 100644
          void LoadNpcTextLocales();
          void LoadPageTextLocales();
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 5242e1b..bc192c4 100644
+index 83904bd..b9867a8 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
-@@ -10835,7 +10835,11 @@ void Player::SetVisibleItemSlot(uint8 slot, Item *pItem)
+@@ -10833,7 +10833,11 @@ void Player::SetVisibleItemSlot(uint8 slot, Item *pItem)
          SetUInt64Value(PLAYER_VISIBLE_ITEM_1_CREATOR + (slot * MAX_VISIBLE_ITEM_OFFSET), pItem->GetUInt64Value(ITEM_FIELD_CREATOR));
  
          int VisibleBase = PLAYER_VISIBLE_ITEM_1_0 + (slot * MAX_VISIBLE_ITEM_OFFSET);
@@ -258,7 +258,7 @@ index 5242e1b..bc192c4 100644
  
          for (int i = 0; i < MAX_INSPECTED_ENCHANTMENT_SLOT; ++i)
              SetUInt32Value(VisibleBase + 1 + i, pItem->GetEnchantmentId(EnchantmentSlot(i)));
-@@ -10959,6 +10963,7 @@ void Player::MoveItemFromInventory(uint8 bag, uint8 slot, bool update)
+@@ -10957,6 +10961,7 @@ void Player::MoveItemFromInventory(uint8 bag, uint8 slot, bool update)
  {
      if (Item* it = GetItemByPos(bag,slot))
      {
@@ -266,7 +266,7 @@ index 5242e1b..bc192c4 100644
          ItemRemovedQuestCheck(it->GetEntry(), it->GetCount());
          RemoveItem(bag, slot, update);
          it->RemoveFromUpdateQueueOf(this);
-@@ -20837,3 +20842,56 @@ void Player::SetMap(Map * map)
+@@ -20854,3 +20859,56 @@ void Player::SetMap(Map * map)
      Unit::SetMap(map);
      m_mapRef.link(map, this);
  }
@@ -366,10 +366,10 @@ index 4e67504..16bfbc6 100644
      protected:
  
 diff --git a/src/game/World.cpp b/src/game/World.cpp
-index b4be73d..31bab94 100644
+index d14320f..ed31ba3 100644
 --- a/src/game/World.cpp
 +++ b/src/game/World.cpp
-@@ -1219,6 +1219,9 @@ void World::SetInitialWorldSettings()
+@@ -1221,6 +1221,9 @@ void World::SetInitialWorldSettings()
  
      sLog.outString("Loading Item Texts...");
      objmgr.LoadItemTexts();
@@ -380,10 +380,10 @@ index b4be73d..31bab94 100644
      sLog.outString("Loading Creature Model Based Info Data...");
      objmgr.LoadCreatureModelInfo();
 diff --git a/src/scripts/World/npcs_special.cpp b/src/scripts/World/npcs_special.cpp
-index be13e2f..504e195 100644
+index fb03f58..3cbd597 100644
 --- a/src/scripts/World/npcs_special.cpp
 +++ b/src/scripts/World/npcs_special.cpp
-@@ -40,6 +40,8 @@ EndContentData */
+@@ -41,6 +41,8 @@ EndContentData */
  
  #include "ScriptPCH.h"
  #include "ScriptedEscortAI.h"
@@ -392,7 +392,7 @@ index be13e2f..504e195 100644
  
  /*######
  ## npc_lunaclaw_spirit
-@@ -1508,6 +1510,245 @@ bool GossipSelect_npc_spiritofazuregos(Player *player, Creature *creature, uint3
+@@ -1549,6 +1551,245 @@ bool GossipSelect_npc_spiritofazuregos(Player *player, Creature *creature, uint3
          return true; 
  }
  
@@ -638,7 +638,7 @@ index be13e2f..504e195 100644
  void AddSC_npcs_special()
  {
      Script *newscript;
-@@ -1598,12 +1839,18 @@ void AddSC_npcs_special()
+@@ -1644,12 +1885,18 @@ void AddSC_npcs_special()
      newscript->Name = "mob_mojo";
      newscript->GetAI = &GetAI_mob_mojo;
      newscript->RegisterSelf();

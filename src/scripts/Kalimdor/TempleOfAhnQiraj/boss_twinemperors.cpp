@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Twinemperors
-SD%Complete: 95
-SDComment:
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Twinemperors
+Complete(%): 95
+Comment:
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -105,9 +105,9 @@ struct boss_twinemperorsAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
-        Unit *pOtherBoss = GetOtherBoss();
+        Unit* pOtherBoss = GetOtherBoss();
         if (pOtherBoss)
         {
             float dPercent = ((float)damage) / ((float)me->GetMaxHealth());
@@ -122,7 +122,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         Creature *pOtherBoss = GetOtherBoss();
         if (pOtherBoss)
@@ -136,12 +136,12 @@ struct boss_twinemperorsAI : public ScriptedAI
             DoPlaySoundToSet(me, IAmVeklor() ? SOUND_VL_DEATH : SOUND_VN_DEATH);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoPlaySoundToSet(me, IAmVeklor() ? SOUND_VL_KILL : SOUND_VN_KILL);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         DoZoneInCombat();
         Creature *pOtherBoss = GetOtherBoss();
@@ -159,7 +159,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *entry)
+    void SpellHit(Unit* caster, const SpellEntry *entry)
     {
         if (caster == me)
             return;
@@ -176,8 +176,8 @@ struct boss_twinemperorsAI : public ScriptedAI
         #define HEAL_BROTHER_AMOUNT 30000.0f
         uint32 largerAmount = (uint32)((HEAL_BROTHER_AMOUNT * mult) - HEAL_BROTHER_AMOUNT);
 
-        uint32 myh = me->GetHealth();
-        uint32 hish = pOtherBoss->GetHealth();
+        //uint32 myh = me->GetHealth();
+        //uint32 hish = pOtherBoss->GetHealth();
         if (mytotal > histotal)
         {
             uint32 h = me->GetHealth()+largerAmount;
@@ -197,7 +197,7 @@ struct boss_twinemperorsAI : public ScriptedAI
 
         if (Heal_Timer <= diff)
         {
-            Unit *pOtherBoss = GetOtherBoss();
+            Unit* pOtherBoss = GetOtherBoss();
             if (pOtherBoss && (pOtherBoss->GetDistance((const Creature *)me) <= 60))
             {
                 DoCast(pOtherBoss, SPELL_HEAL_BROTHER);
@@ -264,7 +264,7 @@ struct boss_twinemperorsAI : public ScriptedAI
             {
                 AfterTeleport = false;
                 me->clearUnitState(UNIT_STAT_STUNNED);
-                Unit *nearu = me->SelectNearestTarget(100);
+                Unit* nearu = me->SelectNearestTarget(100);
                 //DoYell(nearu->GetName(), LANG_UNIVERSAL, 0);
                 if (nearu)
                 {
@@ -294,7 +294,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || me->getVictim())
             return;
@@ -409,7 +409,7 @@ struct boss_twinemperorsAI : public ScriptedAI
 class BugAura : public Aura
 {
     public:
-        BugAura(SpellEntry *spell, uint32 eff, int32 *bp, Unit *pTarget, Unit *caster) : Aura(spell, eff, bp, pTarget, caster, NULL)
+        BugAura(SpellEntry *spell, uint32 eff, int32 *bp, Unit* pTarget, Unit* caster) : Aura(spell, eff, bp, pTarget, caster, NULL)
             {}
 };
 
@@ -562,7 +562,7 @@ struct boss_veklorAI : public boss_twinemperorsAI
         //Blizzard_Timer
         if (Blizzard_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 45, true);
             if (pTarget)
                 DoCast(pTarget,SPELL_BLIZZARD);
@@ -571,7 +571,7 @@ struct boss_veklorAI : public boss_twinemperorsAI
 
         if (ArcaneBurst_Timer <= diff)
         {
-            Unit *mvic;
+            Unit* mvic;
             if ((mvic=SelectTarget(SELECT_TARGET_NEAREST, 0, NOMINAL_MELEE_RANGE, true)) != NULL)
             {
                 DoCast(mvic,SPELL_ARCANEBURST);

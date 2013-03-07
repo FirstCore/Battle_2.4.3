@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Blasted_Lands
-SD%Complete: 90
-SDComment: Quest support: 2784, 2801, 3628. Missing some texts for Fallen Hero. Teleporter to Rise of the Defiler missing group support.
-SDCategory: Blasted Lands
+Name: Blasted_Lands
+Complete(%): 90
+Comment: Quest support: 2784, 2801, 3628. Missing some texts for Fallen Hero. Teleporter to Rise of the Defiler missing group support.
+Category: Blasted Lands
 EndScriptData */
 
 /* ContentData

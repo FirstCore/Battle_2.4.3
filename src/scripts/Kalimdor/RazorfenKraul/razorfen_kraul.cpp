@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Razorfen Kraul
-SD%Complete: 100
-SDComment: Quest support: 1144
-SDCategory: Razorfen Kraul
+Name: Razorfen Kraul
+Complete(%): 100
+Comment: Quest support: 1144
+Category: Razorfen Kraul
 EndScriptData */
 
 /* ContentData

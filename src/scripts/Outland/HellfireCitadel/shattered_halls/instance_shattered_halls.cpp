@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Shattered_Halls
-SD%Complete: 95
-SDComment:
-SDCategory: Hellfire Citadel, Shattered Halls
+Name: Instance_Shattered_Halls
+Complete(%): 95
+Comment:
+Category: Hellfire Citadel, Shattered Halls
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -377,7 +377,7 @@ InstanceData* GetInstanceData_instance_shattered_halls(Map* map)
     return new instance_shattered_halls(map);
 }
 
-bool AreaTrigger_at_shattered_halls(Player* pPlayer, AreaTriggerEntry const* pAt)
+bool AreaTrigger_at_shattered_halls(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
 {
     if (pPlayer->isGameMaster() || pPlayer->isDead())
         return false;

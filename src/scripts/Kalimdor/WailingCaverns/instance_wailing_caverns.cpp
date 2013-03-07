@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Wailing_Caverns
-SD%Complete: 99
-SDComment: Everything seems to work, still need some checking
-SDCategory: Wailing Caverns
+Name: Instance_Wailing_Caverns
+Complete(%): 99
+Comment: Everything seems to work, still need some checking
+Category: Wailing Caverns
 EndScriptData */
 
 #include "ScriptPCH.h"

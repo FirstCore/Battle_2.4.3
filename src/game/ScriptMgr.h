@@ -115,12 +115,12 @@ class ScriptMgr
         bool AreaTrigger(Player* pPlayer,AreaTriggerEntry const* atEntry);
         CreatureAI* GetAI(Creature* pCreature);
         bool ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets);
-        bool EffectDummyCreature(Unit *caster, uint32 spellId, uint32 effIndex, Creature *crTarget);
+        bool EffectDummyCreature(Unit* caster, uint32 spellId, uint32 effIndex, Creature *crTarget);
         InstanceData* CreateInstanceData(Map *map);
 };
 
 //Generic scripting text function
-void DoScriptText(int32 textEntry, WorldObject* pSource, Unit *pTarget = NULL);
+void DoScriptText(int32 textEntry, WorldObject* pSource, Unit* pTarget = NULL);
 
 #if COMPILER == COMPILER_GNU
 #define FUNC_PTR(name,callconvention,returntype,parameters)    typedef returntype(*name)parameters __attribute__ ((callconvention));

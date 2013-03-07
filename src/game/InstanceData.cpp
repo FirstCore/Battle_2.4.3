@@ -89,6 +89,7 @@ void InstanceData::UpdateMinionState(Creature *minion, EncounterState state)
                 minion->Respawn();
             else if (!minion->getVictim())
                 minion->AI()->DoZoneInCombat();
+            default:
             break;
     }
 }

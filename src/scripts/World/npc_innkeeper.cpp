@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Npc_Innkeeper
-SD%Complete: 50
-SDComment:
-SDCategory: NPCs
+Name: Npc_Innkeeper
+Complete(%): 50
+Comment:
+Category: NPCs
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -48,7 +48,7 @@ bool GossipHello_npc_innkeeper(Player *pPlayer, Creature *pCreature)
 
     if (isEventActive()&& !pPlayer->HasAura(SPELL_TRICK_OR_TREATED, 0))
     {
-        char* localizedEntry;
+        const char* localizedEntry;
         switch (pPlayer->GetSession()->GetSessionDbLocaleIndex())
         {
             case 0:

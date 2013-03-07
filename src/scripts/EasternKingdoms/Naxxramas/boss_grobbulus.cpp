@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Grobbulus
-SD%Complete: 0
-SDComment: Place holder
-SDCategory: Naxxramas
+Name: Boss_Grobbulus
+Complete(%): 0
+Comment: Place holder
+Category: Naxxramas
 EndScriptData */
 
 /*Poison Cloud 26590

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Magtheridons_Lair
-SD%Complete: 100
-SDComment:
-SDCategory: Hellfire Citadel, Magtheridon's lair
+Name: Instance_Magtheridons_Lair
+Complete(%): 100
+Comment:
+Category: Hellfire Citadel, Magtheridon's lair
 EndScriptData */
 
 #include "ScriptPCH.h"

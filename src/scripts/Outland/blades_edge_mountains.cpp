@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Blades_Edge_Mountains
-SD%Complete: 90
-SDComment: Quest support: 10556, 10609, 10682, 10980, 10512. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
-SDCategory: Blade's Edge Mountains
+Name: Blades_Edge_Mountains
+Complete(%): 90
+Comment: Quest support: 10556, 10609, 10682, 10980, 10512. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
+Category: Blade's Edge Mountains
 EndScriptData */
 
 /* ContentData
@@ -86,9 +86,9 @@ struct mobs_nether_drakeAI : public ScriptedAI
         IntangiblePresence_Timer = 15000;
     }
 
-    void EnterCombat(Unit* who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         if (spell->Id == SPELL_T_PHASE_MODULATOR && caster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -212,7 +212,7 @@ struct mobs_nether_drakeAI : public ScriptedAI
 
         if (ManaBurn_Timer <= diff)
         {
-            Unit *pTarget = me->getVictim();
+            Unit* pTarget = me->getVictim();
             if (pTarget && pTarget->getPowerType() == POWER_MANA)
                 DoCast(pTarget,SPELL_MANA_BURN);
             ManaBurn_Timer = 8000+rand()%8000;
@@ -246,11 +246,11 @@ struct npc_daranelleAI : public ScriptedAI
     {
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (who->GetTypeId() == TYPEID_PLAYER)
         {
@@ -288,7 +288,7 @@ bool GossipHello_npc_overseer_nuaar(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_overseer_nuaar(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_overseer_nuaar(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -315,7 +315,7 @@ bool GossipHello_npc_saikkal_the_elder(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_saikkal_the_elder(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_saikkal_the_elder(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -383,7 +383,7 @@ struct npc_ogre_bruteAI : public ScriptedAI
         PlayerGUID = 0;
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (!pWho || (!pWho->isAlive()))
             return;
@@ -430,7 +430,7 @@ CreatureAI* GetAI_npc_ogre_brute(Creature* pCreature)
 #define Q_THE_THUNDERSPIKE 10526
 #define GOR_GRIMGUT_ENTRY  21319
 
-bool GOUse_go_thunderspike(Player *player, GameObject* _GO)
+bool GOUse_go_thunderspike(Player *player, GameObject* /*_GO*/)
 {
     if (player->GetQuestStatus(Q_THE_THUNDERSPIKE) == QUEST_STATUS_INCOMPLETE)
     {

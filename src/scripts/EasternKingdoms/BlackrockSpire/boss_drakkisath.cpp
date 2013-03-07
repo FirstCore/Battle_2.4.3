@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Drakkisath
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Spire
+Name: Boss_Drakkisath
+Complete(%): 100
+Comment:
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_drakkisathAI : public ScriptedAI
         Thunderclap_Timer = 17000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Stratholme
-SD%Complete: 100
-SDComment: Misc mobs for instance. GO-script to apply aura and start event for quest 8945
-SDCategory: Stratholme
+Name: Stratholme
+Complete(%): 100
+Comment: Misc mobs for instance. GO-script to apply aura and start event for quest 8945
+Category: Stratholme
 EndScriptData */
 
 /* ContentData
@@ -122,7 +122,7 @@ struct mob_restless_soulAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/) {}
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         if (caster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -191,7 +191,7 @@ struct mobs_spectral_ghostly_citizenAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/) {}
 
-    void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
     {
         if (!Tagged && spell->Id == SPELL_EGAN_BLASTER)
             Tagged = true;

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_The_Eye
-SD%Complete: 100
-SDComment:
-SDCategory: Tempest Keep, The Eye
+Name: Instance_The_Eye
+Complete(%): 100
+Comment:
+Category: Tempest Keep, The Eye
 EndScriptData */
 
 #include "ScriptPCH.h"

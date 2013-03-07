@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Majordomo_Executus
-SD%Complete: 30
-SDComment: Correct spawning and Event NYI
-SDCategory: Molten Core
+Name: Boss_Majordomo_Executus
+Complete(%): 30
+Comment: Correct spawning and Event NYI
+Category: Molten Core
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -75,7 +75,7 @@ struct boss_majordomoAI : public ScriptedAI
         DoScriptText(SAY_SLAY, me);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }

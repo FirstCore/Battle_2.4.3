@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Uldaman
-SD%Complete: 100
-SDComment: Quest support: 2240, 2278 + 1 trash mob
-SDCategory: Uldaman
+Name: Uldaman
+Complete(%): 100
+Comment: Quest support: 2240, 2278 + 1 trash mob
+Category: Uldaman
 EndScriptData */
 
 /* ContentData
@@ -51,7 +51,7 @@ struct mob_jadespine_basiliskAI : public ScriptedAI
         Cslumber_Timer = 2000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -197,7 +197,7 @@ bool GossipSelect_npc_lore_keeper_of_norgannon(Player* pPlayer, Creature* pCreat
 ## go_keystone_chamber
 ######*/
 
-bool GOHello_go_keystone_chamber(Player *player, GameObject* go)
+bool GOHello_go_keystone_chamber(Player *, GameObject* go)
 {
     ScriptedInstance* pInstance = go->GetInstanceData();
 
@@ -215,7 +215,7 @@ bool GOHello_go_keystone_chamber(Player *player, GameObject* go)
 ## at_map_chamber
 ######*/
 
-bool AT_map_chamber(Player *pPlayer, const AreaTriggerEntry *at)
+bool AT_map_chamber(Player *pPlayer, const AreaTriggerEntry *)
 {
     if (pPlayer && pPlayer->GetQuestStatus(QUEST_HIDDEN_CHAMBER) == QUEST_STATUS_INCOMPLETE)
         pPlayer->AreaExploredOrEventHappens(QUEST_HIDDEN_CHAMBER);

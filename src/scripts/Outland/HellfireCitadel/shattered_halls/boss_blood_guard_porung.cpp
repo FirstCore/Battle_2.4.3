@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Blood_Guard_Porung
-SD%Complete: 99
-SDComment:
-SDCategory: Hellfire Citadel, Shattered Halls
+Name: Boss_Blood_Guard_Porung
+Complete(%): 99
+Comment:
+Category: Hellfire Citadel, Shattered Halls
 EndScriptData */
 
 /* ContentData
@@ -52,13 +52,13 @@ struct boss_blood_guard_porungAI : public ScriptedAI
             pInstance->SetData(DATA_PORUNG, NOT_STARTED);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_PORUNG, IN_PROGRESS);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_PORUNG, DONE);

@@ -28,9 +28,9 @@ DelayExecutor::instance()
 }
 
 DelayExecutor::DelayExecutor():
-activated_ (false),
 pre_svc_hook_ (0),
-post_svc_hook_ (0) {}
+post_svc_hook_ (0),
+activated_ (false) {}
 
 DelayExecutor::~DelayExecutor()
 {

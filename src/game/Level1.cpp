@@ -160,8 +160,38 @@ bool ChatHandler::HandleAnnounceCommand(const char* args)
     return true;
 }
 
-// announce to logged in GMs
+// Admin Announce
+bool ChatHandler::HandleAdminAnnounceCommand(const char* args)
+{
+    if (!*args)
+        return false;
+
+    sWorld.SendWorldText(LANG_SYSTEMMESSAGE_ADMINISTRATOR, m_session->GetPlayerName(), args);
+    return true;
+}
+
+// GameMaster Announce
 bool ChatHandler::HandleGMAnnounceCommand(const char* args)
+{
+    if (!*args)
+        return false;
+
+    sWorld.SendWorldText(LANG_SYSTEMMESSAGE_GAMEMASTER, m_session->GetPlayerName(), args);
+    return true;
+}
+
+// Guard Announce
+bool ChatHandler::HandleGuardAnnounceCommand(const char* args)
+{
+    if (!*args)
+        return false;
+
+    sWorld.SendWorldText(LANG_SYSTEMMESSAGE_GUARD, m_session->GetPlayerName(), args);
+    return true;
+}
+
+// announce to logged in GMs
+bool ChatHandler::HandleGameMasterAnnounceCommand(const char* args)
 {
     if (!*args)
         return false;
@@ -1686,7 +1716,7 @@ bool ChatHandler::HandleModifyScaleCommand(const char* args)
         return false;
     }
 
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (target == NULL)
     {
         SendSysMessage(LANG_SELECT_CHAR_OR_CREATURE);
@@ -2149,7 +2179,7 @@ bool ChatHandler::HandleLookupAreaCommand(const char* args)
         AreaTableEntry const *areaEntry = sAreaStore.LookupEntry (areaflag);
         if (areaEntry)
         {
-            int loc = m_session ? m_session->GetSessionDbcLocale () : sWorld.GetDefaultDbcLocale();
+            int loc = m_session ? int(m_session->GetSessionDbcLocale()) : sWorld.GetDefaultDbcLocale();
             std::string name = areaEntry->area_name[loc];
             if (name.empty())
                 continue;
@@ -2348,7 +2378,8 @@ bool ChatHandler::HandleSendMailCommand(const char* args)
         return false;
     }
 
-    uint32 mailId = objmgr.GenerateMailID();
+    objmgr.GenerateMailID();
+
     // from console show not existed sender
     MailSender sender(MAIL_NORMAL,m_session ? m_session->GetPlayer()->GetGUIDLow() : 0, MAIL_STATIONERY_GM);
 

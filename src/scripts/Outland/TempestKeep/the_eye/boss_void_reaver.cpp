@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Void_Reaver
-SD%Complete: 90
-SDComment: Should reset if raid are out of room.
-SDCategory: Tempest Keep, The Eye
+Name: Boss_Void_Reaver
+Complete(%): 90
+Comment: Should reset if raid are out of room.
+Category: Tempest Keep, The Eye
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -67,7 +67,7 @@ struct boss_void_reaverAI : public ScriptedAI
             pInstance->SetData(DATA_VOIDREAVEREVENT, NOT_STARTED);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%3)
         {
@@ -77,7 +77,7 @@ struct boss_void_reaverAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -85,7 +85,7 @@ struct boss_void_reaverAI : public ScriptedAI
             pInstance->SetData(DATA_VOIDREAVEREVENT, DONE);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
 
@@ -119,9 +119,9 @@ struct boss_void_reaverAI : public ScriptedAI
                 ArcaneOrb_Timer = 3000;
                 return;
             }
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
-            std::vector<Unit *> target_list;
+            std::vector<Unit* > target_list;
             for (std::list<HostileReference *>::iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
             {
                 pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());

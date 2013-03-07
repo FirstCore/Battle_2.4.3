@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Boss_Galvangar
-SD%Complete:
-SDComment:
+Name: Boss_Galvangar
+Complete(%):
+Comment:
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -61,7 +61,7 @@ struct boss_galvangarAI : public ScriptedAI
         uiResetTimer                      = 5*IN_MILLISECONDS;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(YELL_AGGRO, me);
     }

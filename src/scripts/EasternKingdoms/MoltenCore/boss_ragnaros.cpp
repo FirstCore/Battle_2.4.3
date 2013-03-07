@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ragnaros
-SD%Complete: 75
-SDComment: Intro Dialog and event NYI
-SDCategory: Molten Core
+Name: Boss_Ragnaros
+Complete(%): 75
+Comment: Intro Dialog and event NYI
+Category: Molten Core
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -128,7 +128,7 @@ struct boss_ragnarosAI : public Scripted_NoMovementAI
         DoScriptText(SAY_KILL, me);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

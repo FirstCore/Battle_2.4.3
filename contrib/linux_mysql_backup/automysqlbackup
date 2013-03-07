@@ -84,7 +84,7 @@ load_default_config() {
   CONFIG_mysql_dump_dbstatus='yes'
   CONFIG_mysql_dump_differential='no'
   CONFIG_backup_local_files=()
-  CONFIG_db_names=( 'characters' 'realmd' )
+  CONFIG_db_names=( 'characters' 'auth' )
   CONFIG_db_month_names=( 'world' )
   CONFIG_db_exclude=( 'information_schema' )
   CONFIG_table_exclude=()

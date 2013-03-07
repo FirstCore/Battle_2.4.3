@@ -847,6 +847,8 @@ enum BlizzLikeStrings
     LANG_GM_ANNOUNCE_COLOR               = 6615,
 
     LANG_GM_SILENCE                      = 6616,              // GM Silenced Spell 1852
+    LANG_GM_AC_KICK_ANNOUNCE             = 6620,              // GM AC Kick Announce
+    LANG_GM_AC_ANNOUNCE                  = 6621,              // GM AC Announce
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999
@@ -920,6 +922,39 @@ enum BlizzLikeStrings
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
 
+    // Transmogrification
+    LANG_REM_TRANSMOGRIFICATIONS_ITEMS  = 11100,
+    LANG_ERR_NO_TRANSMOGRIFICATIONS     = 11101,
+    LANG_REM_TRANSMOGRIFICATION_ITEM    = 11102,
+    LANG_ERR_NO_TRANSMOGRIFICATION      = 11103,
+    LANG_ITEM_TRANSMOGRIFIED            = 11104,
+    LANG_ERR_NO_ITEM_SUITABLE           = 11105,
+    LANG_ERR_NO_ITEM_EXISTS             = 11106,
+    LANG_ERR_EQUIP_SLOT_EMPTY           = 11107,
+
+    LANG_SLOT_NAME_HEAD                 = 11108,
+    LANG_SLOT_NAME_SHOULDERS            = 11109,
+    LANG_SLOT_NAME_BODY                 = 11110,
+    LANG_SLOT_NAME_CHEST                = 11111,
+    LANG_SLOT_NAME_WAIST                = 11112,
+    LANG_SLOT_NAME_LEGS                 = 11113,
+    LANG_SLOT_NAME_FEET                 = 11114,
+    LANG_SLOT_NAME_WRISTS               = 11115,
+    LANG_SLOT_NAME_HANDS                = 11116,
+    LANG_SLOT_NAME_BACK                 = 11117,
+    LANG_SLOT_NAME_MAINHAND             = 11118,
+    LANG_SLOT_NAME_OFFHAND              = 11119,
+    LANG_SLOT_NAME_RANGED               = 11120,
+    LANG_SLOT_NAME_TABARD               = 11121,
+
+    LANG_OPTION_BACK                    = 11122,
+    LANG_OPTION_REMOVE_ALL              = 11123,
+    LANG_POPUP_REMOVE_ALL               = 11124,
+    LANG_OPTION_UPDATE_MENU             = 11125,
+    LANG_OPTION_REMOVE_ONE              = 11126,
+    LANG_POPUP_REMOVE_ONE               = 11127,
+    LANG_POPUP_TRANSMOGRIFY             = 11128,
+
     // ChatSpy
     LANG_CHATSPY_APENDED                = 11600,
     LANG_CHATSPY_CANCELLEDMASSIVE       = 11601,
@@ -930,6 +965,11 @@ enum BlizzLikeStrings
     LANG_CHATSPY_LISTOFSPYS             = 11606,
     LANG_CHATSPY_TOTAL                  = 11607,
     LANG_CHATSPY_ONESPYSANOTHER         = 11608,
+
+    // Admin, GameMaster and Guard Announce
+    LANG_SYSTEMMESSAGE_ADMINISTRATOR    = 12000,
+    LANG_SYSTEMMESSAGE_GAMEMASTER       = 12001,
+    LANG_SYSTEMMESSAGE_GUARD            = 12002,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

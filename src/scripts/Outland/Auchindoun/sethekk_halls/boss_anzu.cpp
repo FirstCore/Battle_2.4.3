@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Anzu
-SD%Complete: 95
-SDComment:Summon event is missing. 
-SDCategory: Auchindoun, Sethekk Halls
+Name: Boss_Anzu
+Complete(%): 95
+Comment:Summon event is missing. 
+Category: Auchindoun, Sethekk Halls
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -81,13 +81,13 @@ struct boss_anzuAI : public ScriptedAI
         SummonedCount = 5;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         if (pInstance)
             pInstance->SetData(DATA_ANZUEVENT, IN_PROGRESS);        
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         if (pInstance)
             pInstance->SetData(DATA_ANZUEVENT, DONE);
@@ -95,7 +95,7 @@ struct boss_anzuAI : public ScriptedAI
 	
     void JustSummoned(Creature *summoned)
     {
-        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             summoned->AI()->AttackStart(pTarget);
     }
 
@@ -109,10 +109,9 @@ struct boss_anzuAI : public ScriptedAI
             DoCast(me, SPELL_BANISH);
             DoScriptText(SAY_HELP, me);
             Paralyzing = true;
-            Creature* Summoned;
             for (uint32 i = 0; i < SummonedCount; i++)
             {
-                Summoned = me->SummonCreature(NPC_BROOD,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
+                me->SummonCreature(NPC_BROOD,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
             }
             Summon1 = true;
         }
@@ -122,10 +121,9 @@ struct boss_anzuAI : public ScriptedAI
             DoCast(me, SPELL_BANISH);
             DoScriptText(SAY_HELP, me);
             Paralyzing = true;
-            Creature* Summoned;
             for (uint32 i = 0; i < SummonedCount; i++)
             {
-                Summoned = me->SummonCreature(NPC_BROOD,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
+                me->SummonCreature(NPC_BROOD,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
             }
             Summon2 = true;
         }
@@ -144,7 +142,7 @@ struct boss_anzuAI : public ScriptedAI
         {
             if (Cyclone_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 {
                     DoCast(pTarget, SPELL_CYCLONE);
                     Cyclone_Timer = 20000+rand()%1000;
@@ -153,7 +151,7 @@ struct boss_anzuAI : public ScriptedAI
 
             if (Bomb_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 {
                     DoCast(pTarget, SPELL_BOMB);
                     Bomb_Timer = 30000+rand()%1000;

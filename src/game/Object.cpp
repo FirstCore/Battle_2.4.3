@@ -1092,7 +1092,7 @@ bool Object::PrintIndexError(uint32 index, bool set) const
     return false;
 }
 
-bool Position::HasInLine(const Unit * const target, float distance, float width) const
+bool Position::HasInLine(const Unit* const target, float distance, float width) const
 {
     if (!HasInArc(M_PI, target) || !target->IsWithinDist3d(m_positionX, m_positionY, m_positionZ, distance))
         return false;
@@ -1632,7 +1632,7 @@ void WorldObject::AddObjectToRemoveList()
     map->AddObjectToRemoveList(this);
 }
 
-TempSummon *Map::SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties, uint32 duration, Unit *summoner, SpellEntry const* spellInfo)
+TempSummon *Map::SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties, uint32 duration, Unit* summoner, SpellEntry const* spellInfo)
 {
     uint32 mask = SUMMON_MASK_SUMMON;
     if (properties)

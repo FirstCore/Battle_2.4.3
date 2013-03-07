@@ -1137,7 +1137,7 @@ index 0000000..bdeb2c4
 +        } while (result->NextRow());
 +
 +        outstring_log("");
-+        outstring_log("BSCR: >> Loaded %u npc_teleport.", nbDest);
++        outstring_log(">> Loaded %u npc_teleport.", nbDest);
 +    } else outstring_log("BSCR: WARNING >> Loaded 0 npc_teleport.");
 +}
 +

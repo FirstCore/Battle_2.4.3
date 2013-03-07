@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ouro
-SD%Complete: 85
-SDComment: No model for submerging. Currently just invisible.
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Ouro
+Complete(%): 85
+Comment: No model for submerging. Currently just invisible.
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -60,7 +60,7 @@ struct boss_ouroAI : public ScriptedAI
         Submerged = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoCast(me->getVictim(), SPELL_BIRTH);
     }
@@ -101,7 +101,7 @@ struct boss_ouroAI : public ScriptedAI
         //ChangeTarget_Timer
         if (Submerged && ChangeTarget_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
 
             if (pTarget)

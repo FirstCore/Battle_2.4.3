@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Quartmaster_Zigris
-SD%Complete: 100
-SDComment: Needs revision
-SDCategory: Blackrock Spire
+Name: Boss_Quartmaster_Zigris
+Complete(%): 100
+Comment: Needs revision
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -44,7 +44,7 @@ struct boss_quatermasterzigrisAI : public ScriptedAI
         //HelingPotion_Timer = 25000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

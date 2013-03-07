@@ -1,13 +1,13 @@
 #################################################
-# BlizzLike Core Auth Server configuration file #
+# BLIZZLIKE CORE AUTH SERVER CONFIGURATION FILE #
 #################################################
 
 [authserver]
-ConfVersion=20120921
+ConfVersion=20130210
 
 # Note to devs, line breaks should be at column 80
 ###############################################################################
-# REALMD SETTINGS
+# AUTH SETTINGS
 #
 #    LoginDatabaseInfo
 #        Database connection settings for the realm server.
@@ -29,16 +29,16 @@ ConfVersion=20120921
 #    MaxPingTime
 #         Settings for maximum database-ping interval (minutes between pings)
 #
-#    RealmServerPort
-#         Default RealmServerPort
+#    AuthServerPort
+#         Default AuthServerPort
 #
 #    BindIP
 #         Bind Realm Server to IP/hostname
 #
 #    PidFile
-#        Realmd daemon PID file
+#        auth daemon PID file
 #        Default: ""             - do not create PID file
-#                 "./realmd.pid" - create PID file (recommended name)
+#                 "./auth.pid" - create PID file (recommended name)
 #
 #    LogLevel
 #        Server console level of logging
@@ -49,7 +49,7 @@ ConfVersion=20120921
 #
 #    LogFile
 #        Logfile name
-#        Default: "realmd.log"
+#        Default: "auth.log"
 #                 "" - Empty name disable creating log file
 #
 #    LogTimestamp
@@ -129,14 +129,14 @@ ConfVersion=20120921
 #
 ###############################################################################
 
-LoginDatabaseInfo = "127.0.0.1;3306;blizzlike;blizzlike;realmd"
+LoginDatabaseInfo = "127.0.0.1;3306;blizzlike;blizzlike;auth"
 LogsDir = ""
 MaxPingTime = 30
-RealmServerPort = 3724
+AuthServerPort = 3724
 BindIP = "0.0.0.0"
 PidFile = ""
 LogLevel = 0
-LogFile = "realmd.log"
+LogFile = "auth.log"
 LogTimestamp = 0
 LogFileLevel = 0
 LogColors = "13 10 11 9"

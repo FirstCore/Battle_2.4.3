@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Gorosh_the_Dervish
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Depths
+Name: Boss_Gorosh_the_Dervish
+Complete(%): 100
+Comment:
+Category: Blackrock Depths
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_gorosh_the_dervishAI : public ScriptedAI
         MortalStrike_Timer = 22000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

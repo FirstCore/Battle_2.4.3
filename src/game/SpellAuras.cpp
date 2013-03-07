@@ -315,7 +315,7 @@ pAuraHandler AuraHandler[TOTAL_AURAS]=
     &Aura::HandleNULL                                       //261 SPELL_AURA_261 some phased state (44856 spell)
 };
 
-Aura::Aura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit *target, Unit *caster, Item* castItem) :
+Aura::Aura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit* target, Unit* caster, Item* castItem) :
 m_procCharges(0), m_stackAmount(1), m_isRemoved(false), m_spellmod(NULL), m_effIndex(eff), m_caster_guid(0), m_target(target),
 m_timeCla(1000), m_castItemGuid(castItem?castItem->GetGUID():0), m_auraSlot(MAX_AURAS),
 m_positive(false), m_permanent(false), m_isPeriodic(false), m_isAreaAura(false),
@@ -435,8 +435,8 @@ Aura::~Aura()
 {
 }
 
-AreaAura::AreaAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit *target,
-Unit *caster, Item* castItem) : Aura(spellproto, eff, currentBasePoints, target, caster, castItem)
+AreaAura::AreaAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit* target,
+Unit* caster, Item* castItem) : Aura(spellproto, eff, currentBasePoints, target, caster, castItem)
 {
     m_isAreaAura = true;
 
@@ -485,8 +485,8 @@ AreaAura::~AreaAura()
 {
 }
 
-PersistentAreaAura::PersistentAreaAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit *target,
-Unit *caster, Item* castItem) : Aura(spellproto, eff, currentBasePoints, target, caster, castItem)
+PersistentAreaAura::PersistentAreaAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit* target,
+Unit* caster, Item* castItem) : Aura(spellproto, eff, currentBasePoints, target, caster, castItem)
 {
     m_isPersistent = true;
 }
@@ -495,7 +495,7 @@ PersistentAreaAura::~PersistentAreaAura()
 {
 }
 
-Aura* CreateAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit *target, Unit *caster, Item* castItem)
+Aura* CreateAura(SpellEntry const* spellproto, uint32 eff, int32 *currentBasePoints, Unit* target, Unit* caster, Item* castItem)
 {
     if (IsAreaAuraEffect(spellproto->Effect[eff]))
         return new AreaAura(spellproto, eff, currentBasePoints, target, caster, castItem);
@@ -510,7 +510,7 @@ Unit* Aura::GetCaster() const
 
     //return ObjectAccessor::GetUnit(*m_target,m_caster_guid);
     //must return caster even if it's in another grid/map
-    Unit *unit = ObjectAccessor::GetObjectInWorld(m_caster_guid, (Unit*)NULL);
+    Unit* unit = ObjectAccessor::GetObjectInWorld(m_caster_guid, (Unit*)NULL);
     return unit && unit->IsInWorld() ? unit : NULL;
 }
 
@@ -552,7 +552,7 @@ void Aura::Update(uint32 diff)
     }
 
     // Channeled aura required check distance from caster except in possessed cases
-    Unit *pRealTarget = (GetSpellProto()->EffectApplyAuraName[m_effIndex] == SPELL_AURA_PERIODIC_TRIGGER_SPELL &&
+    Unit* pRealTarget = (GetSpellProto()->EffectApplyAuraName[m_effIndex] == SPELL_AURA_PERIODIC_TRIGGER_SPELL &&
                          sSpellStore.LookupEntry(GetSpellProto()->EffectTriggerSpell[m_effIndex]) &&
                          !IsAreaOfEffectSpell(sSpellStore.LookupEntry(GetSpellProto()->EffectTriggerSpell[m_effIndex])) &&
                          GetTriggerTarget()) ? GetTriggerTarget() : m_target;
@@ -613,7 +613,7 @@ void Aura::Update(uint32 diff)
     }
 }
 
-bool AreaAura::CheckTarget(Unit *target)
+bool AreaAura::CheckTarget(Unit* target)
 {
     if (target->HasAura(GetId(), m_effIndex))
         return false;
@@ -666,7 +666,7 @@ void AreaAura::Update(uint32 diff)
 
         if (!caster->hasUnitState(UNIT_STAT_ISOLATED))
         {
-            std::list<Unit *> targets;
+            std::list<Unit* > targets;
 
             switch(m_areaAuraType)
             {
@@ -690,13 +690,13 @@ void AreaAura::Update(uint32 diff)
                 case AREA_AURA_OWNER:
                 case AREA_AURA_PET:
                 {
-                    if (Unit *owner = caster->GetCharmerOrOwner())
+                    if (Unit* owner = caster->GetCharmerOrOwner())
                         targets.push_back(owner);
                     break;
                 }
             }
 
-            for (std::list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
+            for (std::list<Unit* >::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
             {
                 if (!CheckTarget(*tIter))
                     continue;
@@ -723,7 +723,7 @@ void AreaAura::Update(uint32 diff)
     }
     else                                                    // aura at non-caster
     {
-        Unit * tmp_target = m_target;
+        Unit* tmp_target = m_target;
         Unit* caster = GetCaster();
         uint32 tmp_spellId = GetId(), tmp_effIndex = m_effIndex;
 
@@ -762,7 +762,7 @@ void PersistentAreaAura::Update(uint32 diff)
 
     // remove the aura if its caster or the dynamic object causing it was removed
     // or if the target moves too far from the dynamic object
-    Unit *caster = GetCaster();
+    Unit* caster = GetCaster();
     if (caster)
     {
         DynamicObject *dynObj = caster->GetDynObject(GetId(), GetEffIndex());
@@ -777,7 +777,7 @@ void PersistentAreaAura::Update(uint32 diff)
     else
         remove = true;
 
-    Unit *tmp_target = m_target;
+    Unit* tmp_target = m_target;
     uint32 tmp_id = GetId(), tmp_index = GetEffIndex();
 
     // WARNING: the aura may get deleted during the update
@@ -2057,10 +2057,12 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                     m_target->AddThreat(caster, 10.0f);
                 return;
             case 7057:                                      // Haunting Spirits
-                // expected to tick with 30 sec period (tick part see in Aura::PeriodicTick)
+                // expected to tick with 20 sec period (tick part see in Aura::PeriodicTick)
                 m_isPeriodic = true;
-                m_modifier.periodictime = 30*IN_MILLISECONDS;
+                m_modifier.periodictime = 20*IN_MILLISECONDS;
                 m_periodicTimer = m_modifier.periodictime;
+                m_maxduration = 22*IN_MILLISECONDS;
+                m_duration = m_maxduration;
                 return;
             case 13139:                                     // net-o-matic
                 // root to self part of (root_target->charge->root_self sequence
@@ -2291,7 +2293,7 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
             //Summon Fire Elemental
             if (GetId() == 40133 && caster)
             {
-                Unit *owner = caster->GetOwner();
+                Unit* owner = caster->GetOwner();
                 if (owner && owner->GetTypeId() == TYPEID_PLAYER)
                 {
                     if (apply)
@@ -2305,7 +2307,7 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
             //Summon Earth Elemental
             if (GetId() == 40132 && caster)
             {
-                Unit *owner = caster->GetOwner();
+                Unit* owner = caster->GetOwner();
                 if (owner && owner->GetTypeId() == TYPEID_PLAYER)
                 {
                     if (apply)
@@ -3523,7 +3525,7 @@ void Aura::HandleAuraModSilence(bool apply, bool Real)
             // Arcane Torrent (Mana)
               case 28730:
               {
-                  Unit * caster = GetCaster();
+                  Unit* caster = GetCaster();
                   if (!caster)
                       return;
 
@@ -3540,7 +3542,7 @@ void Aura::HandleAuraModSilence(bool apply, bool Real)
             // Arcane Torrent (Energy)
             case 25046:
             {
-                Unit * caster = GetCaster();
+                Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
@@ -3749,8 +3751,7 @@ void Aura::HandleModMechanicImmunity(bool apply, bool Real)
             next = iter;
             ++next;
             SpellEntry const *spell = iter->second->GetSpellProto();
-            if (!(spell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY)  // spells unaffected by invulnerability
-                && !iter->second->IsPositive()                                    // only remove negative spells
+            if (!iter->second->IsPositive()                                    // only remove negative spells
                 && spell->Id != GetId())
             {
                 //check for mechanic mask
@@ -3905,7 +3906,7 @@ void Aura::HandleAuraModSchoolImmunity(bool apply, bool Real)
                 ++next;
                 SpellEntry const *spell = iter->second->GetSpellProto();
                 if ((GetSpellSchoolMask(spell) & school_mask)//Check for school mask
-                    && !(spell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY)   //Spells unaffected by invulnerability
+                    && IsDispelableBySpell(GetSpellProto(),spell->Id, true)
                     && !iter->second->IsPositive()          //Don't remove positive spells
                     && spell->Id != GetId())               //Don't remove self
                 {
@@ -3980,7 +3981,7 @@ void Aura::HandleAuraProcTriggerSpell(bool apply, bool Real)
         switch (GetId())
         {
             case 28200:                                     // Ascendance (Talisman of Ascendance trinket)
-                m_procCharges = 6;
+                m_procCharges = 5;
                 UpdateAuraCharges();
                 break;
             default: break;
@@ -4141,7 +4142,7 @@ void Aura::HandlePeriodicDamage(bool apply, bool Real)
     // For prevent double apply bonuses
     bool loading = (m_target->GetTypeId() == TYPEID_PLAYER && m_target->ToPlayer()->GetSession()->PlayerLoading());
 
-    Unit *caster = GetCaster();
+    Unit* caster = GetCaster();
 
     switch (m_spellProto->SpellFamilyName)
     {
@@ -4667,7 +4668,7 @@ void Aura::HandleModRegen(bool apply, bool /*Real*/)        // eating
         {
             m_periodicTimer += 5000;
             int32 gain = m_target->ModifyHealth(GetModifierValue());
-            Unit *caster = GetCaster();
+            Unit* caster = GetCaster();
             if (caster)
             {
                 SpellEntry const *spellProto = GetSpellProto();
@@ -5658,7 +5659,7 @@ void Aura::PeriodicTick()
         case SPELL_AURA_PERIODIC_DAMAGE:
         case SPELL_AURA_PERIODIC_DAMAGE_PERCENT:
         {
-            Unit *pCaster = GetCaster();
+            Unit* pCaster = GetCaster();
             if (!pCaster)
                 return;
 
@@ -5667,7 +5668,7 @@ void Aura::PeriodicTick()
                 return;
 
             // Check for immune (not use charges)
-            if (m_target->IsImmunedToDamage(GetSpellSchoolMask(GetSpellProto())))
+            if (m_target->IsImmunedToDamage(GetSpellProto()))
                 return;
 
             // some auras remove at specific health level or more
@@ -5784,7 +5785,9 @@ void Aura::PeriodicTick()
             pCaster->CalcAbsorbResist(m_target, GetSpellSchoolMask(GetSpellProto()), DOT, pdamage, &absorb, &resist);
 
             DEBUG_LOG("PeriodicTick: %u (TypeId: %u) attacked %u (TypeId: %u) for %u dmg inflicted by %u abs is %u",
-                GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), m_target->GetGUIDLow(), m_target->GetTypeId(), pdamage, GetId(),absorb);
+            GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), m_target->GetGUIDLow(), m_target->GetTypeId(), pdamage, GetId(),absorb);
+
+            pdamage = (pdamage <= absorb+resist) ? 0 : (pdamage-absorb-resist);
 
             WorldPacket data(SMSG_PERIODICAURALOG, (21+16));// we guess size
             data << m_target->GetPackGUID();
@@ -5805,7 +5808,6 @@ void Aura::PeriodicTick()
             uint32 procAttacker = PROC_FLAG_ON_DO_PERIODIC;
             uint32 procVictim   = PROC_FLAG_ON_TAKE_PERIODIC;
             uint32 procEx = PROC_EX_INTERNAL_DOT | PROC_EX_NORMAL_HIT;
-            pdamage = (pdamage <= absorb+resist) ? 0 : (pdamage-absorb-resist);
             if (pdamage)
                 procVictim|=PROC_FLAG_TAKEN_ANY_DAMAGE;
             pCaster->ProcDamageAndSpell(target, procAttacker, procVictim, procEx, pdamage, BASE_ATTACK, spellProto);
@@ -5815,7 +5817,7 @@ void Aura::PeriodicTick()
         }
         case SPELL_AURA_PERIODIC_LEECH:
         {
-            Unit *pCaster = GetCaster();
+            Unit* pCaster = GetCaster();
             if (!pCaster)
                 return;
 
@@ -5827,7 +5829,7 @@ void Aura::PeriodicTick()
                 return;
 
             // Check for immune (not use charges)
-            if (m_target->IsImmunedToDamage(GetSpellSchoolMask(GetSpellProto())))
+            if (m_target->IsImmunedToDamage(GetSpellProto()))
                 return;
 
             uint32 absorb=0;
@@ -5954,7 +5956,7 @@ void Aura::PeriodicTick()
         case SPELL_AURA_PERIODIC_HEAL:
         case SPELL_AURA_OBS_MOD_HEALTH:
         {
-            Unit *pCaster = GetCaster();
+            Unit* pCaster = GetCaster();
             if (!pCaster)
                 return;
 
@@ -6035,7 +6037,7 @@ void Aura::PeriodicTick()
         }
         case SPELL_AURA_PERIODIC_MANA_LEECH:
         {
-            Unit *pCaster = GetCaster();
+            Unit* pCaster = GetCaster();
             if (!pCaster)
                 return;
 
@@ -6047,7 +6049,7 @@ void Aura::PeriodicTick()
                 return;
 
             // Check for immune (not use charges)
-            if (m_target->IsImmunedToDamage(GetSpellSchoolMask(GetSpellProto())))
+            if (m_target->IsImmunedToDamage(GetSpellProto()))
                 return;
 
             // ignore non positive values (can be result apply spellmods to aura damage
@@ -6190,12 +6192,12 @@ void Aura::PeriodicTick()
         }
         case SPELL_AURA_POWER_BURN_MANA:
         {
-            Unit *pCaster = GetCaster();
+            Unit* pCaster = GetCaster();
             if (!pCaster)
                 return;
 
             // Check for immune (not use charges)
-            if (m_target->IsImmunedToDamage(GetSpellSchoolMask(GetSpellProto())))
+            if (m_target->IsImmunedToDamage(GetSpellProto()))
                 return;
 
             int32 pdamage = GetModifierValue() > 0 ? GetModifierValue() : 0;
@@ -6347,7 +6349,7 @@ void Aura::PeriodicDummyTick()
             // Should be manauser
             if (m_target->getPowerType() != POWER_MANA)
                 return;
-            Unit *caster = GetCaster();
+            Unit* caster = GetCaster();
             if (!caster)
                 return;
             // Regen amount is max (100% from spell) on 21% or less mana and min on 92.5% or greater mana (20% from spell)
@@ -6579,9 +6581,17 @@ void Aura::HandleArenaPreparation(bool apply, bool Real)
         return;
 
     if (apply)
+    {
         m_target->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION);
+        m_target->SetFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
+        m_target->SetVisibility(UnitVisibility(m_target->GetVisibility() | VISIBILITY_GROUP_STEALTH));
+    }
     else
+    {
         m_target->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION);
+        m_target->RemoveFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
+        m_target->SetVisibility(UnitVisibility(m_target->GetVisibility() & ~VISIBILITY_GROUP_STEALTH));
+    }
 }
 
 void Aura::HandleAuraReflectSpellSchool(bool apply, bool real)

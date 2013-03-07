@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Elwynn_Forest
-SD%Complete: 50
-SDComment: Quest support: 1786
-SDCategory: Elwynn Forest
+Name: Elwynn_Forest
+Complete(%): 50
+Comment: Quest support: 1786
+Category: Elwynn Forest
 EndScriptData */
 
 /* ContentData
@@ -49,11 +49,11 @@ struct npc_henze_faulkAI : public ScriptedAI
         spellHit = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void MoveInLineOfSight(Unit * /*who*/)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
         return;
     }
@@ -72,7 +72,7 @@ struct npc_henze_faulkAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit * /*Hitter*/, const SpellEntry *Spellkind)
+    void SpellHit(Unit* /*Hitter*/, const SpellEntry *Spellkind)
     {
         if (Spellkind->Id == 8593 && !spellHit)
         {

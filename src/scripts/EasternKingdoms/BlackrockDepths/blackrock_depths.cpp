@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Blackrock_Depths
-SD%Complete: 95
-SDComment: Quest support: 4001, 4342, 7604, 4322. Vendor Lokhtos Darkbargainer. Need to rewrite the Jail Break support
-SDCategory: Blackrock Depths
+Name: Blackrock_Depths
+Complete(%): 95
+Comment: Quest support: 4001, 4342, 7604, 4322. Vendor Lokhtos Darkbargainer. Need to rewrite the Jail Break support
+Category: Blackrock Depths
 EndScriptData */
 
 /* ContentData
@@ -735,7 +735,7 @@ struct npc_marshal_windsorAI : public npc_escortAI
 
     void Reset() {}
 
-    void JustDied(Unit *slayer)
+    void JustDied(Unit* slayer)
     {
         pInstance->SetData(DATA_QUEST_JAIL_BREAK,ENCOUNTER_STATE_FAILED);
     }
@@ -900,7 +900,7 @@ struct npc_marshal_reginald_windsorAI : public npc_escortAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
             return;
@@ -930,7 +930,7 @@ struct npc_marshal_reginald_windsorAI : public npc_escortAI
         }
     void Reset() {}
 
-    void JustDied(Unit *slayer)
+    void JustDied(Unit* slayer)
     {
         pInstance->SetData(DATA_QUEST_JAIL_BREAK,ENCOUNTER_STATE_FAILED);
     }
@@ -1215,7 +1215,7 @@ struct npc_rocknotAI : public npc_escortAI
                 DoGo(DATA_GO_BAR_KEG_TRAP,0);               //doesn't work very well, leaving code here for future
                 //spell by trap has effect61, this indicate the bar go hostile
 
-                if (Unit *tmp = Unit::GetUnit(*me,pInstance->GetData64(DATA_PHALANX)))
+                if (Unit* tmp = Unit::GetUnit(*me,pInstance->GetData64(DATA_PHALANX)))
                     tmp->setFaction(14);
 
                 //for later, this event(s) has alot more to it.

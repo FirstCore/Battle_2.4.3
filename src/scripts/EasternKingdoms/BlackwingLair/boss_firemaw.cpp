@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Firemaw
-SD%Complete: 100
-SDComment:
-SDCategory: Blackwing Lair
+Name: Boss_Firemaw
+Complete(%): 100
+Comment:
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_firemawAI : public ScriptedAI
         FlameBuffet_Timer = 5000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }

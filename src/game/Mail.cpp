@@ -162,10 +162,6 @@ void WorldSession::HandleSendMail(WorldPacket& recv_data)
         return;
     }
 
-    uint32 rc_account = receive
-        ? receive->GetSession()->GetAccountId()
-        : objmgr.GetPlayerAccountIdByGUID(rc);
-
     Item* items[MAX_MAIL_ITEMS];
 
     for (uint8 i = 0; i < items_count; ++i)
@@ -1002,6 +998,9 @@ void MailDraft::SendMailTo(MailReceiver const& receiver, MailSender const& sende
     uint32 expire_delay;
     if (sender.GetMailMessageType() == MAIL_AUCTION && m_items.empty() && !m_money)        // auction mail without any items and money
         expire_delay = sWorld.getConfig(CONFIG_MAIL_DELIVERY_DELAY);
+    // mail from battlemaster (rewardmarks) should last only one day
+    else if (sender.GetMailMessageType() == MAIL_CREATURE && objmgr.GetBattleMasterBG(sender.GetSenderId()) != BATTLEGROUND_TYPE_NONE)
+        expire_delay = DAY;
     else
         expire_delay = (m_COD > 0) ? 3 * DAY : 30 * DAY;
 
@@ -1094,7 +1093,7 @@ void WorldSession::SendExternalMails()
 
                 if (receiver != 0)
                 {
-                    sLog.outDebug("External Mail - Sending mail to %u, Item:%u", receiver_guid, ItemID);
+                    sLog.outDebug("External Mail - Sending mail to %llu, Item:%u", receiver_guid, ItemID);
                     uint32 itemTextId = !message.empty() ? objmgr.CreateItemText(message) : 0;
                     if (ItemID != 0)
                     {

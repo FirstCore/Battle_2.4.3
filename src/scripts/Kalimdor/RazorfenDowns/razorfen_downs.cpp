@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Razorfen_Downs
-SD%Complete: 100
-SDComment: Support for Henry Stern(2 recipes)
-SDCategory: Razorfen Downs
+Name: Razorfen_Downs
+Complete(%): 100
+Comment: Support for Henry Stern(2 recipes)
+Category: Razorfen Downs
 EndScriptData */
 
 /* ContentData

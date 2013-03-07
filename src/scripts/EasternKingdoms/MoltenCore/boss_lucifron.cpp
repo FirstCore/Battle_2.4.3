@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Lucifron
-SD%Complete: 100
-SDComment:
-SDCategory: Molten Core
+Name: Boss_Lucifron
+Complete(%): 100
+Comment:
+Category: Molten Core
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_lucifronAI : public ScriptedAI
         ShadowShock_Timer = 6000;                           //6 seconds
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

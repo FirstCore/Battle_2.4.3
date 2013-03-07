@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Thunder_Bluff
-SD%Complete: 100
-SDComment: Quest support: 925
-SDCategory: Thunder Bluff
+Name: Thunder_Bluff
+Complete(%): 100
+Comment: Quest support: 925
+Category: Thunder Bluff
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -55,7 +55,7 @@ struct npc_cairne_bloodhoofAI : public ScriptedAI
         Uppercut_Timer = 10000;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -64,7 +64,7 @@ struct npc_cairne_bloodhoofAI : public ScriptedAI
 
         if (BerserkerCharge_Timer <= diff)
         {
-            Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+            Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             if (pTarget)
                 DoCast(pTarget, SPELL_BERSERKER_CHARGE);
             BerserkerCharge_Timer = 25000;

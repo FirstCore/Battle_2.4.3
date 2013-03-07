@@ -74,7 +74,7 @@ void WorldSession::HandlePetAction(WorldPacket& recv_data)
     }
 }
 
-void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid, uint16 flag, uint64 guid2)
+void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid, uint16 flag, uint64 guid2)
 {
     CharmInfo *charmInfo = pet->GetCharmInfo();
     if (!charmInfo)
@@ -122,7 +122,7 @@ void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid
                     }
 
                     // only place where pet can be player
-                    Unit *TargetUnit = ObjectAccessor::GetUnit(*_player, guid2);
+                    Unit* TargetUnit = ObjectAccessor::GetUnit(*_player, guid2);
                     if (!TargetUnit)
                         return;
 
@@ -475,7 +475,7 @@ void WorldSession::HandlePetRename(WorldPacket& recv_data)
 
     pet->SetName(name);
 
-    Unit *owner = pet->GetOwner();
+    Unit* owner = pet->GetOwner();
     if (owner && (owner->GetTypeId() == TYPEID_PLAYER) && owner->ToPlayer()->GetGroup())
         owner->ToPlayer()->SetGroupUpdateFlag(GROUP_UPDATE_FLAG_PET_NAME);
 
@@ -583,7 +583,7 @@ void WorldSession::HandlePetUnlearnOpcode(WorldPacket& recvPacket)
 
     for (uint8 i = 0; i < 10; i++)
     {
-        if (charmInfo->GetActionBarEntry(i)->SpellOrAction && charmInfo->GetActionBarEntry(i)->Type == ACT_ENABLED || charmInfo->GetActionBarEntry(i)->Type == ACT_DISABLED)
+        if ((charmInfo->GetActionBarEntry(i)->SpellOrAction && charmInfo->GetActionBarEntry(i)->Type == ACT_ENABLED) || charmInfo->GetActionBarEntry(i)->Type == ACT_DISABLED)
             charmInfo->GetActionBarEntry(i)->SpellOrAction = 0;
     }
 
@@ -688,7 +688,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
 
     caster->clearUnitState(UNIT_STAT_FOLLOW);
 
-    Spell *spell = new Spell(caster, spellInfo, spellid == 33395); // water elemental can cast freeze as triggered
+    Spell *spell = new Spell(caster, spellInfo, false);
     spell->m_targets = targets;
 
     int16 result = spell->PetCanCast(NULL);

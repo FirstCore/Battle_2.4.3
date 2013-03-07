@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Bloodmyst_Isle
-SD%Complete: 80
-SDComment: Quest support: 9670, 9756(gossip items text needed).
-SDCategory: Bloodmyst Isle
+Name: Bloodmyst_Isle
+Complete(%): 80
+Comment: Quest support: 9670, 9756(gossip items text needed).
+Category: Bloodmyst Isle
 EndScriptData */
 
 /* ContentData

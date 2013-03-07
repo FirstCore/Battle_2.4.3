@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_the_black_stalker
-SD%Complete: 95
-SDComment: Timers may be incorrect
-SDCategory: Coilfang Resevoir, Underbog
+Name: Boss_the_black_stalker
+Complete(%): 95
+Comment: Timers may be incorrect
+Category: Coilfang Resevoir, Underbog
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -64,14 +64,14 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         Striders.clear();
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void JustSummoned(Creature *summon)
     {
         if (summon && summon->GetEntry() == ENTRY_SPORE_STRIDER)
         {
             Striders.push_back(summon->GetGUID());
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 summon->AI()->AttackStart(pTarget);
             else
                 if (me->getVictim())
@@ -79,7 +79,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *who)
+    void JustDied(Unit* /*who*/)
     {
         for (std::list<uint64>::iterator i = Striders.begin(); i != Striders.end(); ++i)
             if (Creature *strider = Unit::GetCreature(*me, *i))
@@ -120,7 +120,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         {
             if (LevitatedTarget_Timer <= diff)
             {
-                if (Unit *pTarget = (Unit*)Unit::GetUnit(*me, LevitatedTarget))
+                if (Unit* pTarget = (Unit*)Unit::GetUnit(*me, LevitatedTarget))
                 {
                     if (!pTarget->HasAura(SPELL_LEVITATE,0))
                     {
@@ -145,7 +145,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         }
         if (Levitate_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
             {
                 DoCast(pTarget, SPELL_LEVITATE);
                 LevitatedTarget = pTarget->GetGUID();
@@ -158,7 +158,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         // Chain Lightning
         if (ChainLightning_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_CHAIN_LIGHTNING);
             ChainLightning_Timer = 7000;
         } else ChainLightning_Timer -= diff;
@@ -166,7 +166,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
         // Static Charge
         if (StaticCharge_Timer <= diff)
         {
-            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,30,true))
+            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,30,true))
                 DoCast(pTarget, SPELL_STATIC_CHARGE);
             StaticCharge_Timer = 10000;
         } else StaticCharge_Timer -= diff;

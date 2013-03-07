@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Blackfathom_Deeps
-SD%Complete: 50
-SDComment:
-SDCategory: Blackfathom Deeps
+Name: Instance_Blackfathom_Deeps
+Complete(%): 50
+Comment:
+Category: Blackfathom Deeps
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -35,19 +35,19 @@ EndScriptData */
 
 const Position LorgusPosition[4] =
 {
-    { -458.500610, -38.343079, -33.474445 },
-    { -469.423615, -88.400513, -39.265102 },
-    { -622.354980, -10.350100, -22.777000 },
-    { -759.640564,  16.658913, -29.159529 }
+    { -458.500610, -38.343079, -33.474445, 0 },
+    { -469.423615, -88.400513, -39.265102, 0 },
+    { -622.354980, -10.350100, -22.777000, 0 },
+    { -759.640564,  16.658913, -29.159529, 0 }
 };
 
 const Position SpawnsLocation[] =
 {
-    {-775.431, -153.853, -25.871, 3.207},
-    {-775.404, -174.132, -25.871, 3.185},
-    {-862.430, -154.937, -25.871, 0.060},
-    {-862.193, -174.251, -25.871, 6.182},
-    {-863.895, -458.899, -33.891, 5.637}
+    {-775.431, -153.853, -25.871, 3.207 },
+    {-775.404, -174.132, -25.871, 3.185 },
+    {-862.430, -154.937, -25.871, 0.060 },
+    {-862.193, -174.251, -25.871, 6.182 },
+    {-863.895, -458.899, -33.891, 5.637 }
 };
 
 struct instance_blackfathom_deeps : public ScriptedInstance
@@ -124,7 +124,7 @@ struct instance_blackfathom_deeps : public ScriptedInstance
                 break;
             case GO_AKU_MAI_DOOR:
                 if (m_auiEncounter[2] == DONE)
-                    HandleGameObject(NULL,true,pGo);
+                    HandleGameObject(0,true,pGo);
                 m_uiMainDoorGUID = pGo->GetGUID();
                 break;
         }

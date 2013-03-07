@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Skeram
-SD%Complete: 75
-SDComment: Mind Control buggy.
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Skeram
+Complete(%): 75
+Comment: Mind Control buggy.
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -98,7 +98,7 @@ struct boss_skeramAI : public ScriptedAI
             me->setDeathState(JUST_DIED);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%3)
         {
@@ -108,13 +108,13 @@ struct boss_skeramAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (!IsImage)
             DoScriptText(SAY_DEATH, me);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (IsImage || Images75)
             return;
@@ -245,7 +245,7 @@ struct boss_skeramAI : public ScriptedAI
 
         for (int tryi = 0; tryi < 41; tryi ++)
         {
-            Unit *targetpl = SelectUnit(SELECT_TARGET_RANDOM, 0);
+            Unit* targetpl = SelectUnit(SELECT_TARGET_RANDOM, 0);
             if (targetpl->GetTypeId() == TYPEID_PLAYER)
             {
                 Group *grp = ((Player *)targetpl)->GetGroup();
@@ -276,7 +276,7 @@ struct boss_skeramAI : public ScriptedAI
             case 25: Images25 = true; break;
         }
 
-        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+        Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
 
         Image1 = me->SummonCreature(15263, i1->x, i1->y, i1->z, i1->r, TEMPSUMMON_CORPSE_DESPAWN, 30000);
         if (!Image1)

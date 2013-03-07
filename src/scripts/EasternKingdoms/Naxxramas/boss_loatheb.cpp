@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Loatheb
-SD%Complete: 100
-SDComment:
-SDCategory: Naxxramas
+Name: Boss_Loatheb
+Complete(%): 100
+Comment:
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -84,59 +84,59 @@ struct boss_loathebAI : public ScriptedAI
         Summon_Timer = 8000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch (rand()%3)
         {
             case 0:
-                me->MonsterYell(SAY_AGGRO1,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_AGGRO1,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_AGGRO1);
                 break;
             case 1:
-                me->MonsterYell(SAY_AGGRO2,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_AGGRO2,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_AGGRO2);
                 break;
             case 2:
-                me->MonsterYell(SAY_AGGRO3,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_AGGRO3,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_AGGRO3);
                 break;
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch (rand()%6)
         {
             case 0:
-                me->MonsterYell(SAY_SLAY1,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY1,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY1);
                 break;
             case 1:
-                me->MonsterYell(SAY_SLAY2,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY2,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY2);
                 break;
             case 2:
-                me->MonsterYell(SAY_SLAY3,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY3,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY3);
                 break;
             case 3:
-                me->MonsterYell(SAY_SLAY4,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY4,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY4);
                 break;
             case 4:
-                me->MonsterYell(SAY_SLAY5,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY5,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY5);
                 break;
             case 5:
-                me->MonsterYell(SAY_SLAY6,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_SLAY6,LANG_UNIVERSAL,0);
                 DoPlaySoundToSet(me,SOUND_SLAY6);
                 break;
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
-        me->MonsterYell(SAY_DEATH,LANG_UNIVERSAL,NULL);
+        me->MonsterYell(SAY_DEATH,LANG_UNIVERSAL,0);
         DoPlaySoundToSet(me,SOUND_DEATH);
     }
 
@@ -183,7 +183,7 @@ struct boss_loathebAI : public ScriptedAI
         //Summon_Timer
         if (Summon_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             Unit* SummonedSpores = NULL;
 
             SummonedSpores = me->SummonCreature(16286,ADD_1X,ADD_1Y,ADD_1Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);

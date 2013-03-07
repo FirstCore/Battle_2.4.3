@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Shadowfang_Keep
-SD%Complete: 90
-SDComment:
-SDCategory: Shadowfang Keep
+Name: Instance_Shadowfang_Keep
+Complete(%): 90
+Comment:
+Category: Shadowfang Keep
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -104,17 +104,17 @@ struct instance_shadowfang_keep : public ScriptedInstance
             case GO_COURTYARD_DOOR:
                 DoorCourtyardGUID = pGo->GetGUID();
                 if (m_auiEncounter[0] == DONE)
-                    HandleGameObject(NULL, true, pGo);
+                    HandleGameObject(0, true, pGo);
                 break;
             case GO_SORCERER_DOOR:
                 DoorSorcererGUID = pGo->GetGUID();
                 if (m_auiEncounter[2] == DONE)
-                    HandleGameObject(NULL, true, pGo);
+                    HandleGameObject(0, true, pGo);
                 break;
             case GO_ARUGAL_DOOR:
                 DoorArugalGUID = pGo->GetGUID();
                 if (m_auiEncounter[3] == DONE)
-                    HandleGameObject(NULL, true, pGo);
+                    HandleGameObject(0, true, pGo);
                 break;
         }
     }

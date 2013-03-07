@@ -117,7 +117,7 @@ void GameObject::RemoveFromWorld()
         // Possible crash at access to deleted GO in Unit::m_gameobj
         if (uint64 owner_guid = GetOwnerGUID())
         {
-            if (Unit * owner = GetOwner())
+            if (Unit* owner = GetOwner())
                 owner->RemoveGameObject(this,false);
             else
                 sLog.outError("Delete GameObject (GUID: %u Entry: %u) that has references in invalid creature %u GO list. Crash possible.",GetGUIDLow(),GetGOInfo()->id,GUID_LOPART(owner_guid));
@@ -407,6 +407,7 @@ void GameObject::Update(uint32 diff)
                             lootingGroupLeaderGUID = 0;
                         }
                     }
+                    default:
                     break;
             }
             break;
@@ -589,7 +590,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask)
 
     WorldDatabase.BeginTransaction();
     WorldDatabase.PExecuteLog("DELETE FROM gameobject WHERE guid = '%u'", m_DBTableGuid);
-    WorldDatabase.PExecuteLog(ss.str().c_str());
+    WorldDatabase.PExecuteLog("%s", ss.str().c_str());
     WorldDatabase.CommitTransaction();
 }
 
@@ -604,7 +605,7 @@ bool GameObject::LoadFromDB(uint32 guid, Map *map)
     }
 
     uint32 entry = data->id;
-    uint32 map_id = data->mapid;
+    //uint32 map_id = data->mapid;
     float x = data->posX;
     float y = data->posY;
     float z = data->posZ;
@@ -755,7 +756,7 @@ bool GameObject::isVisibleForInState(Player const* u, bool inVisibleList) const
         // special invisibility cases
         if (GetGOInfo()->type == GAMEOBJECT_TYPE_TRAP && GetGOInfo()->trap.stealthed)
         {
-            Unit *owner = GetOwner();
+            Unit* owner = GetOwner();
             if (owner && u->IsHostileTo(owner) && !canDetectTrap(u, GetDistance(u)))
                 return false;
         }
@@ -1385,7 +1386,7 @@ void GameObject::CastSpell(Unit* target, uint32 spell)
     if (!trigger) return;
 
     trigger->SetVisibility(VISIBILITY_OFF); //should this be true?
-    if (Unit *owner = GetOwner())
+    if (Unit* owner = GetOwner())
     {
         trigger->setFaction(owner->getFaction());
         trigger->CastSpell(target, spell, true, 0, 0, owner->GetGUID());
@@ -1404,7 +1405,7 @@ const char* GameObject::GetNameForLocaleIdx(int32 loc_idx) const
 {
     if (loc_idx >= 0)
         if (GameObjectLocale const *cl = objmgr.GetGameObjectLocale(GetEntry()))
-            if (cl->Name.size() > loc_idx && !cl->Name[loc_idx].empty())
+            if (cl->Name.size() > uint32(loc_idx) && !cl->Name[loc_idx].empty())
                 return cl->Name[loc_idx].c_str();
 
     return GetName();

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: instance_zulaman
-SD%Complete: 80
-SDComment:
-SDCategory: Zul'Aman
+Name: instance_zulaman
+Complete(%): 80
+Comment:
+Category: Zul'Aman
 EndScriptData */
 
 #include "ScriptPCH.h"

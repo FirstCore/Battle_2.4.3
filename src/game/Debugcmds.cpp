@@ -87,8 +87,6 @@ bool ChatHandler::HandleSetPoiCommand(const char* args)
         return false;
 
     uint32 icon = atol(icon_text);
-    if (icon < 0)
-        icon = 0;
 
     uint32 flags = atol(flags_text);
 
@@ -129,7 +127,7 @@ bool ChatHandler::HandleBuyErrorCommand(const char* args)
 
 bool ChatHandler::HandleSendOpcodeCommand(const char* /*args*/)
 {
-    Unit *unit = getSelectedUnit();
+    Unit* unit = getSelectedUnit();
     Player *player = NULL;
     if (!unit || (unit->GetTypeId() != TYPEID_PLAYER))
         player = m_session->GetPlayer();
@@ -335,8 +333,7 @@ bool ChatHandler::HandleSendChatMsgCommand(const char* args)
 bool ChatHandler::HandleSendQuestPartyMsgCommand(const char* args)
 {
     uint32 msg = atol((char*)args);
-    if (msg >= 0)
-        m_session->GetPlayer()->SendPushToPartyResponse(m_session->GetPlayer(), msg);
+    m_session->GetPlayer()->SendPushToPartyResponse(m_session->GetPlayer(), msg);
     return true;
 }
 
@@ -353,8 +350,7 @@ bool ChatHandler::HandleGetLootRecipient(const char* /*args*/)
 bool ChatHandler::HandleSendQuestInvalidMsgCommand(const char* args)
 {
     uint32 msg = atol((char*)args);
-    if (msg >= 0)
-        m_session->GetPlayer()->SendCanTakeQuestResponse(msg);
+    m_session->GetPlayer()->SendCanTakeQuestResponse(msg);
     return true;
 }
 
@@ -636,7 +632,7 @@ bool ChatHandler::HandleDebugHostilRefList(const char * /*args*/)
     PSendSysMessage("Hostil reference list of %s (guid %u)",target->GetName(), target->GetGUIDLow());
     while (ref)
     {
-        if (Unit * unit = ref->getSource()->getOwner())
+        if (Unit* unit = ref->getSource()->getOwner())
         {
             ++cnt;
             PSendSysMessage("   %u.   %s   (guid %u)  - threat %f",cnt,unit->GetName(), unit->GetGUIDLow(), ref->getThreat());
@@ -662,7 +658,6 @@ bool ChatHandler::HandleSetInstanceDataCommand(const char *args)
 
     char *id = strtok((char*)args, " ");
     char *data = strtok(NULL, " ");
-    char *trash = strtok(NULL, " ");
 
     if (!id || !data)
         return false;
@@ -688,7 +683,6 @@ bool ChatHandler::HandleGetInstanceDataCommand(const char *args)
     }
 
     char *id = strtok((char*)args, " ");
-    char *trash = strtok(NULL, " ");
 
     if (!id)
         return false;

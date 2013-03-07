@@ -79,29 +79,29 @@ struct boss_azgalorAI : public hyjal_trashAI
             pInstance->SetData(DATA_AZGALOREVENT, NOT_STARTED);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance && IsEvent)
             pInstance->SetData(DATA_AZGALOREVENT, IN_PROGRESS);
         DoPlaySoundToSet(me, SOUND_ONAGGRO);
-        me->MonsterYell(SAY_ONAGGRO, LANG_UNIVERSAL, NULL);
+        me->MonsterYell(SAY_ONAGGRO, LANG_UNIVERSAL, 0);
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch (urand(0,2))
         {
             case 0:
                 DoPlaySoundToSet(me, SOUND_ONSLAY1);
-                me->MonsterYell(SAY_ONSLAY1, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(SAY_ONSLAY1, LANG_UNIVERSAL, 0);
                 break;
             case 1:
                 DoPlaySoundToSet(me, SOUND_ONSLAY2);
-                me->MonsterYell(SAY_ONSLAY2, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(SAY_ONSLAY2, LANG_UNIVERSAL, 0);
                 break;
             case 2:
                 DoPlaySoundToSet(me, SOUND_ONSLAY3);
-                me->MonsterYell(SAY_ONSLAY3, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(SAY_ONSLAY3, LANG_UNIVERSAL, 0);
                 break;
         }
     }
@@ -111,13 +111,13 @@ struct boss_azgalorAI : public hyjal_trashAI
         pos = i;
         if (i == 7 && pInstance)
         {
-            Unit *pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
+            Unit* pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
             if (pTarget && pTarget->isAlive())
                 me->AddThreat(pTarget,0.0f);
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* victim)
     {
         hyjal_trashAI::JustDied(victim);
         if (pInstance && IsEvent)
@@ -222,11 +222,11 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
         CheckTimer = 5000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
     }
 
@@ -234,7 +234,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
     {
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (me->IsWithinDist(who, 50) && !me->isInCombat() && me->IsHostileTo(who))
         {
@@ -243,7 +243,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
         }
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
     }
 

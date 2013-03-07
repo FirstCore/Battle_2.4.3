@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Wetlands
-SD%Complete: 100
-SDComment: Quest support: 1249
-SDCategory: Wetlands
+Name: Wetlands
+Complete(%): 100
+Comment: Quest support: 1249
+Category: Wetlands
 EndScriptData */
 
 /* ContentData

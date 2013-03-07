@@ -28,7 +28,7 @@ OutdoorPvPNA::OutdoorPvPNA()
     m_TypeId = OUTDOOR_PVP_NA;
 }
 
-void OutdoorPvPNA::HandleKillImpl(Player *plr, Unit * killed)
+void OutdoorPvPNA::HandleKillImpl(Player *plr, Unit* killed)
 {
     if (killed->GetTypeId() == TYPEID_PLAYER && plr->GetTeam() != killed->ToPlayer()->GetTeam())
     {

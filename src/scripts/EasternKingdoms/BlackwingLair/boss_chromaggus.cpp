@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Chromaggus
-SD%Complete: 95
-SDComment: Chromatic Mutation disabled due to lack of core support
-SDCategory: Blackwing Lair
+Name: Boss_Chromaggus
+Complete(%): 95
+Comment: Chromatic Mutation disabled due to lack of core support
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -186,7 +186,7 @@ struct boss_chromaggusAI : public ScriptedAI
         Enraged = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

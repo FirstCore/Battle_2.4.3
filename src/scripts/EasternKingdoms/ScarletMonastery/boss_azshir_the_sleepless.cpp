@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Azshir_the_Sleepless
-SD%Complete: 80
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Boss_Azshir_the_Sleepless
+Complete(%): 80
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_azshir_the_sleeplessAI : public ScriptedAI
         Terrify_Timer = 20000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

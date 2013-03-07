@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Westfall
-SD%Complete: 90
-SDComment: Quest support: 155, 1651
-SDCategory: Westfall
+Name: Westfall
+Complete(%): 90
+Comment: Quest support: 155, 1651
+Category: Westfall
 EndScriptData */
 
 /* ContentData

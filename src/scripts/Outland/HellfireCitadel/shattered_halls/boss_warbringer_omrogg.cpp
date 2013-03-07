@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Warbringer_Omrogg
-SD%Complete: 99
-SDComment: Heroic enabled. Spell timing may need additional tweaks
-SDCategory: Hellfire Citadel, Shattered Halls
+Name: Boss_Warbringer_Omrogg
+Complete(%): 99
+Comment: Heroic enabled. Spell timing may need additional tweaks
+Category: Hellfire Citadel, Shattered Halls
 EndScriptData */
 
 /* ContentData
@@ -104,7 +104,7 @@ struct mob_omrogg_headsAI : public ScriptedAI
     uint32 Death_Timer;
 
     void Reset() {}
-    void EnterCombat(Unit* who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
     void DoDeathYell()
     {
@@ -181,15 +181,15 @@ struct boss_warbringer_omroggAI : public ScriptedAI
     {
         if (LeftHead && RightHead)
         {
-            Unit *Left  = Unit::GetUnit(*me,LeftHead);
-            Unit *Right = Unit::GetUnit(*me,RightHead);
+            Unit* Left  = Unit::GetUnit(*me,LeftHead);
+            Unit* Right = Unit::GetUnit(*me,RightHead);
 
             if (!Left || !Right)
                 return;
 
             ithreat = rand()%4;
 
-            Unit *source = (Left->GetEntry() == Threat[ithreat].creature ? Left : Right);
+            Unit* source = (Left->GetEntry() == Threat[ithreat].creature ? Left : Right);
 
             DoScriptText(Threat[ithreat].id, source);
 
@@ -198,12 +198,12 @@ struct boss_warbringer_omroggAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoSpawnCreature(ENTRY_LEFT_HEAD,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN,1800000);
         DoSpawnCreature(ENTRY_RIGHT_HEAD,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN,1800000);
 
-        if (Unit *Left = Unit::GetUnit(*me,LeftHead))
+        if (Unit* Left = Unit::GetUnit(*me,LeftHead))
         {
             iaggro = rand()%3;
 
@@ -230,19 +230,19 @@ struct boss_warbringer_omroggAI : public ScriptedAI
         summoned->SetVisibility(VISIBILITY_OFF);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         if (LeftHead && RightHead)
         {
-            Unit *Left  = Unit::GetUnit(*me,LeftHead);
-            Unit *Right = Unit::GetUnit(*me,RightHead);
+            Unit* Left  = Unit::GetUnit(*me,LeftHead);
+            Unit* Right = Unit::GetUnit(*me,RightHead);
 
             if (!Left || !Right)
                 return;
 
             ikilling = rand()%2;
 
-            Unit *source = (Left->GetEntry() == Killing[ikilling].creature ? Left : Right);
+            Unit* source = (Left->GetEntry() == Killing[ikilling].creature ? Left : Right);
 
             switch(ikilling)
             {
@@ -259,12 +259,12 @@ struct boss_warbringer_omroggAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (LeftHead && RightHead)
         {
-            Unit *Left  = Unit::GetUnit(*me,LeftHead);
-            Unit *Right = Unit::GetUnit(*me,RightHead);
+            Unit* Left  = Unit::GetUnit(*me,LeftHead);
+            Unit* Right = Unit::GetUnit(*me,RightHead);
 
             if (!Left || !Right)
                 return;
@@ -287,8 +287,8 @@ struct boss_warbringer_omroggAI : public ScriptedAI
             if (!LeftHead || !RightHead)
                 return;
 
-            Unit *Left  = Unit::GetUnit(*me,LeftHead);
-            Unit *Right = Unit::GetUnit(*me,RightHead);
+            Unit* Left  = Unit::GetUnit(*me,LeftHead);
+            Unit* Right = Unit::GetUnit(*me,RightHead);
 
             if (!Left || !Right)
                 return;
@@ -301,7 +301,7 @@ struct boss_warbringer_omroggAI : public ScriptedAI
 
             if (ThreatYell2)
             {
-                Unit *source = (Left->GetEntry() == ThreatDelay2[ithreat].creature ? Left : Right);
+                Unit* source = (Left->GetEntry() == ThreatDelay2[ithreat].creature ? Left : Right);
 
                 DoScriptText(ThreatDelay2[ithreat].id, source);
                 ThreatYell2 = false;
@@ -309,7 +309,7 @@ struct boss_warbringer_omroggAI : public ScriptedAI
 
             if (ThreatYell)
             {
-                Unit *source = (Left->GetEntry() == ThreatDelay1[ithreat].creature ? Left : Right);
+                Unit* source = (Left->GetEntry() == ThreatDelay1[ithreat].creature ? Left : Right);
 
                 DoScriptText(ThreatDelay1[ithreat].id, source);
                 ThreatYell = false;
@@ -318,7 +318,7 @@ struct boss_warbringer_omroggAI : public ScriptedAI
 
             if (KillingYell)
             {
-                Unit *source = (Left->GetEntry() == KillingDelay[ikilling].creature ? Left : Right);
+                Unit* source = (Left->GetEntry() == KillingDelay[ikilling].creature ? Left : Right);
 
                 DoScriptText(KillingDelay[ikilling].id, source);
                 KillingYell = false;
@@ -349,7 +349,7 @@ struct boss_warbringer_omroggAI : public ScriptedAI
 
         if (ResetThreat_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             {
                 DoYellForThreat();
                 DoResetThreat();

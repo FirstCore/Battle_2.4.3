@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hydromancer_Thespia
-SD%Complete: 80
-SDComment: Needs additional adjustments (when instance script is adjusted)
-SDCategory: Coilfang Resevoir, The Steamvault
+Name: Boss_Hydromancer_Thespia
+Complete(%): 80
+Comment: Needs additional adjustments (when instance script is adjusted)
+Category: Coilfang Resevoir, The Steamvault
 EndScriptData */
 
 /* ContentData
@@ -67,7 +67,7 @@ struct boss_thespiaAI : public ScriptedAI
             pInstance->SetData(TYPE_HYDROMANCER_THESPIA, NOT_STARTED);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEAD, me);
 
@@ -75,7 +75,7 @@ struct boss_thespiaAI : public ScriptedAI
             pInstance->SetData(TYPE_HYDROMANCER_THESPIA, DONE);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -84,7 +84,7 @@ struct boss_thespiaAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch(rand()%3)
         {
@@ -106,10 +106,10 @@ struct boss_thespiaAI : public ScriptedAI
         if (LightningCloud_Timer <= diff)
         {
             //cast twice in Heroic mode
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_LIGHTNING_CLOUD);
             if (HeroicMode)
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget, SPELL_LIGHTNING_CLOUD);
             LightningCloud_Timer = 15000+rand()%10000;
         } else LightningCloud_Timer -=diff;
@@ -117,7 +117,7 @@ struct boss_thespiaAI : public ScriptedAI
         //LungBurst_Timer
         if (LungBurst_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_LUNG_BURST);
             LungBurst_Timer = 7000+rand()%5000;
         } else LungBurst_Timer -=diff;
@@ -126,10 +126,10 @@ struct boss_thespiaAI : public ScriptedAI
         if (EnvelopingWinds_Timer <= diff)
         {
             //cast twice in Heroic mode
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_ENVELOPING_WINDS);
             if (HeroicMode)
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget, SPELL_ENVELOPING_WINDS);
             EnvelopingWinds_Timer = 10000+rand()%5000;
         } else EnvelopingWinds_Timer -=diff;
@@ -154,7 +154,7 @@ struct mob_coilfang_waterelementalAI : public ScriptedAI
         WaterBoltVolley_Timer = 3000+rand()%3000;
     }
 
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
     void UpdateAI(const uint32 diff)
     {

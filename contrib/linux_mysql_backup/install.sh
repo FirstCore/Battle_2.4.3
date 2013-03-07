@@ -96,7 +96,7 @@ upgrade_config_file () {
     echo "# set to (), i.e. empty, if you want to backup all databases"
     if isSet DBNAMES; then
       if [[ "x$DBNAMES" = "xall" ]]; then
-	echo "#CONFIG_db_names=( 'characters' 'realmd' )"
+	echo "#CONFIG_db_names=( 'characters' 'auth' )"
       else
 	declare -a CONFIG_db_names
 	for i in $DBNAMES; do
@@ -105,7 +105,7 @@ upgrade_config_file () {
 	declare -p CONFIG_db_names | sed -e 's/\[[^]]*]=//g'
       fi
     else
-      echo "#CONFIG_db_names=( 'characters' 'realmd' )"
+      echo "#CONFIG_db_names=( 'characters' 'auth' )"
     fi
     echo "# You can use"
     echo "#declare -a MDBNAMES=( \"\${DBNAMES[@]}\" 'added entry1' 'added entry2' ... )"
@@ -404,8 +404,8 @@ parse_config_file () {
 echo "### Checking archive files for existence, readability and integrity."
 echo
 
-precheck_files=( automysqlbackup 1b5f87be583384448d1fc8c35596cf94
-automysqlbackup.conf 4d03e1760a3bf4bb7e41e774a3fda5a4
+precheck_files=( automysqlbackup a0aac21095f9b45fdeb60c5adaed623c
+automysqlbackup.conf dd32da2b284936c04ac70254294452bd
 README 2da9406ddedf64cd0bc3008816f7a5c7
 LICENSE 39bba7d2cf0ba1036f2a6e2be52fe3f0
 )

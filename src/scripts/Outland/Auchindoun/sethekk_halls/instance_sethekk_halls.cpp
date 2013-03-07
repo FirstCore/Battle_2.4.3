@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance - Sethekk Halls
-SD%Complete: 95
-SDComment: Instance Data for Sethekk Halls instance
-SDCategory: Auchindoun, Sethekk Halls
+Name: Instance - Sethekk Halls
+Complete(%): 95
+Comment: Instance Data for Sethekk Halls instance
+Category: Auchindoun, Sethekk Halls
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -59,7 +59,7 @@ struct instance_sethekk_halls : public ScriptedInstance
 
     void Initialize()
     {
-        IkissDoorGUID = NULL;
+        IkissDoorGUID = 0;
         SummonLakka = false;
 
         for (uint8 i = 0; i < ENCOUNTERS; i++)

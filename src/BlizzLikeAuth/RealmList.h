@@ -45,7 +45,7 @@ struct Realm
     uint32 m_ID;
     AccountTypes allowedSecurityLevel;                      // current allowed join security level (show as locked for not fit accounts)
     float populationLevel;
-    RealmBuilds realmbuilds;                                // list of supported builds (updated in DB by blizzlike-core)
+    RealmBuilds realmbuilds;                                // list of supported builds (updated in DB by worldserver)
     RealmBuildInfo realmBuildInfo;                          // build info for show version in list
 };
 

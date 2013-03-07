@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Winterspring
-SD%Complete: 90
-SDComment: Quest support: 5126 (Loraxs' tale missing proper gossip items text). Vendor Rivern Frostwind. Obtain Cache of Mau'ari
-SDCategory: Winterspring
+Name: Winterspring
+Complete(%): 90
+Comment: Quest support: 5126 (Loraxs' tale missing proper gossip items text). Vendor Rivern Frostwind. Obtain Cache of Mau'ari
+Category: Winterspring
 EndScriptData */
 
 /* ContentData

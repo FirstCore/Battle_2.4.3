@@ -189,7 +189,7 @@ bool OutdoorPvPZM::SetupOutdoorPvP()
     return true;
 }
 
-void OutdoorPvPZM::HandleKillImpl(Player *plr, Unit * killed)
+void OutdoorPvPZM::HandleKillImpl(Player *plr, Unit* killed)
 {
     if (killed->GetTypeId() != TYPEID_PLAYER)
         return;

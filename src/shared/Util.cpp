@@ -282,7 +282,7 @@ bool Utf8toWStr(char const* utf8str, size_t csize, wchar_t* wstr, size_t& wsize)
         if (len > wsize)
         {
             wsize = 0;
-            wstr = L"";
+            *wstr = 0;
             return false;
         }
 
@@ -293,7 +293,7 @@ bool Utf8toWStr(char const* utf8str, size_t csize, wchar_t* wstr, size_t& wsize)
     catch(std::exception)
     {
         wsize = 0;
-        wstr = L"";
+        *wstr = 0;
         return false;
     }
 

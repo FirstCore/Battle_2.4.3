@@ -31,7 +31,7 @@ namespace BlizzLike
     }
     namespace XP
     {
-        typedef enum XPColorChar { RED, ORANGE, YELLOW, GREEN, GRAY };
+        enum XPColorChar { RED, ORANGE, YELLOW, GREEN, GRAY };
 
         inline uint32 GetGrayLevel(uint32 pl_level)
         {
@@ -98,7 +98,7 @@ namespace BlizzLike
             }
         }
 
-        inline uint32 Gain(Player *pl, Unit *u)
+        inline uint32 Gain(Player *pl, Unit* u)
         {
             if (u->GetTypeId() == TYPEID_UNIT && (
                 ((Creature*)u)->isTotem() || ((Creature*)u)->isPet() ||

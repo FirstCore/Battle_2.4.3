@@ -3738,7 +3738,7 @@ bool ChatHandler::HandleGuildInviteCommand(const char *args)
         plGuid = objmgr.GetPlayerGUIDByName (plName.c_str ());
 
     if (!plGuid)
-        false;
+        return false;
 
     // player's guild membership checked in AddMember before add
     if (!targetGuild->AddMember (plGuid,targetGuild->GetLowestRank ()))
@@ -3953,8 +3953,10 @@ bool ChatHandler::HandleDieCommand(const char* /*args*/)
 
     if (target->isAlive())
     {
-        //m_session->GetPlayer()->DealDamage(target, target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-        m_session->GetPlayer()->Kill(target);
+        if (sWorld.getConfig(CONFIG_DIE_COMMAND_MODE)) 
+            m_session->GetPlayer()->Kill(target); 
+        else 
+            m_session->GetPlayer()->DealDamage(target, target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false); 
     }
 
     return true;
@@ -4106,7 +4108,7 @@ bool ChatHandler::HandleAuraCommand(const char *args)
     if (!px)
         return false;
 
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
     {
         SendSysMessage(LANG_SELECT_CHAR_OR_CREATURE);
@@ -4142,7 +4144,7 @@ bool ChatHandler::HandleUnAuraCommand(const char *args)
     if (!px)
         return false;
 
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
     {
         SendSysMessage(LANG_SELECT_CHAR_OR_CREATURE);
@@ -4921,7 +4923,7 @@ bool ChatHandler::HandleDelTeleCommand(const char * args)
 
 bool ChatHandler::HandleListAurasCommand (const char * /*args*/)
 {
-    Unit *unit = getSelectedUnit();
+    Unit* unit = getSelectedUnit();
     if (!unit)
     {
         SendSysMessage(LANG_SELECT_CHAR_OR_CREATURE);
@@ -5294,7 +5296,7 @@ bool ChatHandler::HandleServerShutDownCommand(const char *args)
     int32 time = atoi (time_str);
 
     // Prevent interpret wrong arg value as 0 secs shutdown time
-    if (time == 0 && (time_str[0] != '0' || time_str[1] != '\0') || time < 0)
+    if ((time == 0 && (time_str[0] != '0' || time_str[1] != '\0')) || time < 0)
         return false;
 
     if (exitcode_str)
@@ -5329,7 +5331,7 @@ bool ChatHandler::HandleServerRestartCommand(const char *args)
     int32 time = atoi (time_str);
 
     // Prevent interpret wrong arg value as 0 secs shutdown time
-    if (time == 0 && (time_str[0] != '0' || time_str[1] != '\0') || time < 0)
+    if ((time == 0 && (time_str[0] != '0' || time_str[1] != '\0')) || time < 0)
         return false;
 
     if (exitcode_str)
@@ -5364,7 +5366,7 @@ bool ChatHandler::HandleServerIdleRestartCommand(const char *args)
     int32 time = atoi (time_str);
 
     // Prevent interpret wrong arg value as 0 secs shutdown time
-    if (time == 0 && (time_str[0] != '0' || time_str[1] != '\0') || time < 0)
+    if ((time == 0 && (time_str[0] != '0' || time_str[1] != '\0')) || time < 0)
         return false;
 
     if (exitcode_str)
@@ -5399,7 +5401,7 @@ bool ChatHandler::HandleServerIdleShutDownCommand(const char *args)
     int32 time = atoi (time_str);
 
     // Prevent interpret wrong arg value as 0 secs shutdown time
-    if (time == 0 && (time_str[0] != '0' || time_str[1] != '\0') || time < 0)
+    if ((time == 0 && (time_str[0] != '0' || time_str[1] != '\0')) || time < 0)
         return false;
 
     if (exitcode_str)
@@ -6122,7 +6124,7 @@ bool ChatHandler::HandleFlyModeCommand(const char *args)
     if (!*args)
         return false;
 
-    Unit *unit = getSelectedUnit();
+    Unit* unit = getSelectedUnit();
     if (!unit || (unit->GetTypeId() != TYPEID_PLAYER))
         unit = m_session->GetPlayer();
 
@@ -6976,7 +6978,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
         }
 
         uint32 item_count = itemCountStr ? atoi(itemCountStr) : 1;
-        if (item_count < 1 || item_proto->MaxCount && item_count > item_proto->MaxCount)
+        if (item_count < 1 || (item_proto->MaxCount && item_count > item_proto->MaxCount))
         {
             PSendSysMessage(LANG_COMMAND_INVALID_ITEM_COUNT, item_count,item_id);
             SetSentErrorMessage(true);
@@ -7112,7 +7114,7 @@ bool ChatHandler::HandleSendMoneyCommand(const char *args)
         return false;
     }
 
-    uint32 mailId = objmgr.GenerateMailID();
+    objmgr.GenerateMailID();
 
     // from console show not existed sender
     MailSender sender(MAIL_NORMAL,m_session ? m_session->GetPlayer()->GetGUIDLow() : 0, MAIL_STATIONERY_GM);
@@ -7477,7 +7479,7 @@ bool ChatHandler::HandleGroupRemoveCommand(const char *args)
 
 bool ChatHandler::HandlePossessCommand(const char * /*args*/)
 {
-    Unit *pUnit = getSelectedUnit();
+    Unit* pUnit = getSelectedUnit();
     if (!pUnit)
         return false;
 
@@ -7487,7 +7489,7 @@ bool ChatHandler::HandlePossessCommand(const char * /*args*/)
 
 bool ChatHandler::HandleUnPossessCommand(const char * /*args*/)
 {
-    Unit *pUnit = getSelectedUnit();
+    Unit* pUnit = getSelectedUnit();
     if (!pUnit)
         pUnit = m_session->GetPlayer();
 
@@ -7500,7 +7502,7 @@ bool ChatHandler::HandleUnPossessCommand(const char * /*args*/)
 
 bool ChatHandler::HandleBindSightCommand(const char * /*args*/)
 {
-    Unit *pUnit = getSelectedUnit();
+    Unit* pUnit = getSelectedUnit();
     if (!pUnit)
         return false;
 

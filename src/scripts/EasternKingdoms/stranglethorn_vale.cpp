@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Stranglethorn_Vale
-SD%Complete: 100
-SDComment: Quest support: 592
-SDCategory: Stranglethorn Vale
+Name: Stranglethorn_Vale
+Complete(%): 100
+Comment: Quest support: 592
+Category: Stranglethorn Vale
 EndScriptData */
 
 /* ContentData
@@ -48,7 +48,7 @@ struct mob_yennikuAI : public ScriptedAI
         me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_NONE);
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         if (caster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -67,7 +67,7 @@ struct mob_yennikuAI : public ScriptedAI
         return;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -86,7 +86,7 @@ struct mob_yennikuAI : public ScriptedAI
             {
                 if (me->getVictim()->GetTypeId() == TYPEID_PLAYER)
                 {
-                    Unit *victim = me->getVictim();
+                    Unit* victim = me->getVictim();
                     if (CAST_PLR(victim)->GetTeam() == HORDE)
                     {
                         me->CombatStop();

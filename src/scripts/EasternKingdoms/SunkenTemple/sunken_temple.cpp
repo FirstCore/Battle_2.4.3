@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Sunken_Temple
-SD%Complete: 100
-SDComment: Area Trigger + Puzzle event support
-SDCategory: Sunken Temple
+Name: Sunken_Temple
+Complete(%): 100
+Comment: Area Trigger + Puzzle event support
+Category: Sunken Temple
 EndScriptData */
 
 /* ContentData

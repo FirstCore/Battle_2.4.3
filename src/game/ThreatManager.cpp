@@ -240,7 +240,7 @@ HostileReference* ThreatContainer::addThreat(Unit* pVictim, float pThreat)
 
 //============================================================
 
-void ThreatContainer::modifyThreatPercent(Unit *pVictim, int32 pPercent)
+void ThreatContainer::modifyThreatPercent(Unit* pVictim, int32 pPercent)
 {
     if (HostileReference* ref = getReferenceByTarget(pVictim))
         ref->addThreatPercent(pPercent);
@@ -375,14 +375,14 @@ void ThreatManager::addThreat(Unit* pVictim, float pThreat, SpellSchoolMask scho
     {
         float reducedThreat = threat * pVictim->GetReducedThreatPercent() / 100;
         threat -= reducedThreat;
-        if (Unit *unit = pVictim->GetMisdirectionTarget())
+        if (Unit* unit = pVictim->GetMisdirectionTarget())
             _addThreat(unit, reducedThreat);
     }
 
     _addThreat(pVictim, threat);
 }
 
-void ThreatManager::_addThreat(Unit *pVictim, float threat)
+void ThreatManager::_addThreat(Unit* pVictim, float threat)
 {
     HostileReference* ref = iThreatContainer.addThreat(pVictim, threat);
     // Ref is not in the online refs, search the offline refs next
@@ -402,7 +402,7 @@ void ThreatManager::_addThreat(Unit *pVictim, float threat)
 
 //============================================================
 
-void ThreatManager::modifyThreatPercent(Unit *pVictim, int32 pPercent)
+void ThreatManager::modifyThreatPercent(Unit* pVictim, int32 pPercent)
 {
     iThreatContainer.modifyThreatPercent(pVictim, pPercent);
 }
@@ -419,7 +419,7 @@ Unit* ThreatManager::getHostileTarget()
 
 //============================================================
 
-float ThreatManager::getThreat(Unit *pVictim, bool pAlsoSearchOfflineList)
+float ThreatManager::getThreat(Unit* pVictim, bool pAlsoSearchOfflineList)
 {
     float threat = 0.0f;
     HostileReference* ref = iThreatContainer.getReferenceByTarget(pVictim);
@@ -445,7 +445,7 @@ void ThreatManager::tauntApply(Unit* pTaunter)
 
 //============================================================
 
-void ThreatManager::tauntFadeOut(Unit *pTaunter)
+void ThreatManager::tauntFadeOut(Unit* pTaunter)
 {
     HostileReference* ref = iThreatContainer.getReferenceByTarget(pTaunter);
     if (ref)

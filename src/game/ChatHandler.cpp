@@ -125,7 +125,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
     else
     {
         // send in universal language if player in .gmon mode (ignore spell effects)
-        if (_player->isGameMaster())
+        if (_player->isGameMaster() || _player->GetAreaId() == 415)
             lang = LANG_UNIVERSAL;
         else
         {
@@ -230,7 +230,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             Player *player = ObjectAccessor::Instance().FindPlayerByName(to.c_str());
             uint32 tSecurity = GetSecurity();
-            uint32 pSecurity = player ? player->GetSession()->GetSecurity() : SEC_PLAYER;
+            uint32 pSecurity = player ? player->GetSession()->GetSecurity() : uint32(SEC_PLAYER);
             if (!player || (tSecurity == SEC_PLAYER && pSecurity > SEC_PLAYER && !player->isAcceptWhispers()))
             {
                 SendPlayerNotFoundNotice(to);
@@ -387,7 +387,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // if player is in battleground, he cannot say to battleground members by /ra
             Group *group = GetPlayer()->GetOriginalGroup();
             // so if player hasn't OriginalGroup and his player->GetGroup() is BG raid or his group isn't raid, then return
-            if (!group && !(group = GetPlayer()->GetGroup()) || group->isBGGroup() || !group->isRaidGroup())
+           if ((!group && !(group = GetPlayer()->GetGroup())) || group->isBGGroup() || !group->isRaidGroup())
                 return;
 
             // ChatSpy
@@ -423,7 +423,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             // if player is in battleground, he cannot say to battleground members by /ra
             Group *group = GetPlayer()->GetOriginalGroup();
-            if (!group && !(group = GetPlayer()->GetGroup()) || group->isBGGroup() || !group->isRaidGroup() || !group->IsLeader(GetPlayer()->GetGUID()))
+            if ((!group && !(group = GetPlayer()->GetGroup())) || group->isBGGroup() || !group->isRaidGroup() || !group->IsLeader(GetPlayer()->GetGUID()))
                 return;
 
             // ChatSpy

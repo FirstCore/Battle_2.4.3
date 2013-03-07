@@ -62,6 +62,28 @@ void WorldSession::HandleDuelAcceptedOpcode(WorldPacket& recvPacket)
             plTarget->RemoveArenaSpellCooldowns();
     }
 
+    // Reset Duel Cooldowns, Hp, Mana and Rage.
+    //                         Elwynn Forest                Durotar
+    if (player->GetAreaId() == 12 || player->GetAreaId() == 14)
+    {
+        player->SetHealth(player->GetMaxHealth());
+        plTarget->SetHealth(plTarget->GetMaxHealth());
+        player->RemoveArenaSpellCooldowns();
+        plTarget->RemoveArenaSpellCooldowns();
+        player->RemoveAurasDueToSpell(25771);
+        plTarget->RemoveAurasDueToSpell(25771);
+
+        if (player->getPowerType() == POWER_MANA)
+            player->SetPower(POWER_MANA, player->GetMaxPower(POWER_MANA));
+        if (plTarget->getPowerType() == POWER_MANA)
+            plTarget->SetPower(POWER_MANA, plTarget->GetMaxPower(POWER_MANA));
+    }
+
+    if (player->getPowerType() == POWER_RAGE)
+        player->SetPower(POWER_RAGE, 0);
+    if (plTarget->getPowerType() == POWER_RAGE)
+        plTarget->SetPower(POWER_RAGE, 0);
+
     WorldPacket data(SMSG_DUEL_COUNTDOWN, 4);
     data << (uint32)3000;                                   // 3 seconds
     player->GetSession()->SendPacket(&data);

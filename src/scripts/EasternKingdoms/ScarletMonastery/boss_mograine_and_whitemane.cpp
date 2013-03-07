@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Mograine_And_Whitemane
-SD%Complete: 90
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Boss_Mograine_And_Whitemane
+Complete(%): 90
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"

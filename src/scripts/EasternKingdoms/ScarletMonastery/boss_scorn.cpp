@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Scorn
-SD%Complete: 100
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Boss_Scorn
+Complete(%): 100
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_scornAI : public ScriptedAI
         FrostNova_Timer = 30000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

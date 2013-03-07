@@ -2,7 +2,7 @@
 
 // Configuration.
 // Realm database.
-$r_db = "realmd";
+$r_db = "auth";
 // IP (and port).
 $ip = "127.0.0.1:3306";
 // Username.

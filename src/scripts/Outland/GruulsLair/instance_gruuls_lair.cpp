@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Gruuls_Lair
-SD%Complete: 100
-SDComment:
-SDCategory: Gruul's Lair
+Name: Instance_Gruuls_Lair
+Complete(%): 100
+Comment:
+Category: Gruul's Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -90,7 +90,7 @@ struct instance_gruuls_lair : public ScriptedInstance
         {
             case 184468:
                 MaulgarDoor = pGo->GetGUID();
-                if (Encounters[0] == DONE) HandleGameObject(NULL, true, pGo);
+                if (Encounters[0] == DONE) HandleGameObject(0, true, pGo);
                 break;
             case 184662: GruulDoor = pGo->GetGUID(); break;
         }

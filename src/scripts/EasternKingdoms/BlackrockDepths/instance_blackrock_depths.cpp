@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Blackrock_Depths
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Depths
+Name: Instance_Blackrock_Depths
+Complete(%): 100
+Comment:
+Category: Blackrock Depths
 EndScriptData */
 
 /*
@@ -208,7 +208,7 @@ struct instance_blackrock_depths : public ScriptedInstance
 
     void SetData64(uint32 type, uint64 data)
     {
-        debug_log("BSCR: Instance Blackrock Depths: SetData64 update (Type: %u Data %u)", type, data);
+        debug_log("BSCR: Instance Blackrock Depths: SetData64 update (Type: %u Data %llu)", type, data);
 
         switch(type)
         {
@@ -370,7 +370,7 @@ struct instance_blackrock_depths : public ScriptedInstance
             {
                 boss->setFaction(FACTION_HOSTILE);
                 boss->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                if (Unit *pTarget = boss->SelectNearestTarget(500))
+                if (Unit* pTarget = boss->SelectNearestTarget(500))
                     boss->AI()->AttackStart(pTarget);
             }
         }

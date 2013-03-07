@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Baron_Rivendare
-SD%Complete: 70
-SDComment: aura applied/defined in database
-SDCategory: Stratholme
+Name: Boss_Baron_Rivendare
+Complete(%): 70
+Comment: aura applied/defined in database
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -111,7 +111,7 @@ struct boss_baron_rivendareAI : public ScriptedAI
 
     void JustSummoned(Creature* summoned)
     {
-        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             summoned->AI()->AttackStart(pTarget);
     }
 
@@ -129,7 +129,7 @@ struct boss_baron_rivendareAI : public ScriptedAI
         //ShadowBolt
         if (ShadowBolt_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(me->getVictim(), SPELL_SHADOWBOLT);
 
             ShadowBolt_Timer = 10000;

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hungarfen
-SD%Complete: 95
-SDComment: Need confirmation if spell data are same in both modes. Summons should have faster rate in heroic
-SDCategory: Coilfang Resevoir, Underbog
+Name: Boss_Hungarfen
+Complete(%): 95
+Comment: Need confirmation if spell data are same in both modes. Summons should have faster rate in heroic
+Category: Coilfang Resevoir, Underbog
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_hungarfenAI : public ScriptedAI
         AcidGeyser_Timer = 10000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -66,7 +66,7 @@ struct boss_hungarfenAI : public ScriptedAI
 
         if (Mushroom_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 me->SummonCreature(17990, pTarget->GetPositionX()+float(rand()%8), pTarget->GetPositionY()+float(rand()%8), pTarget->GetPositionZ(), float(rand()%5), TEMPSUMMON_TIMED_DESPAWN, 22000);
             else
                 me->SummonCreature(17990, me->GetPositionX()+float(rand()%8), me->GetPositionY()+float(rand()%8), me->GetPositionZ(), float(rand()%5), TEMPSUMMON_TIMED_DESPAWN, 22000);
@@ -76,7 +76,7 @@ struct boss_hungarfenAI : public ScriptedAI
 
         if (AcidGeyser_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget,SPELL_ACID_GEYSER);
             AcidGeyser_Timer = 10000+rand()%7500;
         } else AcidGeyser_Timer -= diff;
@@ -110,12 +110,6 @@ struct mob_underbog_mushroomAI : public ScriptedAI
         DoCast(me,SPELL_PUTRID_MUSHROOM,true);
         DoCast(me,SPELL_SPORE_CLOUD,true);
     }
-
-    void MoveInLineOfSight(Unit *who) { return; }
-
-    void AttackStart(Unit* who) { return; }
-
-    void EnterCombat(Unit* who) { }
 
     void UpdateAI(const uint32 diff)
     {

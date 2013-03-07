@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Tirisfal_Glades
-SD%Complete: 100
-SDComment: Quest support: 590, 1819
-SDCategory: Tirisfal Glades
+Name: Tirisfal_Glades
+Complete(%): 100
+Comment: Quest support: 590, 1819
+Category: Tirisfal Glades
 EndScriptData */
 
 /* ContentData

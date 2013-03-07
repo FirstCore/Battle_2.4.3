@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Epoch_Hunter
-SD%Complete: 60
-SDComment: Missing spawns pre-event, missing speech to be coordinated with rest of escort event.
-SDCategory: Caverns of Time, Old Hillsbrad Foothills
+Name: Boss_Epoch_Hunter
+Complete(%): 60
+Comment: Missing spawns pre-event, missing speech to be coordinated with rest of escort event.
+Category: Caverns of Time, Old Hillsbrad Foothills
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -63,7 +63,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         Mda_Timer = 40000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%2)
         {
@@ -72,7 +72,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -81,7 +81,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -120,7 +120,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
 
         if (WingBuffet_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget,SPELL_WING_BUFFET);
             WingBuffet_Timer = 25000+rand()%10000;
         } else WingBuffet_Timer -= diff;

@@ -303,7 +303,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
             //Note: checked only aura for effect 0, if need check aura for effect 1/2 then
             // possible way: pack in event.buffed.amount 2 uint16 (ammount+effectIdx)
             Aura* aura = me->GetAura(event.buffed.spellId,0);
-            if (!aura || aura->GetStackAmount() < event.buffed.amount)
+            if (!aura || uint32(aura->GetStackAmount()) < event.buffed.amount)
                 return false;
 
             //Repeat Timers
@@ -319,7 +319,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
             //Note: checked only aura for effect 0, if need check aura for effect 1/2 then
             // possible way: pack in event.buffed.amount 2 uint16 (ammount+effectIdx)
             Aura* aura = pActionInvoker->GetAura(event.buffed.spellId,0);
-            if (!aura || aura->GetStackAmount() < event.buffed.amount)
+            if (!aura || uint32(aura->GetStackAmount()) < event.buffed.amount)
                 return false;
 
             //Repeat Timers
@@ -331,7 +331,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
             //Note: checked only aura for effect 0, if need check aura for effect 1/2 then
             // possible way: pack in event.buffed.amount 2 uint16 (ammount+effectIdx)
             Aura* aura = me->GetAura(event.buffed.spellId,0);
-            if (aura && aura->GetStackAmount() >= event.buffed.amount)
+            if (aura && uint32(aura->GetStackAmount()) >= event.buffed.amount)
                 return false;
 
             //Repeat Timers
@@ -344,7 +344,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
                 return false;
 
             Aura* aura = me->getVictim()->GetAura(event.buffed.spellId,0);
-            if (aura && aura->GetStackAmount() >= event.buffed.amount)
+            if (aura && uint32(aura->GetStackAmount()) >= event.buffed.amount)
                 return false;
 
             //Repeat Timers
@@ -1017,7 +1017,7 @@ void CreatureEventAI::JustSummoned(Creature* pUnit)
     }
 }
 
-void CreatureEventAI::EnterCombat(Unit *enemy)
+void CreatureEventAI::EnterCombat(Unit* enemy)
 {
     //Check for on combat start events
     if (!bEmptyList)
@@ -1049,7 +1049,7 @@ void CreatureEventAI::EnterCombat(Unit *enemy)
     EventDiff = 0;
 }
 
-void CreatureEventAI::AttackStart(Unit *who)
+void CreatureEventAI::AttackStart(Unit* who)
 {
     if (!who)
         return;
@@ -1067,7 +1067,7 @@ void CreatureEventAI::AttackStart(Unit *who)
     }
 }
 
-void CreatureEventAI::MoveInLineOfSight(Unit *who)
+void CreatureEventAI::MoveInLineOfSight(Unit* who)
 {
     if (me->getVictim())
         return;

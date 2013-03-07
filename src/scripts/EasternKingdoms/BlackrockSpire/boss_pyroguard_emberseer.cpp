@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Pyroguard_Emberseer
-SD%Complete: 100
-SDComment: Event to activate Emberseer NYI
-SDCategory: Blackrock Spire
+Name: Boss_Pyroguard_Emberseer
+Complete(%): 100
+Comment: Event to activate Emberseer NYI
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_pyroguard_emberseerAI : public ScriptedAI
         PyroBlast_Timer = 14000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -70,7 +70,7 @@ struct boss_pyroguard_emberseerAI : public ScriptedAI
         //PyroBlast_Timer
         if (PyroBlast_Timer <= diff)
         {
-            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                 DoCast(pTarget, SPELL_PYROBLAST);
             PyroBlast_Timer = 15000;
         } else PyroBlast_Timer -= diff;

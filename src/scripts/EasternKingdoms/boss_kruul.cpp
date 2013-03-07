@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Kruul
-SD%Complete: 100
-SDComment: Highlord Kruul are presumably no longer in-game on regular bases, however future events could bring him back.
-SDCategory: Bosses
+Name: Boss_Kruul
+Complete(%): 100
+Comment: Highlord Kruul are presumably no longer in-game on regular bases, however future events could bring him back.
+Category: Bosses
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -55,7 +55,7 @@ struct boss_kruulAI : public ScriptedAI
         Hound_Timer = 8000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

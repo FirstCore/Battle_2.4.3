@@ -1,16 +1,16 @@
 ##################################################
-# BlizzLike Core World Server configuration file #
+# BLIZZLIKE CORE WORLD SERVER CONFIGURATION FILE #
 ##################################################
 
 [worldserver]
-ConfVersion=20120922
+ConfVersion=20130302
 
 # Note to devs, line breaks should be at column 80
 ###############################################################################
 # CONNECTIONS AND DIRECTORIES
 #
 #    RealmID
-#        RealmID must match the realmlist inside the realmd database
+#        RealmID must match the realmlist inside the auth database
 #
 #    DataDir
 #        Data directory setting.
@@ -51,7 +51,7 @@ ConfVersion=20120922
 RealmID = 1
 DataDir = "."
 LogsDir = ""
-LoginDatabaseInfo     = "127.0.0.1;3306;blizzlike;blizzlike;realmd"
+LoginDatabaseInfo     = "127.0.0.1;3306;blizzlike;blizzlike;auth"
 WorldDatabaseInfo     = "127.0.0.1;3306;blizzlike;blizzlike;world"
 CharacterDatabaseInfo = "127.0.0.1;3306;blizzlike;blizzlike;characters"
 MaxPingTime = 30
@@ -279,7 +279,7 @@ MapUpdate.Threads = 1
 #
 #    LogFile
 #        Logfile name
-#        Default: "server.log"
+#        Default: "world.log"
 #                 "" - Empty name disable creating log file
 #
 #    ChatLogFile
@@ -475,7 +475,7 @@ MapUpdate.Threads = 1
 LogSQL = 1
 PidFile = ""
 LogLevel = 1
-LogFile = "server.log"
+LogFile = "world.log"
 ChatLogFile = "chat.log"
 LogTimestamp = 0
 LogFileLevel = 0
@@ -1588,7 +1588,7 @@ Network.TcpNodelay = 1
 #
 #    Auction House Bot character data
 #        AuctionHouseBot.Account is the account number
-#         (in realmd->account table) of the player you want to run
+#         (in auth->account table) of the player you want to run
 #         as the auction bot.
 #        AuctionHouseBot.GUID is the GUID (in characters->characters table)
 #         of the player you want to run as the auction bot.
@@ -1983,13 +1983,18 @@ CharDelete.KeepDays = 30
 #
 #    DuelMod.Enable
 #        Allows players cooldowns/mana/hp to reset before each duel.
-#        Default: 0 (Disabled)
-#                 1 - Enabled
+#        Default: 0 - (Disabled)
+#                 1 - (Enabled)
 #
 #    DuelMod.Cooldowns
 #        Makes the players arena cooldowns reset before each duel.
-#        Default: 0 (Disabled)
-#                 1 - Enabled
+#        Default: 0 - (Disabled)
+#                 1 - (Enabled)
+#
+#    Die.Command.Mode
+#        Description: Do not trigger things like loot from .die command.
+#        Default: 1 - (Enabled)
+#                 0 - (Disabled)
 #
 ###############################################################################
 
@@ -2011,6 +2016,7 @@ MinRecordUpdateTimeDiff = 100
 PlayerStart.String = ""
 DuelMod.Enable = 0
 DuelMod.Cooldowns = 0
+Die.Command.Mode = 1
 
 ###############################################################################
 # AUTO BROADCAST
@@ -2034,3 +2040,42 @@ DuelMod.Cooldowns = 0
 AutoBroadcast.On = 0
 AutoBroadcast.Center = 0
 AutoBroadcast.Timer = 60000
+
+###################################################################################################################
+# PVP RANKS
+#
+# PvPRank.Rate.ExtraHonor
+# Rate of honor bonus for killing higher PVP ranked players
+# Default:
+# 1 - 10% more honor per RANK difference
+# 2 - 20%
+# 0 - off
+#
+# PvPRank.HKPerRank
+# Honor Kills needed for each rank, use "," between values.
+# Whole string must be enclosed with " "
+# Always specify 14 values, for 14 ranks
+# Default:
+# "10,50,100,200,450,750,1300,2000,3500,6000,9500,15000,21000,30000"
+#
+###################################################################################################################
+
+PvPRank.Rate.ExtraHonor = 1
+PvPRank.HKPerRank = "10,50,100,200,450,750,1300,2000,3500,6000,9500,15000,21000,30000"
+
+###############################################################################
+# MOVEMENT ANTICHEAT
+#
+#    Anticheat.Movement.Enable
+#        Enable Movement Anticheat
+#        Default: 1 - (Enabled)
+#                 0 - (Disabled)
+#
+#    Anticheat.Movement.GmLevel
+#        Detection occurs below and at the same GmLevel
+#        Default: 0 - (Only Players)
+#
+###############################################################################
+
+Anticheat.Movement.Enable = 1
+Anticheat.Movement.GmLevel = 0

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Pandemonius
-SD%Complete: 75
-SDComment: Not known how void blast is done (amount of rapid cast seems to be related to players in party). All mobs remaining in surrounding area should aggro when engaged.
-SDCategory: Auchindoun, Mana Tombs
+Name: Boss_Pandemonius
+Complete(%): 75
+Comment: Not known how void blast is done (amount of rapid cast seems to be related to players in party). All mobs remaining in surrounding area should aggro when engaged.
+Category: Auchindoun, Mana Tombs
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -59,12 +59,12 @@ struct boss_pandemoniusAI : public ScriptedAI
         VoidBlast_Counter = 0;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -73,7 +73,7 @@ struct boss_pandemoniusAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%3)
         {
@@ -91,7 +91,7 @@ struct boss_pandemoniusAI : public ScriptedAI
 
         if (VoidBlast_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 DoCast(pTarget,HeroicMode ? H_SPELL_VOID_BLAST : SPELL_VOID_BLAST);
                 VoidBlast_Timer = 500;

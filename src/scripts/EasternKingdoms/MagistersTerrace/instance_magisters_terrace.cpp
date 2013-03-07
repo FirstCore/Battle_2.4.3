@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Magisters_Terrace
-SD%Complete: 60
-SDComment:  Designed only for Selin Fireheart
-SDCategory: Magister's Terrace
+Name: Instance_Magisters_Terrace
+Complete(%): 60
+Comment:  Designed only for Selin Fireheart
+Category: Magister's Terrace
 EndScriptData */
 
 #include "ScriptPCH.h"

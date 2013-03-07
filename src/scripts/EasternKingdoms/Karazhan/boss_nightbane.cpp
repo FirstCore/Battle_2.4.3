@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Nightbane
-SD%Complete: 95
-SDComment:  timers,
-SDCategory: Karazhan
+Name: Boss_Nightbane
+Complete(%): 95
+Comment:  timers,
+Category: Karazhan
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -173,22 +173,24 @@ struct boss_nightbaneAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(TYPE_NIGHTBANE, IN_PROGRESS);
 
         HandleTerraceDoors(false);
-        me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, NULL);
+        me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, 0);
     }
 
     void AttackStart(Unit* who)
     {
         if (!Intro && !Flying)
+        {
             if (Phase == 1)
                 ScriptedAI::AttackStart(who);
             else
                 AttackStartNoMove(who);
+        }
     }
 
     void JustDied(Unit* /*killer*/)
@@ -200,14 +202,18 @@ struct boss_nightbaneAI : public ScriptedAI
         HandleTerraceDoors(true);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!Intro && !Flying)
+        {
             if (!me->getVictim() && me->canStartAttack(who))
+            {
                 if (Phase == 1)
                     ScriptedAI::AttackStart(who);
                 else
                     AttackStartNoMove(who);
+            }
+        }
     }
 
     void MovementInform(uint32 type, uint32 id)
@@ -269,7 +275,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
     void TakeOff()
     {
-        me->MonsterYell(YELL_FLY_PHASE, LANG_UNIVERSAL, NULL);
+        me->MonsterYell(YELL_FLY_PHASE, LANG_UNIVERSAL, 0);
 
         me->InterruptSpell(CURRENT_GENERIC_SPELL);
         me->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
@@ -288,7 +294,9 @@ struct boss_nightbaneAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (WaitTimer)
+        if (!WaitTimer)
+        return;
+
         if (WaitTimer <= diff)
         {
             if (Intro)
@@ -353,14 +361,14 @@ struct boss_nightbaneAI : public ScriptedAI
 
             if (CharredEarthTimer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_CHARRED_EARTH);
                 CharredEarthTimer = 20000;
             } else CharredEarthTimer -= diff;
 
             if (TailSweepTimer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     if (!me->HasInArc(M_PI, pTarget))
                         DoCast(pTarget, SPELL_TAIL_SWEEP);
                 TailSweepTimer = 15000;
@@ -368,7 +376,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
             if (SearingCindersTimer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_SEARING_CINDERS);
                 SearingCindersTimer = 10000;
             } else SearingCindersTimer -= diff;
@@ -410,7 +418,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
                 if (DistractingAshTimer <= diff)
                 {
-                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(pTarget, SPELL_DISTRACTING_ASH);
                     DistractingAshTimer = 2000; //timer wrong
                 } else DistractingAshTimer -= diff;
@@ -443,7 +451,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
             if (FlyTimer <= diff) //landing
             {
-                me->MonsterYell(RAND(*YELL_LAND_PHASE_1,*YELL_LAND_PHASE_2), LANG_UNIVERSAL, NULL);
+                me->MonsterYell(RAND(*YELL_LAND_PHASE_1,*YELL_LAND_PHASE_2), LANG_UNIVERSAL, 0);
 
                 me->GetMotionMaster()->Clear(false);
                 me->GetMotionMaster()->MovePoint(3,IntroWay[3][0],IntroWay[3][1],IntroWay[3][2]);

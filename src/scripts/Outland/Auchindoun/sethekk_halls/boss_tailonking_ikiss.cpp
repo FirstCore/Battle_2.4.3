@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Talon_King_Ikiss
-SD%Complete: 95
-SDComment: Heroic supported. Some details missing, but most are spell related.
-SDCategory: Auchindoun, Sethekk Halls
+Name: Boss_Talon_King_Ikiss
+Complete(%): 95
+Comment: Heroic supported. Some details missing, but most are spell related.
+Category: Auchindoun, Sethekk Halls
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -86,7 +86,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
             pInstance->SetData(DATA_IKISSEVENT, NOT_STARTED);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!me->getVictim() && who->isTargetableForAttack() && (me->IsHostileTo(who)) && who->isInAccessiblePlaceFor (me))
         {
@@ -108,7 +108,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%3)
         {
@@ -121,7 +121,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
             pInstance->SetData(DATA_IKISSEVENT, IN_PROGRESS);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -129,7 +129,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
             pInstance->SetData(DATA_IKISSEVENT, DONE);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -159,7 +159,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
         if (Sheep_Timer <= diff)
         {
             //second top aggro target in normal, random target in heroic correct?
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = HeroicMode ? SelectUnit(SELECT_TARGET_RANDOM,0) : SelectUnit(SELECT_TARGET_TOPAGGRO,1);
             if (pTarget)
                 DoCast(pTarget,HeroicMode ? H_SPELL_POLYMORPH : SPELL_POLYMORPH);
@@ -186,7 +186,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
         {
             DoScriptText(EMOTE_ARCANE_EXP, me);
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             {
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);

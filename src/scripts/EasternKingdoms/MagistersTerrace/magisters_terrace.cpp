@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Magisters_Terrace
-SD%Complete: 100
-SDComment: Quest support: 11490(post-event)
-SDCategory: Magisters Terrace
+Name: Magisters_Terrace
+Complete(%): 100
+Comment: Quest support: 11490(post-event)
+Category: Magisters Terrace
 EndScriptData */
 
 /* ContentData

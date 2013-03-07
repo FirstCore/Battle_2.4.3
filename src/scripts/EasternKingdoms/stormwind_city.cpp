@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Stormwind_City
-SD%Complete: 100
-SDComment: Quest support: 1640, 1447, 4185, 11223, 434. Receive emote General Marcus
-SDCategory: Stormwind City
+Name: Stormwind_City
+Complete(%): 100
+Comment: Quest support: 1640, 1447, 4185, 11223, 434. Receive emote General Marcus
+Category: Stormwind City
 EndScriptData */
 
 /* ContentData
@@ -86,12 +86,12 @@ struct npc_bartlebyAI : public ScriptedAI
         PlayerGUID = 0;
     }
 
-    void JustDied(Unit *who)
+    void JustDied(Unit*)
     {
         me->setFaction(11);
     }
 
-    void DamageTaken(Unit *done_by, uint32 & damage)
+    void DamageTaken(Unit* done_by, uint32 & damage)
     {
         if (damage > me->GetHealth() || ((me->GetHealth() - damage)*100 / me->GetMaxHealth() < 15))
         {
@@ -139,7 +139,7 @@ struct npc_dashel_stonefistAI : public ScriptedAI
         me->setEmoteState(7);
     }
 
-    void DamageTaken(Unit *done_by, uint32 & damage)
+    void DamageTaken(Unit* done_by, uint32 & damage)
     {
         if ((damage > me->GetHealth()) || (me->GetHealth() - damage)*100 / me->GetMaxHealth() < 15)
         {
@@ -335,7 +335,7 @@ struct npc_stormwind_royal_guardAI : public ScriptedAI
                 switch(uiSpybotPhase)
                 {
                 case 1:
-                    if ( Unit *pSpybot = me->GetUnit(*me, SpybotGUID))
+                    if ( Unit* pSpybot = me->GetUnit(*me, SpybotGUID))
                         me->SetFacingToObject(pSpybot);
                     uiSpybotTimer = 1000;
                     ++uiSpybotPhase;
@@ -578,7 +578,7 @@ struct npc_marzon_silent_bladeAI : public ScriptedAI
         me->RestoreFaction();
     }
 
-    void EnterCombat(Unit* pWho)
+    void EnterCombat(Unit*)
     {
         DoScriptText(SAY_MARZON_2, me);
     }

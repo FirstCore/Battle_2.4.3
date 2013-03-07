@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Emperor_Dagran_Thaurissan
-SD%Complete: 99
-SDComment:
-SDCategory: Blackrock Depths
+Name: Boss_Emperor_Dagran_Thaurissan
+Complete(%): 99
+Comment:
+Category: Blackrock Depths
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -51,7 +51,7 @@ struct boss_draganthaurissanAI : public ScriptedAI
         //Counter= 0;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
         me->CallForHelp(VISIBLE_RANGE);
@@ -70,7 +70,7 @@ struct boss_draganthaurissanAI : public ScriptedAI
 
         if (HandOfThaurissan_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_HANDOFTHAURISSAN);
 
             //3 Hands of Thaurissan will be casted

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Shadow_Hunter_Voshgajin
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Spire
+Name: Boss_Shadow_Hunter_Voshgajin
+Complete(%): 100
+Comment:
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -45,7 +45,7 @@ struct boss_shadowvoshAI : public ScriptedAI
         //DoCast(me, SPELL_ICEARMOR, true);
     }
 
-    void EnterCombat(Unit * /*who*/){}
+    void EnterCombat(Unit* /*who*/){}
 
     void UpdateAI(const uint32 diff)
     {
@@ -63,7 +63,7 @@ struct boss_shadowvoshAI : public ScriptedAI
         //Hex_Timer
         if (Hex_Timer <= diff)
         {
-            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                 DoCast(pTarget, SPELL_HEX);
             Hex_Timer = 15000;
         } else Hex_Timer -= diff;

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Laj
-SD%Complete: 90
-SDComment: Immunities are wrong, must be adjusted to use resistance from creature_templates. Most spells require database support.
-SDCategory: Tempest Keep, The Botanica
+Name: Boss_Laj
+Complete(%): 90
+Comment: Immunities are wrong, must be adjusted to use resistance from creature_templates. Most spells require database support.
+Category: Tempest Keep, The Botanica
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -141,7 +141,7 @@ struct boss_lajAI : public ScriptedAI
         CanSummon = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

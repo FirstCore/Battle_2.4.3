@@ -10,16 +10,16 @@
 
 file(GLOB sources_localdir *.cpp *.h)
 
-set(blizzlike-core_SRCS
-  ${blizzlike-core_SRCS}
+set(WORLDSERVER_SRCS
+  ${WORLDSERVER_SRCS}
   ${sources_localdir}
 )
 
 if( WIN32 )
-  set(blizzlike-core_SRCS
-    ${blizzlike-core_SRCS}
+  set(WORLDSERVER_SRCS
+    ${WORLDSERVER_SRCS}
     ${sources_Debugging}
-    BlizzLikeCore.rc
+    worldserver.rc
   )
 endif()
 
@@ -39,23 +39,23 @@ include_directories(
   ${OPENSSL_INCLUDE_DIR}
 )
 
-set(blizzlike-core_LINK_FLAGS "")
+set(WORLDSERVER_LINK_FLAGS "")
 
-add_executable(blizzlike-core ${blizzlike-core_SRCS})
+add_executable(worldserver ${WORLDSERVER_SRCS})
 
 if( NOT WIN32 )
-  add_definitions(-D_BLIZZLIKE_CORE_CONFIG="${CONF_DIR}/blizzlikecore.conf")
+  add_definitions(-D_BLIZZLIKE_WORLD_CONFIG="${CONF_DIR}/worldserver.conf")
 endif()
 
-add_dependencies(blizzlike-core revision.h)
+add_dependencies(worldserver revision.h)
 
 if( UNIX )
-  set(blizzlike-core_LINK_FLAGS "-pthread ${blizzlike-core_LINK_FLAGS}")
+  set(WORLDSERVER_LINK_FLAGS "-pthread ${WORLDSERVER_LINK_FLAGS}")
 endif()
 
-set_target_properties(blizzlike-core PROPERTIES LINK_FLAGS "${blizzlike-core_LINK_FLAGS}")
+set_target_properties(worldserver PROPERTIES LINK_FLAGS "${WORLDSERVER_LINK_FLAGS}")
 
-target_link_libraries(blizzlike-core
+target_link_libraries(worldserver
   game
   shared
   scripts
@@ -75,16 +75,16 @@ target_link_libraries(blizzlike-core
 )
 
 if( WIN32 )
-  add_custom_command(TARGET blizzlike-core
+  add_custom_command(TARGET worldserver
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/blizzlikecore.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
   )
 endif()
 
 if( UNIX )
-  install(TARGETS blizzlike-core DESTINATION bin)
-  install(FILES blizzlikecore.conf.dist DESTINATION etc)
+  install(TARGETS worldserver DESTINATION bin)
+  install(FILES worldserver.conf.dist DESTINATION etc)
 elseif( WIN32 )
-  install(TARGETS blizzlike-core DESTINATION "${CMAKE_INSTALL_PREFIX}")
-  install(FILES blizzlikecore.conf.dist DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(TARGETS worldserver DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(FILES worldserver.conf.dist DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()

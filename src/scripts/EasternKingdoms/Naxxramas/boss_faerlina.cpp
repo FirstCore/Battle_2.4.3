@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Faerlina
-SD%Complete: 50
-SDComment: Without Mindcontrol boss cannot be defeated
-SDCategory: Naxxramas
+Name: Boss_Faerlina
+Complete(%): 50
+Comment: Without Mindcontrol boss cannot be defeated
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -56,7 +56,7 @@ struct boss_faerlinaAI : public ScriptedAI
         HasTaunted = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch (rand()%4)
         {
@@ -67,7 +67,7 @@ struct boss_faerlinaAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
          if (!HasTaunted && me->IsWithinDistInMap(who, 60.0f))
          {
@@ -78,7 +78,7 @@ struct boss_faerlinaAI : public ScriptedAI
          ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch (rand()%2)
         {
@@ -87,7 +87,7 @@ struct boss_faerlinaAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
     }
@@ -107,7 +107,7 @@ struct boss_faerlinaAI : public ScriptedAI
         //RainOfFire_Timer
         if (RainOfFire_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget,SPELL_RAINOFFIRE);
             RainOfFire_Timer = 16000;
         } else RainOfFire_Timer -= diff;

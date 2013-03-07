@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Omar_The_Unscarred
-SD%Complete: 99
-SDComment:
-SDCategory: Hellfire Citadel, Hellfire Ramparts
+Name: Boss_Omar_The_Unscarred
+Complete(%): 99
+Comment:
+Category: Hellfire Citadel, Hellfire Ramparts
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -80,7 +80,7 @@ struct boss_omor_the_unscarredAI : public Scripted_NoMovementAI
             pInstance->SetData(DATA_OMOR, NOT_STARTED);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch(rand()%3)
         {
@@ -93,7 +93,7 @@ struct boss_omor_the_unscarredAI : public Scripted_NoMovementAI
             pInstance->SetData(DATA_OMOR, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         if (rand()%2)
             return;
@@ -109,7 +109,7 @@ struct boss_omor_the_unscarredAI : public Scripted_NoMovementAI
             summoned->AI()->AttackStart(random);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DIE, me);
 
@@ -187,7 +187,7 @@ struct boss_omor_the_unscarredAI : public Scripted_NoMovementAI
         {
             DoScriptText(SAY_CURSE, me);
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             {
                 DoCast(pTarget,HeroicMode ? H_SPELL_BANE_OF_TREACHERY : SPELL_TREACHEROUS_AURA);
                 Aura_Timer = 8000+rand()%8000;
@@ -196,7 +196,7 @@ struct boss_omor_the_unscarredAI : public Scripted_NoMovementAI
 
         if (Shadowbolt_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             {
                 if (pTarget)
                     pTarget = me->getVictim();

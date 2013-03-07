@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Item_Scripts
-SD%Complete: 100
-SDComment: Items for a range of different items. See content below (in script)
-SDCategory: Items
+Name: Item_Scripts
+Complete(%): 100
+Comment: Items for a range of different items. See content below (in script)
+Category: Items
 EndScriptData */
 
 /* ContentData
@@ -54,7 +54,7 @@ EndContentData */
 # item_area_52_special
 #####*/
 
-bool ItemUse_item_area_52_special(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_area_52_special(Player *player, Item* _Item, SpellCastTargets const& /*targets*/)
 {
     if (player->GetAreaId() == 3803)
     {
@@ -456,7 +456,7 @@ bool ItemUse_item_yehkinyas_bramble(Player *player, Item* _Item, SpellCastTarget
 {
     if (player->GetQuestStatus(3520) == QUEST_STATUS_INCOMPLETE)
     {
-        Unit * unit_target = targets.getUnitTarget();
+        Unit* unit_target = targets.getUnitTarget();
         if (unit_target &&
             unit_target->GetTypeId() == TYPEID_UNIT &&
             unit_target->isDead() &&

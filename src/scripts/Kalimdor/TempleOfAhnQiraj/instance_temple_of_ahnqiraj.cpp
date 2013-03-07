@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Temple_of_Ahnqiraj
-SD%Complete: 80
-SDComment:
-SDCategory: Temple of Ahn'Qiraj
+Name: Instance_Temple_of_Ahnqiraj
+Complete(%): 80
+Comment:
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"

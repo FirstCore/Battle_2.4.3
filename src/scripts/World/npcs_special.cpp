@@ -16,30 +16,33 @@
  */
 
 /* ScriptData
-SDName: Npcs_Special
-SD%Complete: 100
-SDComment: To be used for special NPCs that are located globally.
-SDCategory: NPCs
+Name: Npcs_Special
+Complete(%): 100
+Comment: To be used for special NPCs that are located globally.
+Category: NPCs
 EndScriptData
 */
 
 /* ContentData
-npc_lunaclaw_spirit      80%    support for quests 6001/6002 (Body and Heart)
-npc_chicken_cluck       100%    support for quest 3861 (Cluck!)
-npc_dancing_flames      100%    midsummer event NPC
-npc_guardian            100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by BSCR
-npc_garments_of_quests   80%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
-npc_injured_patient     100%    patients for triage-quests (6622 and 6624)
-npc_doctor              100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
-npc_mount_vendor        100%    Regular mount vendors all over the world. Display gossip if player doesn't meet the requirements to buy
-npc_rogue_trainer        80%    Scripted trainers, so they are able to offer item 17126 for class quest 6681
-npc_sayge               100%    Darkmoon event fortune teller, buff player based on answers given
-npc_snake_trap_serpents  80%    AI for snakes that summoned by Snake Trap
-azuregos_magical_ledger 100%    support for quest Azuregos Magical Ledger
+npc_lunaclaw_spirit          80%    support for quests 6001/6002 (Body and Heart)
+npc_chicken_cluck           100%    support for quest 3861 (Cluck!)
+npc_dancing_flames          100%    midsummer event NPC
+npc_guardian                100%    guardianAI used to prevent players from accessing off-limits areas. Not in use by BSCR
+npc_garments_of_quests       80%    NPC's related to all Garments of-quests 5621, 5624, 5625, 5648, 5650
+npc_injured_patient         100%    patients for triage-quests (6622 and 6624)
+npc_doctor                  100%    Gustaf Vanhowzen and Gregory Victor, quest 6622 and 6624 (Triage)
+npc_mount_vendor            100%    Regular mount vendors all over the world. Display gossip if player doesn't meet the requirements to buy
+npc_rogue_trainer            80%    Scripted trainers, so they are able to offer item 17126 for class quest 6681
+npc_sayge                   100%    Darkmoon event fortune teller, buff player based on answers given
+npc_snake_trap_serpents     100%    AI for snakes that summoned by Snake Trap
+azuregos_magical_ledger     100%    support for quest Azuregos Magical Ledger
+npc_force_of_nature_treants 100%    AI for force of nature (druid spell)
 EndContentData */
 
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
+#include "ObjectMgr.h"
+#include "Language.h"
 
 /*######
 ## npc_lunaclaw_spirit
@@ -103,7 +106,7 @@ struct npc_chicken_cluckAI : public ScriptedAI
         me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -405,7 +408,7 @@ struct npc_injured_patientAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/){}
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         if (caster->GetTypeId() == TYPEID_PLAYER && me->isAlive() && spell->Id == 20804)
         {
@@ -685,7 +688,7 @@ struct npc_garments_of_questsAI : public npc_escortAI
         me->SetHealth(int(me->GetMaxHealth()*0.7));
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void SpellHit(Unit* pCaster, const SpellEntry *Spell)
     {
@@ -807,7 +810,7 @@ struct npc_garments_of_questsAI : public npc_escortAI
         {
             if (RunAwayTimer <= diff)
             {
-                if (Unit *pUnit = Unit::GetUnit(*me,caster))
+                if (Unit* pUnit = Unit::GetUnit(*me,caster))
                 {
                     switch(me->GetEntry())
                     {
@@ -852,7 +855,7 @@ struct npc_guardianAI : public ScriptedAI
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         me->MonsterYell(SAY_AGGRO, LANG_UNIVERSAL, 0);
     }
@@ -1169,7 +1172,7 @@ struct npc_steam_tonkAI : public ScriptedAI
     npc_steam_tonkAI(Creature *c) : ScriptedAI(c) {}
 
     void Reset() {}
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void OnPossess(bool apply)
     {
@@ -1208,9 +1211,9 @@ struct npc_tonk_mineAI : public ScriptedAI
         ExplosionTimer = 3000;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
-    void AttackStart(Unit * /*who*/) {}
-    void MoveInLineOfSight(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
+    void AttackStart(Unit* /*who*/) {}
+    void MoveInLineOfSight(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -1279,90 +1282,129 @@ CreatureAI* GetAI_npc_winter_reveler(Creature* pCreature)
     return new npc_winter_revelerAI(pCreature);
 }
 
+/************************************************************/
+
+struct npc_force_of_nature_treantsAI : public ScriptedAI {
+
+    npc_force_of_nature_treantsAI(Creature* c) : ScriptedAI(c) {}
+    
+    Unit* Owner;
+    
+    void Reset() {
+        Owner = me->GetOwner();
+        if(!Owner)
+            return;
+        
+        if(Unit* target = Owner->getAttackerForHelper())
+        {
+            me->SetInCombatWith(target);
+            AttackStart(target);
+        }
+    }
+    
+    void UpdateAI(const uint32 /*diff*/) {
+        
+        if(!Owner)
+            return;
+            
+        if (!me->getVictim())
+        {
+            if (Unit* target = Owner->getAttackerForHelper())
+            {
+                AttackStart(target);
+            }
+            else if (!me->hasUnitState(UNIT_STAT_FOLLOW))
+            {
+                me->GetMotionMaster()->Clear();
+                me->GetMotionMaster()->MoveFollow(Owner,PET_FOLLOW_DIST,PET_FOLLOW_ANGLE);
+            }
+        }
+        
+        DoMeleeAttackIfReady();
+    }
+
+};
+
+CreatureAI* GetAI_npc_force_of_nature_treants(Creature* pCreature)
+{
+    return new npc_force_of_nature_treantsAI(pCreature);
+}
+
 /*####
 ## npc_snake_trap_serpents
 ####*/
 
-enum SnakeTrap
-{
-    SPELL_MIND_NUMBING_POISON     = 25810,	// Viper poison 1
-    SPELL_DEADLY_POISON           = 34655,	// Viper poison 2
-    SPELL_CRIPPLING_POISON        = 30981,	// Viper poison 3
+#define SPELL_MIND_NUMBING_POISON    8692    //Viper
+#define SPELL_DEADLY_POISON          34655   //Venomous Snake
+#define SPELL_CRIPPLING_POISON       3409    //Viper
 
-    NPC_VIPER                     = 19921   // Viper
-};
-
-#define VENOMOUS_SNAKE_TIMER 1500
+#define VENOMOUS_SNAKE_TIMER 1200
 #define VIPER_TIMER 3000
-#define RAND 5
+
+#define C_VIPER 19921
 
 struct npc_snake_trap_serpentsAI : public ScriptedAI
 {
-    npc_snake_trap_serpentsAI(Creature* creature) : ScriptedAI(creature) {}
+    npc_snake_trap_serpentsAI(Creature *c) : ScriptedAI(c), SpellTimer(0) {}
 
-    uint32 SpellTimer;
+    int32 SpellTimer;
+    Unit* Owner;
     bool IsViper;
 
     void EnterCombat(Unit* /*who*/) {}
 
     void Reset()
     {
-        SpellTimer = 0;
+        Owner = me->GetOwner();
 
-        CreatureInfo const* Info = me->GetCreatureInfo();
+        if (!Owner)
+            return;
 
-        if (Info->Entry == NPC_VIPER)
+        CreatureInfo const *Info = me->GetCreatureInfo();
+
+        if (Info->Entry == C_VIPER)
             IsViper = true;
         else
             IsViper = false;
 
-        me->SetMaxHealth(uint32(107 * (me->getLevel() - 40) * 0.025f));
-        // Add delta to make them not all hit the same time
+        //Add delta to make them not all hit the same time
         uint32 delta = (rand() % 7) * 100;
-        me->SetStatFloatValue(UNIT_FIELD_BASEATTACKTIME, float(Info->baseattacktime + delta));
-        me->SetStatFloatValue(UNIT_FIELD_RANGED_ATTACK_POWER , float(Info->attackpower));
+        me->SetStatFloatValue(UNIT_FIELD_BASEATTACKTIME, Info->baseattacktime + delta);
+        me->SetStatFloatValue(UNIT_FIELD_RANGED_ATTACK_POWER , Info->attackpower);
 
-        // Start attacking attacker of owner on first ai update after spawn - move in line of sight may choose better target
-        if (!me->getVictim() && me->isSummon())
-            if (Unit * Owner = CAST_SUM(me)->GetSummoner())
-                if (Owner->getAttackerForHelper())
-                    AttackStart(Owner->getAttackerForHelper());
-    }
-
-    // Redefined for random target selection:
-    void MoveInLineOfSight(Unit *who)
-    {
-        if (!me->getVictim() && who->isTargetableForAttack() && (me->IsHostileTo(who)) && who->isInAccessiblePlaceFor(me))
+        if (Unit* attacker = Owner->getAttackerForHelper())
         {
-            if (me->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
-                return;
-
-            float attackRadius = me->GetAttackDistance(who);
-            if (me->IsWithinDistInMap(who, attackRadius) && me->IsWithinLOSInMap(who))
-            {
-                if (!(rand() % RAND))
-                {
-                    me->setAttackTimer(BASE_ATTACK, (rand() % 10) * 100);
-                    SpellTimer = (rand() % 10) * 100;
-                    AttackStart(who);
-                }
-            }
-        }
+            me->SetInCombatWith(attacker);
+            AttackStart(attacker);
+        }   
     }
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+        if (!Owner)
             return;
+
+        if (!me->getVictim())
+        {
+            if (Owner->getAttackerForHelper())
+            {
+                AttackStart(Owner->getAttackerForHelper());
+            }
+            else if (!me->hasUnitState(UNIT_STAT_FOLLOW))
+            {
+                me->GetMotionMaster()->Clear();
+                me->GetMotionMaster()->MoveFollow(Owner,PET_FOLLOW_DIST,PET_FOLLOW_ANGLE);
+            }
+        }
 
         if (SpellTimer <= diff)
         {
-            if (IsViper) // Viper
+            if (IsViper) //Viper
             {
-                if (urand(0, 2) == 0) // 33% chance to cast
+                if (urand(0,2) == 0) //33% chance to cast
                 {
                     uint32 spell;
-                    if (urand(0, 1) == 0)
+                    if (urand(0,1) == 0)
                         spell = SPELL_MIND_NUMBING_POISON;
                     else
                         spell = SPELL_CRIPPLING_POISON;
@@ -1372,15 +1414,16 @@ struct npc_snake_trap_serpentsAI : public ScriptedAI
 
                 SpellTimer = VIPER_TIMER;
             }
-            else // Venomous Snake
+            else //Venomous Snake
             {
-                if (urand(0, 2) == 0) // 33% chance to cast
+                if (rand() % 10 < 8) //80% chance to cast
                     DoCast(me->getVictim(), SPELL_DEADLY_POISON);
                 SpellTimer = VENOMOUS_SNAKE_TIMER + (rand() %5)*100;
             }
         } else SpellTimer -= diff;
+        
         DoMeleeAttackIfReady();
-    }
+     }
 };
 
 CreatureAI* GetAI_npc_snake_trap_serpents(Creature* pCreature)
@@ -1410,7 +1453,7 @@ struct mob_mojoAI : public ScriptedAI
         if (Unit* own = me->GetOwner())
             me->GetMotionMaster()->MoveFollow(own,0,0);
     }
-    void Aggro(Unit * /*who*/){}
+    void Aggro(Unit* /*who*/){}
     void UpdateAI(const uint32 diff)
     {
         if (me->HasAura(20372, 0))
@@ -1508,6 +1551,245 @@ bool GossipSelect_npc_spiritofazuregos(Player *player, Creature *creature, uint3
         return true; 
 }
 
+/*
+1.0.
+Transmogrification 2.4.3. - Gossip Menu
+Original patch by Rochet2. Update by Dirty, thx to lillecarl for GetBagByPos
+
+ScriptName for NPC:
+transmog
+
+TODO:
+Make DB saving even better (Deleting)? What about coding?
+Make local name for items
+Fix the cost formula
+
+Cant transmogrify:
+rediculus _items // Foereaper: would be fun to stab people with a fish
+-- Cant think of any good way to handle this easily
+*/
+
+#define GOLD_COST    0 // 0 for no gold cost
+#include "Item.h"
+
+#if (GOLD_COST)
+#define GOLD_COST_FUNCTION GetFakePrice(oldItem)
+#else
+#define GOLD_COST_FUNCTION 0
+#endif
+
+/*##
+##TRANSMOGRIFICATION
+##*/
+std::string GetItemName(Item* item, WorldSession* session)
+	
+// local name
+{
+        std::string name = item->GetProto()->Name1;
+        int loc_idx = session->GetSessionDbLocaleIndex();
+        if (loc_idx >= 0)
+            if (ItemLocale const* il = objmgr.GetItemLocale(item->GetEntry()))
+            if(il)
+            {
+                if(il->Name.size() > size_t(loc_idx) && !il->Name[loc_idx].empty())
+                    name = il->Name[loc_idx];
+            }
+				
+					
+        return name;
+}
+
+std::map<uint64, std::map<uint32, Item*> > _items; // _items[lowGUID][DISPLAY] = item
+
+const char * GetSlotName(uint8 slot, WorldSession* session)
+{
+    switch(slot)
+    {
+        case EQUIPMENT_SLOT_HEAD      : return session->GetBlizzLikeString(LANG_SLOT_NAME_HEAD);
+        case EQUIPMENT_SLOT_SHOULDERS : return session->GetBlizzLikeString(LANG_SLOT_NAME_SHOULDERS);
+        case EQUIPMENT_SLOT_BODY      : return session->GetBlizzLikeString(LANG_SLOT_NAME_BODY);
+        case EQUIPMENT_SLOT_CHEST     : return session->GetBlizzLikeString(LANG_SLOT_NAME_CHEST);
+        case EQUIPMENT_SLOT_WAIST     : return session->GetBlizzLikeString(LANG_SLOT_NAME_WAIST);
+        case EQUIPMENT_SLOT_LEGS      : return session->GetBlizzLikeString(LANG_SLOT_NAME_LEGS);
+        case EQUIPMENT_SLOT_FEET      : return session->GetBlizzLikeString(LANG_SLOT_NAME_FEET);
+        case EQUIPMENT_SLOT_WRISTS    : return session->GetBlizzLikeString(LANG_SLOT_NAME_WRISTS);
+        case EQUIPMENT_SLOT_HANDS     : return session->GetBlizzLikeString(LANG_SLOT_NAME_HANDS);
+        case EQUIPMENT_SLOT_BACK      : return session->GetBlizzLikeString(LANG_SLOT_NAME_BACK);
+        case EQUIPMENT_SLOT_MAINHAND  : return session->GetBlizzLikeString(LANG_SLOT_NAME_MAINHAND);
+        case EQUIPMENT_SLOT_OFFHAND   : return session->GetBlizzLikeString(LANG_SLOT_NAME_OFFHAND);
+        case EQUIPMENT_SLOT_RANGED    : return session->GetBlizzLikeString(LANG_SLOT_NAME_RANGED);
+        case EQUIPMENT_SLOT_TABARD    : return session->GetBlizzLikeString(LANG_SLOT_NAME_TABARD);
+        default: return NULL;
+    }
+}
+
+bool GossipHello_transmog(Player* player, Creature* creature)
+    {
+        WorldSession* session = player->GetSession();
+        for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_TABARD; slot++) // EQUIPMENT_SLOT_END
+        {
+            if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
+            {
+                if (newItem->HasGoodFakeQuality())
+                {
+                    if (const char* slotName = GetSlotName(slot, session))
+                        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, slotName, EQUIPMENT_SLOT_END, slot);
+                }
+            }
+        }
+        player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, session->GetBlizzLikeString(LANG_OPTION_REMOVE_ALL), EQUIPMENT_SLOT_END+2, 0, session->GetBlizzLikeString(LANG_POPUP_REMOVE_ALL), 0, false);
+        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TALK, session->GetBlizzLikeString(LANG_OPTION_UPDATE_MENU), EQUIPMENT_SLOT_END+1, 0);
+        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
+        return true;
+    }
+
+bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, uint32 uiAction)
+{
+    WorldSession* session = player->GetSession();
+    player->PlayerTalkClass->ClearMenus();
+        switch(sender)
+        {
+        case EQUIPMENT_SLOT_END: // Show items you can use
+        {
+            if (Item* oldItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, uiAction))
+            {
+                uint32 lowGUID = player->GetGUIDLow();
+                _items[lowGUID].clear();
+                uint32 limit = 0;
+                for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; i++)
+                {
+                        if (limit > 30)
+                            break;
+                        if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, i))
+                        {
+                            uint32 display = newItem->GetProto()->DisplayInfoID;
+                            if (player->SuitableForTransmogrification(oldItem, newItem) == ERR_FAKE_OK)
+                            {
+                                if (_items[lowGUID].find(display) == _items[lowGUID].end())
+                                {
+                                    limit++;
+                                    _items[lowGUID][display] = newItem;
+                                    player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), 0, false);
+							   }
+                            }
+                        }
+                    }
+
+                    for (uint8 i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; i++)
+                    {
+                        if (Bag* bag = player->GetBagByPos(i))
+                        {
+                            for (uint32 j = 0; j < bag->GetBagSize(); j++)
+                            {
+                                if (limit > 30)
+                                    break;
+                                if (Item* newItem = player->GetItemByPos(i, j))
+                                {
+                                    uint32 display = newItem->GetProto()->DisplayInfoID;
+                                    if (player->SuitableForTransmogrification(oldItem, newItem) == ERR_FAKE_OK)
+                                    {
+                                        if (_items[lowGUID].find(display) == _items[lowGUID].end())
+                                        {
+                                            limit++;
+                                            _items[lowGUID][display] = newItem;
+                                            player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), GOLD_COST_FUNCTION, false);}
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    char popup[250];
+                    snprintf(popup, 250, session->GetBlizzLikeString(LANG_POPUP_REMOVE_ONE), GetSlotName(uiAction, session));
+                    player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, session->GetBlizzLikeString(LANG_OPTION_REMOVE_ONE), EQUIPMENT_SLOT_END+3, uiAction, popup, 0, false);
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TALK, session->GetBlizzLikeString(LANG_OPTION_BACK), EQUIPMENT_SLOT_END+1, 0);
+                    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
+                }
+                else
+                    GossipHello_transmog(player, creature);
+            } break;
+        case EQUIPMENT_SLOT_END+1: // Back
+            {
+                GossipHello_transmog(player, creature);
+            } break;
+        case EQUIPMENT_SLOT_END+2: // Remove Transmogrifications
+            {
+                bool removed = false;
+                for (uint8 Slot = EQUIPMENT_SLOT_START; Slot < EQUIPMENT_SLOT_END; Slot++)
+                {
+                    if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, Slot))
+                    {
+                        if (newItem->DeleteFakeEntry() && !removed)
+                            removed = true;
+                    }
+                }
+                if (removed)
+                {
+                    session->SendAreaTriggerMessage(session->GetBlizzLikeString(LANG_REM_TRANSMOGRIFICATIONS_ITEMS));
+                    player->PlayDirectSound(3337);
+                }
+                else
+                    session->SendNotification(session->GetBlizzLikeString(LANG_ERR_NO_TRANSMOGRIFICATIONS));
+                GossipHello_transmog(player, creature);
+            } break;
+        case EQUIPMENT_SLOT_END+3: // Remove Transmogrification from single item
+            {
+                if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, uiAction))
+                {
+                    if (newItem->DeleteFakeEntry())
+                    {
+                        session->SendAreaTriggerMessage(session->GetBlizzLikeString(LANG_REM_TRANSMOGRIFICATION_ITEM), GetSlotName(uiAction, session));
+                        player->PlayDirectSound(3337);
+                    }
+                    else
+                        session->SendNotification(session->GetBlizzLikeString(LANG_ERR_NO_TRANSMOGRIFICATION), GetSlotName(uiAction, session));
+                }
+                GossipSelect_transmog(player, creature, EQUIPMENT_SLOT_END, uiAction);
+            } break;
+        default: // Transmogrify
+            {
+                uint32 lowGUID = player->GetGUIDLow();
+                if (Item* oldItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, sender))
+                {
+                    if (_items[lowGUID].find(uiAction) != _items[lowGUID].end() && _items[lowGUID][uiAction]->IsInWorld())
+                    {
+                        Item* newItem = _items[lowGUID][uiAction];
+                        if (newItem->GetOwnerGUID() == player->GetGUIDLow() && (newItem->IsInBag() || newItem->GetBagSlot() == INVENTORY_SLOT_BAG_0) && player->SuitableForTransmogrification(oldItem, newItem) == ERR_FAKE_OK)
+                        {
+#if (GOLD_COST)
+                            player->ModifyMoney(-1*GetFakePrice(oldItem)); // take cost
+#endif
+                            oldItem->SetFakeEntry(newItem->GetEntry());
+                            newItem->SetBinding(true);
+                            player->PlayDirectSound(3337);
+                            session->SendAreaTriggerMessage(session->GetBlizzLikeString(LANG_ITEM_TRANSMOGRIFIED), GetSlotName(sender, session));
+                        }
+                        else
+                            session->SendNotification(session->GetBlizzLikeString(LANG_ERR_NO_ITEM_SUITABLE));
+                    }
+                    else
+                        session->SendNotification(session->GetBlizzLikeString(LANG_ERR_NO_ITEM_EXISTS));
+                }
+                else
+                    session->SendNotification(session->GetBlizzLikeString(LANG_ERR_EQUIP_SLOT_EMPTY));
+                _items[lowGUID].clear();
+                GossipSelect_transmog(player, creature, EQUIPMENT_SLOT_END, sender);
+            } break;
+        }
+        return true;
+}  
+
+#if (GOLD_COST)
+    uint32 GetFakePrice(Item* item)
+    {
+        uint32 sellPrice = item->GetProto()->SellPrice;
+        uint32 minPrice = item->GetProto()->RequiredLevel * 1176;
+        if (sellPrice < minPrice)
+            sellPrice = minPrice;
+        return sellPrice;
+    }
+#endif
+
 void AddSC_npcs_special()
 {
     Script *newscript;
@@ -1590,6 +1872,11 @@ void AddSC_npcs_special()
     newscript->RegisterSelf();
 
     newscript = new Script;
+    newscript->Name = "npc_force_of_nature_treants";
+    newscript->GetAI = &GetAI_npc_force_of_nature_treants;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
     newscript->Name = "npc_snake_trap_serpents";
     newscript->GetAI = &GetAI_npc_snake_trap_serpents;
     newscript->RegisterSelf();
@@ -1603,6 +1890,12 @@ void AddSC_npcs_special()
     newscript->Name = "npc_spiritofazuregos"; 
     newscript->pGossipHello = &GossipHello_npc_spiritofazuregos; 
     newscript->pGossipSelect = &GossipSelect_npc_spiritofazuregos; 
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "transmog";
+    newscript->pGossipHello =  &GossipHello_transmog;
+    newscript->pGossipSelect = &GossipSelect_transmog;
     newscript->RegisterSelf();
 
 }

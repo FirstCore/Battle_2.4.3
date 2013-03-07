@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: mob_anubisath_sentinel
-SD%Complete: 95
-SDComment: Shadow storm is not properly implemented in core it should only pTarget ppl outside of melee range.
-SDCategory: Temple of Ahn'Qiraj
+Name: mob_anubisath_sentinel
+Complete(%): 95
+Comment: Shadow storm is not properly implemented in core it should only pTarget ppl outside of melee range.
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -148,7 +148,7 @@ struct aqsentinelAI : public ScriptedAI
                 GiveBuddyMyList(nearby[i]);
     }
 
-    void CallBuddiesToAttack(Unit *who)
+    void CallBuddiesToAttack(Unit* who)
     {
         for (int i=0; i<3; ++i)
         {
@@ -165,7 +165,7 @@ struct aqsentinelAI : public ScriptedAI
         }
     }
 
-    void AddSentinelsNear(Unit * /*nears*/)
+    void AddSentinelsNear(Unit* /*nears*/)
     {
         std::list<Creature*> assistList;
         me->GetCreatureListWithEntryInGrid(assistList,15264,70.0f);
@@ -193,7 +193,7 @@ struct aqsentinelAI : public ScriptedAI
         return 0;                                           // should never happen
     }
 
-    void GetOtherSentinels(Unit *who)
+    void GetOtherSentinels(Unit* who)
     {
         bool *chosenAbilities = new bool[9];
         memset(chosenAbilities, 0, 9*sizeof(bool));
@@ -246,7 +246,7 @@ struct aqsentinelAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * who)
+    void EnterCombat(Unit* who)
     {
         if (gatherOthersWhenAggro)
             GetOtherSentinels(who);
@@ -264,7 +264,7 @@ struct aqsentinelAI : public ScriptedAI
                 continue;
             if (sent->isDead())
                 continue;
-            int h = sent->GetHealth() + (sent->GetMaxHealth() / 2);
+            uint32 h = sent->GetHealth() + (sent->GetMaxHealth() / 2);
             if (h > sent->GetMaxHealth())
                 h = sent->GetMaxHealth();
             sent->SetHealth(h);
@@ -272,7 +272,7 @@ struct aqsentinelAI : public ScriptedAI
         }
     }
 
-    Unit *GetHatedManaUser()
+    Unit* GetHatedManaUser()
     {
         std::list<HostileReference*>::iterator i;
         for (i = me->getThreatManager().getThreatList().begin();i != me->getThreatManager().getThreatList().end(); ++i)

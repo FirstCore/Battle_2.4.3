@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Dark_Portal
-SD%Complete: 30
-SDComment: Misc NPC's and mobs for instance. Most here far from complete.
-SDCategory: Caverns of Time, The Dark Portal
+Name: Dark_Portal
+Complete(%): 30
+Comment: Misc NPC's and mobs for instance. Most here far from complete.
+Category: Caverns of Time, The Dark Portal
 EndScriptData */
 
 /* ContentData
@@ -86,7 +86,7 @@ struct npc_medivh_bmAI : public ScriptedAI
         me->CastSpell(me,SPELL_PORTAL_RUNE,true);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!pInstance)
             return;
@@ -120,7 +120,7 @@ struct npc_medivh_bmAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit *who)
+    void AttackStart(Unit*)
     {
         //if (pInstance && pInstance->GetData(TYPE_MEDIVH) == IN_PROGRESS)
         //return;
@@ -128,9 +128,9 @@ struct npc_medivh_bmAI : public ScriptedAI
         //ScriptedAI::AttackStart(who);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit*) {}
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry* spell)
     {
         if (SpellCorrupt_Timer)
             return;
@@ -232,9 +232,9 @@ struct Wave
 
 static Wave PortalWaves[]=
 {
-    {C_ASSAS, C_WHELP, C_CHRON, 0},
-    {C_EXECU, C_CHRON, C_WHELP, C_ASSAS},
-    {C_EXECU, C_VANQU, C_CHRON, C_ASSAS}
+    {{C_ASSAS, C_WHELP, C_CHRON, 0}},
+    {{C_EXECU, C_CHRON, C_WHELP, C_ASSAS}},
+    {{C_EXECU, C_VANQU, C_CHRON, C_ASSAS}}
 };
 
 struct npc_time_riftAI : public ScriptedAI
@@ -269,7 +269,7 @@ struct npc_time_riftAI : public ScriptedAI
         else mWaveId = 1;
 
     }
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit*) {}
 
     void DoSummonAtRift(uint32 creature_entry)
     {
@@ -289,8 +289,8 @@ struct npc_time_riftAI : public ScriptedAI
         //normalize Z-level if we can, if rift is not at ground level.
         pos.m_positionZ = std::max(me->GetMap()->GetHeight(pos.m_positionX, pos.m_positionY, MAX_HEIGHT), me->GetMap()->GetWaterLevel(pos.m_positionX, pos.m_positionY));
 
-        if (Unit *Summon = DoSummon(creature_entry, pos, 30000, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT))
-            if (Unit *temp = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_MEDIVH) : 0))
+        if (Unit* Summon = DoSummon(creature_entry, pos, 30000, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT))
+            if (Unit* temp = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_MEDIVH) : 0))
                 Summon->AddThreat(temp,0.0f);
     }
 
@@ -367,7 +367,7 @@ bool GossipHello_npc_saat(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_saat(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_saat(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {

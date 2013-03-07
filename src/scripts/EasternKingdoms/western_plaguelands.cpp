@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Western_Plaguelands
-SD%Complete: 90
-SDComment: Quest support: 5216, 5219, 5222, 5225, 5229, 5231, 5233, 5235, 9446. To obtain Vitreous Focuser (could use more spesifics about gossip items)
-SDCategory: Western Plaguelands
+Name: Western_Plaguelands
+Complete(%): 90
+Comment: Quest support: 5216, 5219, 5222, 5225, 5229, 5231, 5233, 5235, 9446. To obtain Vitreous Focuser (could use more spesifics about gossip items)
+Category: Western Plaguelands
 EndScriptData */
 
 /* ContentData
@@ -158,7 +158,7 @@ struct npc_the_scourge_cauldronAI : public ScriptedAI
             me->SetRespawnDelay(600);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || who->GetTypeId() != TYPEID_PLAYER)
             return;

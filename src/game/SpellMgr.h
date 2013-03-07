@@ -403,6 +403,7 @@ inline bool IsNonCombatSpell(SpellEntry const *spellInfo)
 bool IsPositiveSpell(uint32 spellId);
 bool IsPositiveEffect(uint32 spellId, uint32 effIndex);
 bool IsPositiveTarget(uint32 targetA, uint32 targetB);
+bool IsDispelableBySpell(SpellEntry const * dispelSpell, uint32 spellId, bool def = false);
 
 bool IsSingleTargetSpell(SpellEntry const *spellInfo);
 bool IsSingleTargetSpells(SpellEntry const *spellInfo1, SpellEntry const *spellInfo2);
@@ -593,14 +594,22 @@ enum ProcFlagsEx
     PROC_EX_ABSORB              = 0x0000400,
     PROC_EX_REFLECT             = 0x0000800,
     PROC_EX_INTERRUPT           = 0x0001000,                 // Melee hit result can be Interrupt (not used)
-    PROC_EX_RESERVED1           = 0x0002000,
-    PROC_EX_RESERVED2           = 0x0004000,
+    PROC_EX_AURA_REMOVE_DESTROY = 0x0002000,
+    PROC_EX_AURA_REMOVE_EXPIRE  = 0x0004000,
     PROC_EX_RESERVED3           = 0x0008000,
     PROC_EX_EX_TRIGGER_ALWAYS   = 0x0010000,                 // If set trigger always ( no matter another flags) used for drop charges
     PROC_EX_EX_ONE_TIME_TRIGGER = 0x0020000,                 // If set trigger always but only one time (not used)
     PROC_EX_INTERNAL_HOT        = 0x1000000,                 // Only for internal use
-    PROC_EX_INTERNAL_DOT        = 0x2000000                  // Only for internal use
+    PROC_EX_INTERNAL_DOT        = 0x2000000,                 // Only for internal use
+    PROC_EX_INTERNAL_TRIGGERED  = 0x4000000,                 // Only for internal use
+    PROC_EX_INTERNAL_ITEM_CAST  = 0x8000000
 };
+
+#define AURA_SPELL_PROC_EX_MASK \
+   (PROC_EX_NORMAL_HIT | PROC_EX_CRITICAL_HIT | PROC_EX_MISS | \
+    PROC_EX_RESIST | PROC_EX_DODGE | PROC_EX_PARRY | PROC_EX_BLOCK | \
+    PROC_EX_EVADE | PROC_EX_IMMUNE | PROC_EX_DEFLECT | \
+    PROC_EX_ABSORB | PROC_EX_REFLECT | PROC_EX_INTERRUPT)
 
 struct SpellProcEventEntry
 {

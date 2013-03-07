@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Old_Hillsbrad
-SD%Complete: 75
-SDComment: If thrall escort fail, all parts will reset. In future, save sub-parts and continue from last known.
-SDCategory: Caverns of Time, Old Hillsbrad Foothills
+Name: Instance_Old_Hillsbrad
+Complete(%): 75
+Comment: If thrall escort fail, all parts will reset. In future, save sub-parts and continue from last known.
+Category: Caverns of Time, Old Hillsbrad Foothills
 EndScriptData */
 
 #include "ScriptPCH.h"

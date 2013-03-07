@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Magtheridon
-SD%Complete: 60
-SDComment: In Development
-SDCategory: Hellfire Citadel, Magtheridon's lair
+Name: Boss_Magtheridon
+Complete(%): 60
+Comment: In Development
+Category: Hellfire Citadel, Magtheridon's lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -130,8 +130,8 @@ struct mob_abyssalAI : public ScriptedAI
     }
 
     void EnterCombat(Unit*) {DoZoneInCombat();}
-    void AttackStart(Unit *who) {if (!trigger) ScriptedAI::AttackStart(who);}
-    void MoveInLineOfSight(Unit *who) {if (!trigger) ScriptedAI::MoveInLineOfSight(who);}
+    void AttackStart(Unit* who) {if (!trigger) ScriptedAI::AttackStart(who);}
+    void MoveInLineOfSight(Unit* who) {if (!trigger) ScriptedAI::MoveInLineOfSight(who);}
 
     void UpdateAI(const uint32 diff)
     {
@@ -240,7 +240,7 @@ struct boss_magtheridonAI : public ScriptedAI
     }
 
     //function to interrupt channeling and debuff clicker with mind exh(used if second person clicks with same cube or after dispeling/ending shadow grasp DoT)
-    void DebuffClicker(Unit *clicker)
+    void DebuffClicker(Unit* clicker)
     {
         if (!clicker || !clicker->isAlive())
             return;
@@ -257,7 +257,7 @@ struct boss_magtheridonAI : public ScriptedAI
         // if not - apply mind exhaustion and delete from clicker's list
         for (CubeMap::iterator i = Cube.begin(); i != Cube.end(); ++i)
         {
-            Unit *clicker = Unit::GetUnit(*me, (*i).second);
+            Unit* clicker = Unit::GetUnit(*me, (*i).second);
             if (!clicker || !clicker->HasAura(SPELL_SHADOW_GRASP, 1))
             {
                 DebuffClicker(clicker);
@@ -277,12 +277,12 @@ struct boss_magtheridonAI : public ScriptedAI
         if (!ClickerNum) NeedCheckCube = false;
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoScriptText(SAY_PLAYER_KILLED, me);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_MAGTHERIDON_EVENT, DONE);
@@ -292,13 +292,13 @@ struct boss_magtheridonAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit*) {}
 
-    void AttackStart(Unit *who)
+    void AttackStart(Unit* who)
     {
         if (!me->hasUnitState(UNIT_STAT_STUNNED))
             ScriptedAI::AttackStart(who);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_MAGTHERIDON_EVENT, IN_PROGRESS);
@@ -362,7 +362,7 @@ struct boss_magtheridonAI : public ScriptedAI
 
         if (Blaze_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 float x, y, z;
                 pTarget->GetPosition(x, y, z);
@@ -394,7 +394,7 @@ struct boss_magtheridonAI : public ScriptedAI
         {
             if (Debris_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 {
                     float x, y, z;
                     pTarget->GetPosition(x, y, z);
@@ -440,7 +440,7 @@ struct mob_hellfire_channelerAI : public ScriptedAI
         me->CastSpell(me, SPELL_SHADOW_GRASP_C, false);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_CHANNELER_EVENT, IN_PROGRESS);
@@ -485,14 +485,14 @@ struct mob_hellfire_channelerAI : public ScriptedAI
 
         if (Fear_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1))
                 DoCast(pTarget, SPELL_FEAR);
             Fear_Timer = 25000 + rand()%15000;
         } else Fear_Timer -= diff;
 
         if (Infernal_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 me->CastSpell(pTarget, SPELL_BURNING_ABYSSAL, true);
             Infernal_Timer = 30000 + rand()%10000;
         } else Infernal_Timer -= diff;

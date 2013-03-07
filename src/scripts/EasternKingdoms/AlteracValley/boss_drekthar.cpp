@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Boss_DrekThar
-SD%Complete: 50%
-SDComment:
+Name: Boss_DrekThar
+Complete(%): 50%
+Comment:
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -68,7 +68,7 @@ struct boss_drektharAI : public ScriptedAI
         uiYellTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS); //20 to 30 seconds
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(YELL_AGGRO, me);
     }

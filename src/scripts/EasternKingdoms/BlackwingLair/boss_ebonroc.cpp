@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ebonroc
-SD%Complete: 50
-SDComment: Shadow of Ebonroc needs core support
-SDCategory: Blackwing Lair
+Name: Boss_Ebonroc
+Complete(%): 50
+Comment: Shadow of Ebonroc needs core support
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_ebonrocAI : public ScriptedAI
         Heal_Timer = 1000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }

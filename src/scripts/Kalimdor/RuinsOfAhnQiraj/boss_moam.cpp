@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Moam
-SD%Complete: 100
-SDComment: VERIFY SCRIPT AND SQL
-SDCategory: Ruins of Ahn'Qiraj
+Name: Boss_Moam
+Complete(%): 100
+Comment: VERIFY SCRIPT AND SQL
+Category: Ruins of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -37,7 +37,7 @@ struct boss_moamAI : public ScriptedAI
 {
     boss_moamAI(Creature *c) : ScriptedAI(c) {}
 
-    Unit *pTarget;
+    Unit* pTarget;
     uint32 TRAMPLE_Timer;
     uint32 DRAINMANA_Timer;
     uint32 SUMMONMANA_Timer;
@@ -53,7 +53,7 @@ struct boss_moamAI : public ScriptedAI
         DRAINMANA_Timer = 30000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         DoScriptText(EMOTE_AGGRO, me);
         pTarget = who;

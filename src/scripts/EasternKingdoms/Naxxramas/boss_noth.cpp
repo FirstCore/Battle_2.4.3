@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Noth
-SD%Complete: 40
-SDComment: Missing Balcony stage
-SDCategory: Naxxramas
+Name: Boss_Noth
+Complete(%): 40
+Comment: Missing Balcony stage
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -65,7 +65,7 @@ struct boss_nothAI : public ScriptedAI
         Summon_Timer = 12000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch (rand()%3)
         {
@@ -75,7 +75,7 @@ struct boss_nothAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit*)
     {
         switch (rand()%2)
         {
@@ -86,11 +86,11 @@ struct boss_nothAI : public ScriptedAI
 
     void JustSummoned(Creature* summoned)
     {
-        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             summoned->AddThreat(pTarget,0.0f);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
     }

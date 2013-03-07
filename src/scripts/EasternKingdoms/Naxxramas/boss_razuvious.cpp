@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Razuvious
-SD%Complete: 50
-SDComment: Missing adds and event is impossible without Mind Control
-SDCategory: Naxxramas
+Name: Boss_Razuvious
+Complete(%): 50
+Comment: Missing adds and event is impossible without Mind Control
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -69,7 +69,7 @@ struct boss_razuviousAI : public ScriptedAI
         CommandSound_Timer = 40000;                         //40 seconds
     }
 
-    void KilledUnit(Unit* Victim)
+    void KilledUnit(Unit*)
     {
         if (rand()%3)
             return;
@@ -85,12 +85,12 @@ struct boss_razuviousAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         DoPlaySoundToSet(me, SOUND_DEATH);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch (rand()%3)
         {

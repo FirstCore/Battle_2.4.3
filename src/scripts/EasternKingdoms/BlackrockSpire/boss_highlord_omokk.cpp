@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Highlord_Omokk
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Spire
+Name: Boss_Highlord_Omokk
+Complete(%): 100
+Comment:
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -55,7 +55,7 @@ struct boss_highlordomokkAI : public ScriptedAI
         Slow_Timer = 24000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Burning_Steppes
-SD%Complete: 100
-SDComment: Quest support: 4224, 4866
-SDCategory: Burning Steppes
+Name: Burning_Steppes
+Complete(%): 100
+Comment: Quest support: 4224, 4866
+Category: Burning Steppes
 EndScriptData */
 
 /* ContentData
@@ -51,7 +51,7 @@ struct npc_ragged_johnAI : public ScriptedAI
 
     void Reset() {}
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (who->HasAura(16468,0))
         {
@@ -65,7 +65,7 @@ struct npc_ragged_johnAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 };
 
 CreatureAI* GetAI_npc_ragged_john(Creature* pCreature)

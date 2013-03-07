@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Shade_of_Akama
-SD%Complete: 95
-SDComment: Seems to be complete.
-SDCategory: Black Temple
+Name: Boss_Shade_of_Akama
+Complete(%): 95
+Comment: Seems to be complete.
+Category: Black Temple
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -38,7 +38,7 @@ struct Location
 {
     float x, y, o, z;
 };
-
+/*
 static Location ChannelerLocations[]=
 {
     {463.161285f, 401.219757f, 3.141592f},
@@ -48,7 +48,7 @@ static Location ChannelerLocations[]=
     {446.012421f, 411.211853f, 5.210546f},
     {457.377625f, 411.211853f, 4.177494f}
 };
-
+*/
 static Location SpawnLocations[]=
 {
     {498.652740f, 461.728119f, 0},
@@ -260,7 +260,7 @@ struct boss_shade_of_akamaAI : public ScriptedAI
             summons.Despawn(summon);
     }
 
-    void MoveInLineOfSight(Unit * /*who*/)
+    void MoveInLineOfSight(Unit* /*who*/)
     {
         if (!GridSearcherSucceeded)
         {
@@ -354,7 +354,7 @@ struct boss_shade_of_akamaAI : public ScriptedAI
                 {
                     Spawn->RemoveUnitMovementFlag(MOVEFLAG_WALK_MODE);
                     Spawn->GetMotionMaster()->MovePoint(0, AGGRO_X, AGGRO_Y, AGGRO_Z);
-                    Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
+                    Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     Spawn->AI()->AttackStart(pTarget);
                     DoZoneInCombat(Spawn);
                 }

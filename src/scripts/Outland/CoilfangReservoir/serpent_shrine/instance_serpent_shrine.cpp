@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Serpent_Shrine
-SD%Complete: 100
-SDComment: Instance Data Scripts and functions to acquire mobs and set encounter status for use in various Serpent Shrine Scripts
-SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
+Name: Instance_Serpent_Shrine
+Complete(%): 100
+Comment: Instance Data Scripts and functions to acquire mobs and set encounter status for use in various Serpent Shrine Scripts
+Category: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
 #include "ScriptPCH.h"

@@ -1816,7 +1816,7 @@ bool ChatHandler::HandleItemMoveCommand(const char* args)
 //demorph player or unit
 bool ChatHandler::HandleDeMorphCommand(const char* /*args*/)
 {
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
         target = m_session->GetPlayer();
 
@@ -1833,7 +1833,7 @@ bool ChatHandler::HandleMorphCommand(const char* args)
 
     uint16 display_id = (uint16)atoi((char*)args);
 
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
         target = m_session->GetPlayer();
 
@@ -2875,7 +2875,7 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
                 return false;
             }
 
-            sLog.outDebug("DEBUG: UPDATE waypoint_data SET wpguid = '%u");
+            sLog.outDebug("DEBUG: UPDATE waypoint_data SET wpguid = '%u'", wpCreature->GetGUIDLow());
             // set "wpguid" column to the visual waypoint
             WorldDatabase.PExecuteLog("UPDATE waypoint_data SET wpguid = '%u' WHERE id = '%u' and point = '%u'", wpCreature->GetGUIDLow(), pathid, point);
 
@@ -3120,7 +3120,7 @@ bool ChatHandler::HandleLookupFactionCommand(const char* args)
                     repState = &repItr->second;
             }
 
-            int loc = m_session ? m_session->GetSessionDbcLocale() : sWorld.GetDefaultDbcLocale();
+            int loc = m_session ? int(m_session->GetSessionDbcLocale()) : sWorld.GetDefaultDbcLocale();
             std::string name = factionEntry->name[loc];
             if (name.empty())
                 continue;
@@ -3229,7 +3229,7 @@ bool ChatHandler::HandleAddHonorCommand(const char* args)
 
 bool ChatHandler::HandleHonorAddKillCommand(const char* /*args*/)
 {
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
     {
         SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -3560,8 +3560,6 @@ bool ChatHandler::HandleLearnAllRecipesCommand(const char* args)
 
     if (!Utf8toWStr(args,wnamepart))
         return false;
-
-    uint32 counter = 0;                                     // Counter for figure out that we found smth.
 
     // converting string that we try to find to lower case
     wstrToLower(wnamepart);
@@ -3975,7 +3973,7 @@ bool ChatHandler::HandleTempGameObjectCommand(const char* args)
     Player *chr = m_session->GetPlayer();
 
     char* spawntime = strtok(NULL, " ");
-    uint32 spawntm;
+    uint32 spawntm = 0;
 
     if (spawntime)
         spawntm = atoi((char*)spawntime);
@@ -4230,7 +4228,7 @@ bool ChatHandler::HandleNpcSetLinkCommand(const char* args)
 
     if (!pCreature->GetDBTableGUIDLow())
     {
-        PSendSysMessage("Selected creature isn't in creature table", pCreature->GetGUIDLow());
+        PSendSysMessage("Selected creature (GUID: %u) isn't in creature table", pCreature->GetGUIDLow());
         SetSentErrorMessage(true);
         return false;
     }

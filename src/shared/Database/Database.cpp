@@ -89,7 +89,7 @@ bool Database::Initialize(const char *infoString)
     if (!mysqlInit)
     {
         sLog.outError("Could not initialize Mysql connection");
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -180,7 +180,7 @@ bool Database::Initialize(const char *infoString)
     {
         sLog.outError("BC> %s", mysql_error(mysqlInit));
         mysql_close(mysqlInit);
-        sleep(10);
+        sleep(5);
         return false;
     }
 }

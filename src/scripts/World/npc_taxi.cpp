@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Npc_Taxi
-SD%Complete: 0%
-SDComment: To be used for taxi NPCs that are located globally.
-SDCategory: NPCs
+Name: Npc_Taxi
+Complete(%): 0%
+Comment: To be used for taxi NPCs that are located globally.
+Category: NPCs
 EndScriptData
 */
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Marli
-SD%Complete: 95
-SDComment: Unknown correct Thrash timer. Threat not resetting for entire raid upon charge (core issue?)
-SDCategory: Zul'Gurub
+Name: Boss_Marli
+Complete(%): 95
+Comment: Unknown correct Thrash timer. Threat not resetting for entire raid upon charge (core issue?)
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -85,7 +85,7 @@ struct boss_marliAI : public ScriptedAI
         PhaseTwo = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
@@ -106,7 +106,7 @@ struct boss_marliAI : public ScriptedAI
         {
             if (!PhaseTwo && DrainLife_Timer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 DoCast(pTarget, SPELL_DRAIN_LIFE);
                 DrainLife_Timer = 20000;
             }
@@ -133,7 +133,7 @@ struct boss_marliAI : public ScriptedAI
             {
                 DoScriptText(SAY_SPIDER_SPAWN, me);
 
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (!pTarget)
                     return;
 
@@ -159,7 +159,7 @@ struct boss_marliAI : public ScriptedAI
 
             if (SpawnSpider_Timer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (!pTarget)
                     return;
 
@@ -192,7 +192,7 @@ struct boss_marliAI : public ScriptedAI
             {
                 if (Charge_Timer <= diff)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     int i = 0;
                     while (i < 3)                           // max 3 tries to get a random target with power_mana
                     {
@@ -260,12 +260,12 @@ struct mob_spawn_of_marliAI : public ScriptedAI
         Growth_Level = 1;  // increases each time Grow_Timer is called to increase scale & damage.
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
        Growth_Level = 1;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         me->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
     }

@@ -777,7 +777,6 @@ LootStoreItem const * LootTemplate::LootGroup::Roll() const
             if (ExplicitlyChanced[i].chance>=100.f)
                 return &ExplicitlyChanced[i];
 
-            ItemPrototype const *pProto = objmgr.GetItemPrototype(ExplicitlyChanced[i].itemid);
             Roll -= ExplicitlyChanced[i].chance;
             if (Roll < 0)
                 return &ExplicitlyChanced[i];
@@ -858,7 +857,7 @@ void LootTemplate::LootGroup::Verify(LootStore const& lootstore, uint32 id, uint
     }
 }
 
-void LootTemplate::LootGroup::CheckLootRefs(LootTemplateMap const& store, LootIdSet* ref_set) const
+void LootTemplate::LootGroup::CheckLootRefs(LootTemplateMap const& /*store*/, LootIdSet* ref_set) const
 {
     for (LootStoreItemList::const_iterator ieItr=ExplicitlyChanced.begin(); ieItr != ExplicitlyChanced.end(); ++ieItr)
     {

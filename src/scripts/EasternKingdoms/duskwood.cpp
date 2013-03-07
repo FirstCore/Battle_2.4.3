@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Duskwood
-SD%Complete: 100
-SDComment: Quest Support:8735
-SDCategory: Duskwood
+Name: Duskwood
+Complete(%): 100
+Comment: Quest Support:8735
+Category: Duskwood
 EndScriptData */
 
 /* ContentData

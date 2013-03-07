@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Darkshore
-SD%Complete: 100
-SDComment: Quest support: 731, 2078, 5321
-SDCategory: Darkshore
+Name: Darkshore
+Complete(%): 100
+Comment: Quest support: 731, 2078, 5321
+Category: Darkshore
 EndScriptData */
 
 /* ContentData
@@ -75,7 +75,7 @@ struct npc_kerlonianAI : public FollowerAI
         m_uiFallAsleepTimer = urand(10000, 45000);
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         FollowerAI::MoveInLineOfSight(pWho);
 

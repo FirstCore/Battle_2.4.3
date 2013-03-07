@@ -80,6 +80,10 @@ int32 World::m_visibility_notify_periodOnContinents = DEFAULT_VISIBILITY_NOTIFY_
 int32 World::m_visibility_notify_periodInInstances  = DEFAULT_VISIBILITY_NOTIFY_PERIOD;
 int32 World::m_visibility_notify_periodInBGArenas   = DEFAULT_VISIBILITY_NOTIFY_PERIOD;
 
+// Movement Anticheat
+bool World::m_EnableMvAnticheat = true;
+uint32 World::m_MvAnticheatGmLevel = 0;
+
 // World constructor
 World::World()
 {
@@ -531,6 +535,10 @@ void World::LoadConfigSettings(bool reload)
         rate_values[RATE_DURABILITY_LOSS_BLOCK] = 0.0f;
     }
 
+    // Movement Anticheat
+    m_EnableMvAnticheat = sConfig.GetBoolDefault("Anticheat.Movement.Enable", true);
+    m_MvAnticheatGmLevel = sConfig.GetIntDefault("Anticheat.Movement.GmLevel", 0);
+
     // Read other configuration items from the config file
 
     m_configs[CONFIG_COMPRESSION] = sConfig.GetIntDefault("Compression", 1);
@@ -568,7 +576,7 @@ void World::LoadConfigSettings(bool reload)
     {
         uint32 val = sConfig.GetIntDefault("WorldServerPort", DEFAULT_WORLDSERVER_PORT);
         if (val != m_configs[CONFIG_PORT_WORLD])
-            sLog.outError("WorldServerPort option can't be changed at blizzliked.conf reload, using current value (%u).",m_configs[CONFIG_PORT_WORLD]);
+            sLog.outError("WorldServerPort option can't be changed at worldserver.conf reload, using current value (%u).",m_configs[CONFIG_PORT_WORLD]);
     }
     else
         m_configs[CONFIG_PORT_WORLD] = sConfig.GetIntDefault("WorldServerPort", DEFAULT_WORLDSERVER_PORT);
@@ -577,7 +585,7 @@ void World::LoadConfigSettings(bool reload)
     {
         uint32 val = sConfig.GetIntDefault("SocketSelectTime", DEFAULT_SOCKET_SELECT_TIME);
         if (val != m_configs[CONFIG_SOCKET_SELECTTIME])
-            sLog.outError("SocketSelectTime option can't be changed at blizzliked.conf reload, using current value (%u).",m_configs[DEFAULT_SOCKET_SELECT_TIME]);
+            sLog.outError("SocketSelectTime option can't be changed at worldserver.conf reload, using current value (%u).",m_configs[DEFAULT_SOCKET_SELECT_TIME]);
     }
     else
         m_configs[CONFIG_SOCKET_SELECTTIME] = sConfig.GetIntDefault("SocketSelectTime", DEFAULT_SOCKET_SELECT_TIME);
@@ -586,7 +594,7 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_SESSION_ADD_DELAY] = sConfig.GetIntDefault("SessionAddDelay", 10000);
 
     m_configs[CONFIG_GROUP_XP_DISTANCE] = sConfig.GetIntDefault("MaxGroupXPDistance", 74);
-    // todo Add MonsterSight and GuarderSight (with meaning) in blizzliked.conf or put them as define
+    // todo Add MonsterSight and GuarderSight (with meaning) in worldserver.conf or put them as define
     m_configs[CONFIG_SIGHT_MONSTER] = sConfig.GetIntDefault("MonsterSight", 50);
     m_configs[CONFIG_SIGHT_GUARDER] = sConfig.GetIntDefault("GuarderSight", 50);
 
@@ -594,7 +602,7 @@ void World::LoadConfigSettings(bool reload)
     {
         uint32 val = sConfig.GetIntDefault("GameType", 0);
         if (val != m_configs[CONFIG_GAME_TYPE])
-            sLog.outError("GameType option can't be changed at blizzliked.conf reload, using current value (%u).",m_configs[CONFIG_GAME_TYPE]);
+            sLog.outError("GameType option can't be changed at worldserver.conf reload, using current value (%u).",m_configs[CONFIG_GAME_TYPE]);
     }
     else
         m_configs[CONFIG_GAME_TYPE] = sConfig.GetIntDefault("GameType", 0);
@@ -603,7 +611,7 @@ void World::LoadConfigSettings(bool reload)
     {
         uint32 val = sConfig.GetIntDefault("RealmZone", REALM_ZONE_DEVELOPMENT);
         if (val != m_configs[CONFIG_REALM_ZONE])
-            sLog.outError("RealmZone option can't be changed at blizzliked.conf reload, using current value (%u).",m_configs[CONFIG_REALM_ZONE]);
+            sLog.outError("RealmZone option can't be changed at worldserver.conf reload, using current value (%u).",m_configs[CONFIG_REALM_ZONE]);
     }
     else
         m_configs[CONFIG_REALM_ZONE] = sConfig.GetIntDefault("RealmZone", REALM_ZONE_DEVELOPMENT);
@@ -861,7 +869,7 @@ void World::LoadConfigSettings(bool reload)
     {
         uint32 val = sConfig.GetIntDefault("Expansion",1);
         if (val != m_configs[CONFIG_EXPANSION])
-            sLog.outError("Expansion option can't be changed at blizzliked.conf reload, using current value (%u).",m_configs[CONFIG_EXPANSION]);
+            sLog.outError("Expansion option can't be changed at worldserver.conf reload, using current value (%u).",m_configs[CONFIG_EXPANSION]);
     }
     else
         m_configs[CONFIG_EXPANSION] = sConfig.GetIntDefault("Expansion",1);
@@ -908,6 +916,8 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_DEATH_CORPSE_RECLAIM_DELAY_PVE] = sConfig.GetBoolDefault("Death.CorpseReclaimDelay.PvE", true);
     m_configs[CONFIG_DEATH_BONES_WORLD]              = sConfig.GetBoolDefault("Death.Bones.World", true);
     m_configs[CONFIG_DEATH_BONES_BG_OR_ARENA]        = sConfig.GetBoolDefault("Death.Bones.BattlegroundOrArena", true);
+
+    m_configs[CONFIG_DIE_COMMAND_MODE] = sConfig.GetBoolDefault("Die.Command.Mode", true);
 
     m_configs[CONFIG_THREAT_RADIUS] = sConfig.GetIntDefault("ThreatRadius", 60);
 
@@ -1020,7 +1030,7 @@ void World::LoadConfigSettings(bool reload)
     if (reload)
     {
         if (dataPath != m_dataPath)
-            sLog.outError("DataDir option can't be changed at blizzlikecore.conf reload, using current value (%s).",m_dataPath.c_str());
+            sLog.outError("DataDir option can't be changed at worldserver.conf reload, using current value (%s).",m_dataPath.c_str());
     }
     else
     {
@@ -1100,6 +1110,20 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATLOG_PUBLIC] = sConfig.GetBoolDefault("ChatLogs.Public", false);
     m_configs[CONFIG_CHATLOG_ADDON] = sConfig.GetBoolDefault("ChatLogs.Addon", false);
     m_configs[CONFIG_CHATLOG_BGROUND] = sConfig.GetBoolDefault("ChatLogs.BattleGround", false);
+
+    // PvP Ranks
+    m_configs[CONFIG_FLOAT_RATE_PVP_RANK_EXTRA_HONOR] = sConfig.GetIntDefault("PvPSystem.Rank.Rate.ExtraHonor", 1);
+    std::string s_pvp_ranks = sConfig.GetStringDefault("PvPSystem.Rank.HKPerRank", "10,50,100,200,450,750,1300,2000,3500,6000,9500,15000,21000,30000");
+    char *c_pvp_ranks = const_cast<char*>(s_pvp_ranks.c_str());
+    for (int i = 0; i !=HKRANKMAX; i++)
+    {
+        if(i==0)
+            pvp_ranks[0] = 0;
+        else if(i==1)
+            pvp_ranks[1] = atoi(strtok (c_pvp_ranks, ","));
+        else
+            pvp_ranks[i] = atoi(strtok (NULL, ","));
+    }
 }
 
 // Initialize the World
@@ -1124,7 +1148,7 @@ void World::SetInitialWorldSettings()
         ||m_configs[CONFIG_EXPANSION] && (
         !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) || !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f)))
     {
-        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map/*.vmtree/*.vmtile files in appropriate directories or correct the DataDir value in the blizzlikecore.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
+        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map/*.vmtree/*.vmtile files in appropriate directories or correct the DataDir value in the worldserver.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
         exit(1);
     }
 
@@ -1220,6 +1244,9 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading Item Texts...");
     objmgr.LoadItemTexts();
 
+    sLog.outString("Loading Transmogrifications...");       // Transmogrification
+    objmgr.LoadTransmogrifications();
+
     sLog.outString("Loading Creature Model Based Info Data...");
     objmgr.LoadCreatureModelInfo();
 
@@ -1247,8 +1274,8 @@ void World::SetInitialWorldSettings()
     sLog.outString();
     sLog.outString("Loading Creature Addon Data...");
     objmgr.LoadCreatureAddons();                            // must be after LoadCreatureTemplates() and LoadCreatures()
-    sLog.outString(">>> Creature Addon Data loaded");
     sLog.outString();
+    sLog.outString(">>> Creature Addon Data loaded");
 
     sLog.outString("Loading Creature Respawn Data...");   // must be after PackInstances()
     objmgr.LoadCreatureRespawnTimes();
@@ -1431,7 +1458,11 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading CreatureEventAI Scripts...");
     CreatureEAI_Mgr.LoadCreatureEventAI_Scripts();
 
-    sLog.outString("Initializing Scripts...");
+    sLog.outString(" ");
+    sLog.outString("**********************");
+    sLog.outString(" Initializing Scripts ");
+    sLog.outString("**********************");
+    sLog.outString(" ");
     sScriptMgr.ScriptsInit();
 
     // Initialize game time and timers
@@ -1529,7 +1560,7 @@ void World::SetInitialWorldSettings()
     // Delete all characters which have been deleted X days before
     Player::DeleteOldCharacters();
 
-    sLog.outString("WORLD: World initialized");
+    sLog.outString("WorldServer started");
 }
 
 void World::DetectDBCLang()
@@ -2258,8 +2289,8 @@ void World::UpdateSessions(time_t diff)
         next = itr;
         ++next;
 
-        if (!itr->second)
-            continue;
+      //if (!itr->second) // UpdateSessions will never get NULL at this point.
+      //    continue;
 
         // and remove not active sessions from the list
         if (!itr->second->Update(diff))                      // As interval = 0

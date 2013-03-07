@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Headless_Horseman
-SD%Complete:
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Boss_Headless_Horseman
+Complete(%):
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -146,7 +146,7 @@ struct mob_wisp_invisAI : public ScriptedAI
     uint32 spell;
     uint32 spell2;
     void Reset(){}
-    void EnterCombat(Unit * /*who*/){}
+    void EnterCombat(Unit* /*who*/){}
     void SetType(uint32 _type)
     {
         switch(Creaturetype = _type)
@@ -178,7 +178,7 @@ struct mob_wisp_invisAI : public ScriptedAI
             me->SetDisplayId(2027);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || Creaturetype != 1 || !who->isTargetableForAttack())
             return;
@@ -225,8 +225,8 @@ struct mob_headAI : public ScriptedAI
         laugh = urand(15000,30000);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
-    void SaySound(int32 textEntry, Unit *pTarget = 0)
+    void EnterCombat(Unit* /*who*/) {}
+    void SaySound(int32 textEntry, Unit* pTarget = 0)
     {
         DoScriptText(textEntry, me, pTarget);
         //DoCast(me, SPELL_HEAD_SPEAKS, true);
@@ -267,7 +267,7 @@ struct mob_headAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit *caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell)
     {
         if (!withbody)
             return;
@@ -309,7 +309,7 @@ struct mob_headAI : public ScriptedAI
                 Creature *speaker = DoSpawnCreature(HELPER,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN,1000);
                 if (speaker)
                     speaker->CastSpell(speaker,SPELL_HEAD_SPEAKS,false);
-                me->MonsterTextEmote(EMOTE_LAUGHS,NULL);
+                me->MonsterTextEmote(EMOTE_LAUGHS,0);
             } else laugh -= diff;
         }
         else
@@ -319,7 +319,7 @@ struct mob_headAI : public ScriptedAI
                 if (wait <= diff)
                 {
                     die = false;
-                    if (Unit *body = Unit::GetUnit((*me), bodyGUID))
+                    if (Unit* body = Unit::GetUnit((*me), bodyGUID))
                         body->Kill(body);
                     me->Kill(me);
                 } else wait -= diff;
@@ -452,7 +452,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
                 wp_reached = false;
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 SaySound(SAY_ENTRANCE);
-                if (Unit *plr = Unit::GetUnit((*me),PlayerGUID))
+                if (Unit* plr = Unit::GetUnit((*me),PlayerGUID))
                     DoStartMovement(plr);
                 break;
             }
@@ -460,19 +460,19 @@ struct boss_headless_horsemanAI : public ScriptedAI
         ++id;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_HORSEMAN_EVENT, IN_PROGRESS);
         DoZoneInCombat();
     }
     void AttackStart(Unit* who) {ScriptedAI::AttackStart(who);}
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (withhead && Phase != 0)
             ScriptedAI::MoveInLineOfSight(who);
     }
-    void KilledUnit(Unit *plr)
+    void KilledUnit(Unit* plr)
     {
         if (plr->GetTypeId() == TYPEID_PLAYER)
         {
@@ -484,7 +484,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void SaySound(int32 textEntry, Unit *pTarget = 0)
+    void SaySound(int32 textEntry, Unit* pTarget = 0)
     {
         DoScriptText(textEntry, me, pTarget);
         laugh += 4000;
@@ -535,7 +535,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
             pInstance->SetData(DATA_HORSEMAN_EVENT, DONE);
     }
 
-    void SpellHit(Unit *caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell)
     {
         if (withhead)
             return;
@@ -565,7 +565,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (damage >= me->GetHealth() && withhead)
         {
@@ -653,7 +653,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
                 case 2:
                     if (conflagrate <= diff)
                     {
-                        if (Unit *plr = SelectRandomPlayer(30.0f))
+                        if (Unit* plr = SelectRandomPlayer(30.0f))
                             DoCast(plr, SPELL_CONFLAGRATION, false);
                         conflagrate = urand(10000,16000);
                     } else conflagrate -= diff;
@@ -672,7 +672,7 @@ struct boss_headless_horsemanAI : public ScriptedAI
             if (laugh <= diff)
             {
                 laugh = urand(11000,22000);
-                me->MonsterTextEmote(EMOTE_LAUGHS,NULL);
+                me->MonsterTextEmote(EMOTE_LAUGHS,0);
                 DoPlaySoundToSet(me, RandomLaugh[rand()%3]);
             } else laugh -= diff;
 
@@ -772,9 +772,9 @@ struct mob_pulsing_pumpkinAI : public ScriptedAI
         me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_STUNNED);
     }
 
-    void EnterCombat(Unit * /*who*/){}
+    void EnterCombat(Unit* /*who*/){}
 
-    void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
     {
         if (spell->Id == SPELL_SPROUTING)
         {
@@ -790,15 +790,15 @@ struct mob_pulsing_pumpkinAI : public ScriptedAI
     void Despawn()
     {
         if (!debuffGUID) return;
-        Unit *debuff = Unit::GetUnit((*me),debuffGUID);
+        Unit* debuff = Unit::GetUnit((*me),debuffGUID);
         if (debuff)
             debuff->SetVisibility(VISIBILITY_OFF);
             debuffGUID = 0;
     }
 
-    void JustDied(Unit * /*killer*/) { if (!sprouted) Despawn(); }
+    void JustDied(Unit* /*killer*/) { if (!sprouted) Despawn(); }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || !who->isTargetableForAttack() || !me->IsHostileTo(who) || me->getVictim())
             return;

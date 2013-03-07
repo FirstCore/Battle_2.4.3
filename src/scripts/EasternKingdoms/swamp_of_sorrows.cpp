@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Swamp_of_Sorrows
-SD%Complete: 100
-SDComment: Quest support: 1393
-SDCategory: Swap of Sorrows
+Name: Swamp_of_Sorrows
+Complete(%): 100
+Comment: Quest support: 1393
+Category: Swap of Sorrows
 EndScriptData */
 
 /* ContentData

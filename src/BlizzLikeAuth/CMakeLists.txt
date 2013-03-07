@@ -10,16 +10,16 @@
 
 file(GLOB sources_localdir *.cpp *.h)
 
-set(blizzlike-realm_SRCS
-  ${blizzlike-realm_SRCS}
+set(AUTHSERVER_SRCS
+  ${AUTHSERVER_SRCS}
   ${sources_localdir}
 )
 
 if( WIN32 )
-  set(blizzlike-realm_SRCS
-    ${blizzlike-realm_SRCS}
+  set(AUTHSERVER_SRCS
+    ${AUTHSERVER_SRCS}
     ${sources_Debugging}
-    BlizzLikeRealm.rc
+    authserver.rc
   )
 endif()
 
@@ -33,29 +33,29 @@ include_directories(
   ${OPENSSL_INCLUDE_DIR}
 )
 
-set(blizzlike-realm_LINK_FLAGS "")
+set(AUTHSERVER_LINK_FLAGS "")
 
-add_executable(blizzlike-realm
-  ${blizzlike-realm_SRCS}
+add_executable(authserver
+  ${AUTHSERVER_SRCS}
 )
 
-add_dependencies(blizzlike-realm revision.h)
+add_dependencies(authserver revision.h)
 
 if( NOT WIN32 )
-  add_definitions(-D_BLIZZLIKE_REALM_CONFIG="${CONF_DIR}/blizzlikerealm.conf")
+  add_definitions(-D_BLIZZLIKE_AUTH_CONFIG="${CONF_DIR}/authserver.conf")
 endif()
 
 if( UNIX )
-  set(authserver_LINK_FLAGS "-pthread ${blizzlike-realm_LINK_FLAGS}")
+  set(AUTHSERVER_LINK_FLAGS "-pthread ${AUTHSERVER_LINK_FLAGS}")
 endif()
 
 if( CMAKE_SYSTEM_NAME MATCHES "Darwin" )
-  set(blizzlike-realm_LINK_FLAGS "-framework Carbon ${blizzlike-realm_LINK_FLAGS}")
+  set(AUTHSERVER_LINK_FLAGS "-framework Carbon ${AUTHSERVER_LINK_FLAGS}")
 endif()
 
-set_target_properties(blizzlike-realm PROPERTIES LINK_FLAGS "${blizzlike-realm_LINK_FLAGS}")
+set_target_properties(authserver PROPERTIES LINK_FLAGS "${AUTHSERVER_LINK_FLAGS}")
 
-target_link_libraries(blizzlike-realm
+target_link_libraries(authserver
   shared
   blizzlikeframework
   ${MYSQL_LIBRARY}
@@ -65,16 +65,16 @@ target_link_libraries(blizzlike-realm
 )
 
 if( WIN32 )
-  add_custom_command(TARGET blizzlike-realm
+  add_custom_command(TARGET authserver
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/blizzlikerealm.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/authserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
   )
 endif()
 
 if( UNIX )
-  install(TARGETS blizzlike-realm DESTINATION bin)
-  install(FILES blizzlikerealm.conf.dist DESTINATION etc)
+  install(TARGETS authserver DESTINATION bin)
+  install(FILES authserver.conf.dist DESTINATION etc)
 elseif( WIN32 )
-  install(TARGETS blizzlike-realm DESTINATION "${CMAKE_INSTALL_PREFIX}")
-  install(FILES blizzlikerealm.conf.dist DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(TARGETS authserver DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(FILES authserver.conf.dist DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Kormok
-SD%Complete: 100
-SDComment:
-SDCategory: Scholomance
+Name: Boss_Kormok
+Complete(%): 100
+Comment:
+Category: Scholomance
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_kormokAI : public ScriptedAI
         Mages = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

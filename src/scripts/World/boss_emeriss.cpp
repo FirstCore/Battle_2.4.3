@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Emeriss
-SD%Complete: 90
-SDComment: Teleport function & Mark of Nature missing
-SDCategory: Bosses
+Name: Emeriss
+Complete(%): 90
+Comment: Teleport function & Mark of Nature missing
+Category: Bosses
 EndScriptData */
 
 #include "ScriptPCH.h"

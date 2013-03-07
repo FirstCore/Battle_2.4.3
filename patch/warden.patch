@@ -1,8 +1,8 @@
-diff --git a/sql/warden/realmd_warden.sql b/sql/warden/realmd_warden.sql
+diff --git a/sql/warden/auth_warden.sql b/sql/warden/auth_warden.sql
 new file mode 100644
 index 0000000..6712b9d
 --- /dev/null
-+++ b/sql/warden/realmd_warden.sql
++++ b/sql/warden/auth_warden.sql
 @@ -0,0 +1,3 @@
 +-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +ALTER TABLE `account` 
@@ -47,11 +47,11 @@ index 0000000..57684e0
 +/*!40000 ALTER TABLE `warden_data_result` ENABLE KEYS */;
 +UNLOCK TABLES;
 \ No newline at end of file
-diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
-index 9927bb6..5deb532 100644
---- a/src/BlizzLikeCore/blizzlikecore.conf.dist
-+++ b/src/BlizzLikeCore/blizzlikecore.conf.dist
-@@ -2034,3 +2034,51 @@ DuelMod.Cooldowns = 0
+diff --git a/src/BlizzLikeCore/worldserver.conf.dist b/src/BlizzLikeCore/worldserver.conf.dist
+index 9b6dd63..ddcdaec 100644
+--- a/src/BlizzLikeCore/worldserver.conf.dist
++++ b/src/BlizzLikeCore/worldserver.conf.dist
+@@ -2040,3 +2040,51 @@ Die.Command.Mode = 1
  AutoBroadcast.On = 0
  AutoBroadcast.Center = 0
  AutoBroadcast.Timer = 60000
@@ -103,10 +103,10 @@ index 9927bb6..5deb532 100644
 +Warden.ClientResponseDelay = 600
 +Warden.ClientCheckHoldOff = 5
 +Warden.LogFile = "warden.log"
-diff --git a/src/BlizzLikeRealm/AuthSocket.cpp b/src/BlizzLikeRealm/AuthSocket.cpp
+diff --git a/src/BlizzLikeAuth/AuthSocket.cpp b/src/BlizzLikeAuth/AuthSocket.cpp
 index a5e5954..b309d55 100644
---- a/src/BlizzLikeRealm/AuthSocket.cpp
-+++ b/src/BlizzLikeRealm/AuthSocket.cpp
+--- a/src/BlizzLikeAuth/AuthSocket.cpp
++++ b/src/BlizzLikeAuth/AuthSocket.cpp
 @@ -348,6 +348,14 @@ bool AuthSocket::_HandleLogonChallenge()
      _login = (const char*)ch->I;
      _build = ch->build;
@@ -146,10 +146,10 @@ index a5e5954..b309d55 100644
      QueryResult_AutoPtr result = LoginDatabase.PQuery ("SELECT sessionkey FROM account WHERE username = '%s'", _safelogin.c_str ());
  
      // Stop if the account is not found
-diff --git a/src/BlizzLikeRealm/AuthSocket.h b/src/BlizzLikeRealm/AuthSocket.h
+diff --git a/src/BlizzLikeAuth/AuthSocket.h b/src/BlizzLikeAuth/AuthSocket.h
 index 9cb7d5e..88d0d77 100644
---- a/src/BlizzLikeRealm/AuthSocket.h
-+++ b/src/BlizzLikeRealm/AuthSocket.h
+--- a/src/BlizzLikeAuth/AuthSocket.h
++++ b/src/BlizzLikeAuth/AuthSocket.h
 @@ -67,6 +67,7 @@ class AuthSocket: public BufferedSocket
          // Since GetLocaleByName() is _NOT_ bijective, we have to store the locale as a string. Otherwise we can't differ
          // between enUS and enGB, which is important for the patch system
@@ -3176,7 +3176,7 @@ index 0000000..258325b
 +
 +    ServerTicks = getMSTime();
 +
-+    uint32 maxid = WardenDataStorage.InternalDataID;
++    //uint32 maxid = WardenDataStorage.InternalDataID;
 +
 +    uint32 id;
 +    uint8 type;
@@ -3593,7 +3593,7 @@ index 0000000..25eacd8
 +
 +#endif
 diff --git a/src/game/World.cpp b/src/game/World.cpp
-index db0dcaf..840580e 100644
+index d14320f..ff3a891 100644
 --- a/src/game/World.cpp
 +++ b/src/game/World.cpp
 @@ -60,6 +60,7 @@
@@ -3604,7 +3604,7 @@ index db0dcaf..840580e 100644
  
  INSTANTIATE_SINGLETON_1(World);
  
-@@ -1100,6 +1101,14 @@ void World::LoadConfigSettings(bool reload)
+@@ -1102,6 +1103,14 @@ void World::LoadConfigSettings(bool reload)
      m_configs[CONFIG_CHATLOG_PUBLIC] = sConfig.GetBoolDefault("ChatLogs.Public", false);
      m_configs[CONFIG_CHATLOG_ADDON] = sConfig.GetBoolDefault("ChatLogs.Addon", false);
      m_configs[CONFIG_CHATLOG_BGROUND] = sConfig.GetBoolDefault("ChatLogs.BattleGround", false);
@@ -3619,7 +3619,7 @@ index db0dcaf..840580e 100644
  }
  
  // Initialize the World
-@@ -1488,6 +1497,10 @@ void World::SetInitialWorldSettings()
+@@ -1494,6 +1503,10 @@ void World::SetInitialWorldSettings()
      uint32 nextGameEvent = gameeventmgr.Initialize();
      m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
  
@@ -3631,10 +3631,10 @@ index db0dcaf..840580e 100644
      sLog.outString("Starting BattleGround System");
      sBattleGroundMgr.CreateInitialBattleGrounds();
 diff --git a/src/game/World.h b/src/game/World.h
-index 4add340..522d330 100644
+index 7ad3d80..2bd700b 100644
 --- a/src/game/World.h
 +++ b/src/game/World.h
-@@ -250,6 +250,12 @@ enum WorldConfigs
+@@ -251,6 +251,12 @@ enum WorldConfigs
      CONFIG_AUTOBROADCAST_TIMER,
      CONFIG_AUTOBROADCAST_ENABLED,
      CONFIG_AUTOBROADCAST_CENTER,
@@ -3939,19 +3939,19 @@ index 0000000..1c4e843
 +
 +#endif
 diff --git a/src/shared/Log.cpp b/src/shared/Log.cpp
-index bfcde93..5c458be 100644
+index 9b1473d..d0b214a 100644
 --- a/src/shared/Log.cpp
 +++ b/src/shared/Log.cpp
-@@ -30,7 +30,7 @@ Log::Log() :
+@@ -29,7 +29,7 @@ INSTANTIATE_SINGLETON_1(Log);
+ Log::Log() :
      raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL),
-     dberLogfile(NULL), chatLogfile(NULL), m_gmlog_per_account(false),
-     m_enableLogDBLater(false), m_enableLogDB(false), m_colored(false),
--    arenaLogFile(NULL)
-+    arenaLogFile(NULL), wardenLogFile(NULL)
+     dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), m_gmlog_per_account(false),
+-    m_enableLogDBLater(false), m_enableLogDB(false), m_colored(false)
++    m_enableLogDBLater(false), m_enableLogDB(false), m_colored(false), wardenLogFile(NULL)
  {
      Initialize();
  }
-@@ -64,6 +64,10 @@ Log::~Log()
+@@ -63,6 +63,10 @@ Log::~Log()
      if (arenaLogFile != NULL)
          fclose(arenaLogFile);
      arenaLogFile = NULL;
@@ -3962,7 +3962,7 @@ index bfcde93..5c458be 100644
  }
  
  void Log::SetLogLevel(char *Level)
-@@ -155,6 +159,7 @@ void Log::Initialize()
+@@ -154,6 +158,7 @@ void Log::Initialize()
      raLogfile = openLogFile("RaLogFile",NULL,"a");
      chatLogfile = openLogFile("ChatLogFile","ChatLogTimestamp","a");
      arenaLogFile = openLogFile("ArenaLogFile",NULL,"a");
@@ -3970,7 +3970,7 @@ index bfcde93..5c458be 100644
  
      // Main log file settings
      m_logLevel     = sConfig.GetIntDefault("LogLevel", LOGL_NORMAL);
-@@ -877,3 +882,26 @@ void Log::outChat(const char * str, ...)
+@@ -918,3 +923,26 @@ void Log::outChat(const char * str, ...)
      fflush(stdout);
  }
  
@@ -3998,10 +3998,10 @@ index bfcde93..5c458be 100644
 +    fflush(stdout);
 +}
 diff --git a/src/shared/Log.h b/src/shared/Log.h
-index d718c35..45b99ae 100644
+index 3a91e98..8da71cb 100644
 --- a/src/shared/Log.h
 +++ b/src/shared/Log.h
-@@ -106,6 +106,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
+@@ -107,6 +107,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
          void outCommand( uint32 account, const char * str, ...) ATTR_PRINTF(3,4);
          void outRemote( const char * str, ... )                 ATTR_PRINTF(2,3);
          void outChat( const char * str, ... )                   ATTR_PRINTF(2,3);
@@ -4009,7 +4009,7 @@ index d718c35..45b99ae 100644
          void outArena( const char * str, ... )                  ATTR_PRINTF(2,3);
          void outCharDump( const char * str, uint32 account_id, uint32 guid, const char * name );
  
-@@ -136,6 +137,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
+@@ -137,6 +138,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
          FILE* dberLogfile;
          FILE* chatLogfile;
          FILE* arenaLogFile;

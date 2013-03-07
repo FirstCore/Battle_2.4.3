@@ -198,8 +198,8 @@ public:
     virtual bool Update(uint32 diff);
 
     // handle npc/player kill
-    virtual void HandleKill(Player * killer, Unit * killed);
-    virtual void HandleKillImpl(Player * /*killer*/, Unit * /*killed*/) {}
+    virtual void HandleKill(Player * killer, Unit* killed);
+    virtual void HandleKillImpl(Player * /*killer*/, Unit* /*killed*/) {}
 
     // checks if player is in range of a capture credit marker
     bool IsInsideObjective(Player * plr) const;

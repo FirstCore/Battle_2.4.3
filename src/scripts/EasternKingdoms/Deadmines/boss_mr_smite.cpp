@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Boss Mr.Smite
-SD%Complete:
-SDComment: Timers and say taken from acid script
+Name: Boss Mr.Smite
+Complete(%):
+Comment: Timers and say taken from acid script
 EndScriptData */
 
 #include "ScriptPCH.h"

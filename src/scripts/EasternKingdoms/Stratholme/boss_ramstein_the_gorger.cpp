@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ramstein_The_Gorger
-SD%Complete: 70
-SDComment:
-SDCategory: Stratholme
+Name: Boss_Ramstein_The_Gorger
+Complete(%): 70
+Comment:
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -48,7 +48,7 @@ struct boss_ramstein_the_gorgerAI : public ScriptedAI
         Knockout_Timer = 12000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

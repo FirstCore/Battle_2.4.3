@@ -188,8 +188,8 @@ void BattleGroundQueue::AddPlayer(Player *plr, GroupQueueInfo *ginfo)
         if (q_max_level > sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL))
             q_max_level = sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL);
 
-        int32 MinPlayers = bg->GetMinPlayersPerTeam();
-        int32 MaxPlayers = bg->GetMaxPlayersPerTeam();
+        uint32 MinPlayers = bg->GetMinPlayersPerTeam();
+        uint32 MaxPlayers = bg->GetMaxPlayersPerTeam();
 
         uint32 qHorde = 0;
         uint32 qAlliance = 0;
@@ -545,8 +545,6 @@ void BattleGroundQueue::Update(uint32 bgTypeId, uint32 queue_id, uint8 arenatype
     if (m_QueuedGroups[queue_id].empty())
         return;
 
-    uint32 bgQueueTypeId = sBattleGroundMgr.BGQueueTypeId(bgTypeId, arenatype);
-
     //battleground with free slot for player should be always the last in this queue
     BGFreeSlotQueueType::iterator itr, next;
     for (itr = sBattleGroundMgr.BGFreeSlotQueue[bgTypeId].begin(); itr != sBattleGroundMgr.BGFreeSlotQueue[bgTypeId].end(); itr = next)
@@ -809,18 +807,15 @@ void BattleGroundQueue::Update(uint32 bgTypeId, uint32 queue_id, uint8 arenatype
             (bOneSideAllyTeam1 && bOneSideAllyTeam2))
         {
             // which side has enough players?
-            uint32 side = 0;
             SelectionPoolBuildMode mode1, mode2;
             // find out what pools are we using
             if (bOneSideAllyTeam1 && bOneSideAllyTeam2)
             {
-                side = ALLIANCE;
                 mode1 = ONESIDE_ALLIANCE_TEAM1;
                 mode2 = ONESIDE_ALLIANCE_TEAM2;
             }
             else
             {
-                side = HORDE;
                 mode1 = ONESIDE_HORDE_TEAM1;
                 mode2 = ONESIDE_HORDE_TEAM2;
             }
@@ -864,13 +859,6 @@ void BattleGroundQueue::Update(uint32 bgTypeId, uint32 queue_id, uint8 arenatype
                     break;
                 }
             }
-
-            // assigned team of the other group
-            uint32 other_side;
-            if (side == ALLIANCE)
-                other_side = HORDE;
-            else
-                other_side = ALLIANCE;
 
             bg2->SetQueueType(queue_id);
 
@@ -1053,7 +1041,7 @@ void BattleGroundMgr::Update(time_t diff)
     if (m_MaxRatingDifference)
     {
         // it's time to force update
-        if (m_NextRatingDiscardUpdate < diff)
+        if (m_NextRatingDiscardUpdate < int32(diff))
         {
             // forced update for level 70 rated arenas
             m_BattleGroundQueues[BATTLEGROUND_QUEUE_2v2].Update(BATTLEGROUND_AA,6,ARENA_TYPE_2v2,true,0);
@@ -1066,9 +1054,9 @@ void BattleGroundMgr::Update(time_t diff)
     }
     if (m_AutoDistributePoints)
     {
-        if (m_AutoDistributionTimeChecker < diff)
+        if (m_AutoDistributionTimeChecker < int32(diff))
         {
-            if (time(NULL) > m_NextAutoDistributionTime)
+            if (uint32(time(NULL)) > m_NextAutoDistributionTime)
             {
                 DistributeArenaPoints();
                 m_NextAutoDistributionTime = time(NULL) + BATTLEGROUND_ARENA_POINT_DISTRIBUTION_DAY * sWorld.getConfig(CONFIG_ARENA_AUTO_DISTRIBUTE_INTERVAL_DAYS);
@@ -1081,7 +1069,7 @@ void BattleGroundMgr::Update(time_t diff)
     }
 }
 
-void BattleGroundMgr::BuildBattleGroundStatusPacket(WorldPacket *data, BattleGround *bg, uint32 team, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint32 arenatype, uint8 israted)
+void BattleGroundMgr::BuildBattleGroundStatusPacket(WorldPacket *data, BattleGround *bg, uint32 /*team*/, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint32 arenatype, uint8 israted)
 {
     // we can be in 3 queues in same time...
     if (StatusID == 0)
@@ -1446,7 +1434,7 @@ BattleGround * BattleGroundMgr::CreateNewBattleGround(uint32 bgTypeId, uint8 are
 }
 
 // used to create the BG templates
-uint32 BattleGroundMgr::CreateBattleGround(uint32 bgTypeId, uint32 MinPlayersPerTeam, uint32 MaxPlayersPerTeam, uint32 LevelMin, uint32 LevelMax, char* BattleGroundName, uint32 MapID, float Team1StartLocX, float Team1StartLocY, float Team1StartLocZ, float Team1StartLocO, float Team2StartLocX, float Team2StartLocY, float Team2StartLocZ, float Team2StartLocO)
+uint32 BattleGroundMgr::CreateBattleGround(uint32 bgTypeId, uint32 MinPlayersPerTeam, uint32 MaxPlayersPerTeam, uint32 LevelMin, uint32 LevelMax, char* BattleGroundName, uint32 MapID, float Team1StartLocX, float Team1StartLocY, float Team1StartLocZ, float Team1StartLocO, float Team2StartLocX, float Team2StartLocY, float Team2StartLocZ, float Team2StartLocO, float StartMaxDist)
 {
     // Create the BG
     BattleGround *bg = NULL;
@@ -1484,6 +1472,7 @@ uint32 BattleGroundMgr::CreateBattleGround(uint32 bgTypeId, uint32 MinPlayersPer
     bg->SetName(BattleGroundName);
     bg->SetTeamStartLoc(ALLIANCE, Team1StartLocX, Team1StartLocY, Team1StartLocZ, Team1StartLocO);
     bg->SetTeamStartLoc(HORDE,    Team2StartLocX, Team2StartLocY, Team2StartLocZ, Team2StartLocO);
+    bg->SetStartMaxDist(StartMaxDist);
     bg->SetLevelRange(LevelMin, LevelMax);
 
     //add BattleGround instance to FreeSlotQueue (.back() will return the template!)
@@ -1499,14 +1488,15 @@ void BattleGroundMgr::CreateInitialBattleGrounds()
 {
     float AStartLoc[4];
     float HStartLoc[4];
+    float StartMaxDist;
     uint32 MaxPlayersPerTeam, MinPlayersPerTeam, MinLvl, MaxLvl, start1, start2;
     BattlemasterListEntry const *bl;
     WorldSafeLocsEntry const *start;
 
     uint32 count = 0;
 
-    //                                                       0   1                 2                 3      4      5                6              7             8
-    QueryResult_AutoPtr result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO FROM battleground_template");
+    //                                                       0   1                  2                  3       4       5                 6               7              8            9
+    QueryResult_AutoPtr result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, AllianceStartLoc, AllianceStartO, HordeStartLoc, HordeStartO, StartMaxDist FROM battleground_template");
 
     if (!result)
     {
@@ -1599,8 +1589,10 @@ void BattleGroundMgr::CreateInitialBattleGrounds()
             continue;
         }
 
+        StartMaxDist = fields[9].GetFloat();
+
         //sLog.outDetail("Creating battleground %s, %u-%u", bl->name[sWorld.GetDBClang()], MinLvl, MaxLvl);
-        if (!CreateBattleGround(bgTypeID, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, bl->name[sWorld.GetDefaultDbcLocale()], bl->mapid[0], AStartLoc[0], AStartLoc[1], AStartLoc[2], AStartLoc[3], HStartLoc[0], HStartLoc[1], HStartLoc[2], HStartLoc[3]))
+        if (!CreateBattleGround(bgTypeID, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, bl->name[sWorld.GetDefaultDbcLocale()], bl->mapid[0], AStartLoc[0], AStartLoc[1], AStartLoc[2], AStartLoc[3], HStartLoc[0], HStartLoc[1], HStartLoc[2], HStartLoc[3], StartMaxDist))
             continue;
 
         ++count;

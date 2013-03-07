@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Lethon
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Bosses
+Name: Lethon
+Complete(%): 0
+Comment: Place Holder
+Category: Bosses
 EndScriptData */
 
 #include "ScriptPCH.h"

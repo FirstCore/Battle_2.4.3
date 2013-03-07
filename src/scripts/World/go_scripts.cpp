@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: GO_Scripts
-SD%Complete: 100
-SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 6481, 10990, 10991, 10992. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089, 2936. Soulwell
-SDCategory: Game Objects
+Name: GO_Scripts
+Complete(%): 100
+Comment: Quest support: 4285,4287,4288(crystal pylons), 4296, 6481, 10990, 10991, 10992. Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089, 2936. Soulwell
+Category: Game Objects
 EndScriptData */
 
 /* ContentData
@@ -195,7 +195,7 @@ float ethereum_NPC[2][7] =
  {22810,22811,22812,22813,22814,22815,0}      // fiendly npc (need script in acid ? only to cast spell reputation reward)
 };
 
-bool GOHello_go_ethereum_prison(Player *pPlayer, GameObject *pGO)
+bool GOHello_go_ethereum_prison(Player* /*pPlayer*/, GameObject *pGO)
 {
     pGO->SetGoState(GO_STATE_ACTIVE);
     switch(rand()%2)
@@ -521,7 +521,7 @@ bool GOHello_go_blood_filled_orb(Player *pPlayer, GameObject *pGO)
 
 bool GOHello_go_soulwell(Player *pPlayer, GameObject* pGO)
 {
-    Unit *caster = pGO->GetOwner();
+    Unit* caster = pGO->GetOwner();
     if (!caster || caster->GetTypeId() != TYPEID_PLAYER)
         return true;
 

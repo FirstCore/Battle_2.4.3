@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_ZulGurub
-SD%Complete: 80
-SDComment: Missing reset function after killing a boss for Ohgan, Thekal.
-SDCategory: Zul'Gurub
+Name: Instance_ZulGurub
+Complete(%): 80
+Comment: Missing reset function after killing a boss for Ohgan, Thekal.
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"

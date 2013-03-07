@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Taerar
-SD%Complete: 70
-SDComment: Mark of Nature & Teleport NYI. Fix the way to be banished.
-SDCategory: Bosses
+Name: Taerar
+Complete(%): 70
+Comment: Mark of Nature & Teleport NYI. Fix the way to be banished.
+Category: Bosses
 EndScriptData */
 
 #include "ScriptPCH.h"

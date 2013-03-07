@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Captain_Skarloc
-SD%Complete: 75
-SDComment: Missing adds, missing waypoints to move up to Thrall once spawned + speech before enter combat.
-SDCategory: Caverns of Time, Old Hillsbrad Foothills
+Name: Boss_Captain_Skarloc
+Complete(%): 75
+Comment: Missing adds, missing waypoints to move up to Thrall once spawned + speech before enter combat.
+Category: Caverns of Time, Old Hillsbrad Foothills
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -65,14 +65,14 @@ struct boss_captain_skarlocAI : public ScriptedAI
         Consecration_Timer = 8000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         //This is not correct. Should taunt Thrall before engage in combat
         DoScriptText(SAY_TAUNT1, me);
         DoScriptText(SAY_TAUNT2, me);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -81,7 +81,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 

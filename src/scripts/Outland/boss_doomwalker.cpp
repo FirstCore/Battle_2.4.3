@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Doomwalker
-SD%Complete: 100
-SDComment:
-SDCategory: Shadowmoon Valley
+Name: Boss_Doomwalker
+Complete(%): 100
+Comment:
+Category: Shadowmoon Valley
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -67,7 +67,7 @@ struct boss_doomwalkerAI : public ScriptedAI
         InEnrage = false;
     }
 
-    void KilledUnit(Unit* Victim)
+    void KilledUnit(Unit* /*Victim*/)
     {
         if (rand()%5)
             return;
@@ -82,12 +82,12 @@ struct boss_doomwalkerAI : public ScriptedAI
         DoCast(me->getVictim(), SPELL_MARK_DEATH);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
@@ -144,7 +144,7 @@ struct boss_doomwalkerAI : public ScriptedAI
         //Spell Chain Lightning
         if (Chain_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
 
             if (!pTarget)

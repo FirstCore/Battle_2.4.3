@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Felwood
-SD%Complete: 95
-SDComment: Quest support: 4101, 4102
-SDCategory: Felwood
+Name: Felwood
+Complete(%): 95
+Comment: Quest support: 4101, 4102
+Category: Felwood
 EndScriptData */
 
 /* ContentData

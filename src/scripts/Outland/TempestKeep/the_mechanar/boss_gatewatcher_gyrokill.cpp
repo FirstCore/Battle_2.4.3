@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Gatewatcher_Gyrokill
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Tempest Keep, The Mechanar
+Name: Boss_Gatewatcher_Gyrokill
+Complete(%): 0
+Comment: Place Holder
+Category: Tempest Keep, The Mechanar
 EndScriptData */
 
 #include "ScriptPCH.h"

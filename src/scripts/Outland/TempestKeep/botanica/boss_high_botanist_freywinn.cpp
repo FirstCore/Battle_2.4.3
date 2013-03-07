@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_High_Botanist_Freywinn
-SD%Complete: 90
-SDComment: some strange visual related to tree form(if aura lost before normal duration end). possible make summon&transform -process smoother(transform after delay)
-SDCategory: Tempest Keep, The Botanica
+Name: Boss_High_Botanist_Freywinn
+Complete(%): 90
+Comment: some strange visual related to tree form(if aura lost before normal duration end). possible make summon&transform -process smoother(transform after delay)
+Category: Tempest Keep, The Botanica
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -65,7 +65,7 @@ struct boss_high_botanist_freywinnAI : public ScriptedAI
         MoveFree = true;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
@@ -87,7 +87,7 @@ struct boss_high_botanist_freywinnAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -96,7 +96,7 @@ struct boss_high_botanist_freywinnAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
     }
@@ -137,7 +137,7 @@ struct boss_high_botanist_freywinnAI : public ScriptedAI
                 {
                     for (std::list<uint64>::iterator itr = Adds_List.begin(); itr != Adds_List.end(); ++itr)
                     {
-                        if (Unit *temp = Unit::GetUnit(*me,*itr))
+                        if (Unit* temp = Unit::GetUnit(*me,*itr))
                         {
                             if (!temp->isAlive())
                             {

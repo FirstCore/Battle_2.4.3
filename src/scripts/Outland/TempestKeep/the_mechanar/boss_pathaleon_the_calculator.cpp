@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss Pathaleon the Calculator
-SD%Complete: 50
-SDComment: Event missing. Script for himself 99% blizzlike.
-SDCategory: Tempest Keep, The Mechanar
+Name: Boss Pathaleon the Calculator
+Complete(%): 50
+Comment: Event missing. Script for himself 99% blizzlike.
+Category: Tempest Keep, The Mechanar
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -80,12 +80,12 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
         Counter = 0;
         summons.DespawnAll();
     }
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -94,7 +94,7 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -114,7 +114,7 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
         {
             for (int i = 0; i < 3;i++)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 Creature* Wraith = me->SummonCreature(21062,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                 if (pTarget && Wraith)
                     Wraith->AI()->AttackStart(pTarget);
@@ -137,7 +137,7 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
 
         if (Domination_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
             {
                 switch(rand()%2)
                 {
@@ -196,7 +196,7 @@ struct mob_nether_wraithAI : public ScriptedAI
 
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -207,7 +207,7 @@ struct mob_nether_wraithAI : public ScriptedAI
 
         if (ArcaneMissiles_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(pTarget,SPELL_ARCANE_MISSILES);
             else
                 DoCast(me->getVictim(),SPELL_ARCANE_MISSILES);

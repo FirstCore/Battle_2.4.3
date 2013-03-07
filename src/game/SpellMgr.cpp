@@ -848,6 +848,40 @@ bool IsPositiveSpell(uint32 spellId)
     return true;
 }
 
+bool IsDispelableBySpell(SpellEntry const * dispelSpell, uint32 spellId, bool def)
+{
+    if (!dispelSpell) return false;
+    SpellEntry const *spellproto = sSpellStore.LookupEntry(spellId);
+    if (!spellproto) return false;
+
+    if (spellproto->Mechanic == MECHANIC_IMMUNE_SHIELD)
+    {
+        if (dispelSpell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    else if (spellproto->Mechanic == MECHANIC_INVULNERABILITY)
+    {
+        if (dispelSpell->AttributesEx & SPELL_ATTR_EX_UNAFFECTED_BY_SCHOOL_IMMUNE)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    else
+    {
+        if ((dispelSpell->AttributesEx & SPELL_ATTR_EX_UNAFFECTED_BY_SCHOOL_IMMUNE)
+            || (dispelSpell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY))
+            return !def;
+    }
+
+    return def;
+}
+
 bool IsSingleTargetSpell(SpellEntry const *spellInfo)
 {
     // all other single target spells have if it has AttributesEx5
@@ -1367,8 +1401,8 @@ bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const * spellP
         }
         else // For spells need check school/spell family/family mask
         {
-            // Potions can trigger only if spellfamily given
-            if (procSpell->SpellFamilyName == SPELLFAMILY_POTION)
+            // Item cast can trigger only with spells with spellfamily
+            if (procExtra & PROC_EX_INTERNAL_ITEM_CAST && procSpell->SpellFamilyName)
             {
                 if (procSpell->SpellFamilyName == spellProcEvent->spellFamilyName)
                     return true;
@@ -1392,8 +1426,8 @@ bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const * spellP
             }
         }
     }
-    // potions can trigger only if have spell_proc entry
-    else if (procSpell && procSpell->SpellFamilyName==SPELLFAMILY_POTION)
+    // Item cast can trigger only with spells with spellfamily
+    else if (procExtra & PROC_EX_INTERNAL_ITEM_CAST)
         return false;
 
     // Check for extra req (if none) and hit/crit
@@ -1406,7 +1440,7 @@ bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const * spellP
     else // Passive spells hits here only if resist/reflect/immune/evade
     {
         // Exist req for PROC_EX_EX_TRIGGER_ALWAYS
-        if (procEvent_procEx & PROC_EX_EX_TRIGGER_ALWAYS)
+        if ((procExtra & AURA_SPELL_PROC_EX_MASK) && (procEvent_procEx & PROC_EX_EX_TRIGGER_ALWAYS))
             return true;
         // Passive spells cant trigger if need hit
         if ((procEvent_procEx & PROC_EX_NORMAL_HIT) && !active)
@@ -1472,8 +1506,8 @@ void SpellMgr::LoadSpellThreats()
 
     sSpellThreatStore.Load();
 
-    sLog.outString(">> Loaded %u aggro generating spells", sSpellThreatStore.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u aggro generating spells", sSpellThreatStore.RecordCount);
 }
 
 void SpellMgr::LoadSpellEnchantProcData()
@@ -1523,6 +1557,7 @@ void SpellMgr::LoadSpellEnchantProcData()
         ++count;
     } while (result->NextRow());
 
+    sLog.outString();
     sLog.outString(">> Loaded %u enchant proc data definitions", count);
 }
 
@@ -1893,8 +1928,6 @@ void SpellMgr::LoadSpellLearnSkills()
                 else
                     dbc_node.value    = (entry->EffectBasePoints[i]+1)*75;
                 dbc_node.maxvalue = (entry->EffectBasePoints[i]+1)*75;
-
-                SpellLearnSkillNode const* db_node = GetSpellLearnSkill(spell);
 
                 mSpellLearnSkills[spell] = dbc_node;
                 ++dbc_count;
@@ -2276,7 +2309,9 @@ void SpellMgr::LoadSpellCustomAttr()
                     mSpellCustomAttr[i] |= SPELL_ATTR_CU_CHARGE;
                     break;
                 case SPELL_EFFECT_TRIGGER_SPELL:
-                    if (IsPositionTarget(spellInfo->EffectImplicitTargetA[j]) ||
+                    if (SpellTargetType[spellInfo->EffectImplicitTargetA[j]]== TARGET_TYPE_DEST_CASTER ||
+                        SpellTargetType[spellInfo->EffectImplicitTargetA[j]]== TARGET_TYPE_DEST_TARGET ||
+                        SpellTargetType[spellInfo->EffectImplicitTargetA[j]]== TARGET_TYPE_DEST_DEST ||
                         spellInfo->Targets & (TARGET_FLAG_SOURCE_LOCATION|TARGET_FLAG_DEST_LOCATION))
                         spellInfo->Effect[j] = SPELL_EFFECT_TRIGGER_MISSILE;
                     break;
@@ -2303,6 +2338,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch(i)
         {
+        case 42924: //GiddyUP!
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_NEARBY_ENTRY;
+            spellInfo->RecoveryTime = 2000; //2sec
+            break;
         case 26029: // dark glare
         case 37433: // spout
         case 43140: case 43215: // flame breath
@@ -2681,7 +2720,7 @@ bool IsSpellAllowedInLocation(SpellEntry const *spellInfo,uint32 map_id,uint32 z
             return false;
         }
         case 32307:                                         // Warmaul Ogre Banner
-            return area_id == 3610;
+            return area_id == 3637;
         case 32724:                                         // Gold Team (Alliance)
         case 32725:                                         // Green Team (Alliance)
         case 32727:                                         // Arena Preparation

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Magmadar
-SD%Complete: 75
-SDComment: Conflag on ground nyi, fear causes issues without VMAPs
-SDCategory: Molten Core
+Name: Boss_Magmadar
+Complete(%): 75
+Comment: Conflag on ground nyi, fear causes issues without VMAPs
+Category: Molten Core
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -49,7 +49,7 @@ struct boss_magmadarAI : public ScriptedAI
         DoCast(me, SPELL_MAGMASPIT, true);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -76,7 +76,7 @@ struct boss_magmadarAI : public ScriptedAI
         //Lavabomb_Timer
         if (Lavabomb_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_LAVABOMB_ALT);
 
             Lavabomb_Timer = 12000;

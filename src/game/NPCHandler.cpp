@@ -142,7 +142,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     }
 
     WorldPacket data(SMSG_TRAINER_LIST, 8+4+4+trainer_spells->spellList.size()*38 + strTitle.size()+1);
-    data << guid;
+    data << uint64(guid);
     data << uint32(trainer_spells->trainerType);
 
     size_t count_pos = data.wpos();
@@ -229,19 +229,24 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket& recv_data)
     if (_player->GetMoney() < nSpellCost)
         return;
 
-    SendPlaySpellVisual(guid, 0xB3);                        // visual effect on trainer
+    _player->ModifyMoney( -int32(nSpellCost) );
 
-    WorldPacket data(SMSG_PLAY_SPELL_IMPACT, 8+4);          // visual effect on player
-    data << uint64(_player->GetGUID()) << uint32(0x016A);
+    WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
+    data << uint64(guid);
+    data << uint32(0xB3);                                   // index from SpellVisualKit.dbc
     SendPacket(&data);
 
-    _player->ModifyMoney(-int32(nSpellCost));
+    data.Initialize(SMSG_PLAY_SPELL_IMPACT, 12);            // visual effect on player
+    data << uint64(_player->GetGUID());
+    data << uint32(0x016A);                                 // index from SpellVisualKit.dbc
+    SendPacket(&data);
 
     // learn explicitly to prevent lost money at lags, learning spell will be only show spell animation
     _player->learnSpell(trainer_spell->spell);
 
     data.Initialize(SMSG_TRAINER_BUY_SUCCEEDED, 12);
-    data << uint64(guid) << uint32(spellId);
+    data << uint64(guid);
+    data << uint32(trainer_spell->spell);
     SendPacket(&data);
 }
 

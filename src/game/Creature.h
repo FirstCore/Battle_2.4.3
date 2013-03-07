@@ -187,10 +187,7 @@ struct CreatureInfo
     int32   resistance4;
     int32   resistance5;
     int32   resistance6;
-    uint32  spell1;
-    uint32  spell2;
-    uint32  spell3;
-    uint32  spell4;
+    uint32  spells[CREATURE_MAX_SPELLS];
     uint32  PetSpellDataId;
     uint32  mingold;
     uint32  maxgold;
@@ -557,8 +554,8 @@ class Creature : public Unit, public GridObject<Creature>
         void SetLootRecipient (Unit* unit);
         void AllLootRemovedFromCorpse();
 
-        SpellEntry const *reachWithSpellAttack(Unit *pVictim);
-        SpellEntry const *reachWithSpellCure(Unit *pVictim);
+        SpellEntry const *reachWithSpellAttack(Unit* pVictim);
+        SpellEntry const *reachWithSpellCure(Unit* pVictim);
 
         uint32 m_spells[CREATURE_MAX_SPELLS];
         CreatureSpellCooldowns m_CreatureSpellCooldowns;
@@ -646,7 +643,7 @@ class Creature : public Unit, public GridObject<Creature>
         CreatureGroup *GetGroup() {return m_group;}
         void SetGroup(CreatureGroup *group) {m_group = group;}
 
-        Unit *SelectVictim();
+        Unit* SelectVictim();
 
         void SetDisableReputationGain(bool disable) { DisableReputationGain = disable; }
         bool IsReputationGainDisabled() { return DisableReputationGain; }
@@ -680,6 +677,7 @@ class Creature : public Unit, public GridObject<Creature>
         time_t m_respawnTime;                               // (secs) time of next respawn
         uint32 m_respawnDelay;                              // (secs) delay between corpse disappearance and respawning
         uint32 m_corpseDelay;                               // (secs) delay between death and corpse disappearance
+        uint32 m_deathTimer;                                // (elemental fix)
         float m_respawnradius;
 
         uint8 m_emoteState;

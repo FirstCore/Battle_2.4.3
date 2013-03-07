@@ -37,7 +37,7 @@
 
 // Format is BDB_YYYYMMDD
 #ifndef _REQ_BDB_VERSION
-# define _REQ_BDB_VERSION  "BDB_20121014"
+# define _REQ_BDB_VERSION  "BDB_20130304"
 #endif //_REQ_BDB_VERSION
 
 #ifdef _WIN32
@@ -105,28 +105,10 @@ Master::~Master()
 // Main function
 int Master::Run()
 {
-    sLog.outString("%s [core-daemon]", _FULLVERSION);
+    sLog.outString("**************************************************************************");
+    sLog.outString(" %s(world) Rev: %s Hash: %s ", _PACKAGENAME, _REVISION, _HASH);
+    sLog.outString("**************************************************************************");
     sLog.outString("<Ctrl-C> to stop.");
-    sLog.outString(" ");
-    sLog.outString("              BBBBBB                BBB     ");
-    sLog.outString("          BBBB:..:::BB        BBBBBBBBB     ");
-    sLog.outString("         B:::::BBB:::B      BB:....:::B     ");
-    sLog.outString("          BB:::B BB::B     B:::BBBB:::B     ");
-    sLog.outString("           B:::B BB:.B    B:::B    BB.:B    ");
-    sLog.outString("           B:::BBB::BBB  BB::B      BB.B    ");
-    sLog.outString("           B.:..BBB....BBB.:.B              ");
-    sLog.outString("           B...BB  BB..:BB...B              ");
-    sLog.outString("           B...B    B..:BB...B              ");
-    sLog.outString("           B...B    B..BBB...B              ");
-    sLog.outString("           B...B   BB.BBBB...B              ");
-    sLog.outString("           B...B BB:.BB  B...BB             ");
-    sLog.outString("          B: . B. :BB     B . B        BBB  ");
-    sLog.outString("         B: ..:BBBB       B:  .B      BB .B ");
-    sLog.outString("          BBBBB            B.  :B     B.: B ");
-    sLog.outString("                            B.  :BB    BB:BB");
-    sLog.outString("     BlizzLikeCore 2012(c)   BB   BBBBBBB B ");
-    sLog.outString("  <blizzlike.servegame.com>    BBB.    .BB  ");
-    sLog.outString("                                 BBBBBBBB   ");
     sLog.outString(" ");
 
     // worldd PID file creation
@@ -157,7 +139,7 @@ int Master::Run()
     ACE_Based::Thread world_thread(new WorldRunnable);
     world_thread.setPriority(ACE_Based::Highest);
 
-    // set realmbuilds depend on BlizzLikeCore expected builds, and set server online
+    // set realmbuilds depend on worldserver expected builds, and set server online
     std::string builds = AcceptableClientBuildsListStr();
     LoginDatabase.escape_string(builds);
     LoginDatabase.PExecute("UPDATE realmlist SET realmflags = realmflags & ~(%u), population = 0, realmbuilds = '%s'  WHERE id = '%d'", REALM_FLAG_OFFLINE, builds.c_str(), realmID);
@@ -193,7 +175,7 @@ int Master::Run()
 
                 if (!curAff)
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for BlizzLikeCore. Accessible processors bitmask (hex): %x",Aff,appAff);
+                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for worldserver. Accessible processors bitmask (hex): %x",Aff,appAff);
                 }
                 else
                 {
@@ -211,9 +193,9 @@ int Master::Run()
         if (Prio)
         {
             if (SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
-                sLog.outString("BlizzLikeCore process priority class set to HIGH");
+                sLog.outString("WorldServer process priority class set to HIGH");
             else
-                sLog.outError("ERROR: Can't set BlizzLikeCore process priority class.");
+                sLog.outError("ERROR: Can't set WorldServer process priority class.");
             sLog.outString();
         }
     }
@@ -233,7 +215,7 @@ int Master::Run()
     uint32 realCurrTime, realPrevTime;
     realCurrTime = realPrevTime = getMSTime();
 
-    uint32 socketSelecttime = sWorld.getConfig(CONFIG_SOCKET_SELECTTIME);
+    //uint32 socketSelecttime = sWorld.getConfig(CONFIG_SOCKET_SELECTTIME);
 
     // Start up freeze catcher thread
     ACE_Based::Thread* freeze_thread = NULL;
@@ -362,7 +344,7 @@ bool Master::_StartDB()
     if (dbstring.empty())
     {
         sLog.outError("World database not specified in configuration file");
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -370,7 +352,7 @@ bool Master::_StartDB()
     if (!WorldDatabase.Initialize(dbstring.c_str()))
     {
         sLog.outError("BC> Can't connect to database at %s", dbstring.c_str());
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -379,7 +361,7 @@ bool Master::_StartDB()
     if (dbstring.empty())
     {
         sLog.outError("Character database not specified in configuration file");
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -387,7 +369,7 @@ bool Master::_StartDB()
     if (!CharacterDatabase.Initialize(dbstring.c_str()))
     {
         sLog.outError("Cannot connect to Character database %s",dbstring.c_str());
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -396,7 +378,7 @@ bool Master::_StartDB()
     if (dbstring.empty())
     {
         sLog.outError("Login database not specified in configuration file");
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -404,7 +386,7 @@ bool Master::_StartDB()
     if (!LoginDatabase.Initialize(dbstring.c_str()))
     {
         sLog.outError("Cannot connect to login database %s",dbstring.c_str());
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -413,7 +395,7 @@ bool Master::_StartDB()
     if (!realmID)
     {
         sLog.outError("Realm ID not defined in configuration file");
-        sleep(10);
+        sleep(5);
         return false;
     }
     sLog.outString("Realm running as realm ID %d", realmID);
@@ -438,7 +420,7 @@ bool Master::_StartDB()
         sLog.outError(" WARNING:");
         sLog.outError(" Your World DB version: %s is wrong.", db_version);
         sLog.outError(" Required World DB version: %s", _REQ_BDB_VERSION);
-        sleep(10);
+        sleep(5);
         return false;
     }
 

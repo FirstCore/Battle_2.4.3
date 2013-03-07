@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Mother_Shahraz
-SD%Complete: 80
-SDComment: Saber Lash missing, Fatal Attraction slightly incorrect; need to damage only if affected players are within range of each other
-SDCategory: Black Temple
+Name: Boss_Mother_Shahraz
+Complete(%): 80
+Comment: Saber Lash missing, Fatal Attraction slightly incorrect; need to damage only if affected players are within range of each other
+Category: Black Temple
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -118,7 +118,7 @@ struct boss_shahrazAI : public ScriptedAI
         Enraged = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_MOTHERSHAHRAZEVENT, IN_PROGRESS);
@@ -129,12 +129,12 @@ struct boss_shahrazAI : public ScriptedAI
         DoCast(me,SPELL_SABER_LASH_TRIGGER,true);
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
         if (pInstance)
             pInstance->SetData(DATA_MOTHERSHAHRAZEVENT, DONE);
@@ -160,7 +160,7 @@ struct boss_shahrazAI : public ScriptedAI
         }
     }
 
-    bool TryDoCast(Unit *victim, uint32 spellId, bool triggered = false)
+    bool TryDoCast(Unit* victim, uint32 spellId, bool triggered = false)
     {
         if (me->IsNonMeleeSpellCasted(false)) return false;
 
@@ -311,12 +311,13 @@ struct boss_shahrazAI : public ScriptedAI
 
         //Enrage
         if (!me->HasAura(SPELL_BERSERK, 0))
+        {
             if (EnrageTimer <= diff)
             {
                 DoCast(me, SPELL_BERSERK);
                 DoScriptText(SAY_ENRAGE, me);
             } else EnrageTimer -= diff;
-
+        }
         //Random taunts
         if (RandomYellTimer <= diff)
         {

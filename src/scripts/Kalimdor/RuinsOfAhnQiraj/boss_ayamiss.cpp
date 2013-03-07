@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Ayamiss
-SD%Complete: 50
-SDComment: VERIFY SCRIPT
-SDCategory: Ruins of Ahn'Qiraj
+Name: Boss_Ayamiss
+Complete(%): 50
+Comment: VERIFY SCRIPT
+Category: Ruins of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -38,7 +38,7 @@ struct boss_ayamissAI : public ScriptedAI
 {
     boss_ayamissAI(Creature *c) : ScriptedAI(c) {}
 
-    Unit *pTarget;
+    Unit* pTarget;
     uint32 STINGERSPRAY_Timer;
     uint32 POISONSTINGER_Timer;
     uint32 SUMMONSWARMER_Timer;
@@ -53,7 +53,7 @@ struct boss_ayamissAI : public ScriptedAI
         phase=1;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         pTarget = who;
     }

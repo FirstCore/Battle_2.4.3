@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Rajaxx
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Ruins of Ahn'Qiraj
+Name: Boss_Rajaxx
+Complete(%): 0
+Comment: Place Holder
+Category: Ruins of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"

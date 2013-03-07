@@ -23,7 +23,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h" //"afxres.h"
+#include "windows.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -35,10 +35,10 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_APPICON             ICON                    "BlizzLikeRealm.ico"
+IDI_APPICON             ICON                    "worldserver.ico"
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutre (Par défaut système) resources
+// Neutre (Default system) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
 #ifdef _WIN32
@@ -68,12 +68,12 @@ BEGIN
     BEGIN
         BLOCK "080004b0"
         BEGIN
-            VALUE "FileDescription", "BlizzLikeRealm"
+            VALUE "FileDescription", "worldserver"
             VALUE "FileVersion", STRFILEVER
-            VALUE "InternalName", "BlizzLikeRealm"
+            VALUE "InternalName", "worldserver"
             VALUE "LegalCopyright", LEGALCOPYRIGHT
-            VALUE "OriginalFilename", "BlizzLikeRealm.exe"
-            VALUE "ProductName", "BlizzLikeRealm"
+            VALUE "OriginalFilename", "worldserver.exe"
+            VALUE "ProductName", "worldserver"
             VALUE "ProductVersion", STRPRODUCTVER
         END
     END

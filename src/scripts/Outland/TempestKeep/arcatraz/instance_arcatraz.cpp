@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Arcatraz
-SD%Complete: 80
-SDComment: Mainly Harbringer Skyriss event
-SDCategory: Tempest Keep, The Arcatraz
+Name: Instance_Arcatraz
+Complete(%): 80
+Comment: Mainly Harbringer Skyriss event
+Category: Tempest Keep, The Arcatraz
 EndScriptData */
 
 #include "ScriptPCH.h"

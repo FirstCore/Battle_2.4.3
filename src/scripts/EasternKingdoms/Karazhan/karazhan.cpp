@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Karazhan
-SD%Complete: 100
-SDComment: Support for Barnes (Opera controller) and Berthold (Doorman), Support for Quest 9645.
-SDCategory: Karazhan
+Name: Karazhan
+Complete(%): 100
+Comment: Support for Barnes (Opera controller) and Berthold (Doorman), Support for Quest 9645.
+Category: Karazhan
 EndScriptData */
 
 /* ContentData
@@ -418,17 +418,17 @@ bool GossipSelect_npc_barnes(Player* pPlayer, Creature* pCreature, uint32 /*uiSe
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->CLOSE_GOSSIP_MENU();
             pBarnesAI->m_uiEventId = EVENT_OZ;
-            outstring_log("BSCR: player (GUID %i) manually set Opera event to EVENT_OZ",pPlayer->GetGUID());
+            outstring_log("BSCR: player (GUID %llu) manually set Opera event to EVENT_OZ",pPlayer->GetGUID());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
             pPlayer->CLOSE_GOSSIP_MENU();
             pBarnesAI->m_uiEventId = EVENT_HOOD;
-            outstring_log("BSCR: player (GUID %i) manually set Opera event to EVENT_HOOD",pPlayer->GetGUID());
+            outstring_log("BSCR: player (GUID %llu) manually set Opera event to EVENT_HOOD",pPlayer->GetGUID());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
             pPlayer->CLOSE_GOSSIP_MENU();
             pBarnesAI->m_uiEventId = EVENT_RAJ;
-            outstring_log("BSCR: player (GUID %i) manually set Opera event to EVENT_RAJ",pPlayer->GetGUID());
+            outstring_log("BSCR: player (GUID %llu) manually set Opera event to EVENT_RAJ",pPlayer->GetGUID());
             break;
     }
 
@@ -561,25 +561,25 @@ struct npc_image_of_medivhAI : public ScriptedAI
         {
         case 0: return 9999999;
         case 1:
-            me->MonsterYell(SAY_DIALOG_MEDIVH_1,LANG_UNIVERSAL,NULL);
+            me->MonsterYell(SAY_DIALOG_MEDIVH_1,LANG_UNIVERSAL,0);
             return 10000;
         case 2:
             if (arca)
-                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_2,LANG_UNIVERSAL,NULL);
+                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_2,LANG_UNIVERSAL,0);
             return 20000;
         case 3:
-            me->MonsterYell(SAY_DIALOG_MEDIVH_3,LANG_UNIVERSAL,NULL);
+            me->MonsterYell(SAY_DIALOG_MEDIVH_3,LANG_UNIVERSAL,0);
             return 10000;
         case 4:
             if (arca)
-                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_4, LANG_UNIVERSAL, NULL);
+                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_4, LANG_UNIVERSAL, 0);
             return 20000;
         case 5:
-            me->MonsterYell(SAY_DIALOG_MEDIVH_5, LANG_UNIVERSAL, NULL);
+            me->MonsterYell(SAY_DIALOG_MEDIVH_5, LANG_UNIVERSAL, 0);
             return 20000;
         case 6:
             if (arca)
-                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_6, LANG_UNIVERSAL, NULL);
+                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_6, LANG_UNIVERSAL, 0);
             return 10000;
         case 7:
             FireArcanagosTimer = 500;
@@ -597,7 +597,7 @@ struct npc_image_of_medivhAI : public ScriptedAI
             return 1000;
         case 11:
             if (arca)
-                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_8, LANG_UNIVERSAL, NULL);
+                CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_8, LANG_UNIVERSAL, 0);
             return 5000;
         case 12:
             arca->GetMotionMaster()->MovePoint(0, -11010.82f,-1761.18f, 156.47f);
@@ -606,7 +606,7 @@ struct npc_image_of_medivhAI : public ScriptedAI
             arca->SetSpeed(MOVE_FLIGHT, 2.0f);
             return 10000;
         case 13:
-            me->MonsterYell(SAY_DIALOG_MEDIVH_9, LANG_UNIVERSAL, NULL);
+            me->MonsterYell(SAY_DIALOG_MEDIVH_9, LANG_UNIVERSAL, 0);
             return 10000;
         case 14:
             me->SetVisibility(VISIBILITY_OFF);

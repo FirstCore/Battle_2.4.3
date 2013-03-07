@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Stonetalon_Mountains
-SD%Complete: 95
-SDComment: Quest support: 6627, 6523
-SDCategory: Stonetalon Mountains
+Name: Stonetalon_Mountains
+Complete(%): 95
+Comment: Quest support: 6627, 6523
+Category: Stonetalon Mountains
 EndScriptData */
 
 /* ContentData

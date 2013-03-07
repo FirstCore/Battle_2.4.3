@@ -528,6 +528,8 @@ class ObjectMgr
         ObjectMgr();
         ~ObjectMgr();
 
+        ItemFakeEntryContainer _itemFakeEntryStore;
+
         typedef UNORDERED_MAP<uint32, Item*> ItemMap;
 
         typedef std::set< Group * > GroupSet;
@@ -554,8 +556,8 @@ class ObjectMgr
 
         UNORDERED_MAP<uint32, uint32> TransportEventMap;
 
-        Player* GetPlayer(const char* name) const { return ObjectAccessor::Instance().FindPlayerByName(name);} // Not used by the core
-        Player* GetPlayer(uint64 guid) const { return ObjectAccessor::FindPlayer(guid); }                      // Not used by the core
+      //Player* GetPlayer(const char* name) const { return ObjectAccessor::Instance().FindPlayerByName(name);} // removed
+      //Player* GetPlayer(uint64 guid) const { return ObjectAccessor::FindPlayer(guid); }                      // removed
 
         static GameObjectInfo const *GetGameObjectInfo(uint32 id) { return sGOStorage.LookupEntry<GameObjectInfo>(id); }
 
@@ -755,6 +757,7 @@ class ObjectMgr
         void LoadGameobjectRespawnTimes();
         void LoadItemPrototypes();
         void LoadItemLocales();
+        void LoadTransmogrifications(); // Transmogrification
         void LoadQuestLocales();
         void LoadNpcTextLocales();
         void LoadPageTextLocales();

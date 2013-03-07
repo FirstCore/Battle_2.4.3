@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Ironforge
-SD%Complete: 100
-SDComment: Quest support: 3702
-SDCategory: Ironforge
+Name: Ironforge
+Complete(%): 100
+Comment: Quest support: 3702
+Category: Ironforge
 EndScriptData */
 
 /* ContentData

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Scholomance
-SD%Complete: 100
-SDComment:
-SDCategory: Scholomance
+Name: Instance_Scholomance
+Complete(%): 100
+Comment:
+Category: Scholomance
 EndScriptData */
 
 #include "ScriptPCH.h"

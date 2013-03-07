@@ -61,11 +61,11 @@ struct ScriptAction
 //******************************************
 // Map file format defines
 //******************************************
-#define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '5.0w'
-#define MAP_AREA_MAGIC        'AERA'
-#define MAP_HEIGHT_MAGIC      'TGHM'
-#define MAP_LIQUID_MAGIC      'QILM'
+#define MAP_MAGIC             0x5350414D // SPAM
+#define MAP_VERSION_MAGIC     0x352E3077 // 5.0w
+#define MAP_AREA_MAGIC        0x41455241 // AERA
+#define MAP_HEIGHT_MAGIC      0x5447484D // TGHM
+#define MAP_LIQUID_MAGIC      0x51494C4D // QILM
 
 struct map_fileheader
 {
@@ -420,7 +420,7 @@ class Map : public GridRefManager<NGridType>, public BlizzLike::ObjectLevelLocka
 
         void UpdateIteratorBack(Player *player);
 
-        TempSummon *SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties = NULL, uint32 duration = 0, Unit *summoner = NULL, SpellEntry const* spellInfo = NULL);
+        TempSummon *SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties = NULL, uint32 duration = 0, Unit* summoner = NULL, SpellEntry const* spellInfo = NULL);
         Creature* GetCreature(uint64 guid);
         GameObject* GetGameObject(uint64 guid);
         DynamicObject* GetDynamicObject(uint64 guid);

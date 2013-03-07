@@ -671,7 +671,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_ACTIVATE_OBJECT:
                 // Source must be Unit.
-                if (Unit *pSource = _GetScriptUnit(source, true, step.script))
+                if (Unit* pSource = _GetScriptUnit(source, true, step.script))
                 {
                     // Target must be GameObject.
                     if (!target)
@@ -696,7 +696,7 @@ void Map::ScriptsProcess()
             {
                 // Source (datalong2 != 0) or target (datalong2 == 0) must be Unit.
                 bool bReverse = step.script->RemoveAura.Flags & SF_REMOVEAURA_REVERSE;
-                if (Unit *pTarget = _GetScriptUnit(bReverse ? source : target, bReverse, step.script))
+                if (Unit* pTarget = _GetScriptUnit(bReverse ? source : target, bReverse, step.script))
                     pTarget->RemoveAurasDueToSpell(step.script->RemoveAura.SpellID);
                 break;
             }
@@ -883,7 +883,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_ORIENTATION:
                 // Source must be Unit.
-                if (Unit *pSource = _GetScriptUnit(source, true, step.script))
+                if (Unit* pSource = _GetScriptUnit(source, true, step.script))
                 {
                     if (step.script->Orientation.Flags& SF_ORIENTATION_FACE_TARGET)
                     {

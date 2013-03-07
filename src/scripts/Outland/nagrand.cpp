@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Nagrand
-SD%Complete: 99
-SDComment: Quest support: 9849, 9918, 9874, 9991, 10107, 10108, 10044, 10172, 10646, 10085, 10987, 9868, 9948, 9923, 9924, 9955, 9879. TextId's unknown for altruis_the_sufferer and greatmother_geyah (npc_text)
-SDCategory: Nagrand
+Name: Nagrand
+Complete(%): 99
+Comment: Quest support: 9849, 9918, 9874, 9991, 10107, 10108, 10044, 10172, 10646, 10085, 10987, 9868, 9948, 9923, 9924, 9955, 9879. TextId's unknown for altruis_the_sufferer and greatmother_geyah (npc_text)
+Category: Nagrand
 EndScriptData */
 
 /* ContentData
@@ -61,9 +61,9 @@ struct mob_shattered_rumblerAI : public ScriptedAI
         Spawn = false;
     }
 
-    void EnterCombat(Unit* who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void SpellHit(Unit *Hitter, const SpellEntry *Spellkind)
+    void SpellHit(Unit* Hitter, const SpellEntry *Spellkind)
     {
         if (Spellkind->Id == 32001 && !Spawn)
         {
@@ -123,7 +123,7 @@ struct mob_lumpAI : public ScriptedAI
         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void DamageTaken(Unit *done_by, uint32 & damage)
+    void DamageTaken(Unit* done_by, uint32 & damage)
     {
         if (done_by->GetTypeId() == TYPEID_PLAYER && (me->GetHealth() - damage)*100 / me->GetMaxHealth() < 30)
         {
@@ -146,7 +146,7 @@ struct mob_lumpAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         if (me->HasAura(SPELL_VISUAL_SLEEP,0))
             me->RemoveAura(SPELL_VISUAL_SLEEP,0);
@@ -206,7 +206,7 @@ bool GossipHello_mob_lump(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_mob_lump(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_mob_lump(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -244,9 +244,9 @@ struct mob_sunspring_villagerAI : public ScriptedAI
         me->SetUInt32Value(UNIT_FIELD_BYTES_1,7);   // lay down
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
     {
         if (spell->Id == 32146)
         {
@@ -297,7 +297,7 @@ bool GossipHello_npc_altruis_the_sufferer(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_altruis_the_sufferer(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_altruis_the_sufferer(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -342,7 +342,7 @@ bool GossipSelect_npc_altruis_the_sufferer(Player *player, Creature* pCreature, 
     return true;
 }
 
-bool QuestAccept_npc_altruis_the_sufferer(Player *player, Creature *creature, Quest const *quest)
+bool QuestAccept_npc_altruis_the_sufferer(Player *player, Creature* /*creature*/, Quest const* /*quest*/)
 {
     if (!player->GetQuestRewardStatus(9991))              //Survey the Land, q-id 9991
     {
@@ -400,7 +400,7 @@ bool GossipHello_npc_greatmother_geyah(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_greatmother_geyah(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_greatmother_geyah(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -487,7 +487,7 @@ bool GossipHello_npc_lantresor_of_the_blade(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_lantresor_of_the_blade(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_lantresor_of_the_blade(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -702,9 +702,9 @@ struct npc_creditmarker_visit_with_ancestorsAI : public ScriptedAI
 
     void Reset() {}
 
-    void EnterCombat(Unit* who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who)
             return;
@@ -753,7 +753,7 @@ struct mob_sparrowhawkAI : public ScriptedAI
         PlayerGUID = 0;
         fleeing = false;
     }
-    void AttackStart(Unit *who)
+    void AttackStart(Unit* who)
     {
         if (PlayerGUID)
             return;
@@ -761,9 +761,9 @@ struct mob_sparrowhawkAI : public ScriptedAI
         ScriptedAI::AttackStart(who);
     }
 
-    void EnterCombat(Unit* who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || PlayerGUID)
             return;
@@ -812,7 +812,7 @@ struct mob_sparrowhawkAI : public ScriptedAI
         ScriptedAI::UpdateAI(diff);
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         if (caster->GetTypeId() == TYPEID_PLAYER)
         {

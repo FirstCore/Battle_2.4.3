@@ -189,6 +189,7 @@ enum WorldConfigs
     CONFIG_DEATH_CORPSE_RECLAIM_DELAY_PVE,
     CONFIG_DEATH_BONES_WORLD,
     CONFIG_DEATH_BONES_BG_OR_ARENA,
+    CONFIG_DIE_COMMAND_MODE,
     CONFIG_THREAT_RADIUS,
     CONFIG_CHANCE_OF_GM_SURVEY,
     CONFIG_INSTANT_LOGOUT,
@@ -250,6 +251,7 @@ enum WorldConfigs
     CONFIG_AUTOBROADCAST_TIMER,
     CONFIG_AUTOBROADCAST_ENABLED,
     CONFIG_AUTOBROADCAST_CENTER,
+    CONFIG_FLOAT_RATE_PVP_RANK_EXTRA_HONOR,
     CONFIG_VALUE_COUNT
 };
 
@@ -313,6 +315,26 @@ enum Rates
     RATE_DURABILITY_LOSS_ABSORB,
     RATE_DURABILITY_LOSS_BLOCK,
     MAX_RATES
+};
+
+enum HonorKillPvPRank
+{
+    HKRANK00,
+    HKRANK01,
+    HKRANK02,
+    HKRANK03,
+    HKRANK04,
+    HKRANK05,
+    HKRANK06,
+    HKRANK07,
+    HKRANK08,
+    HKRANK09,
+    HKRANK10,
+    HKRANK11,
+    HKRANK12,
+    HKRANK13,
+    HKRANK14,
+    HKRANKMAX
 };
 
 // Type of server
@@ -511,6 +533,8 @@ class World
         void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
 
+        uint32 pvp_ranks[HKRANKMAX];
+
         // Are we in the middle of a shutdown?
         bool IsShutdowning() const { return m_ShutdownTimer > 0; }
         void ShutdownServ(uint32 time, uint32 options, uint8 exitcode);
@@ -574,6 +598,10 @@ class World
         static int32 GetVisibilityNotifyPeriodOnContinents(){ return m_visibility_notify_periodOnContinents; }
         static int32 GetVisibilityNotifyPeriodInInstances() { return m_visibility_notify_periodInInstances;  }
         static int32 GetVisibilityNotifyPeriodInBGArenas()  { return m_visibility_notify_periodInBGArenas;   }
+
+        // Movement Anticheat
+        static bool GetEnableMvAnticheat()              { return m_EnableMvAnticheat;       }
+        static uint32 GetMvAnticheatGmLevel()           { return m_MvAnticheatGmLevel;      }
 
         void ProcessCliCommands();
         void QueueCliCommand(CliCommandHolder* commandHolder) { cliCmdQueue.add(commandHolder); }
@@ -661,6 +689,10 @@ class World
         static int32 m_visibility_notify_periodOnContinents;
         static int32 m_visibility_notify_periodInInstances;
         static int32 m_visibility_notify_periodInBGArenas;
+
+        // Movement Anticheat (Enable Flag)
+        static bool m_EnableMvAnticheat;
+        static uint32 m_MvAnticheatGmLevel;
 
         // CLI command holder to be thread safe
         ACE_Based::LockedQueue<CliCommandHolder*, ACE_Thread_Mutex> cliCmdQueue;

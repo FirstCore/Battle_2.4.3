@@ -58,7 +58,7 @@ struct ScriptedAI : public CreatureAI
     //CreatureAI Functions
     //*************
 
-    void AttackStartNoMove(Unit *pTarget);
+    void AttackStartNoMove(Unit* pTarget);
 
     // Called at any Damage from any attacker (before damage apply)
     void DamageTaken(Unit* /*pDone_by*/, uint32& /*uiDamage*/) {}
@@ -82,7 +82,7 @@ struct ScriptedAI : public CreatureAI
     void SpellHit(Unit* /*caster*/, const SpellEntry * /*spell*/) {}
 
     // Called when spell hits a target
-    void SpellHitTarget(Unit * /*pTarget*/, const SpellEntry * /*spell*/) {}
+    void SpellHitTarget(Unit* /*pTarget*/, const SpellEntry * /*spell*/) {}
 
     //Called at waypoint reached or PointMovement end
     void MovementInform(uint32 /*type*/, uint32 /*id*/){}
@@ -209,8 +209,8 @@ struct BossAI : public ScriptedAI
     void UpdateAI(const uint32 diff) = 0;
 
     void Reset() { _Reset(); }
-    void EnterCombat(Unit * /*who*/) { _EnterCombat(); }
-    void JustDied(Unit * /*killer*/) { _JustDied(); }
+    void EnterCombat(Unit* /*who*/) { _EnterCombat(); }
+    void JustDied(Unit* /*killer*/) { _JustDied(); }
     void JustReachedHome() { me->setActive(false); }
 
     protected:

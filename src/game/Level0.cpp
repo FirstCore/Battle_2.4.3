@@ -101,6 +101,8 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 
     //SendSysMessage(full);
     //PSendSysMessage(LANG_USING_WORLD_DB,sWorld.GetDBVersion());
+    PSendSysMessage("Core: GaryMoveOut 2.4.3");
+    PSendSysMessage("Rev: 23.02.2013");
     PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, str.c_str());
     PSendSysMessage("Update time diff: %u.", updateTime);
@@ -189,7 +191,7 @@ bool ChatHandler::HandleSaveCommand(const char* /*args*/)
 
     // save or plan save after 20 sec (logout delay) if current next save time more this value and _not_ output any messages to prevent cheat planning
     uint32 save_interval = sWorld.getConfig(CONFIG_INTERVAL_SAVE);
-    if (save_interval == 0 || save_interval > 20*IN_MILLISECONDS && player->GetSaveTimer() <= save_interval - 20*IN_MILLISECONDS)
+    if (save_interval == 0 || (save_interval > 20*IN_MILLISECONDS && player->GetSaveTimer() <= save_interval - 20*IN_MILLISECONDS))
         player->SaveToDB();
 
     return true;

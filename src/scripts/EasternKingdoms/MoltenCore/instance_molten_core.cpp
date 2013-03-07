@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Molten_Core
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Molten Core
+Name: Instance_Molten_Core
+Complete(%): 0
+Comment: Place Holder
+Category: Molten Core
 EndScriptData */
 
 #include "ScriptPCH.h"

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: boss_darhrohan_balnazzar
-SD%Complete: 100
-SDComment: CHECK SQL
-SDCategory: Stratholme
+Name: boss_darhrohan_balnazzar
+Complete(%): 100
+Comment: CHECK SQL
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -104,7 +104,7 @@ struct boss_dathrohan_balnazzarAI : public ScriptedAI
             TEMPSUMMON_TIMED_DESPAWN, HOUR*IN_MILLISECONDS);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -184,7 +184,7 @@ struct boss_dathrohan_balnazzarAI : public ScriptedAI
             //DeepSleep
             if (m_uiDeepSleep_Timer <= uiDiff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget, SPELL_SLEEP);
 
                 m_uiDeepSleep_Timer = 15000;

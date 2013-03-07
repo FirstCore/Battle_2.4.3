@@ -563,7 +563,7 @@ bool AuthSocket::_HandleLogonProof()
 
         if (!PatchCache::instance()->GetHash(tmp, (uint8*)&xferh.md5))
         {
-            // calculate patch md5, happens if patch was added while realmd was running
+            // calculate patch md5, happens if patch was added while auth was running
             PatchCache::instance()->LoadPatchMD5(tmp);
             PatchCache::instance()->GetHash(tmp, (uint8*)&xferh.md5);
         }

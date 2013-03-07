@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Arcatraz
-SD%Complete: 60
-SDComment: Warden Mellichar, event controller for Skyriss event. Millhouse Manastorm. TODO: make better combatAI for Millhouse.
-SDCategory: Tempest Keep, The Arcatraz
+Name: Arcatraz
+Complete(%): 60
+Comment: Warden Mellichar, event controller for Skyriss event. Millhouse Manastorm. TODO: make better combatAI for Millhouse.
+Category: Tempest Keep, The Arcatraz
 EndScriptData */
 
 /* ContentData
@@ -111,11 +111,11 @@ struct npc_millhouse_manastormAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -124,7 +124,7 @@ struct npc_millhouse_manastormAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -281,9 +281,9 @@ struct npc_warden_mellicharAI : public ScriptedAI
             pInstance->SetData(TYPE_HARBINGERSKYRISS,NOT_STARTED);
     }
 
-    void AttackStart(Unit* who) { }
+    void AttackStart(Unit* /*who*/) { }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (IsRunning)
             return;
@@ -301,7 +301,7 @@ struct npc_warden_mellicharAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(YELL_INTRO1, me);
         DoCast(me,SPELL_BUBBLE_VISUAL);
@@ -495,7 +495,7 @@ struct mob_zerekethvoidzoneAI : public ScriptedAI
         DoCast(me,SPELL_VOID_ZONE_DAMAGE);
     }
 
-    void EnterCombat(Unit* who) {}
+    void EnterCombat(Unit* /*who*/) {}
 };
 CreatureAI* GetAI_mob_zerekethvoidzoneAI(Creature* pCreature)
 {

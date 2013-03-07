@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Fankriss
-SD%Complete: 100
-SDComment: sound not implemented
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Fankriss
+Complete(%): 100
+Comment: sound not implemented
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -81,7 +81,7 @@ struct boss_fankrissAI : public ScriptedAI
             ((CreatureAI*)Spawn->AI())->AttackStart(victim);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -125,7 +125,7 @@ struct boss_fankrissAI : public ScriptedAI
         {
             if (SpawnHatchlings_Timer <= diff)
             {
-                Unit *pTarget = NULL;
+                Unit* pTarget = NULL;
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 {

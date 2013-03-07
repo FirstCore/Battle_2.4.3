@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: The_Eye
-SD%Complete: 100
-SDComment:
-SDCategory: Tempest Keep, The Eye
+Name: The_Eye
+Complete(%): 100
+Comment:
+Category: Tempest Keep, The Eye
 EndScriptData */
 
 /* ContentData
@@ -45,7 +45,7 @@ struct mob_crystalcore_devastatorAI : public ScriptedAI
         Knockaway_Timer = 25000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -61,7 +61,7 @@ struct mob_crystalcore_devastatorAI : public ScriptedAI
             me->CastSpell(me->getVictim(),SPELL_KNOCKAWAY, true);
 
             // current aggro target is knocked away pick new target
-            Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 0);
+            Unit* pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 0);
 
             if (!pTarget || pTarget == me->getVictim())
                 pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);

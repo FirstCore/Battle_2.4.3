@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Searing_Gorge
-SD%Complete: 80
-SDComment: Quest support: 3377, 3441 (More accurate info on Kalaran needed). Lothos Riftwaker teleport to Molten Core.
-SDCategory: Searing Gorge
+Name: Searing_Gorge
+Complete(%): 80
+Comment: Quest support: 3377, 3441 (More accurate info on Kalaran needed). Lothos Riftwaker teleport to Molten Core.
+Category: Searing Gorge
 EndScriptData */
 
 /* ContentData

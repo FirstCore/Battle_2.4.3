@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hydross_The_Unstable
-SD%Complete: 90
-SDComment: Some details and adjustments left to do, probably nothing major. Spawns may be spawned in different way/location.
-SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
+Name: Boss_Hydross_The_Unstable
+Complete(%): 90
+Comment: Some details and adjustments left to do, probably nothing major. Spawns may be spawned in different way/location.
+Category: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -134,7 +134,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             beamer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             beams[0]=beamer->GetGUID();
         }
-        beamer = beamer = me->SummonCreature(ENTRY_BEAM_DUMMY,-219.918f,-371.308f,22.0042f,2.73072f,TEMPSUMMON_CORPSE_DESPAWN,0);
+        beamer = me->SummonCreature(ENTRY_BEAM_DUMMY,-219.918f,-371.308f,22.0042f,2.73072f,TEMPSUMMON_CORPSE_DESPAWN,0);
         if (beamer)
         {
             beamer->CastSpell(me,SPELL_BLUE_BEAM,true);
@@ -155,7 +155,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             }
         }
     }
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
 
@@ -163,7 +163,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             pInstance->SetData(DATA_HYDROSSTHEUNSTABLEEVENT, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         if (CorruptedForm)
         {
@@ -204,7 +204,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
         Summons.Despawn(summon);
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
         if (CorruptedForm)
             DoScriptText(SAY_CORRUPT_DEATH, me);
@@ -259,7 +259,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             //VileSludge_Timer
             if (VileSludge_Timer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget)
                     DoCast(pTarget, SPELL_VILE_SLUDGE);
 
@@ -302,7 +302,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             {
                 if (MarkOfHydross_Count <= 5)
                 {
-                    uint32 mark_spell = NULL;
+                    uint32 mark_spell = 0;
 
                     switch(MarkOfHydross_Count)
                     {
@@ -326,7 +326,7 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
             //WaterTomb_Timer
             if (WaterTomb_Timer <= diff)
             {
-                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
                 if (pTarget)
                     DoCast(pTarget, SPELL_WATER_TOMB);
 

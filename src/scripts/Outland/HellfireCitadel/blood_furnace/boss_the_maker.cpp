@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_The_Maker
-SD%Complete: 99
-SDComment:
-SDCategory: Hellfire Citadel, Blood Furnace
+Name: Boss_The_Maker
+Complete(%): 99
+Comment:
+Category: Hellfire Citadel, Blood Furnace
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -58,7 +58,7 @@ struct boss_the_makerAI : public ScriptedAI
             pInstance->SetData(DATA_MAKEREVENT, NOT_STARTED);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         switch(rand()%3)
         {
@@ -71,7 +71,7 @@ struct boss_the_makerAI : public ScriptedAI
             pInstance->SetData(DATA_MAKEREVENT, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {
@@ -80,7 +80,7 @@ struct boss_the_makerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DIE, me);
 
@@ -95,7 +95,7 @@ struct boss_the_makerAI : public ScriptedAI
 
         if (ExplodingBreaker_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget,HeroicMode ? SPELL_EXPLODING_BREAKER_H : SPELL_EXPLODING_BREAKER);
             ExplodingBreaker_Timer = 9000+rand()%2000;
         }
@@ -103,7 +103,7 @@ struct boss_the_makerAI : public ScriptedAI
 
         if (Domination_Timer <= diff)
         {
-            Unit *pTarget;
+            Unit* pTarget;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             DoCast(pTarget,SPELL_DOMINATION);
             Domination_Timer = 60000;

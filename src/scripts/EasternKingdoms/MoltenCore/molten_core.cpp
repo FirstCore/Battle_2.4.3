@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Molten_Core
-SD%Complete: 100
-SDComment:
-SDCategory: Molten Core
+Name: Molten_Core
+Complete(%): 100
+Comment:
+Category: Molten Core
 EndScriptData */
 
 /* ContentData

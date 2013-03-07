@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Azshara
-SD%Complete: 90
-SDComment: Quest support: 2744, 3141, 9364, 10994
-SDCategory: Azshara
+Name: Azshara
+Complete(%): 90
+Comment: Quest support: 2744, 3141, 9364, 10994
+Category: Azshara
 EndScriptData */
 
 /* ContentData
@@ -50,9 +50,9 @@ struct mobs_spitelashesAI : public ScriptedAI
         spellhit = false;
     }
 
-    void EnterCombat(Unit * /*who*/) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void SpellHit(Unit *Hitter, const SpellEntry *Spellkind)
+    void SpellHit(Unit* Hitter, const SpellEntry *Spellkind)
     {
         if (!spellhit &&
             Hitter->GetTypeId() == TYPEID_PLAYER &&
@@ -290,11 +290,13 @@ struct mob_rizzle_sprysprocketAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         if (Must_Die)
+        {
             if (Must_Die_Timer <= diff)
             {
                 Despawn();
                 return;
             } else Must_Die_Timer -= diff;
+        }
 
         if (!Escape)
         {
@@ -317,7 +319,7 @@ struct mob_rizzle_sprysprocketAI : public ScriptedAI
                     me->AI_SendMoveToPacket(3706.39f, -3969.15f, 35.9118f, 0, 0, 0);
                 }
                 //begin swimming and summon depth charges
-                Player* pPlayer = Unit::GetPlayer(*me, PlayerGUID);
+                //Player* pPlayer = Unit::GetPlayer(*me, PlayerGUID);
                 DoScriptText(EMOTE_START, me);
                 DoCast(me, SPELL_PERIODIC_DEPTH_CHARGE);
                 me->SetUnitMovementFlags(MOVEFLAG_FLYING2 | MOVEFLAG_SWIMMING);
@@ -379,7 +381,7 @@ struct mob_rizzle_sprysprocketAI : public ScriptedAI
             pPlayer->GetSession()->SendPacket(&data);
     }
 
-    void AttackStart(Unit *who)
+    void AttackStart(Unit* who)
     {
         if (!who || PlayerGUID)
             return;
@@ -460,15 +462,16 @@ struct mob_depth_chargeAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         if (we_must_die)
+        {
             if (must_die_timer <= diff)
             {
                 me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 me->RemoveCorpse();
             } else must_die_timer -= diff;
-        return;
+        }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who)
             return;
@@ -481,7 +484,7 @@ struct mob_depth_chargeAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit * /*who*/)
+    void AttackStart(Unit* /*who*/)
     {
     }
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Scarlet_Monastery
-SD%Complete: 50
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Instance_Scarlet_Monastery
+Complete(%): 50
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"

@@ -3,9 +3,9 @@
 # The directory your binaries are stored at
 BINDIR=~/server/bin/
 # The worldserver binary name
-WORLDNAME=blizzlike-core
+WORLDNAME=worldserver
 # The realmserver binary name
-REALMNAME=blizzlike-realm
+REALMNAME=authserver
 # The restarters filename
 RESTARTNAME=blizzlike-restarter
 # The name of the "screens" the restarter creates

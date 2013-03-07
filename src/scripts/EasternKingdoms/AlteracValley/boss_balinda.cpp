@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: Boss_Balinda
-SD%Complete:
-SDComment:
+Name: Boss_Balinda
+Complete(%):
+Comment:
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -110,7 +110,7 @@ struct boss_balindaAI : public ScriptedAI
         Summons.DespawnAll();
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(YELL_AGGRO, me);
     }

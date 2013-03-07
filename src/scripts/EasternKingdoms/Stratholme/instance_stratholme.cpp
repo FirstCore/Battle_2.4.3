@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: instance_stratholme
-SD%Complete: 50
-SDComment: In progress. Undead side 75% implemented. Save/load not implemented.
-SDCategory: Stratholme
+Name: instance_stratholme
+Complete(%): 50
+Comment: In progress. Undead side 75% implemented. Save/load not implemented.
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"

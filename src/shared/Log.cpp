@@ -28,9 +28,8 @@ INSTANTIATE_SINGLETON_1(Log);
 
 Log::Log() :
     raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL),
-    dberLogfile(NULL), chatLogfile(NULL), m_gmlog_per_account(false),
-    m_enableLogDBLater(false), m_enableLogDB(false), m_colored(false),
-    arenaLogFile(NULL)
+    dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), m_gmlog_per_account(false),
+    m_enableLogDBLater(false), m_enableLogDB(false), m_colored(false)
 {
     Initialize();
 }
@@ -638,6 +637,48 @@ void Log::outDetail(const char * str, ...)
         }
     }
 
+    fflush(stdout);
+}
+
+void Log::outStaticDebug(const char * str, ...)
+{
+    if (!str)
+        return;
+
+    if (m_enableLogDB && m_dbLogLevel > LOGL_DETAIL)
+    {
+        va_list ap2;
+        va_start(ap2, str);
+        char nnew_str[MAX_QUERY_LEN];
+        vsnprintf(nnew_str, MAX_QUERY_LEN, str, ap2);
+        outDB(LOG_TYPE_DEBUG, nnew_str);
+        va_end(ap2);
+    }
+
+    if ( m_logLevel > LOGL_DETAIL )
+    {
+        if (m_colored)
+            SetColor(true,m_colors[LOGL_DEBUG]);
+
+        UTF8PRINTF(stdout,str,);
+
+        if (m_colored)
+            ResetColor(true);
+
+        printf("\n");
+
+        if (logfile)
+        {
+            outTimestamp(logfile);
+            va_list ap2;
+            va_start(ap2, str);
+            vfprintf(logfile, str, ap2);
+            va_end(ap2);
+
+            fprintf(logfile, "\n");
+            fflush(logfile);
+        }
+    }
     fflush(stdout);
 }
 

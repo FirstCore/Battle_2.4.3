@@ -23,7 +23,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h"
+#include "windows.h" //"afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -35,10 +35,10 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_APPICON             ICON                    "BlizzLikeCore.ico"
+IDI_APPICON             ICON                    "authserver.ico"
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutre (Par défaut système) resources
+// Neutre (Default system) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
 #ifdef _WIN32
@@ -68,12 +68,12 @@ BEGIN
     BEGIN
         BLOCK "080004b0"
         BEGIN
-            VALUE "FileDescription", "BlizzLikeCore"
+            VALUE "FileDescription", "authserver"
             VALUE "FileVersion", STRFILEVER
-            VALUE "InternalName", "BlizzLikeCore"
+            VALUE "InternalName", "authserver"
             VALUE "LegalCopyright", LEGALCOPYRIGHT
-            VALUE "OriginalFilename", "BlizzLikeCore.exe"
-            VALUE "ProductName", "BlizzLikeCore"
+            VALUE "OriginalFilename", "authserver.exe"
+            VALUE "ProductName", "authserver"
             VALUE "ProductVersion", STRPRODUCTVER
         END
     END

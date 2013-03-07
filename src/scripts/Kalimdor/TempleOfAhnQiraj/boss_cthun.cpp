@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Cthun
-SD%Complete: 95
-SDComment: Darkglare tracking issue
-SDCategory: Temple of Ahn'Qiraj
+Name: Boss_Cthun
+Complete(%): 95
+Comment: Darkglare tracking issue
+Category: Temple of Ahn'Qiraj
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -124,7 +124,7 @@ struct flesh_tentacleAI : public Scripted_NoMovementAI
         CheckTimer = 1000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -183,7 +183,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
             pInst->SetData(DATA_CTHUN_PHASE, 0);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -194,7 +194,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
         Spawned = (Creature*)me->SummonCreature(MOB_EYE_TENTACLE,me->GetPositionX()+x,me->GetPositionY()+y,me->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,500);
         if (Spawned)
         {
-            Unit *pTarget;
+            Unit* pTarget;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
 
             if (pTarget)
@@ -220,7 +220,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
                 if (BeamTimer <= diff)
                 {
                     //SPELL_GREEN_BEAM
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
                     if (pTarget)
                     {
@@ -238,7 +238,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
                 //ClawTentacleTimer
                 if (ClawTentacleTimer <= diff)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
                     if (pTarget)
                     {
@@ -283,7 +283,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
                     me->InterruptNonMeleeSpells(false);
 
                     //Select random target for dark beam to start on
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
 
                     if (pTarget)
@@ -314,27 +314,29 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
             {
                 //EyeTentacleTimer
                 if (DarkGlareTick < 35)
-                    if (DarkGlareTickTimer <= diff)
                 {
-                    //Remove any target
-                    me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+                    if (DarkGlareTickTimer <= diff)
+                    {
+                        //Remove any target
+                        me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
 
-                    //Set angle and cast
-                    if (ClockWise)
-                        me->SetOrientation(DarkGlareAngle + ((float)DarkGlareTick*PI/35));
-                    else me->SetOrientation(DarkGlareAngle - ((float)DarkGlareTick*PI/35));
+                        //Set angle and cast
+                        if (ClockWise)
+                            me->SetOrientation(DarkGlareAngle + ((float)DarkGlareTick*PI/35));
+                        else me->SetOrientation(DarkGlareAngle - ((float)DarkGlareTick*PI/35));
 
-                    me->StopMoving();
+                        me->StopMoving();
 
-                    //Actual dark glare cast, maybe something missing here?
-                    me->CastSpell(me, SPELL_DARK_GLARE, false);
+                        //Actual dark glare cast, maybe something missing here?
+                        me->CastSpell(me, SPELL_DARK_GLARE, false);
 
-                    //Increase tick
-                    DarkGlareTick++;
+                        //Increase tick
+                        DarkGlareTick++;
 
-                    //1 second per tick
-                    DarkGlareTickTimer = 1000;
-                } else DarkGlareTickTimer -= diff;
+                        //1 second per tick
+                        DarkGlareTickTimer = 1000;
+                    } else DarkGlareTickTimer -= diff;
+                }
 
                 //PhaseTimer
                 if (PhaseTimer <= diff)
@@ -376,7 +378,7 @@ struct eye_of_cthunAI : public Scripted_NoMovementAI
         }
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
         //No instance
         if (!pInst)
@@ -499,7 +501,7 @@ struct cthunAI : public Scripted_NoMovementAI
             pInst->SetData(DATA_CTHUN_PHASE, 0);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -510,7 +512,7 @@ struct cthunAI : public Scripted_NoMovementAI
         Spawned = (Creature*)me->SummonCreature(MOB_EYE_TENTACLE,me->GetPositionX()+x,me->GetPositionY()+y,me->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,500);
         if (Spawned)
         {
-            Unit *pTarget;
+            Unit* pTarget;
 
             pTarget = SelectRandomNotStomach();
 
@@ -733,7 +735,7 @@ struct cthunAI : public Scripted_NoMovementAI
                 //Stomach Enter Timer
                 if (StomachEnterTimer <= diff)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectRandomNotStomach();
 
                     if (pTarget)
@@ -750,24 +752,26 @@ struct cthunAI : public Scripted_NoMovementAI
                 } else StomachEnterTimer -= diff;
 
                 if (StomachEnterVisTimer && StomachEnterTarget)
-                    if (StomachEnterVisTimer <= diff)
                 {
-                    //Check for valid player
-                    Unit* pUnit = Unit::GetUnit(*me, StomachEnterTarget);
-
-                    if (pUnit)
+                    if (StomachEnterVisTimer <= diff)
                     {
-                        DoTeleportPlayer(pUnit, STOMACH_X, STOMACH_Y, STOMACH_Z, STOMACH_O);
-                    }
+                        //Check for valid player
+                        Unit* pUnit = Unit::GetUnit(*me, StomachEnterTarget);
 
-                    StomachEnterTarget = 0;
-                    StomachEnterVisTimer = 0;
-                } else StomachEnterVisTimer -= diff;
+                        if (pUnit)
+                        {
+                            DoTeleportPlayer(pUnit, STOMACH_X, STOMACH_Y, STOMACH_Z, STOMACH_O);
+                        }
+
+                        StomachEnterTarget = 0;
+                        StomachEnterVisTimer = 0;
+                    } else StomachEnterVisTimer -= diff;
+                }
 
                 //GientClawTentacleTimer
                 if (GiantClawTentacleTimer <= diff)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectRandomNotStomach();
                     if (pTarget)
                     {
@@ -787,7 +791,7 @@ struct cthunAI : public Scripted_NoMovementAI
                 //GiantEyeTentacleTimer
                 if (GiantEyeTentacleTimer <= diff)
                 {
-                    Unit *pTarget = NULL;
+                    Unit* pTarget = NULL;
                     pTarget = SelectRandomNotStomach();
                     if (pTarget)
                     {
@@ -864,14 +868,14 @@ struct cthunAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* /*pKiller*/)
     {
         //Switch
         if (pInst)
             pInst->SetData(DATA_CTHUN_PHASE, 5);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
         //No instance
         if (!pInst)
@@ -940,7 +944,7 @@ struct eye_tentacleAI : public Scripted_NoMovementAI
         KillSelfTimer = 35000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -962,7 +966,7 @@ struct eye_tentacleAI : public Scripted_NoMovementAI
         //MindflayTimer
         if (MindflayTimer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             if (pTarget && !pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
                 DoCast(pTarget,SPELL_MIND_FLAY);
@@ -1002,7 +1006,7 @@ struct claw_tentacleAI : public Scripted_NoMovementAI
         EvadeTimer = 5000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -1015,39 +1019,41 @@ struct claw_tentacleAI : public Scripted_NoMovementAI
 
         //EvadeTimer
         if (!me->IsWithinMeleeRange(me->getVictim()))
-            if (EvadeTimer <= diff)
         {
-            Unit* p = Unit::GetUnit(*me, Portal);
-            if (p)
-                p->DealDamage(p, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-
-            //Dissapear and reappear at new position
-            me->SetVisibility(VISIBILITY_OFF);
-
-            Unit *pTarget = NULL;
-            pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
-            if (!pTarget)
+            if (EvadeTimer <= diff)
             {
-                me->DealDamage(me, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-                return;
-            }
-
-            if (!pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
-            {
-                me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0);
-                Unit* p = DoSpawnCreature(MOB_SMALL_PORTAL,0,0,0,0,TEMPSUMMON_CORPSE_DESPAWN, 0);
+                Unit* p = Unit::GetUnit(*me, Portal);
                 if (p)
-                    Portal = p->GetGUID();
+                    p->DealDamage(p, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
 
-                GroundRuptureTimer = 500;
-                HamstringTimer = 2000;
-                EvadeTimer = 5000;
-                AttackStart(pTarget);
-            }
+                //Dissapear and reappear at new position
+                me->SetVisibility(VISIBILITY_OFF);
 
-            me->SetVisibility(VISIBILITY_ON);
+                Unit* pTarget = NULL;
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                if (!pTarget)
+                {
+                    me->DealDamage(me, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    return;
+                }
 
-        } else EvadeTimer -= diff;
+                if (!pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
+                {
+                    me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0);
+                    Unit* p = DoSpawnCreature(MOB_SMALL_PORTAL,0,0,0,0,TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    if (p)
+                        Portal = p->GetGUID();
+
+                    GroundRuptureTimer = 500;
+                    HamstringTimer = 2000;
+                    EvadeTimer = 5000;
+                    AttackStart(pTarget);
+                }
+
+                me->SetVisibility(VISIBILITY_ON);
+
+            } else EvadeTimer -= diff;
+        }
 
         //GroundRuptureTimer
         if (GroundRuptureTimer <= diff)
@@ -1098,7 +1104,7 @@ struct giant_claw_tentacleAI : public Scripted_NoMovementAI
         EvadeTimer = 5000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -1111,40 +1117,42 @@ struct giant_claw_tentacleAI : public Scripted_NoMovementAI
 
         //EvadeTimer
         if (!me->IsWithinMeleeRange(me->getVictim()))
-            if (EvadeTimer <= diff)
         {
-            Unit* p = Unit::GetUnit(*me, Portal);
-            if (p)
-                p->DealDamage(p, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-
-            //Dissapear and reappear at new position
-            me->SetVisibility(VISIBILITY_OFF);
-
-            Unit *pTarget = NULL;
-            pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
-            if (!pTarget)
+            if (EvadeTimer <= diff)
             {
-                me->DealDamage(me, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-                return;
-            }
-
-            if (!pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
-            {
-                me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0);
-                Unit* p = DoSpawnCreature(MOB_GIANT_PORTAL,0,0,0,0,TEMPSUMMON_CORPSE_DESPAWN, 0);
+                Unit* p = Unit::GetUnit(*me, Portal);
                 if (p)
-                    Portal = p->GetGUID();
+                    p->DealDamage(p, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
 
-                GroundRuptureTimer = 500;
-                HamstringTimer = 2000;
-                ThrashTimer = 5000;
-                EvadeTimer = 5000;
-                AttackStart(pTarget);
-            }
+                //Dissapear and reappear at new position
+                me->SetVisibility(VISIBILITY_OFF);
 
-            me->SetVisibility(VISIBILITY_ON);
+                Unit* pTarget = NULL;
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                if (!pTarget)
+                {
+                    me->DealDamage(me, me->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    return;
+                }
 
-        } else EvadeTimer -= diff;
+                if (!pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
+                {
+                    me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0);
+                    Unit* p = DoSpawnCreature(MOB_GIANT_PORTAL,0,0,0,0,TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    if (p)
+                        Portal = p->GetGUID();
+
+                    GroundRuptureTimer = 500;
+                    HamstringTimer = 2000;
+                    ThrashTimer = 5000;
+                    EvadeTimer = 5000;
+                    AttackStart(pTarget);
+                }
+
+                me->SetVisibility(VISIBILITY_ON);
+
+            } else EvadeTimer -= diff;
+        }
 
         //GroundRuptureTimer
         if (GroundRuptureTimer <= diff)
@@ -1196,7 +1204,7 @@ struct giant_eye_tentacleAI : public Scripted_NoMovementAI
         BeamTimer = 500;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }
@@ -1210,7 +1218,7 @@ struct giant_eye_tentacleAI : public Scripted_NoMovementAI
         //BeamTimer
         if (BeamTimer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             if (pTarget && !pTarget->HasAura(SPELL_DIGESTIVE_ACID, 0))
                 DoCast(pTarget,SPELL_GREEN_BEAM);
@@ -1229,24 +1237,26 @@ void flesh_tentacleAI::UpdateAI(const uint32 diff)
         return;
 
     if (Parent)
-        if (CheckTimer <= diff)
     {
-        Unit* pUnit = Unit::GetUnit(*me, Parent);
-
-        if (!pUnit || !pUnit->isAlive() || !pUnit->isInCombat())
+        if (CheckTimer <= diff)
         {
-            Parent = 0;
-            me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-            return;
-        }
+            Unit* pUnit = Unit::GetUnit(*me, Parent);
 
-        CheckTimer = 1000;
-    } else CheckTimer -= diff;
+            if (!pUnit || !pUnit->isAlive() || !pUnit->isInCombat())
+            {
+                Parent = 0;
+                me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                return;
+            }
+
+            CheckTimer = 1000;
+        } else CheckTimer -= diff;
+    }
 
     DoMeleeAttackIfReady();
 }
 
-void flesh_tentacleAI::JustDied(Unit* killer)
+void flesh_tentacleAI::JustDied(Unit* /*killer*/)
 {
     if (!Parent)
         return;

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Doomlord_Kazzak
-SD%Complete: 70
-SDComment: Using incorrect spell for Mark of Kazzak
-SDCategory: Hellfire Peninsula
+Name: Boss_Doomlord_Kazzak
+Complete(%): 70
+Comment: Using incorrect spell for Mark of Kazzak
+Category: Hellfire Peninsula
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -77,7 +77,7 @@ struct boss_doomlordkazzakAI : public ScriptedAI
         DoScriptText(SAY_INTRO, me);
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         switch(rand()%2)
         {
@@ -102,7 +102,7 @@ struct boss_doomlordkazzakAI : public ScriptedAI
             }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
     }

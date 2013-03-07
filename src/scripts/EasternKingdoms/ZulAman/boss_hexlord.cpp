@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hex_Lord_Malacrass
-SD%Complete:
-SDComment:
-SDCategory: Zul'Aman
+Name: Boss_Hex_Lord_Malacrass
+Complete(%):
+Comment:
+Category: Zul'Aman
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -250,7 +250,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
             pInstance->SetData(DATA_HEXLORDEVENT, IN_PROGRESS);
 
         DoZoneInCombat();
-        me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, NULL);
+        me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, 0);
         DoPlaySoundToSet(me, SOUND_YELL_AGGRO);
 
         for (uint8 i = 0; i < 4; ++i)
@@ -271,11 +271,11 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
         switch (urand(0,1))
         {
             case 0:
-                me->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, 0);
                 DoPlaySoundToSet(me, SOUND_YELL_KILL_ONE);
                 break;
             case 1:
-                me->MonsterYell(YELL_KILL_TWO, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(YELL_KILL_TWO, LANG_UNIVERSAL, 0);
                 DoPlaySoundToSet(me, SOUND_YELL_KILL_TWO);
                 break;
         }
@@ -286,14 +286,14 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
         if (pInstance)
             pInstance->SetData(DATA_HEXLORDEVENT, DONE);
 
-        me->MonsterYell(YELL_DEATH, LANG_UNIVERSAL, NULL);
+        me->MonsterYell(YELL_DEATH, LANG_UNIVERSAL, 0);
         DoPlaySoundToSet(me, SOUND_YELL_DEATH);
 
         for (uint8 i = 0; i < 4 ; ++i)
         {
             Unit* Temp = Unit::GetUnit((*me),AddGUID[i]);
             if (Temp && Temp->isAlive())
-                Temp->DealDamage(Temp, Temp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                Temp->DealDamage(Temp, Temp->GetHealth(), 0, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
         }
     }
 
@@ -369,7 +369,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
                     if (i_pl->isAlive())me->AddAura(44132, me); //+1% Damage for each active player on boss (+ActivePlayer_Stack)
             }
             //me->AddAura(44132, me);
-            me->MonsterYell(YELL_DRAIN_POWER, LANG_UNIVERSAL, NULL);
+            me->MonsterYell(YELL_DRAIN_POWER, LANG_UNIVERSAL, 0);
             DoPlaySoundToSet(me, SOUND_YELL_DRAIN_POWER);
             DrainPower_Timer = urand(40000,55000);    // must cast in 60 sec, or buff/debuff will disappear
         } else DrainPower_Timer -= diff;
@@ -381,7 +381,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
             else
             {
                 DoCast(me, SPELL_SPIRIT_BOLTS, true);
-                me->MonsterYell(YELL_SPIRIT_BOLTS, LANG_UNIVERSAL, NULL);
+                me->MonsterYell(YELL_SPIRIT_BOLTS, LANG_UNIVERSAL, 0);
                 DoPlaySoundToSet(me, SOUND_YELL_SPIRIT_BOLTS);
                 SpiritBolts_Timer = 40000;
                 SiphonSoul_Timer = 10000;    // ready to drain
@@ -391,8 +391,8 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
 
         if (SiphonSoul_Timer <= diff)
         {
-            Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 70, true);
-            Unit *trigger = DoSpawnCreature(MOB_TEMP_TRIGGER, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
+            Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 70, true);
+            Unit* trigger = DoSpawnCreature(MOB_TEMP_TRIGGER, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
             if (!pTarget || !trigger)
             {
                 EnterEvadeMode();
@@ -424,7 +424,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
 
         if (PlayerAbility_Timer <= diff)
         {
-            //Unit *pTarget = Unit::GetUnit(*me, PlayerGUID);
+            //Unit* pTarget = Unit::GetUnit(*me, PlayerGUID);
             //if (pTarget && pTarget->isAlive())
             //{
                 UseAbility();
@@ -438,7 +438,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
     void UseAbility()
     {
         uint32 random = urand(0,2);
-        Unit *pTarget = NULL;
+        Unit* pTarget = NULL;
         switch(PlayerAbility[PlayerClass][random].target)
         {
             case ABILITY_TARGET_SELF:
@@ -496,7 +496,7 @@ struct boss_thurgAI : public boss_hexlord_addAI
             std::list<Creature*> templist = DoFindFriendlyMissingBuff(50, SPELL_BLOODLUST);
             if (!templist.empty())
             {
-                if (Unit *pTarget = *(templist.begin()))
+                if (Unit* pTarget = *(templist.begin()))
                     DoCast(pTarget, SPELL_BLOODLUST, false);
             }
             bloodlust_timer = 12000;
@@ -555,7 +555,7 @@ struct boss_alyson_antilleAI : public boss_hexlord_addAI
 
         if (flashheal_timer <= diff)
         {
-            Unit *pTarget = DoSelectLowestHpFriendly(99, 30000);
+            Unit* pTarget = DoSelectLowestHpFriendly(99, 30000);
             if (pTarget)
             {
                 if (pTarget->IsWithinDistInMap(me, 50))
@@ -583,7 +583,7 @@ struct boss_alyson_antilleAI : public boss_hexlord_addAI
         {
         if (urand(0,1))
         {
-            Unit *pTarget = SelectTarget();
+            Unit* pTarget = SelectTarget();
 
             DoCast(pTarget, SPELL_DISPEL_MAGIC, false);
         }

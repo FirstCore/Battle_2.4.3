@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Naxxramas
-SD%Complete: 0
-SDComment: Place holder
-SDCategory: Naxxramas
+Name: Instance_Naxxramas
+Complete(%): 0
+Comment: Place holder
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"

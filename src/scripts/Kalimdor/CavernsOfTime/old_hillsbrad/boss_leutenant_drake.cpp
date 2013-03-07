@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Luetenant_Drake
-SD%Complete: 70
-SDComment: Missing proper code for patrolling area after being spawned. Script for GO (barrels) quest 10283
-SDCategory: Caverns of Time, Old Hillsbrad Foothills
+Name: Boss_Luetenant_Drake
+Complete(%): 70
+Comment: Missing proper code for patrolling area after being spawned. Script for GO (barrels) quest 10283
+Category: Caverns of Time, Old Hillsbrad Foothills
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -30,7 +30,7 @@ EndScriptData */
 ## go_barrel_old_hillsbrad
 ######*/
 
-bool GOHello_go_barrel_old_hillsbrad(Player *player, GameObject* _GO)
+bool GOHello_go_barrel_old_hillsbrad(Player *, GameObject* _GO)
 {
     ScriptedInstance* pInstance = _GO->GetInstanceData();
 
@@ -116,12 +116,12 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         ExplodingShout_Timer = 25000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -130,7 +130,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
     }

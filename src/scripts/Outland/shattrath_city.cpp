@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Shattrath_City
-SD%Complete: 100
-SDComment: Quest support: 10004, 10009, 10211, 10231. Flask vendors, Teleport to Caverns of Time
-SDCategory: Shattrath City
+Name: Shattrath_City
+Complete(%): 100
+Comment: Quest support: 10004, 10009, 10211, 10231. Flask vendors, Teleport to Caverns of Time
+Category: Shattrath City
 EndScriptData */
 
 /* ContentData
@@ -59,7 +59,7 @@ struct npc_raliq_the_drunkAI : public ScriptedAI
         me->setFaction(FACTION_FRIENDLY_RD);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -90,7 +90,7 @@ bool GossipHello_npc_raliq_the_drunk(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_raliq_the_drunk(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_raliq_the_drunk(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -123,9 +123,9 @@ struct npc_salsalabimAI : public ScriptedAI
         me->setFaction(FACTION_FRIENDLY_SA);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (done_by->GetTypeId() == TYPEID_PLAYER)
             if ((me->GetHealth()-damage)*100 / me->GetMaxHealth() < 20)
@@ -215,7 +215,7 @@ bool GossipHello_npc_shattrathflaskvendors(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_shattrathflaskvendors(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_shattrathflaskvendors(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_TRADE)
         player->SEND_VENDORLIST(pCreature->GetGUID());
@@ -239,7 +239,7 @@ bool GossipHello_npc_zephyr(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_zephyr(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_zephyr(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
         player->CastSpell(player,37778,false);
@@ -623,7 +623,7 @@ struct npc_dirty_larryAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit* who){}
+    void EnterCombat(Unit* /*who*/){}
 
     void UpdateAI(const uint32 diff)
     {
@@ -707,7 +707,7 @@ bool GossipHello_npc_dirty_larry(Player *player, Creature *creature)
     return true;
 }
 
-bool GossipSelect_npc_dirty_larry(Player *player, Creature *creature, uint32 sender, uint32 action)
+bool GossipSelect_npc_dirty_larry(Player *player, Creature *creature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -744,7 +744,7 @@ bool GossipHello_npc_ishanah(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_ishanah(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_ishanah(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
         player->SEND_GOSSIP_MENU(9458, pCreature->GetGUID());
@@ -778,7 +778,7 @@ bool GossipHello_npc_khadgar(Player *player, Creature *creature)
     return true;
 }
 
-bool GossipSelect_npc_khadgar(Player *player, Creature *creature, uint32 sender, uint32 action)
+bool GossipSelect_npc_khadgar(Player *player, Creature *creature, uint32 /*sender*/, uint32 action)
 {
     switch(action)
     {

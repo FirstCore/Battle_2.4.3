@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Hyjal
-SD%Complete: 80
-SDComment: gossip text id's unknown
-SDCategory: Caverns of Time, Mount Hyjal
+Name: Hyjal
+Complete(%): 80
+Comment: gossip text id's unknown
+Category: Caverns of Time, Mount Hyjal
 EndScriptData */
 
 /* ContentData

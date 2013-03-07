@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Halycon
-SD%Complete: 100
-SDComment:
-SDCategory: Blackrock Spire
+Name: Boss_Halycon
+Complete(%): 100
+Comment:
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -47,7 +47,7 @@ struct boss_halyconAI : public ScriptedAI
         Summoned = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

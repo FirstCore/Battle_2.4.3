@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Houndmaster_Loksey
-SD%Complete: 100
-SDComment:
-SDCategory: Scarlet Monastery
+Name: Boss_Houndmaster_Loksey
+Complete(%): 100
+Comment:
+Category: Scarlet Monastery
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -42,7 +42,7 @@ struct boss_houndmaster_lokseyAI : public ScriptedAI
         BloodLust_Timer = 20000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }

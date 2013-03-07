@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Gluth
-SD%Complete: 100
-SDComment:
-SDCategory: Naxxramas
+Name: Boss_Gluth
+Complete(%): 100
+Comment:
+Category: Naxxramas
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -87,7 +87,7 @@ struct boss_gluthAI : public ScriptedAI
         Summon_Timer = 10000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -134,7 +134,7 @@ struct boss_gluthAI : public ScriptedAI
         //Summon_Timer
         if (Summon_Timer <= diff)
         {
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             Unit* SummonedZombies = NULL;
 
             SummonedZombies = me->SummonCreature(16360,ADD_1X,ADD_1Y,ADD_1Z,0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,80000);

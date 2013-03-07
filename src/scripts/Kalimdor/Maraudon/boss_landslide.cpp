@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Landslide
-SD%Complete: 100
-SDComment:
-SDCategory: Maraudon
+Name: Boss_Landslide
+Complete(%): 100
+Comment:
+Category: Maraudon
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_landslideAI : public ScriptedAI
         Landslide_Timer = 0;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

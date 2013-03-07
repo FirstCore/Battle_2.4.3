@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Shade_of_Aran
-SD%Complete: 95
-SDComment: Flame wreath missing cast animation, mods won't triggere.
-SDCategory: Karazhan
+Name: Boss_Shade_of_Aran
+Complete(%): 95
+Comment: Flame wreath missing cast animation, mods won't triggere.
+Category: Karazhan
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -146,12 +146,12 @@ struct boss_aranAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoScriptText(RAND(SAY_KILL1,SAY_KILL2), me);
     }
 
-    void JustDied(Unit * /*victim*/)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -162,7 +162,7 @@ struct boss_aranAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(RAND(SAY_AGGRO1,SAY_AGGRO2,SAY_AGGRO3), me);
 
@@ -184,7 +184,7 @@ struct boss_aranAI : public ScriptedAI
         //store the threat list in a different container
         for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
         {
-            Unit *pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+            Unit* pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
             //only on alive players
             if (pTarget && pTarget->isAlive() && pTarget->GetTypeId() == TYPEID_PLAYER)
                 targets.push_back(pTarget);
@@ -276,8 +276,10 @@ struct boss_aranAI : public ScriptedAI
 
         //Drink Inturrupt Timer
         if (Drinking && !DrinkInturrupted)
+        {
             if (DrinkInturruptTimer >= diff)
                 DrinkInturruptTimer -= diff;
+        }
         else
         {
             me->SetStandState(UNIT_STAND_STATE_STAND);
@@ -296,7 +298,7 @@ struct boss_aranAI : public ScriptedAI
         {
             if (!me->IsNonMeleeSpellCasted(false))
             {
-                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
                 if (!pTarget)
                     return;
 

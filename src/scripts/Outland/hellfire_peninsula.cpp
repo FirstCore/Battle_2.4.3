@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Hellfire_Peninsula
-SD%Complete: 99
- SDComment: Quest support: 9375, 9418, 10129, 10146, 10162, 10163, 10340, 10346, 10347, 10382 (Special flight paths), 9410, 10909, 10935, 9545, 10838, 11516, 10351.
-SDCategory: Hellfire Peninsula
+Name: Hellfire_Peninsula
+Complete(%): 99
+ Comment: Quest support: 9375, 9418, 10129, 10146, 10162, 10163, 10340, 10346, 10347, 10382 (Special flight paths), 9410, 10909, 10935, 9545, 10838, 11516, 10351.
+Category: Hellfire Peninsula
 EndScriptData */
 
 /* ContentData
@@ -87,7 +87,7 @@ struct npc_aeranasAI : public ScriptedAI
         DoScriptText(SAY_SUMMON, me);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit*) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -159,8 +159,8 @@ struct npc_ancestral_wolfAI : public npc_escortAI
         me->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
     }
 
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit*) {}
+    void AttackStart(Unit*) {}
 
     void WaypointReached(uint32 uiPointId)
     {
@@ -215,7 +215,7 @@ CreatureAI* GetAI_npc_ancestral_wolf(Creature* pCreature)
 ## go_haaleshi_altar
 ######*/
 
-bool GOHello_go_haaleshi_altar(Player *player, GameObject* _GO)
+bool GOHello_go_haaleshi_altar(Player *, GameObject* _GO)
 {
     _GO->SummonCreature(C_AERANAS,-1321.79f, 4043.80f, 116.24f, 1.25f, TEMPSUMMON_TIMED_DESPAWN, 180000);
     return false;
@@ -435,7 +435,7 @@ bool GossipHello_npc_wing_commander_dabiree(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_wing_commander_dabiree(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_wing_commander_dabiree(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -471,7 +471,7 @@ bool GossipHello_npc_gryphoneer_leafbeard(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_gryphoneer_leafbeard(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_gryphoneer_leafbeard(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -512,7 +512,7 @@ bool GossipHello_npc_wing_commander_brack(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_wing_commander_brack(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_wing_commander_brack(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     switch(action)
     {
@@ -589,7 +589,7 @@ struct npc_wounded_blood_elfAI : public npc_escortAI
 
     void Reset() { }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit*)
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
             DoScriptText(SAY_ELF_AGGRO, me);
@@ -640,9 +640,14 @@ struct npc_hand_berserkerAI : public ScriptedAI
 {
     npc_hand_berserkerAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
-    void Reset() {}
+    uint32 CheckTimer;
+ 
+    void Reset()
+    {
+        CheckTimer = 4000;
+    }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho)
     {
         DoMeleeAttackIfReady();
         ScriptedAI::AttackStart(pWho);
@@ -669,6 +674,10 @@ struct npc_hand_berserkerAI : public ScriptedAI
 
     void JustDied(Unit* pWho)
     {
+
+        if (pWho->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(((Player *)pWho), 15) && ((Player *)pWho)->GetQuestStatus(10909) == QUEST_STATUS_COMPLETE)
+        {return;}
+
         if (Creature* Bunny = me->FindNearestCreature(NPC_BUNNY, 17.5f))
         {
             me->CastSpell(Bunny, SPELL_SOUL_BURDEN, false);
@@ -716,6 +725,18 @@ struct npc_anchorite_relic_bunnyAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
+        if (uiChTimer <= uiDiff)
+        {
+            if (Creature* pBer = me->FindNearestCreature(NPC_HAND_BERSERKER, 17.5f, true))
+            {
+                DoCast(pBer, SPELL_CHANNELS);
+            }
+            else me->InterruptNonMeleeSpells(false);
+
+            uiChTimer = 5000;
+        }
+        else uiChTimer -= uiDiff;
+
         if (uiEndTimer <= uiDiff)
         {
             if (GameObject* pRelic = me->FindNearestGameObject(GO_RELIC, 5.0f))
@@ -728,18 +749,6 @@ struct npc_anchorite_relic_bunnyAI : public ScriptedAI
             uiEndTimer = 60000;
         }
         else uiEndTimer -= uiDiff;
-
-        if (uiChTimer <= uiDiff)
-        {
-            if (Creature* pBer = me->FindNearestCreature(NPC_HAND_BERSERKER, 17.5f, true))
-            {
-                DoCast(pBer, SPELL_CHANNELS);
-            }
-            else me->InterruptNonMeleeSpells(false);
-
-            uiChTimer = 5000;
-        }
-        else uiChTimer -= uiDiff;
     }
 };
 
@@ -807,15 +816,15 @@ struct npc_anchorite_baradaAI : public ScriptedAI
         uiPlayerGUID = 0;
     }
 
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit*) {}
+    void AttackStart(Unit*) {}
 
     void DoSpawnDarkness()
     {
         me->SummonCreature(NPC_DARKNESS_RELEASED, -710.924, 2754.683, 105.0, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000);
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (pWho->GetTypeId() == TYPEID_PLAYER)
         {
@@ -926,7 +935,7 @@ struct npc_anchorite_baradaAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pWho)
+    void JustDied(Unit*)
     {
         if (Creature* pColonel = me->FindNearestCreature(NPC_COLONEL_JULES, 15.0f, true))
         {
@@ -959,7 +968,7 @@ bool GossipHello_npc_anchorite_barada(Player *pPlayer, Creature *pCreature)
     return true;
 }
 
-bool GossipSelect_npc_anchorite_barada(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_anchorite_barada(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -1003,10 +1012,10 @@ struct npc_darkness_releasedAI : public ScriptedAI
         }
     }
 
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit* /*pWho*/) {}
+    void AttackStart(Unit* /*pWho*/) {}
 
-    void JustDied(Unit* pWho)
+    void JustDied(Unit* /*pWho*/)
     {
         me->RemoveCorpse();
     }
@@ -1030,7 +1039,7 @@ struct npc_darkness_releasedAI : public ScriptedAI
 
         if (uiChTimer <= uiDiff)
         {
-            if (Creature* pBar = me->FindNearestCreature(NPC_BARADA, 15.0f, false))
+            if (/*Creature* pBar = */me->FindNearestCreature(NPC_BARADA, 15.0f, false))
                 me->setDeathState(CORPSE);
 
             if (Creature* pBara = me->FindNearestCreature(NPC_BARADA, 15.0f, true))
@@ -1069,7 +1078,7 @@ struct npc_foul_purgeAI : public ScriptedAI
         uiChTimer = 4000;
     }
 
-    void JustDied(Unit* pWho)
+    void JustDied(Unit* /*pWho*/)
     {
         me->RemoveCorpse();
     }
@@ -1078,7 +1087,7 @@ struct npc_foul_purgeAI : public ScriptedAI
     {
         if (uiChTimer <= uiDiff)
         {
-            if (Creature* pBar = me->FindNearestCreature(NPC_BARADA, 15.0f, false))
+            if (/*Creature* pBar = */me->FindNearestCreature(NPC_BARADA, 15.0f, false))
                 me->setDeathState(CORPSE);
 
             if (Creature* pBara = me->FindNearestCreature(NPC_BARADA, 15.0f, true))
@@ -1215,7 +1224,7 @@ struct npc_vindicator_sedaiAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (who->GetTypeId() == TYPEID_PLAYER)
         {
@@ -1341,8 +1350,8 @@ struct npc_demoniac_scryerAI : public ScriptedAI
 
     void Reset() {}
 
-    void AttackedBy(Unit* pEnemy) {}
-    void AttackStart(Unit* pEnemy) {}
+    void AttackedBy(Unit* /*pEnemy*/) {}
+    void AttackStart(Unit* /*pEnemy*/) {}
  
     void DoSpawnButtress()
     {
@@ -1473,7 +1482,7 @@ bool GossipHello_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -1518,7 +1527,7 @@ struct npc_magic_sucker_device_spawnerAI : public ScriptedAI
 
         if (uiCheckTimer <= uiDiff)
         {
-            if (Creature* pScr = me->FindNearestCreature(NPC_SCRYER, 15.0f, false))
+            if (/*Creature* pScr = */me->FindNearestCreature(NPC_SCRYER, 15.0f, false))
             {
                 if (Creature* pBut = me->FindNearestCreature(NPC_BUTTRES, 5.0f))
                 {
@@ -1570,8 +1579,8 @@ struct npc_living_flareAI : public ScriptedAI
         Count = 0;
     }
 
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit* /*pWho*/) {}
+    void AttackStart(Unit* /*pWho*/) {}
 
     void UpdateAI(const uint32 uiDiff)
     {

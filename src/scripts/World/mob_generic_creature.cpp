@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Generic_Creature
-SD%Complete: 80
-SDComment: Should be replaced with core based AI
-SDCategory: Creatures
+Name: Generic_Creature
+Complete(%): 80
+Comment: Should be replaced with core based AI
+Category: Creatures
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -41,7 +41,7 @@ struct generic_creatureAI : public ScriptedAI
         IsSelfRooted = false;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         if (!me->IsWithinMeleeRange(who))
         {
@@ -58,6 +58,7 @@ struct generic_creatureAI : public ScriptedAI
 
         //Buff timer (only buff when we are alive and not in combat
         if (!me->isInCombat() && me->isAlive())
+        {
             if (BuffTimer <= diff)
             {
                 //Find a spell that targets friendly and applies an aura (these are generally buffs)
@@ -76,7 +77,7 @@ struct generic_creatureAI : public ScriptedAI
                 }//Try agian in 30 seconds
                 else BuffTimer = 30000;
             } else BuffTimer -= diff;
-
+        }
         //Return since we have no target
         if (!UpdateVictim())
             return;

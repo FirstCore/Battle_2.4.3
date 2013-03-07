@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Noxxion
-SD%Complete: 100
-SDComment:
-SDCategory: Maraudon
+Name: Boss_Noxxion
+Complete(%): 100
+Comment:
+Category: Maraudon
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -46,7 +46,7 @@ struct boss_noxxionAI : public ScriptedAI
         Invisible = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

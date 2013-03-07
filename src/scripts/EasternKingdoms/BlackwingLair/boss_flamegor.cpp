@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Flamegor
-SD%Complete: 100
-SDComment:
-SDCategory: Blackwing Lair
+Name: Boss_Flamegor
+Complete(%): 100
+Comment:
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -45,7 +45,7 @@ struct boss_flamegorAI : public ScriptedAI
         Frenzy_Timer = 10000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoZoneInCombat();
     }

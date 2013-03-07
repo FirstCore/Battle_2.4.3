@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Gatewatcher_Ironhand
-SD%Complete: 75
-SDComment:
-SDCategory: Tempest Keep, The Mechanar
+Name: Boss_Gatewatcher_Ironhand
+Complete(%): 75
+Comment:
+Category: Tempest Keep, The Mechanar
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -64,12 +64,12 @@ struct boss_gatewatcher_iron_handAI : public ScriptedAI
         Stream_of_Machine_Fluid_Timer = 55000;
 
     }
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO_1, me);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         if (rand()%2)
             return;
@@ -81,7 +81,7 @@ struct boss_gatewatcher_iron_handAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH_1, me);
 

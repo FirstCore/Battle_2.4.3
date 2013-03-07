@@ -16,9 +16,9 @@
  */
 
 /* Script Data Start
-SDName: Redridge Mountains
-SD%Complete: 100%
-SDComment: Support for quest 219.
+Name: Redridge Mountains
+Complete(%): 100%
+Comment: Support for quest 219.
 Script Data End */
 
 #include "ScriptPCH.h"

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hazzarah
-SD%Complete: 100
-SDComment:
-SDCategory: Zul'Gurub
+Name: Boss_Hazzarah
+Complete(%): 100
+Comment:
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,7 +43,7 @@ struct boss_hazzarahAI : public ScriptedAI
         Illusions_Timer = 10000 + rand()%8000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -71,7 +71,7 @@ struct boss_hazzarahAI : public ScriptedAI
         {
             //We will summon 3 illusions that will spawn on a random gamer and attack this gamer
             //We will just use one model for the beginning
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
             for (uint8 i = 0; i < 3; ++i)
             {
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_NexusPrince_Shaffar
-SD%Complete: 80
-SDComment: Need more tuning of spell timers, it should not be as linear fight as current. Also should possibly find a better way to deal with his three initial beacons to make sure all aggro.
-SDCategory: Auchindoun, Mana Tombs
+Name: Boss_NexusPrince_Shaffar
+Complete(%): 80
+Comment: Need more tuning of spell timers, it should not be as linear fight as current. Also should possibly find a better way to deal with his three initial beacons to make sure all aggro.
+Category: Auchindoun, Mana Tombs
 EndScriptData */
 
 /* ContentData
@@ -119,7 +119,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!me->getVictim() && who->isTargetableForAttack() && (me->IsHostileTo(who)) && who->isInAccessiblePlaceFor (me))
         {
@@ -141,7 +141,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         switch(rand()%3)
         {
@@ -162,12 +162,12 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         {
             summoned->CastSpell(summoned,SPELL_ETHEREAL_BEACON_VISUAL,false);
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 summoned->AI()->AttackStart(pTarget);
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -176,7 +176,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEAD, me);
     }
@@ -270,7 +270,7 @@ struct mob_ethereal_beaconAI : public ScriptedAI
         Check_Timer = 1000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         // Send Shaffar to fight
         Creature* Shaffar = me->FindNearestCreature(ENTRY_SHAFFAR, 100);
@@ -288,7 +288,7 @@ struct mob_ethereal_beaconAI : public ScriptedAI
         summoned->AI()->AttackStart(me->getVictim());
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit*)
     {
         if (Creature* Shaffar = me->FindNearestCreature(ENTRY_SHAFFAR, 100))
             ((boss_nexusprince_shaffarAI*)(CAST_CRE(Shaffar)->AI()))->RemoveBeaconFromList(me);
@@ -352,7 +352,7 @@ struct mob_ethereal_apprenticeAI : public ScriptedAI
         isFireboltTurn = true;
     }
 
-    void EnterCombat(Unit* who) {}
+    void EnterCombat(Unit*) {}
 
     void UpdateAI(const uint32 diff)
     {

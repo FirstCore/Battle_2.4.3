@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Aeonus
-SD%Complete: 80
-SDComment: Some spells not implemented
-SDCategory: Caverns of Time, The Dark Portal
+Name: Boss_Aeonus
+Complete(%): 80
+Comment: Some spells not implemented
+Category: Caverns of Time, The Dark Portal
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -61,12 +61,12 @@ struct boss_aeonusAI : public ScriptedAI
         Frenzy_Timer = 120000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         //Despawn Time Keeper
         if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == C_TIME_KEEPER)
@@ -81,7 +81,7 @@ struct boss_aeonusAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* /*victim*/)
     {
         DoScriptText(SAY_DEATH, me);
 
@@ -92,7 +92,7 @@ struct boss_aeonusAI : public ScriptedAI
          }
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         switch(rand()%2)
         {

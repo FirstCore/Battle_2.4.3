@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Gahz'ranka
-SD%Complete: 85
-SDComment: Massive Geyser with knockback not working. Spell buggy.
-SDCategory: Zul'Gurub
+Name: Boss_Gahz'ranka
+Complete(%): 85
+Comment: Massive Geyser with knockback not working. Spell buggy.
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -42,7 +42,7 @@ struct boss_gahzrankaAI : public ScriptedAI
         Slam_Timer = 17000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

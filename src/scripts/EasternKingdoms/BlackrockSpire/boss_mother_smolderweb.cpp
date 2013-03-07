@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Mother_Smolderweb
-SD%Complete: 100
-SDComment: Uncertain how often mother's milk is casted
-SDCategory: Blackrock Spire
+Name: Boss_Mother_Smolderweb
+Complete(%): 100
+Comment: Uncertain how often mother's milk is casted
+Category: Blackrock Spire
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -41,9 +41,9 @@ struct boss_mothersmolderwebAI : public ScriptedAI
         MothersMilk_Timer = 10000;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void DamageTaken(Unit * /*done_by*/, uint32 &damage)
+    void DamageTaken(Unit* /*done_by*/, uint32 &damage)
     {
         if (me->GetHealth() <= damage)
             DoCast(me, SPELL_SUMMON_SPIRE_SPIDERLING, true);

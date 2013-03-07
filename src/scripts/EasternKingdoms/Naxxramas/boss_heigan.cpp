@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Heigan
-SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Naxxramas
+Name: Boss_Heigan
+Complete(%): 0
+Comment: Place Holder
+Category: Naxxramas
 EndScriptData */
 
 //Lotheb or Heigan?

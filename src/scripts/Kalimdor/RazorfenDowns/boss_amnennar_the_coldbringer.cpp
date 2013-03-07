@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Amnennar_the_coldbringer
-SD%Complete: 100
-SDComment:
-SDCategory: Razorfen Downs
+Name: Boss_Amnennar_the_coldbringer
+Complete(%): 100
+Comment:
+Category: Razorfen Downs
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -56,7 +56,7 @@ struct boss_amnennar_the_coldbringerAI : public ScriptedAI
         Hp = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }

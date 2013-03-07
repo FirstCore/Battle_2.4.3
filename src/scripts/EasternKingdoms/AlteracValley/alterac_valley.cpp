@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: AV Marshals
-SD%Complete:
-SDComment: Returns AV marshals to inside the building
-SDCategory: Bosses
+Name: AV Marshals
+Complete(%):
+Comment: Returns AV marshals to inside the building
+Category: Bosses
 EndScriptData */
 
 #include "ScriptPCH.h"

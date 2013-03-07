@@ -16,9 +16,9 @@
  */
 
 /* ScriptData
-SDName: boss_archaedas
-SD%Complete: 100
-SDComment: Archaedas is activated when 3 prople click on his altar.
+Name: boss_archaedas
+Complete(%): 100
+Comment: Archaedas is activated when 3 prople click on his altar.
 Every 10 seconds he will awaken one of his minions along the wall.
 At 66%, he will awaken the 6 Guardians.
 At 33%, he will awaken the Vault Walkers
@@ -84,7 +84,7 @@ struct boss_archaedasAI : public ScriptedAI
 
     void ActivateMinion (uint64 guid, bool flag)
     {
-        Unit *minion = Unit::GetUnit(*me, guid);
+        Unit* minion = Unit::GetUnit(*me, guid);
 
         if (minion && minion->isAlive())
         {
@@ -93,7 +93,7 @@ struct boss_archaedasAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         me->setFaction (14);
         me->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -104,16 +104,16 @@ struct boss_archaedasAI : public ScriptedAI
     {
         // Being woken up from the altar, start the awaken sequence
         if (spell == GetSpellStore()->LookupEntry(SPELL_ARCHAEDAS_AWAKEN)) {
-            me->MonsterYell(SAY_AGGRO,LANG_UNIVERSAL,NULL);
+            me->MonsterYell(SAY_AGGRO,LANG_UNIVERSAL,0);
             DoPlaySoundToSet(me,SOUND_AGGRO);
             Awaken_Timer = 4000;
             wakingUp = true;
         }
     }
 
-    void KilledUnit(Unit * /*victim*/)
+    void KilledUnit(Unit* /*victim*/)
     {
-        me->MonsterYell(SAY_KILL,LANG_UNIVERSAL, NULL);
+        me->MonsterYell(SAY_KILL,LANG_UNIVERSAL, 0);
         DoPlaySoundToSet(me, SOUND_KILL);
     }
 
@@ -150,7 +150,7 @@ struct boss_archaedasAI : public ScriptedAI
             ActivateMinion(pInstance->GetData64(8),true);   // EarthenGuardian4
             ActivateMinion(pInstance->GetData64(9),true);   // EarthenGuardian5
             ActivateMinion(pInstance->GetData64(10),false); // EarthenGuardian6
-            me->MonsterYell(SAY_SUMMON,LANG_UNIVERSAL, NULL);
+            me->MonsterYell(SAY_SUMMON,LANG_UNIVERSAL, 0);
             DoPlaySoundToSet(me, SOUND_SUMMON);
             guardiansAwake = true;
         }
@@ -161,7 +161,7 @@ struct boss_archaedasAI : public ScriptedAI
             ActivateMinion(pInstance->GetData64(2),true);    // VaultWalker2
             ActivateMinion(pInstance->GetData64(3),true);    // VaultWalker3
             ActivateMinion(pInstance->GetData64(4),false);    // VaultWalker4
-            me->MonsterYell(SAY_SUMMON2, LANG_UNIVERSAL, NULL);
+            me->MonsterYell(SAY_SUMMON2, LANG_UNIVERSAL, 0);
             DoPlaySoundToSet(me, SOUND_SUMMON2);
             vaultWalkersAwake = true;
         }
@@ -178,7 +178,7 @@ struct boss_archaedasAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied (Unit * /*killer*/) {
+    void JustDied (Unit* /*killer*/) {
         if (pInstance)
         {
             pInstance->SetData(DATA_ANCIENT_DOOR, DONE);        // open the vault door
@@ -194,9 +194,9 @@ CreatureAI* GetAI_boss_archaedas(Creature* pCreature)
 }
 
 /* ScriptData
-SDName: mob_archaedas_minions
-SD%Complete: 100
-SDComment: These mobs are initially frozen until Archaedas awakens them
+Name: mob_archaedas_minions
+Complete(%): 100
+Comment: These mobs are initially frozen until Archaedas awakens them
 one at a time.
 EndScriptData */
 
@@ -230,7 +230,7 @@ struct mob_archaedas_minionsAI : public ScriptedAI
         me->RemoveAllAuras();
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         me->setFaction (14);
         me->RemoveAllAuras();
@@ -247,7 +247,7 @@ struct mob_archaedas_minionsAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (amIAwake)
             ScriptedAI::MoveInLineOfSight(who);
@@ -280,10 +280,10 @@ CreatureAI* GetAI_mob_archaedas_minions(Creature* pCreature)
 }
 
 /* ScriptData
-SDName: go_altar_archaedas
-SD%Complete: 100
-SDComment: Needs 3 people to activate the Archaedas script
-SDCategory: Uldaman
+Name: go_altar_archaedas
+Complete(%): 100
+Comment: Needs 3 people to activate the Archaedas script
+Category: Uldaman
 EndScriptData */
 
 #define OBJECT_ALTAR_OF_ARCHAEDAS   133234
@@ -316,8 +316,8 @@ bool GOHello_go_altar_of_archaedas(Player *player, GameObject* go)
 
     // Check to make sure at least three people are still casting
     uint32 count=0;
-    Unit *pTarget;
-    for (uint32 x=0; x<=5; x++) {
+    Unit* pTarget;
+    for (uint32 x=0; x<5; x++) {
         pTarget = Unit::GetUnit(*player, altarOfArchaedasCount[x]);
         if (!pTarget) continue;
         if (pTarget->IsNonMeleeSpellCasted(true)) count++;
@@ -336,9 +336,9 @@ bool GOHello_go_altar_of_archaedas(Player *player, GameObject* go)
 }
 
 /* ScriptData
-SDName: mob_stonekeepers
-SD%Complete: 100
-SDComment: After activating the altar of the keepers, the stone keepers will
+Name: mob_stonekeepers
+Complete(%): 100
+Comment: After activating the altar of the keepers, the stone keepers will
 wake up one by one.
 EndScriptData */
 
@@ -363,7 +363,7 @@ struct mob_stonekeepersAI : public ScriptedAI
         me->RemoveAllAuras();
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         me->setFaction (14);
         me->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -380,7 +380,7 @@ struct mob_stonekeepersAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit * /*attacker*/)
+    void JustDied(Unit* /*attacker*/)
     {
         DoCast (me, SPELL_SELF_DESTRUCT,true);
         if (pInstance)
@@ -395,10 +395,10 @@ CreatureAI* GetAI_mob_stonekeepers(Creature* pCreature)
 }
 
 /* ScriptData
-SDName: go_altar_of_the_keepers
-SD%Complete: 100
-SDComment: Need 3 people to activate to open the altar.  One by one the StoneKeepers will activate.  After all four are dead than the door will open.
-SDCategory: Uldaman
+Name: go_altar_of_the_keepers
+Complete(%): 100
+Comment: Need 3 people to activate to open the altar.  One by one the StoneKeepers will activate.  After all four are dead than the door will open.
+Category: Uldaman
 EndScriptData */
 
 #define SPELL_BOSS_OBJECT_VISUAL    11206
@@ -436,7 +436,7 @@ bool GOHello_go_altar_of_the_keepers(Player* pPlayer, GameObject* pGo)
 
     // Check to make sure at least three people are still casting
     uint8 count = 0;
-    Unit *pTarget;
+    Unit* pTarget;
     for (uint8 x = 0; x < 5; ++x)
     {
         pTarget = Unit::GetUnit(*pPlayer, altarOfTheKeeperCount[x]);

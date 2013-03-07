@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Nerubenkan
-SD%Complete: 70
-SDComment:
-SDCategory: Stratholme
+Name: Boss_Nerubenkan
+Complete(%): 70
+Comment:
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -52,7 +52,7 @@ struct boss_nerubenkanAI : public ScriptedAI
         RaiseUndeadScarab_Timer = 3000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Guards
-SD%Complete: 100
-SDComment: All Guard gossip data, quite some npc_text-id's still missing, adding constantly as new id's are known. CombatAI should be organized better for future.
-SDCategory: Guards
+Name: Guards
+Complete(%): 100
+Comment: All Guard gossip data, quite some npc_text-id's still missing, adding constantly as new id's are known. CombatAI should be organized better for future.
+Category: Guards
 EndScriptData */
 
 /* ContentData
@@ -2493,7 +2493,7 @@ struct guard_shattrath_aldorAI : public guardAI
         CanTeleport = false;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -2689,7 +2689,7 @@ struct guard_shattrath_scryerAI : public guardAI
         CanTeleport = false;
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Tanaris
-SD%Complete: 80
-SDComment: Quest support: 648, 1560, 2882, 2954, 4005, 10277, 10279(Special flight path). Noggenfogger vendor
-SDCategory: Tanaris
+Name: Tanaris
+Complete(%): 80
+Comment: Quest support: 648, 1560, 2882, 2954, 4005, 10277, 10279(Special flight path). Noggenfogger vendor
+Category: Tanaris
 EndScriptData */
 
 /* ContentData
@@ -79,7 +79,7 @@ struct mob_aquementasAI : public ScriptedAI
             !CAST_PLR(receiver)->HasItemCount(11522,1,true))
         {
             ItemPosCountVec dest;
-            uint8 msg = CAST_PLR(receiver)->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, 11522, 1, false);
+            uint8 msg = CAST_PLR(receiver)->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, 11522, 1, 0);
             if (msg == EQUIP_ERR_OK)
                 CAST_PLR(receiver)->StoreNewItem(dest, 11522, 1, true);
         }
@@ -194,7 +194,7 @@ struct npc_custodian_of_timeAI : public npc_escortAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
             return;
@@ -454,7 +454,7 @@ CreatureAI* GetAI_npc_OOX17(Creature* pCreature)
 #define PATH_ENTRY_4       2093
 #define PATH_ENTRY_5       2094
 
-bool GOHello_go_landmark_treasure(Player *player, GameObject* _GO)
+bool GOHello_go_landmark_treasure(Player *player, GameObject* /*_GO*/)
 {
     if (player->GetQuestStatus(QUEST_CUERGOS_GOLD) != QUEST_STATUS_INCOMPLETE)
         return false;
@@ -527,7 +527,7 @@ struct npc_toogaAI : public FollowerAI
         TortaGUID = 0;
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -569,7 +569,7 @@ struct npc_toogaAI : public FollowerAI
                 {
                     m_uiPostEventTimer = 5000;
 
-                    Unit *pTorta = Unit::GetUnit(*me, TortaGUID);
+                    Unit* pTorta = Unit::GetUnit(*me, TortaGUID);
                     if (!pTorta || !pTorta->isAlive())
                     {
                         //something happened, so just complete

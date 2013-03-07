@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: boss_timmy_the_cruel
-SD%Complete: 100
-SDComment:
-SDCategory: Stratholme
+Name: boss_timmy_the_cruel
+Complete(%): 100
+Comment:
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -41,11 +41,11 @@ struct boss_timmy_the_cruelAI : public ScriptedAI
         HasYelled = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         if (!HasYelled)
         {
-            me->MonsterYell(SAY_SPAWN,LANG_UNIVERSAL,NULL);
+            me->MonsterYell(SAY_SPAWN,LANG_UNIVERSAL,0);
             HasYelled = true;
         }
     }

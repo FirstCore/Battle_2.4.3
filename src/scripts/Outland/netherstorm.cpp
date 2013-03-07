@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Netherstorm
-SD%Complete: 90
-SDComment: Quest support: 10337, 10438, 10652 (special flight paths), 10299,10321,10322,10323,10329,10330,10338,10365(Shutting Down Manaforge), 10198, 10191, 10924, 10221, 10310.
-SDCategory: Netherstorm
+Name: Netherstorm
+Complete(%): 90
+Comment: Quest support: 10337, 10438, 10652 (special flight paths), 10299,10321,10322,10323,10329,10330,10338,10365(Shutting Down Manaforge), 10198, 10191, 10924, 10221, 10310.
+Category: Netherstorm
 EndScriptData */
 
 /* ContentData
@@ -91,12 +91,12 @@ struct npc_manaforge_control_consoleAI : public ScriptedAI
         Wave = false;
         someplayer = 0;
         goConsole = 0;
-        Creature* add = NULL;
+        add = NULL;
     }
 
-    void EnterCombat(Unit *who) { return; }
+    void EnterCombat(Unit* /*who*/) { return; }
 
-    /*void SpellHit(Unit *caster, const SpellEntry *spell)
+    /*void SpellHit(Unit* caster, const SpellEntry *spell)
     {
         //we have no way of telling the creature was hit by spell -> got aura applied after 10-12 seconds
         //then no way for the mobs to actually stop the shutdown as intended.
@@ -104,7 +104,7 @@ struct npc_manaforge_control_consoleAI : public ScriptedAI
             DoSay("Silence! I kill you!",LANG_UNIVERSAL, NULL);
     }*/
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit* /*killer*/)
     {
         DoScriptText(EMOTE_ABORT, me);
 
@@ -405,7 +405,7 @@ struct npc_commander_dawnforgeAI : public ScriptedAI
         isEvent = false;
     }
 
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
     //Select any creature in a grid
     Creature* SelectCreatureInGrid(uint32 entry, float range)
@@ -459,7 +459,7 @@ struct npc_commander_dawnforgeAI : public ScriptedAI
     //Set them back to each other
     void Turn_to_eachother()
     {
-        if (Unit *ardonis = Unit::GetUnit(*me,ardonisGUID))
+        if (Unit* ardonis = Unit::GetUnit(*me,ardonisGUID))
         {
             Player *player = Unit::GetPlayer(*me, playerGUID);
 
@@ -516,8 +516,8 @@ struct npc_commander_dawnforgeAI : public ScriptedAI
             return;
         }
 
-        Unit *ardonis = Unit::GetUnit(*me,ardonisGUID);
-        Unit *pathaleon = Unit::GetUnit(*me,pathaleonGUID);
+        Unit* ardonis = Unit::GetUnit(*me,ardonisGUID);
+        Unit* pathaleon = Unit::GetUnit(*me,pathaleonGUID);
         Player *player = Unit::GetPlayer(*me, playerGUID);
 
         if (!ardonis || !player)
@@ -657,7 +657,7 @@ Creature* SearchDawnforge(Player *source, uint32 entry, float range)
     return pCreature;
 }
 
-bool AreaTrigger_at_commander_dawnforge(Player *player, const AreaTriggerEntry *at)
+bool AreaTrigger_at_commander_dawnforge(Player *player, const AreaTriggerEntry* /*at*/)
 {
     //if player lost aura or not have at all, we should not try start event.
     if (!player->HasAura(SPELL_SUNFURY_DISGUISE,0))
@@ -700,7 +700,7 @@ bool GossipHello_npc_professor_dabiri(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_professor_dabiri(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_professor_dabiri(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -759,13 +759,13 @@ struct mob_phase_hunterAI : public ScriptedAI
         ManaBurnTimer = 5000 + (rand()%3 * 1000); // 5-8 sec cd
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit* who)
     {
         if (Player *player = who->GetCharmerOrOwnerPlayerOrPlayerItself())
             PlayerGUID = player->GetGUID();
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry* /*spell*/)
     {
         DoCast(me, SPELL_DE_MATERIALIZE);
     }
@@ -854,7 +854,7 @@ struct npc_bessyAI : public npc_escortAI
 
     npc_bessyAI(Creature *c) : npc_escortAI(c) {}
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit* /*killer*/)
     {
         if (Player* pPlayer = GetPlayerForEscort())
             pPlayer->FailQuest(Q_ALMABTRIEB);
@@ -883,10 +883,10 @@ struct npc_bessyAI : public npc_escortAI
             case 12:
                 if (pPlayer)
                     pPlayer->GroupEventHappens(Q_ALMABTRIEB, me);
-                if (Unit* Thadell = me->FindNearestCreature(N_THADELL, 30))
+                if (/*Unit* Thadell = */me->FindNearestCreature(N_THADELL, 30))
                     DoScriptText(SAY_THADELL_1, me); break;
             case 13:
-                if (Unit* Thadell = me->FindNearestCreature(N_THADELL, 30))
+                if (/*Unit* Thadell = */me->FindNearestCreature(N_THADELL, 30))
                     DoScriptText(SAY_THADELL_2, me, pPlayer); break;
         }
     }
@@ -896,7 +896,7 @@ struct npc_bessyAI : public npc_escortAI
         summoned->AI()->AttackStart(me);
     }
 
-    void EnterCombat(Unit* who){}
+    void EnterCombat(Unit* /*who*/){}
 
     void Reset()
     {
@@ -1157,10 +1157,10 @@ struct npc_boom_botAI : public ScriptedAI
         me->SetUnitMovementFlags(MOVEFLAG_WALK_MODE);
     }
  
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit* /*pWho*/) {}
+    void AttackStart(Unit* /*pWho*/) {}
  
-    void MovementInform(uint32 type, uint32 id)
+    void MovementInform(uint32 type, uint32 /*id*/)
     {
         if (type != POINT_MOTION_TYPE)
             return;
@@ -1169,7 +1169,7 @@ struct npc_boom_botAI : public ScriptedAI
         Boom = true;
     }
  
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (!pWho->isCharmedOwnedByPlayerOrPlayer())
             return;
@@ -1256,8 +1256,8 @@ struct npc_drijyaAI : public npc_escortAI
         DestroyingTimer = 60000;
     }
 
-    void AttackedBy(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void AttackedBy(Unit* /*pWho*/) {}
+    void AttackStart(Unit* /*pWho*/) {}
 
     void SpawnImp()
     {

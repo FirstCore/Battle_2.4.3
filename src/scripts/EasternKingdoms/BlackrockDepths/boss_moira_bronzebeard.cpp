@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Moira_Bronzbeard
-SD%Complete: 90
-SDComment: Healing of Emperor NYI
-SDCategory: Blackrock Depths
+Name: Boss_Moira_Bronzbeard
+Complete(%): 90
+Comment: Healing of Emperor NYI
+Category: Blackrock Depths
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -51,7 +51,7 @@ struct boss_moira_bronzebeardAI : public ScriptedAI
         Smite_Timer = 8000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

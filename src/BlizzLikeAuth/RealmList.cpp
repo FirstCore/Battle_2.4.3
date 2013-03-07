@@ -24,10 +24,10 @@
 extern DatabaseType LoginDatabase;
 
 // will only support WoW 1.12.1/1.12.2 , WoW:TBC 2.4.3 and official release for WoW:WotLK and later, client builds 10505, 8606, 6005, 5875
-// if you need more from old build then add it in cases in realmd sources code
-// list sorted from high to low build and first build used as low bound for accepted by default range (any > it will accepted by realmd at least)
+// if you need more from old build then add it in cases in auth sources code
+// list sorted from high to low build and first build used as low bound for accepted by default range (any > it will accepted by auth at least)
 
-static RealmBuildInfo ExpectedRealmdClientBuilds[] = {
+static RealmBuildInfo ExpectedauthClientBuilds[] = {
     {12340, 3, 3, 5, 'a'},                                  // highest supported build, also auto accept all above for simplify future supported builds testing
     {11723, 3, 3, 3, 'a'},
     {11403, 3, 3, 2, ' '},
@@ -42,13 +42,13 @@ static RealmBuildInfo ExpectedRealmdClientBuilds[] = {
 RealmBuildInfo const* FindBuildInfo(uint16 _build)
 {
     // first build is low bound of always accepted range
-    if (_build >= ExpectedRealmdClientBuilds[0].build)
-        return &ExpectedRealmdClientBuilds[0];
+    if (_build >= ExpectedauthClientBuilds[0].build)
+        return &ExpectedauthClientBuilds[0];
 
     // continue from 1 with explicit equal check
-    for (int i = 1; ExpectedRealmdClientBuilds[i].build; ++i)
-        if (_build == ExpectedRealmdClientBuilds[i].build)
-            return &ExpectedRealmdClientBuilds[i];
+    for (int i = 1; ExpectedauthClientBuilds[i].build; ++i)
+        if (_build == ExpectedauthClientBuilds[i].build)
+            return &ExpectedauthClientBuilds[i];
 
     // none appropriate build
     return NULL;

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Thekal
-SD%Complete: 100
-SDComment: Combat animation after resurrection is missing. Same issue with the Mograine and Whitemane fight. Core Issue?
-SDCategory: Zul'Gurub
+Name: Boss_Thekal
+Complete(%): 100
+Comment: Combat animation after resurrection is missing. Same issue with the Mograine and Whitemane fight. Core Issue?
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -223,6 +223,7 @@ struct boss_thekalAI : public ScriptedAI
 
             // Resurrecting
             if (LorkhanDead || ZathDead)
+            {
                 if (!IsResurrecting && (CheckDeath_Timer - 2000) <= diff)
                 {
                     if (ZathDead)
@@ -235,6 +236,7 @@ struct boss_thekalAI : public ScriptedAI
                 }
                 else
                     CheckDeath_Timer -= diff;
+            }
 
             // Mortal Cleave Timer
             if (MortalCleave_Timer <= diff)
@@ -268,7 +270,7 @@ struct boss_thekalAI : public ScriptedAI
             // Charge Timer
             if (Charge_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 {
                     DoCast(pTarget, SPELL_CHARGE);
                     DoResetThreat();
@@ -388,6 +390,7 @@ struct mob_zealot_lorkhanAI : public ScriptedAI
 
         // Resurrect
         if (ThekalDead || ZathDead)
+        {
             if (!IsResurrecting && (CheckDeath_Timer - 2000) <= diff)
             {
                 if (ZathDead)
@@ -401,6 +404,7 @@ struct mob_zealot_lorkhanAI : public ScriptedAI
             else
             if (ThekalDead)
                 CheckDeath_Timer -= diff;
+        }
 
         // Shield Timer
         if (Shield_Timer <= diff)
@@ -425,8 +429,8 @@ struct mob_zealot_lorkhanAI : public ScriptedAI
         {
             if (pInstance)
             {
-                Unit *pThekal = Unit::GetUnit((*me), ThekalGUID);
-                Unit *pZath = Unit::GetUnit((*me), ZathGUID);
+                Unit* pThekal = Unit::GetUnit((*me), ThekalGUID);
+                Unit* pZath = Unit::GetUnit((*me), ZathGUID);
 
                 if (!pThekal || !pZath)
                     return;
@@ -557,6 +561,7 @@ struct mob_zealot_zathAI : public ScriptedAI
 
         // Resurrect
         if (ThekalDead || LorkhanDead)
+        {
             if (!IsResurrecting && (CheckDeath_Timer - 2000) <= diff)
             {
                 if (LorkhanDead)
@@ -570,6 +575,7 @@ struct mob_zealot_zathAI : public ScriptedAI
             else
             if (LorkhanDead && ThekalDead)
                 CheckDeath_Timer -= diff;
+        }
 
         // Sweeping Strikes Timer
         if (SweepingStrikes_Timer <= diff)

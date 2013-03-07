@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Loch_Modan
-SD%Complete: 100
-SDComment: Quest support: 3181, 309
-SDCategory: Loch Modan
+Name: Loch_Modan
+Complete(%): 100
+Comment: Quest support: 3181, 309
+Category: Loch Modan
 EndScriptData */
 
 /* ContentData

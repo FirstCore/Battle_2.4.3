@@ -33,19 +33,19 @@
 #include <ace/SOCK_Acceptor.h>
 
 // Format is YYYYMMDD (change in the conf file)
-#ifndef _BLIZZLIKE_REALM_CONFVER
-# define _BLIZZLIKE_REALM_CONFVER 20120921
-#endif //_BLIZZLIKE_REALM_CONFVER
+#ifndef _BLIZZLIKE_AUTH_CONFVER
+# define _BLIZZLIKE_AUTH_CONFVER 20130210
+#endif //_BLIZZLIKE_AUTH_CONFVER
 
-#ifndef _BLIZZLIKE_REALM_CONFIG
-# define _BLIZZLIKE_REALM_CONFIG  "blizzlikerealm.conf"
-#endif //_BLIZZLIKE_REALM_CONFIG
+#ifndef _BLIZZLIKE_AUTH_CONFIG
+# define _BLIZZLIKE_AUTH_CONFIG  "authserver.conf"
+#endif //_BLIZZLIKE_AUTH_CONFIG
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "blizzlike-realm";
-char serviceLongName[] = "blizzlike realm service";
-char serviceDescription[] = "blizzlike realm service";
+char serviceName[] = "authserver";
+char serviceLongName[] = "blizzlike auth service";
+char serviceDescription[] = "blizzlike core auth service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -68,7 +68,7 @@ void HookSignals();
 
 bool stopEvent = false;                                     // Setting it to true stops the server
 
-DatabaseType LoginDatabase;                                 // Accessor to the realm server database
+DatabaseType LoginDatabase;                                 // Accessor to the auth server database
 
 // Print out the usage string for this program on the console.
 void usage(const char *prog)
@@ -85,11 +85,11 @@ void usage(const char *prog)
         ,prog);
 }
 
-// Launch the realm server
+// Launch the auth server
 extern int main(int argc, char **argv)
 {
     // Command line parsing
-    char const* cfg_file = _BLIZZLIKE_REALM_CONFIG;
+    char const* cfg_file = _BLIZZLIKE_AUTH_CONFIG;
 
 #ifdef _WIN32
     char const *options = ":c:s:";
@@ -158,18 +158,20 @@ extern int main(int argc, char **argv)
     }
     sLog.Initialize();
 
-    sLog.outString("%s [realm-daemon]", _FULLVERSION);
+    sLog.outString("*************************************************************************");
+    sLog.outString(" %s(auth) Rev: %s Hash: %s ", _PACKAGENAME, _REVISION, _HASH);
+    sLog.outString("*************************************************************************");
     sLog.outString("<Ctrl-C> to stop.");
     sLog.outString(" ");
 
     // Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion != _BLIZZLIKE_REALM_CONFVER)
+    if (confVersion != _BLIZZLIKE_AUTH_CONFVER)
     {
         sLog.outError(" WARNING:");
         sLog.outError(" Your %s file is out of date.", cfg_file);
         sLog.outError(" Please, check for updates.");
-        sleep(10);
+        sleep(5);
     }
 
     sLog.outDetail("Using ACE: %s", ACE_VERSION);
@@ -182,7 +184,7 @@ extern int main(int argc, char **argv)
 
     sLog.outBasic("Max allowed open files is %d", ACE::max_handles());
 
-    // BlizzLikeRealm PID file creation
+    // AuthServer PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
     if (!pidfile.empty())
     {
@@ -205,6 +207,7 @@ extern int main(int argc, char **argv)
     if (sRealmList->size() == 0)
     {
         sLog.outError("No valid realms specified.");
+        sleep(5);
         return 1;
     }
 
@@ -216,19 +219,21 @@ extern int main(int argc, char **argv)
     // Launch the listening network socket
     ACE_Acceptor<AuthSocket, ACE_SOCK_Acceptor> acceptor;
 
-    uint16 rmport = sConfig.GetIntDefault("RealmServerPort", DEFAULT_REALMSERVER_PORT);
+    uint16 rmport = sConfig.GetIntDefault("AuthServerPort", DEFAULT_AUTHSERVER_PORT);
     std::string bind_ip = sConfig.GetStringDefault("BindIP", "0.0.0.0");
 
     ACE_INET_Addr bind_addr(rmport, bind_ip.c_str());
 
     if (acceptor.open(bind_addr, ACE_Reactor::instance(), ACE_NONBLOCK) == -1)
     {
-        sLog.outError("BlizzLikeRealm can not bind to %s:%d", bind_ip.c_str(), rmport);
+        sLog.outError("AuthServer can not bind to %s:%d", bind_ip.c_str(), rmport);
         return 1;
     }
 
     // Catch termination signals
     HookSignals();
+
+    sLog.outString("AuthServer started");
 
     // Handle affinity for multiple processors and process priority on Windows
     #ifdef _WIN32
@@ -247,7 +252,7 @@ extern int main(int argc, char **argv)
 
                 if (!curAff )
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for BlizzLikeRealm. Accessible processors bitmask (hex): %x",Aff,appAff);
+                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for authserver. Accessible processors bitmask (hex): %x",Aff,appAff);
                 }
                 else
                 {
@@ -265,9 +270,9 @@ extern int main(int argc, char **argv)
         if (Prio)
         {
             if (SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
-                sLog.outString("BlizzLikeRealm process priority class set to HIGH");
+                sLog.outString("AuthServer process priority class set to HIGH");
             else
-                sLog.outError("ERROR: Can't set BlizzLikeRealm process priority class.");
+                sLog.outError("ERROR: Can't set AuthServer process priority class.");
             sLog.outString();
         }
     }
@@ -335,7 +340,7 @@ bool StartDB()
     if (dbstring.empty())
     {
         sLog.outError("Database not specified");
-        sleep(10);
+        sleep(5);
         return false;
     }
 
@@ -343,7 +348,7 @@ bool StartDB()
     if (!LoginDatabase.Initialize(dbstring.c_str()))
     {
         sLog.outError("BC> Can't connect to database at %s", dbstring.c_str());
-        sleep(10);
+        sleep(5);
         return false;
     }
 

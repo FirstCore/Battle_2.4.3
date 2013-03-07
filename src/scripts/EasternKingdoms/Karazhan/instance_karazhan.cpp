@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Karazhan
-SD%Complete: 70
-SDComment: Instance Script for Karazhan to help in various m_auiEncounter. TODO: GameObject visibility for Opera event.
-SDCategory: Karazhan
+Name: Instance_Karazhan
+Complete(%): 70
+Comment: Instance Script for Karazhan to help in various m_auiEncounter. TODO: GameObject visibility for Opera event.
+Category: Karazhan
 EndScriptData */
 
 #include "ScriptPCH.h"

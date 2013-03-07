@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Wailing Caverns
-SD%Complete: 95
-SDComment: Need to add skill usage for Disciple of Naralex
-SDCategory: Wailing Caverns
+Name: Wailing Caverns
+Complete(%): 95
+Comment: Need to add skill usage for Disciple of Naralex
+Category: Wailing Caverns
 EndScriptData */
 
 /* ContentData
@@ -132,7 +132,7 @@ struct npc_disciple_of_naralexAI : public npc_escortAI
         DoScriptText(SAY_ATTACKED, me, who);
     }
 
-    void JustDied(Unit * /*slayer*/)
+    void JustDied(Unit* /*slayer*/)
     {
         if (pInstance)
         {

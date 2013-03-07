@@ -408,6 +408,7 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, QueryResult_AutoPtr result
 
 void Item::DeleteFromDB()
 {
+    DeleteFakeFromDB(GetGUIDLow()); // Transmogrification
     CharacterDatabase.PExecute("DELETE FROM item_instance WHERE guid = '%u'",GetGUIDLow());
 }
 
@@ -853,7 +854,7 @@ uint8 Item::GetGemCountWithID(uint32 GemID) const
 bool Item::IsLimitedToAnotherMapOrZone(uint32 cur_mapId, uint32 cur_zoneId) const
 {
     ItemPrototype const* proto = GetProto();
-    return proto && (proto->Map && proto->Map != cur_mapId || proto->Area && proto->Area != cur_zoneId);
+    return proto && ((proto->Map && proto->Map != cur_mapId) || (proto->Area && proto->Area != cur_zoneId));
 }
 
 // Though the client has the information in the item's data field,
@@ -918,3 +919,39 @@ void Item::BuildUpdate(UpdateDataMapType& data_map)
     ClearUpdateMask(false);
 }
 
+uint32 Item::GetFakeEntry() // Transmogrification
+{
+    ItemFakeEntryContainer::const_iterator itr = objmgr._itemFakeEntryStore.find(GetGUIDLow());
+    if (itr == objmgr._itemFakeEntryStore.end()) return NULL;
+    return itr->second;
+}
+
+bool Item::DeleteFakeEntry() // Transmogrification
+{
+    if (!GetFakeEntry())
+        return false;
+	GetOwner()->SetUInt32Value(PLAYER_VISIBLE_ITEM_1_0 + (GetSlot() * 2), GetEntry());
+    DeleteFakeFromDB(GetGUIDLow());
+    return true;
+}
+
+void Item::DeleteFakeFromDB(uint32 lowGUID) // Transmogrification
+{
+    objmgr._itemFakeEntryStore.erase(lowGUID);
+    CharacterDatabase.PExecute("DELETE FROM custom_transmogrification WHERE GUID = %u", lowGUID);
+}
+
+void Item::SetFakeEntry(uint32 entry) // Transmogrification
+{
+	GetOwner()->SetUInt32Value(PLAYER_VISIBLE_ITEM_1_0 + (GetSlot() * 2), entry);
+	objmgr._itemFakeEntryStore[GetGUIDLow()] = entry;
+    CharacterDatabase.PExecute("REPLACE INTO custom_transmogrification (GUID, FakeEntry) VALUES (%u, %u)", GetGUIDLow(), entry);
+}
+
+bool Item::HasGoodFakeQuality() // Transmogrification
+{
+    uint32 quality = GetProto()->Quality;
+    if (quality == ITEM_QUALITY_UNCOMMON || quality == ITEM_QUALITY_RARE || quality == ITEM_QUALITY_EPIC)
+        return true;
+    return false;
+}

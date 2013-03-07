@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Terokkar_Forest
-SD%Complete: 80
-SDComment: Quest support: 9889, 10009, 10873, 10896, 11096, 10052, 10051, 10898, 10446/10447, 10852, 10887, 10922, 11085, Skettis->Ogri'la Flight
-SDCategory: Terokkar Forest
+Name: Terokkar_Forest
+Complete(%): 80
+Comment: Quest support: 9889, 10009, 10873, 10896, 11096, 10052, 10051, 10898, 10446/10447, 10852, 10887, 10922, 11085, Skettis->Ogri'la Flight
+Category: Terokkar Forest
 EndScriptData */
 
 /* ContentData
@@ -68,7 +68,7 @@ struct mob_unkor_the_ruthlessAI : public ScriptedAI
         me->setFaction(FACTION_HOSTILE);
     }
 
-    void EnterCombat(Unit * /*who*/) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void DoNice()
     {
@@ -81,7 +81,7 @@ struct mob_unkor_the_ruthlessAI : public ScriptedAI
         UnkorUnfriendly_Timer = 60000;
     }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (done_by->GetTypeId() == TYPEID_PLAYER)
             if ((me->GetHealth()-damage)*100 / me->GetMaxHealth() < 30)
@@ -156,9 +156,9 @@ struct mob_infested_root_walkerAI : public ScriptedAI
     mob_infested_root_walkerAI(Creature *c) : ScriptedAI(c) {}
 
     void Reset() { }
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (done_by && done_by->GetTypeId() == TYPEID_PLAYER)
             if (me->GetHealth() <= damage)
@@ -181,9 +181,9 @@ struct mob_rotting_forest_ragerAI : public ScriptedAI
     mob_rotting_forest_ragerAI(Creature *c) : ScriptedAI(c) {}
 
     void Reset() { }
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (done_by->GetTypeId() == TYPEID_PLAYER)
             if (me->GetHealth() <= damage)
@@ -213,8 +213,8 @@ struct mob_netherweb_victimAI : public ScriptedAI
     mob_netherweb_victimAI(Creature *c) : ScriptedAI(c) {}
 
     void Reset() { }
-    void EnterCombat(Unit *who) { }
-    void MoveInLineOfSight(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
+    void MoveInLineOfSight(Unit* /*who*/) { }
 
     void JustDied(Unit* Killer)
     {
@@ -276,7 +276,7 @@ struct npc_floonAI : public ScriptedAI
         me->setFaction(FACTION_FRIENDLY_FL);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
     void UpdateAI(const uint32 diff)
     {
@@ -318,7 +318,7 @@ bool GossipHello_npc_floon(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_floon(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_floon(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF)
     {
@@ -395,7 +395,7 @@ struct npc_isla_starmaneAI : public npc_escortAI
         me->RestoreFaction();
     }
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit* /*killer*/)
     {
         if (Player* pPlayer = GetPlayerForEscort())
         {
@@ -444,7 +444,7 @@ bool GossipHello_go_skull_pile(Player *player, GameObject* _GO)
     return true;
 }
 
-void SendActionMenu_go_skull_pile(Player *player, GameObject* _GO, uint32 action)
+void SendActionMenu_go_skull_pile(Player *player, GameObject* /*_GO*/, uint32 action)
 {
     switch(action)
     {
@@ -688,7 +688,7 @@ bool GossipHello_npc_skyguard_handler_deesak(Player* pPlayer, Creature* pCreatur
     return true;
 }
 
-bool GossipSelect_npc_skyguard_handler_deesak(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_skyguard_handler_deesak(Player* pPlayer, Creature* /*pCreature*/, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -1120,7 +1120,7 @@ struct npc_captive_child : public ScriptedAI
 
     void Reset() {}
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 /*uiPointId*/)
     {
         // we only have one waypoint
         me->ForcedDespawn();
@@ -1224,7 +1224,7 @@ struct npc_skyguard_prisonerAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId)
     {
-        if (Player* pPlayer = GetPlayerForEscort())
+        if (/*Player* pPlayer = */GetPlayerForEscort())
         {
             switch (uiPointId)
             {

@@ -30,6 +30,15 @@
 
 void WorldSession::HandleGMTicketCreateOpcode(WorldPacket& recv_data)
 {
+    // If have a ticket, don't create a new
+    if (ticketmgr.GetGMTicketByPlayer(GetPlayer()->GetGUID()))
+    {
+        WorldPacket data(SMSG_GMTICKET_CREATE, 4);
+        data << uint32(1); // you already have an open ticket.
+        SendPacket (&data);
+        return;
+    }
+
     uint32 map;
     float x, y, z;
     std::string ticketText = "";

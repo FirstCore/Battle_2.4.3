@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Alterac_Mountains
-SD%Complete: 0
-SDComment: Placeholder
-SDCategory: Alterac Mountains
+Name: Alterac_Mountains
+Complete(%): 0
+Comment: Placeholder
+Category: Alterac Mountains
 EndScriptData */
 
 /* ContentData

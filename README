@@ -1,5 +1,6 @@
 = BlizzLike Core -- General information =
 
+<<<<<<< HEAD
 Copyright (C) BlizzLike Core (https://github.com/Vitasic/blizzlikecore)
 
 BlizzLike Core is free software; you can redistribute it and/or modify
@@ -31,5 +32,30 @@ from MaNGOS. For further information on the BlizzLike Core project,
 please visit: https://github.com/Vitasic/blizzlikecore
 
 SQL files to create the database can be found in the sql directory.
+=======
+Copyright (C) BlizzLikeCore (https://github.com/blizzlikegroup/blizzlikecore)
+
+
+BlizzLikeCore is an MMORPG framework that's built using C++, and using a 
+back-end of MySQL for the DB content. BlizzLikeCore is an individual project, 
+if you have code for us to merge into the repo (please file a pull request), 
+or help us by posting issues, patches, and enhancement suggestions on the 
+forum: http://blizzlike.servegame.com
+
+Download
+
+You can download this project, or you can also clone the project with Git 
+by running: git clone git://github.com/blizzlikegroup/blizzlikecore.git
+
+Install
+ 
+Check: http://blizzlike.servegame.com
+
+License
+ 
+BlizzLikeCore is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; version 2 of the License.
+>>>>>>> 33d45077f89cc9015b9db0e0f70c711f6b7354fe
 
 Contact: vitasic-pokataev@yandex.ru

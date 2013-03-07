@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Hinterlands
-SD%Complete: 100
-SDComment: Quest support: 863, 2742
-SDCategory: The Hinterlands
+Name: Hinterlands
+Complete(%): 100
+Comment: Quest support: 863, 2742
+Category: The Hinterlands
 EndScriptData */
 
 /* ContentData

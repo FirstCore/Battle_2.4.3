@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Harbinger_Skyriss
-SD%Complete: 45
-SDComment: CombatAI not fully implemented. Timers will need adjustments. Need more docs on how event fully work. Reset all event and force start over if fail at one point?
-SDCategory: Tempest Keep, The Arcatraz
+Name: Boss_Harbinger_Skyriss
+Complete(%): 45
+Comment: CombatAI not fully implemented. Timers will need adjustments. Need more docs on how event fully work. Reset all event and force start over if fail at one point?
+Category: Tempest Keep, The Arcatraz
 EndScriptData */
 
 /* ContentData
@@ -93,7 +93,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
         ManaBurn_Timer = 25000;
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!Intro)
         {
@@ -102,9 +102,9 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit* /*who*/) {}
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
         DoScriptText(SAY_DEATH, me);
         if (pInstance)
@@ -120,7 +120,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
         else
             summon->SetHealth((summon->GetMaxHealth()*66)/100);
         if (me->getVictim())
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 summon->AI()->AttackStart(pTarget);
      }
 
@@ -170,7 +170,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
                         break;
                     case 2:
                         DoScriptText(SAY_AGGRO, me);
-                        if (Unit *mellic = Unit::GetUnit(*me,pInstance->GetData64(DATA_MELLICHAR)))
+                        if (Unit* mellic = Unit::GetUnit(*me,pInstance->GetData64(DATA_MELLICHAR)))
                         {
                             //should have a better way to do this. possibly spell exist.
                             mellic->setDeathState(JUST_DIED);
@@ -204,7 +204,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
 
         if (MindRend_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(pTarget,HeroicMode ? H_SPELL_MIND_REND : SPELL_MIND_REND);
             else
                 DoCast(me->getVictim(),HeroicMode ? H_SPELL_MIND_REND : SPELL_MIND_REND);
@@ -223,7 +223,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
             case 1: DoScriptText(SAY_FEAR_2, me); break;
             }
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(pTarget,SPELL_FEAR);
             else
                 DoCast(me->getVictim(),SPELL_FEAR);
@@ -242,7 +242,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
             case 1: DoScriptText(SAY_MIND_2, me); break;
             }
 
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(pTarget,HeroicMode ? H_SPELL_DOMINATION : SPELL_DOMINATION);
             else
                 DoCast(me->getVictim(),HeroicMode ? H_SPELL_DOMINATION : SPELL_DOMINATION);
@@ -257,7 +257,7 @@ struct boss_harbinger_skyrissAI : public ScriptedAI
                 if (me->IsNonMeleeSpellCasted(false))
                     return;
 
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
                     DoCast(pTarget,H_SPELL_MANA_BURN);
 
                 ManaBurn_Timer = 16000+rand()%16000;
@@ -289,7 +289,7 @@ struct boss_harbinger_skyriss_illusionAI : public ScriptedAI
 
     void Reset() { }
 
-    void EnterCombat(Unit *who) { }
+    void EnterCombat(Unit* /*who*/) { }
 };
 
 CreatureAI* GetAI_boss_harbinger_skyriss_illusion(Creature* pCreature)

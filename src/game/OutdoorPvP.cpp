@@ -420,7 +420,7 @@ void OPvPCapturePoint::SendObjectiveComplete(uint32 id,uint64 guid)
         (*itr)->KilledMonsterCredit(id, guid);
 }
 
-void OutdoorPvP::HandleKill(Player *killer, Unit * killed)
+void OutdoorPvP::HandleKill(Player *killer, Unit* killed)
 {
     if (Group * pGroup = killer->GetGroup())
     {

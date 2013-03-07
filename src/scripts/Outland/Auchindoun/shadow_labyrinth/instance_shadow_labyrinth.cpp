@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Shadow_Labyrinth
-SD%Complete: 85
-SDComment: Some cleanup left along with save
-SDCategory: Auchindoun, Shadow Labyrinth
+Name: Instance_Shadow_Labyrinth
+Complete(%): 85
+Comment: Some cleanup left along with save
+Category: Auchindoun, Shadow Labyrinth
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -243,7 +243,7 @@ struct mob_fel_overseerAI : public ScriptedAI
 
     ScriptedInstance* pInstance;
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit*)
     {
         pInstance->SetData(TYPE_OVERSEER, DONE);
     }

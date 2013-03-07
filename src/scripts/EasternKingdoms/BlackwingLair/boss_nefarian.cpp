@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Nefarian
-SD%Complete: 80
-SDComment: Some issues with class calls effecting more than one class
-SDCategory: Blackwing Lair
+Name: Boss_Nefarian
+Complete(%): 80
+Comment: Some issues with class calls effecting more than one class
+Category: Blackwing Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -99,7 +99,7 @@ struct boss_nefarianAI : public ScriptedAI
         DoScriptText(SAY_DEATH, me);
     }
 
-    void EnterCombat(Unit * who)
+    void EnterCombat(Unit* who)
     {
         DoScriptText(RAND(SAY_XHEALTH,SAY_AGGRO,SAY_SHADOWFLAME), me);
 

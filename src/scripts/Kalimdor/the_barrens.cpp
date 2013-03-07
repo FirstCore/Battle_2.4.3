@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: The_Barrens
-SD%Complete: 90
-SDComment: Quest support: 863, 1719, 2458, 4921, 6981, 898
-SDCategory: Barrens
+Name: The_Barrens
+Complete(%): 90
+Comment: Quest support: 863, 1719, 2458, 4921, 6981, 898
+Category: Barrens
 EndScriptData */
 
 /* ContentData
@@ -224,7 +224,7 @@ struct npc_taskmaster_fizzuleAI : public ScriptedAI
         me->CombatStop();
     }
 
-    void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
+    void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
     {
         if (spell->Id == SPELL_FLARE || spell->Id == SPELL_FOLLY)
         {
@@ -334,9 +334,9 @@ struct npc_twiggy_flatheadAI : public ScriptedAI
         BigWill = 0;
     }
 
-    void EnterCombat(Unit * /*who*/) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (!who || (!who->isAlive())) return;
 
@@ -347,7 +347,7 @@ struct npc_twiggy_flatheadAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit * /*victim*/) { }
+    void KilledUnit(Unit* /*victim*/) { }
 
     void UpdateAI(const uint32 diff)
     {

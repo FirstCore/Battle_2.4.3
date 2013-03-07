@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Chrono_Lord_Deja
-SD%Complete: 65
-SDComment: All abilities not implemented
-SDCategory: Caverns of Time, The Dark Portal
+Name: Boss_Chrono_Lord_Deja
+Complete(%): 65
+Comment: All abilities not implemented
+Category: Caverns of Time, The Dark Portal
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -59,12 +59,12 @@ struct boss_chrono_lord_dejaAI : public ScriptedAI
         TimeLapse_Timer = 15000;
     }
 
-    void EnterCombat(Unit *who)
+    void EnterCombat(Unit*)
     {
         DoScriptText(SAY_AGGRO, me);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         //Despawn Time Keeper
         if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == C_TIME_KEEPER)
@@ -79,7 +79,7 @@ struct boss_chrono_lord_dejaAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit*)
     {
         switch(rand()%2)
         {
@@ -88,7 +88,7 @@ struct boss_chrono_lord_dejaAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit*)
     {
         DoScriptText(SAY_DEATH, me);
 

@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Hakkar
-SD%Complete: 95
-SDComment: Blood siphon spell buggy cause of Core Issue.
-SDCategory: Zul'Gurub
+Name: Boss_Hakkar
+Complete(%): 95
+Comment: Blood siphon spell buggy cause of Core Issue.
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -95,7 +95,7 @@ struct boss_hakkarAI : public ScriptedAI
         Enraged = false;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
     }
@@ -122,7 +122,7 @@ struct boss_hakkarAI : public ScriptedAI
         //CauseInsanity_Timer
         /*if (CauseInsanity_Timer <= diff)
         {
-        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
         DoCast(pTarget, SPELL_CAUSEINSANITY);
 
         CauseInsanity_Timer = 35000 + rand()%8000;
@@ -131,7 +131,7 @@ struct boss_hakkarAI : public ScriptedAI
         //WillOfHakkar_Timer
         if (WillOfHakkar_Timer <= diff)
         {
-            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(pTarget, SPELL_WILLOFHAKKAR);
 
             WillOfHakkar_Timer = 25000 + rand()%10000;

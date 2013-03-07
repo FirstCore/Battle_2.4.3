@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Feralas
-SD%Complete: 100
-SDComment: Quest support: 3520. Special vendor Gregan Brewspewer
-SDCategory: Feralas
+Name: Feralas
+Complete(%): 100
+Comment: Quest support: 3520. Special vendor Gregan Brewspewer
+Category: Feralas
 EndScriptData */
 
 #include "ScriptPCH.h"

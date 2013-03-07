@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Grilek
-SD%Complete: 100
-SDComment:
-SDCategory: Zul'Gurub
+Name: Boss_Grilek
+Complete(%): 100
+Comment:
+Category: Zul'Gurub
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -41,7 +41,7 @@ struct boss_grilekAI : public ScriptedAI
         GroundTremor_Timer = 8000 + rand()%8000;
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 
@@ -56,7 +56,7 @@ struct boss_grilekAI : public ScriptedAI
         {
 
             DoCast(me, SPELL_AVARTAR);
-            Unit *pTarget = NULL;
+            Unit* pTarget = NULL;
 
             pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
 

@@ -80,6 +80,20 @@ enum BuyBankSlotResult
     ERR_BANKSLOT_OK                 = 3
 };
 
+enum TransmogrificationResult // Transmogrification
+{
+    ERR_FAKE_NEW_BAD_QUALITY,
+    ERR_FAKE_OLD_BAD_QUALITY,
+    ERR_FAKE_SAME_DISPLAY,
+    ERR_FAKE_SAME_DISPLAY_FAKE,
+    ERR_FAKE_CANT_USE,
+    ERR_FAKE_NOT_SAME_CLASS,
+    ERR_FAKE_BAD_CLASS,
+    ERR_FAKE_BAD_SUBLCASS,
+    ERR_FAKE_BAD_INVENTORYTYPE,
+    ERR_FAKE_OK
+};
+
 enum PlayerSpellState
 {
     PLAYERSPELL_UNCHANGED = 0,
@@ -365,6 +379,27 @@ enum PlayerFlags
     PLAYER_FLAGS_UNK4           = 0x00020000,               // taxi benchmark mode (on/off) (2.0.1)
     PLAYER_UNK                  = 0x00040000,               // 2.0.8...
 };
+
+#define PLAYER_TITLE_MASK_ALLIANCE_PVP \
+( PLAYER_TITLE_PRIVATE | PLAYER_TITLE_CORPORAL | \
+PLAYER_TITLE_SERGEANT_A | PLAYER_TITLE_MASTER_SERGEANT | \
+PLAYER_TITLE_SERGEANT_MAJOR | PLAYER_TITLE_KNIGHT | \
+PLAYER_TITLE_KNIGHT_LIEUTENANT | PLAYER_TITLE_KNIGHT_CAPTAIN | \
+PLAYER_TITLE_KNIGHT_CHAMPION | PLAYER_TITLE_LIEUTENANT_COMMANDER | \
+PLAYER_TITLE_COMMANDER | PLAYER_TITLE_MARSHAL | \
+PLAYER_TITLE_FIELD_MARSHAL | PLAYER_TITLE_GRAND_MARSHAL )
+
+#define PLAYER_TITLE_MASK_HORDE_PVP \
+( PLAYER_TITLE_SCOUT | PLAYER_TITLE_GRUNT | \
+PLAYER_TITLE_SERGEANT_H | PLAYER_TITLE_SENIOR_SERGEANT | \
+PLAYER_TITLE_FIRST_SERGEANT | PLAYER_TITLE_STONE_GUARD | \
+PLAYER_TITLE_BLOOD_GUARD | PLAYER_TITLE_LEGIONNAIRE | \
+PLAYER_TITLE_CENTURION | PLAYER_TITLE_CHAMPION | \
+PLAYER_TITLE_LIEUTENANT_GENERAL | PLAYER_TITLE_GENERAL | \
+PLAYER_TITLE_WARLORD | PLAYER_TITLE_HIGH_WARLORD )
+
+#define PLAYER_TITLE_MASK_ALL_PVP \
+( PLAYER_TITLE_MASK_ALLIANCE_PVP | PLAYER_TITLE_MASK_HORDE_PVP )
 
 // used for PLAYER__FIELD_KNOWN_TITLES field (uint64), (1<<bit_index) without (-1)
 // can't use enum for uint64 values
@@ -985,6 +1020,7 @@ class Player : public Unit, public GridObject<Player>
         Item* GetItemByGuid(uint64 guid) const;
         Item* GetItemByPos(uint16 pos) const;
         Item* GetItemByPos(uint8 bag, uint8 slot) const;
+        Bag*  GetBagByPos(uint8 slot) const; // Transmogrification
         Item* GetWeaponForAttack(WeaponAttackType attackType, bool useable = false) const;
         Item* GetShield(bool useable = false) const;
         static uint32 GetAttackBySlot(uint8 slot);        // MAX_ATTACK if not weapon slot
@@ -1661,7 +1697,7 @@ class Player : public Unit, public GridObject<Player>
 
         void UpdateDefense();
         void UpdateWeaponSkill (WeaponAttackType attType);
-        void UpdateCombatSkills(Unit *pVictim, WeaponAttackType attType, MeleeHitOutcome outcome, bool defence);
+        void UpdateCombatSkills(Unit* pVictim, WeaponAttackType attType, MeleeHitOutcome outcome, bool defence);
 
         void SetSkill(uint32 id, uint16 currVal, uint16 maxVal);
         uint16 GetMaxSkillValue(uint32 skill) const;        // max + perm. bonus
@@ -1716,7 +1752,7 @@ class Player : public Unit, public GridObject<Player>
         bool SetFactionReputation(FactionEntry const* factionEntry, int32 standing);
         bool SetOneFactionReputation(FactionEntry const* factionEntry, int32 standing);
         int32 CalculateReputationGain(uint32 creatureOrQuestLevel, int32 rep, bool for_quest);
-        void RewardReputation(Unit *pVictim, float rate);
+        void RewardReputation(Unit* pVictim, float rate);
         void RewardReputation(Quest const *pQuest);
         void SetInitialFactions();
         void UpdateReputation() const;
@@ -1736,12 +1772,14 @@ class Player : public Unit, public GridObject<Player>
         /***                  PVP SYSTEM                       ***/
         /*********************************************************/
         void UpdateHonorFields();
-        bool RewardHonor(Unit *pVictim, uint32 groupsize, float honor = -1, bool pvptoken = false);
+        bool RewardHonor(Unit* pVictim, uint32 groupsize, float honor = -1, bool pvptoken = false);
         uint32 GetHonorPoints() { return GetUInt32Value(PLAYER_FIELD_HONOR_CURRENCY); }
         uint32 GetArenaPoints() { return GetUInt32Value(PLAYER_FIELD_ARENA_CURRENCY); }
         void ModifyHonorPoints(int32 value);
         void ModifyArenaPoints(int32 value);
         uint32 GetMaxPersonalArenaRatingRequirement();
+
+        void UpdateKnownTitles();
 
         //End of PvP System
 
@@ -1788,8 +1826,8 @@ class Player : public Unit, public GridObject<Player>
         void ApplyItemEquipSpell(Item *item, bool apply, bool form_change = false);
         void ApplyEquipSpell(SpellEntry const* spellInfo, Item* item, bool apply, bool form_change = false);
         void UpdateEquipSpellsAtFormChange();
-        void CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, SpellEntry const *spellInfo = NULL);
-        void CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item *item, ItemPrototype const * proto, SpellEntry const *spell = NULL);
+        void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, SpellEntry const *spellInfo = NULL);
+        void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item *item, ItemPrototype const * proto, SpellEntry const *spell = NULL);
 
         void SendInitWorldStates(bool force = false, uint32 forceZoneId = 0);
         void SendUpdateWorldState(uint32 Field, uint32 Value);
@@ -1949,7 +1987,7 @@ class Player : public Unit, public GridObject<Player>
         /*********************************************************/
         uint32 m_lastFallTime;
         float  m_lastFallZ;
-        Unit *m_mover;
+        Unit* m_mover;
         WorldObject *m_seer;
         void SetFallInformation(uint32 time, float z)
         {
@@ -2115,6 +2153,8 @@ class Player : public Unit, public GridObject<Player>
         bool HasTitle(uint32 bitIndex);
         bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
         void SetTitle(CharTitlesEntry const* title, bool lost = false);
+
+        uint32 SuitableForTransmogrification(Item* oldItem, Item* newItem); // Transmogrification
 
     protected:
 
@@ -2302,6 +2342,24 @@ class Player : public Unit, public GridObject<Player>
         float m_rest_bonus;
         RestType rest_type;
         ////////////////////Rest System/////////////////////
+
+        // Movement Anticheat
+        uint32 m_anti_lastmovetime;          // last movement time
+        uint64 m_anti_transportGUID;         // current transport GUID
+        float  m_anti_last_hspeed;           // horizontal speed, default RUN speed
+        uint32 m_anti_lastspeed_changetime;  // last speed change time
+        float  m_anti_last_vspeed;           // vertical speed, default max jump height
+        uint32 m_anti_beginfalltime;         // alternative falling begin time
+        bool m_anti_justteleported;          // seted when player was teleported
+        bool m_anti_flymounted;              // seted when player is mounted on flymount
+        bool m_anti_wasflymounted;           // seted when player was mounted on flymount
+        bool m_anti_ontaxipath;              // seted when player is on a taxi fight
+        bool m_anti_isjumping;               // seted when player is in jump phase
+        bool m_anti_isknockedback;           // seted when player is knocked back
+        uint32 m_anti_justjumped;            // jump already began, anti-air jump check
+        uint64 m_anti_alarmcount;            // alarm counter
+        std::string m_anti_lastcheat;        // stores last cheat as string
+        float m_anti_jumpbase;               // Anti-Gravitation
 
         // Transports
         Transport * m_transport;

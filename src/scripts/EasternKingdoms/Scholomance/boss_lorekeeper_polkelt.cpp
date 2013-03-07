@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Lorekeeper_Polkelt
-SD%Complete: 100
-SDComment:
-SDCategory: Scholomance
+Name: Boss_Lorekeeper_Polkelt
+Complete(%): 100
+Comment:
+Category: Scholomance
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -47,7 +47,7 @@ struct boss_lorekeeperpolkeltAI : public ScriptedAI
         NoxiousCatalyst_Timer = 35000;
     }
 
-    void JustDied(Unit * /*killer*/)
+    void JustDied(Unit* /*killer*/)
     {
         ScriptedInstance *pInstance = me->GetInstanceData();
         if (pInstance)
@@ -59,7 +59,7 @@ struct boss_lorekeeperpolkeltAI : public ScriptedAI
         }
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

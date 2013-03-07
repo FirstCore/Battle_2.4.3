@@ -27,19 +27,19 @@
 #include <ace/Get_Opt.h>
 
 // Format is YYYYMMDD (change in the conf file)
-#ifndef _BLIZZLIKE_CORE_CONFVER
-# define _BLIZZLIKE_CORE_CONFVER 20120922
-#endif //_BLIZZLIKE_CORE_CONFVER
+#ifndef _BLIZZLIKE_WORLD_CONFVER
+# define _BLIZZLIKE_WORLD_CONFVER 20130302
+#endif //_BLIZZLIKE_WORLD_CONFVER
 
-#ifndef _BLIZZLIKE_CORE_CONFIG
-# define _BLIZZLIKE_CORE_CONFIG  "blizzlikecore.conf"
-#endif //_BLIZZLIKE_CORE_CONFIG
+#ifndef _BLIZZLIKE_WORLD_CONFIG
+# define _BLIZZLIKE_WORLD_CONFIG  "worldserver.conf"
+#endif //_BLIZZLIKE_WORLD_CONFIG
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "blizzlike-core";
-char serviceLongName[] = "blizzlike core service";
-char serviceDescription[] = "blizzlike core service";
+char serviceName[] = "worldserver";
+char serviceLongName[] = "blizzlike world service";
+char serviceDescription[] = "blizzlike core world service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -58,7 +58,7 @@ int m_ServiceStatus = -1;
 
 DatabaseType WorldDatabase;                                 ///< Accessor to the world database
 DatabaseType CharacterDatabase;                             ///< Accessor to the character database
-DatabaseType LoginDatabase;                                 ///< Accessor to the realm/login database
+DatabaseType LoginDatabase;                                 ///< Accessor to the auth/login database
 
 uint32 realmID;                                             ///< Id of the realm
 
@@ -77,11 +77,11 @@ void usage(const char *prog)
         ,prog);
 }
 
-// Launch the blizzlike server
+// Launch the world server
 extern int main(int argc, char **argv)
 {
     // Command line parsing
-    char const* cfg_file = _BLIZZLIKE_CORE_CONFIG;
+    char const* cfg_file = _BLIZZLIKE_WORLD_CONFIG;
 
 #ifdef _WIN32
     char const *options = ":c:s:";
@@ -150,18 +150,18 @@ extern int main(int argc, char **argv)
     }
 
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion != _BLIZZLIKE_CORE_CONFVER)
+    if (confVersion != _BLIZZLIKE_WORLD_CONFVER)
     {
         sLog.outError(" WARNING:");
         sLog.outError(" Your %s file is out of date.", cfg_file);
         sLog.outError(" Please, check for updates.");
-        sleep(10);
+        sleep(5);
     }
 
     sLog.outDetail("Using ACE: %s", ACE_VERSION);
 
     // and run the 'Master'
-    // todo - Why do we need this 'Master'? Can't all of this be in the Main as for Realmd?
+    // todo - Why do we need this 'Master'? Can't all of this be in the Main as for auth?
     return sMaster.Run();
 
     // at sMaster return function exist with codes

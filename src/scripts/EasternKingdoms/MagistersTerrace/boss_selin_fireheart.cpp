@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Selin_Fireheart
-SD%Complete: 90
-SDComment: Heroic and Normal Support. Needs further testing.
-SDCategory: Magister's Terrace
+Name: Boss_Selin_Fireheart
+Complete(%): 90
+Comment: Heroic and Normal Support. Needs further testing.
+Category: Magister's Terrace
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -64,7 +64,7 @@ struct boss_selin_fireheartAI : public ScriptedAI
             for (uint8 i = 0; i < size; ++i)
             {
                 uint64 guid = pInstance->GetData64(DATA_FEL_CRYSTAL);
-                debug_log("BSCR: Selin: Adding Fel Crystal %u to list", guid);
+                debug_log("BSCR: Selin: Adding Fel Crystal %llu to list", guid);
                 Crystals.push_back(guid);
             }
         }

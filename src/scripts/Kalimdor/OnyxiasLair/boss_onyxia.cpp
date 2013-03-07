@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Boss_Onyxia
-SD%Complete: 90
-SDComment: Spell Heated Ground is wrong, flying animation, visual for area effect
-SDCategory: Onyxia's Lair
+Name: Boss_Onyxia
+Complete(%): 90
+Comment: Spell Heated Ground is wrong, flying animation, visual for area effect
+Category: Onyxia's Lair
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -99,17 +99,17 @@ struct boss_onyxiaAI : public ScriptedAI
         InitialSpawn = true;
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* /*who*/)
     {
         DoScriptText(SAY_AGGRO, me);
         DoZoneInCombat();
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*Killer*/)
     {
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* /*victim*/)
     {
         DoScriptText(SAY_KILL, me);
     }
@@ -152,7 +152,7 @@ struct boss_onyxiaAI : public ScriptedAI
 
             if (TailSweepTimer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
+                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                 if (pTarget && !me->HasInArc(M_PI, pTarget))
                     DoCast(pTarget, SPELL_TAILSWEEP);
 

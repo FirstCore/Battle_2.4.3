@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Instance_Sunken_Temple
-SD%Complete: 100
-SDComment:Place Holder
-SDCategory: Sunken Temple
+Name: Instance_Sunken_Temple
+Complete(%): 100
+Comment:Place Holder
+Category: Sunken Temple
 EndScriptData */
 
 #include "ScriptPCH.h"

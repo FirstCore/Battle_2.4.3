@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: Dustwallow_Marsh
-SD%Complete: 95
-SDComment: Quest support: 11180, 558, 11126, 1173, 1273, 1324, 11183, 11142, 11209,Vendor Nat Pagle
-SDCategory: Dustwallow Marsh
+Name: Dustwallow_Marsh
+Complete(%): 95
+Comment: Quest support: 11180, 558, 11126, 1173, 1273, 1324, 11183, 11142, 11209,Vendor Nat Pagle
+Category: Dustwallow Marsh
 EndScriptData */
 
 /* ContentData
@@ -60,9 +60,9 @@ struct mobs_risen_husk_spiritAI : public ScriptedAI
         IntangiblePresence_Timer = 5000;
     }
 
-    void EnterCombat(Unit* who) { }
+    void EnterCombat(Unit* /*who*/) { }
 
-    void DamageTaken(Unit *done_by, uint32 &damage)
+    void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (done_by->GetTypeId() == TYPEID_PLAYER)
             if (damage >= me->GetHealth() && CAST_PLR(done_by)->GetQuestStatus(11180) == QUEST_STATUS_INCOMPLETE)
@@ -161,7 +161,7 @@ bool GossipHello_npc_deserter_agitator(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_deserter_agitator(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_deserter_agitator(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     pPlayer->PlayerTalkClass->ClearMenus();
 
@@ -271,7 +271,7 @@ bool GossipHello_npc_theramore_guard(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_theramore_guard(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_theramore_guard(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     pPlayer->PlayerTalkClass->ClearMenus();
 
@@ -308,7 +308,7 @@ bool GossipHello_npc_lady_jaina_proudmoore(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_lady_jaina_proudmoore(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_lady_jaina_proudmoore(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_SENDER_INFO)
     {
@@ -338,7 +338,7 @@ bool GossipHello_npc_nat_pagle(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_nat_pagle(Player *player, Creature* pCreature, uint32 sender, uint32 action)
+bool GossipSelect_npc_nat_pagle(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_TRADE)
         player->SEND_VENDORLIST(pCreature->GetGUID());
@@ -403,7 +403,7 @@ struct npc_morokkAI : public npc_escortAI
         AttackStart(pAttacker);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* /*pDoneBy*/, uint32 &uiDamage)
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -423,7 +423,7 @@ struct npc_morokkAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 /*uiDiff*/)
     {
         if (!me->getVictim())
         {
@@ -925,7 +925,7 @@ struct npc_private_hendelAI : public ScriptedAI
         return;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* /*pDoneBy*/, uint32 &uiDamage)
     {
         if (uiDamage > me->GetHealth() || ((me->GetHealth() - uiDamage)*100 / me->GetMaxHealth() < 20))
         {
@@ -1078,7 +1078,7 @@ bool GossipHello_npc_cassa_crimsonwing(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_cassa_crimsonwing(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_cassa_crimsonwing(Player* pPlayer, Creature* /*pCreature*/, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -1098,7 +1098,7 @@ enum
     NPC_LURKING_SHARK  = 23928
 };
 
-bool AreaTrigger_at_nats_landing(Player* pPlayer, const AreaTriggerEntry* pAt)
+bool AreaTrigger_at_nats_landing(Player* pPlayer, const AreaTriggerEntry* /*pAt*/)
 {
     if (pPlayer->GetQuestStatus(QUEST_NATS_BARGAIN) == QUEST_STATUS_INCOMPLETE && pPlayer->HasAura(SPELL_FISH_PASTE,0))
     {

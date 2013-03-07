@@ -16,10 +16,10 @@
  */
 
 /* ScriptData
-SDName: boss_cannon_master_willey
-SD%Complete: 100
-SDComment:
-SDCategory: Stratholme
+Name: boss_cannon_master_willey
+Complete(%): 100
+Comment:
+Category: Stratholme
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -103,7 +103,7 @@ struct boss_cannon_master_willeyAI : public ScriptedAI
         me->SummonCreature(11054,ADD_9X,ADD_9Y,ADD_9Z,ADD_9O,TEMPSUMMON_TIMED_DESPAWN,240000);
     }
 
-    void EnterCombat(Unit * /*who*/)
+    void EnterCombat(Unit* /*who*/)
     {
     }
 

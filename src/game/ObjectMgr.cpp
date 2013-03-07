@@ -509,8 +509,8 @@ void ObjectMgr::LoadCreatureTemplates()
     SQLCreatureLoader loader;
     loader.Load(sCreatureStorage);
 
-    sLog.outString(">> Loaded %u creature definitions", sCreatureStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u creature definitions", sCreatureStorage.RecordCount);
 
     std::set<uint32> heroicEntries;                         // already loaded heroic value in creatures
     std::set<uint32> hasHeroicEntries;                      // already loaded creatures with heroic entry values
@@ -757,8 +757,8 @@ void ObjectMgr::LoadCreatureAddons()
 {
     sCreatureInfoAddonStorage.Load();
 
-    sLog.outString(">> Loaded %u creature template addons", sCreatureInfoAddonStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u creature template addons", sCreatureInfoAddonStorage.RecordCount);
 
     // check data correctness and convert 'auras'
     for (uint32 i = 1; i < sCreatureInfoAddonStorage.MaxEntry; ++i)
@@ -778,8 +778,8 @@ void ObjectMgr::LoadCreatureAddons()
 
     sCreatureDataAddonStorage.Load();
 
-    sLog.outString(">> Loaded %u creature addons", sCreatureDataAddonStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u creature addons", sCreatureDataAddonStorage.RecordCount);
 
     // check data correctness and convert 'auras'
     for (uint32 i = 1; i < sCreatureDataAddonStorage.MaxEntry; ++i)
@@ -807,8 +807,8 @@ void ObjectMgr::LoadEquipmentTemplates()
 {
     sEquipmentStorage.Load();
 
-    sLog.outString(">> Loaded %u equipment template", sEquipmentStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u equipment template", sEquipmentStorage.RecordCount);
 }
 
 CreatureModelInfo const* ObjectMgr::GetCreatureModelInfo(uint32 modelid)
@@ -857,8 +857,8 @@ void ObjectMgr::LoadCreatureModelInfo()
 {
     sCreatureModelStorage.Load();
 
-    sLog.outString(">> Loaded %u creature model based info", sCreatureModelStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u creature model based info", sCreatureModelStorage.RecordCount);
 
     // check if combat_reach is valid
     for (uint32 i = 1; i < sCreatureModelStorage.MaxEntry; ++i)
@@ -1378,8 +1378,8 @@ void ObjectMgr::LoadCreatureRespawnTimes()
         ++count;
     } while (result->NextRow());
 
-    sLog.outString(">> Loaded %u creature respawn times", mCreatureRespawnTimes.size());
     sLog.outString();
+    sLog.outString(">> Loaded %u creature respawn times", mCreatureRespawnTimes.size());
 }
 
 void ObjectMgr::LoadGameobjectRespawnTimes()
@@ -1440,7 +1440,7 @@ uint64 ObjectMgr::GetPlayerGUIDByName(std::string name) const
 bool ObjectMgr::GetPlayerNameByGUID(const uint64 &guid, std::string &name) const
 {
     // prevent DB access for online player
-    if (Player* player = GetPlayer(guid))
+    if (Player* player = ObjectAccessor::FindPlayer(guid))
     {
         name = player->GetName();
         return true;
@@ -1492,6 +1492,30 @@ uint32 ObjectMgr::GetPlayerAccountIdByPlayerName(const std::string& name) const
     }
 
     return 0;
+}
+
+void ObjectMgr::LoadTransmogrifications() // Transmogrification
+{
+    sLog.outString("Deleting non-existing transmogrification entries...");
+    CharacterDatabase.Execute("DELETE FROM custom_transmogrification WHERE NOT EXISTS (SELECT 1 FROM item_instance WHERE item_instance.guid = custom_transmogrification.GUID)");
+
+    uint32 oldMSTime = getMSTime();
+    _itemFakeEntryStore.clear();
+    QueryResult_AutoPtr result = CharacterDatabase.Query("SELECT GUID, FakeEntry FROM custom_transmogrification WHERE EXISTS (SELECT 1 FROM item_instance WHERE item_instance.guid = custom_transmogrification.GUID)");
+    if (result)
+        do
+        {
+            uint32 lowGUID = (*result)[0].GetUInt32();
+            uint32 entry = (*result)[1].GetUInt32();
+            if (GetItemPrototype(entry))
+                _itemFakeEntryStore[lowGUID] = entry;
+            else
+            {
+                sLog.outErrorDb("Item entry (Entry: %u, GUID: %u) does not exist, deleting.", entry, lowGUID);
+                CharacterDatabase.PExecute("DELETE FROM custom_transmogrification WHERE GUID = %u", lowGUID);
+            }
+        } while (result->NextRow());
+    sLog.outString();
 }
 
 void ObjectMgr::LoadItemLocales()
@@ -1569,8 +1593,8 @@ void ObjectMgr::LoadItemPrototypes()
 {
     SQLItemLoader loader;
     loader.Load(sItemStorage);
-    sLog.outString(">> Loaded %u item prototypes", sItemStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u item prototypes", sItemStorage.RecordCount);
 
     // check data correctness
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
@@ -1911,7 +1935,7 @@ void ObjectMgr::LoadPetLevelInfo()
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in pet_levelstats table, ignoring.",STRONG_MAX_LEVEL,current_level);
                 else
-                    sLog.outDetail("Unused (> MaxPlayerLevel in blizzliked.conf) level %u in pet_levelstats table, ignoring.",current_level);
+                    sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in pet_levelstats table, ignoring.",current_level);
                 continue;
             }
             else if (current_level < 1)
@@ -2286,7 +2310,7 @@ void ObjectMgr::LoadPlayerInfo()
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in player_classlevelstats table, ignoring.",STRONG_MAX_LEVEL,current_level);
                 else
-                    sLog.outDetail("Unused (> MaxPlayerLevel in blizzliked.conf) level %u in player_classlevelstats table, ignoring.",current_level);
+                    sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in player_classlevelstats table, ignoring.",current_level);
                 continue;
             }
 
@@ -2379,7 +2403,7 @@ void ObjectMgr::LoadPlayerInfo()
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in player_levelstats table, ignoring.",STRONG_MAX_LEVEL,current_level);
                 else
-                    sLog.outDetail("Unused (> MaxPlayerLevel in blizzliked.conf) level %u in player_levelstats table, ignoring.",current_level);
+                    sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in player_levelstats table, ignoring.",current_level);
                 continue;
             }
 
@@ -2660,8 +2684,6 @@ void ObjectMgr::LoadArenaTeams()
 
     do
     {
-        Field *fields = result->Fetch();
-
         bar.step();
         ++count;
 
@@ -4218,8 +4240,8 @@ void ObjectMgr::LoadPageTexts()
     sPageTextStore.Free();                                  // for reload case
 
     sPageTextStore.Load();
-    sLog.outString(">> Loaded %u page texts", sPageTextStore.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u page texts", sPageTextStore.RecordCount);
 
     for (uint32 i = 1; i < sPageTextStore.MaxEntry; ++i)
     {
@@ -4544,7 +4566,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
 
         Player *pl = 0;
         if (serverUp)
-            pl = GetPlayer((uint64)m->receiver);
+            pl = ObjectAccessor::FindPlayer((uint64)m->receiver);
         if (pl && pl->m_mailsLoaded)
         {                                                   //this code will run very improbably (the time is between 4 and 5 am, in game is online a player, who has old mail
             //his in mailbox and he has already listed his mails)
@@ -5773,8 +5795,8 @@ void ObjectMgr::LoadGameobjectInfo()
         }
     }
 
-    sLog.outString(">> Loaded %u game object templates", sGOStorage.RecordCount);
     sLog.outString();
+    sLog.outString(">> Loaded %u game object templates", sGOStorage.RecordCount);
 }
 
 void ObjectMgr::LoadExplorationBaseXP()
@@ -7788,7 +7810,8 @@ void ObjectMgr::LoadTransportEvents()
     {
         barGoLink bar1(1);
         bar1.step();
-        sLog.outString("\n>> Transport events table is empty \n");
+        sLog.outString();
+        sLog.outString(">> Transport events table is empty.");
         return;
     }
 
