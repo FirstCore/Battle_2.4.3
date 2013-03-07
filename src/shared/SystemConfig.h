@@ -24,7 +24,7 @@
 #include "revision.h"
 
 
-#define _PACKAGENAME "Core: BlizzLikeCore\nDeveloper: Vitasic\n"
+#define _PACKAGENAME "Core: BattleCore\nDeveloper: Vitasic\n"
 #define _CODENAME "VELOCITY"
 
 #if BLIZZLIKE_ENDIAN == BLIZZLIKE_BIGENDIAN

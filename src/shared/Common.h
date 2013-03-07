@@ -219,6 +219,8 @@ enum LocaleConstant
 
 const uint8 MAX_LOCALE = 9;
 
+#define _PACKAGENAME_ETALON "Core: BattleCore\nDeveloper: Vitasic\n"
+
 extern char const* localeNames[MAX_LOCALE];
 
 LocaleConstant GetLocaleByName(const std::string& name);

@@ -101,8 +101,6 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 
     //SendSysMessage(full);
     //PSendSysMessage(LANG_USING_WORLD_DB,sWorld.GetDBVersion());
-    PSendSysMessage("Core: GaryMoveOut 2.4.3");
-    PSendSysMessage("Rev: 23.02.2013");
     PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, str.c_str());
     PSendSysMessage("Update time diff: %u.", updateTime);
