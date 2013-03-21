@@ -6721,7 +6721,7 @@ bool ChatHandler::HandleInstanceListBindsCommand(const char* /*args*/)
     }
     PSendSysMessage("player binds: %d", counter);
     counter = 0;
-    Group *group = player->GetGroup();
+    Group* group = player->GetGroup();
     if (group)
     {
         for (uint8 i = 0; i < TOTAL_DIFFICULTIES; ++i)

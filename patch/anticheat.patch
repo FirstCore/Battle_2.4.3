@@ -6,10 +6,10 @@ index 0000000..4dc2128
 @@ -0,0 +1,2 @@
 +-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
 +INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use Teleport to Plane Hack.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-diff --git a/src/BlizzLikeCore/worldserver.conf.dist b/src/BlizzLikeCore/worldserver.conf.dist
+diff --git a/src/worldserver/worldserver.conf.dist b/src/worldserver/worldserver.conf.dist
 index 9b6dd63..f40f64a 100644
---- a/src/BlizzLikeCore/worldserver.conf.dist
-+++ b/src/BlizzLikeCore/worldserver.conf.dist
+--- a/src/worldserver/worldserver.conf.dist
++++ b/src/worldserver/worldserver.conf.dist
 @@ -2040,3 +2040,20 @@ Die.Command.Mode = 1
  AutoBroadcast.On = 0
  AutoBroadcast.Center = 0
@@ -653,7 +653,7 @@ index 960f4bd..1808909 100644
  }
  
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 83904bd..639a86d 100644
+index 4cebad9..7798762 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
 @@ -382,6 +382,27 @@ Player::Player (WorldSession *session): Unit()
@@ -684,7 +684,7 @@ index 83904bd..639a86d 100644
      m_mailsLoaded = false;
      m_mailsUpdated = false;
      unReadMails = 0;
-@@ -20501,12 +20522,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
+@@ -20502,12 +20523,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
  
  void Player::HandleFallDamage(MovementInfo& movementInfo)
  {
@@ -704,10 +704,10 @@ index 83904bd..639a86d 100644
      //Players with low fall distance, Feather Fall or physical immunity (charges used) are ignored
      // 14.57 can be calculated by resolving damageperc formular below to 0
 diff --git a/src/game/Player.h b/src/game/Player.h
-index f3e6ab6..fdf1c87 100644
+index 6d21c55..21c1ccd 100644
 --- a/src/game/Player.h
 +++ b/src/game/Player.h
-@@ -2303,6 +2303,24 @@ class Player : public Unit, public GridObject<Player>
+@@ -2307,6 +2307,24 @@ class Player : public Unit, public GridObject<Player>
          RestType rest_type;
          ////////////////////Rest System/////////////////////
  

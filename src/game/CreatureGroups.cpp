@@ -53,7 +53,7 @@ void CreatureGroupManager::AddCreatureToGroup(uint32 groupId, Creature *member)
     }
 }
 
-void CreatureGroupManager::RemoveCreatureFromGroup(CreatureGroup *group, Creature *member)
+void CreatureGroupManager::RemoveCreatureFromGroup(CreatureGroup* group, Creature *member)
 {
     sLog.outDebug("Deleting member pointer to GUID: %u from group %u", group->GetId(), member->GetDBTableGUIDLow());
     group->RemoveMember(member);

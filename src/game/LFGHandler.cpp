@@ -286,7 +286,7 @@ void WorldSession::SendLfgResult(uint32 type, uint32 entry, uint8 lfg_type)
         }
         data << plr->m_lookingForGroup.comment;
 
-        Group *group = plr->GetGroup();
+        Group* group = plr->GetGroup();
         if (group)
         {
             data << group->GetMembersCount()-1;             // count of group members without group leader

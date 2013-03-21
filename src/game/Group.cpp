@@ -519,7 +519,7 @@ void Group::GroupLoot(const uint64& playerGUID, Loot *loot, WorldObject* object)
     ItemPrototype const *item;
     uint8 itemSlot = 0;
     Player *player = ObjectAccessor::FindPlayer(playerGUID);
-    Group *group = player->GetGroup();
+    Group* group = player->GetGroup();
 
     for (i = loot->items.begin(); i != loot->items.end(); ++i, ++itemSlot)
     {
@@ -572,7 +572,7 @@ void Group::NeedBeforeGreed(const uint64& playerGUID, Loot *loot, WorldObject* o
 {
     ItemPrototype const *item;
     Player *player = ObjectAccessor::FindPlayer(playerGUID);
-    Group *group = player->GetGroup();
+    Group* group = player->GetGroup();
 
     uint8 itemSlot = 0;
     for (std::vector<LootItem>::iterator i=loot->items.begin(); i != loot->items.end(); ++i, ++itemSlot)

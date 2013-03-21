@@ -32,7 +32,7 @@ class CreatureGroupManager
 {
     public:
         void AddCreatureToGroup(uint32 group_id, Creature *creature);
-        void RemoveCreatureFromGroup(CreatureGroup *group, Creature *creature);
+        void RemoveCreatureFromGroup(CreatureGroup* group, Creature *creature);
         void LoadCreatureGroups();
 };
 

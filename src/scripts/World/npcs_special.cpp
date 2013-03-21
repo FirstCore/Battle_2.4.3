@@ -1569,14 +1569,7 @@ rediculus _items // Foereaper: would be fun to stab people with a fish
 -- Cant think of any good way to handle this easily
 */
 
-#define GOLD_COST    0 // 0 for no gold cost
 #include "Item.h"
-
-#if (GOLD_COST)
-#define GOLD_COST_FUNCTION GetFakePrice(oldItem)
-#else
-#define GOLD_COST_FUNCTION 0
-#endif
 
 /*##
 ##TRANSMOGRIFICATION
@@ -1623,6 +1616,15 @@ const char * GetSlotName(uint8 slot, WorldSession* session)
     }
 }
 
+uint32 GetFakePrice(Item* item)
+{
+    uint32 sellPrice = item->GetProto()->SellPrice;
+    uint32 minPrice = item->GetProto()->RequiredLevel * 1176;
+    if (sellPrice < minPrice)
+        sellPrice = minPrice;
+    return sellPrice;
+}
+
 bool GossipHello_transmog(Player* player, Creature* creature)
     {
         WorldSession* session = player->GetSession();
@@ -1656,6 +1658,7 @@ bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, ui
                 uint32 lowGUID = player->GetGUIDLow();
                 _items[lowGUID].clear();
                 uint32 limit = 0;
+                uint32 price = 5000000;
                 for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; i++)
                 {
                         if (limit > 30)
@@ -1669,7 +1672,7 @@ bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, ui
                                 {
                                     limit++;
                                     _items[lowGUID][display] = newItem;
-                                    player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), 0, false);
+                                    player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), price, false);
 							   }
                             }
                         }
@@ -1692,7 +1695,7 @@ bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, ui
                                         {
                                             limit++;
                                             _items[lowGUID][display] = newItem;
-                                            player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), GOLD_COST_FUNCTION, false);}
+                                            player->ADD_GOSSIP_ITEM_EXTENDED(GOSSIP_ICON_INTERACT_1, newItem->GetProto()->Name1, uiAction, display, session->GetBlizzLikeString(LANG_POPUP_TRANSMOGRIFY)+GetItemName(newItem, session), price, false);}
                                     }
                                 }
                             }
@@ -1756,9 +1759,8 @@ bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, ui
                         Item* newItem = _items[lowGUID][uiAction];
                         if (newItem->GetOwnerGUID() == player->GetGUIDLow() && (newItem->IsInBag() || newItem->GetBagSlot() == INVENTORY_SLOT_BAG_0) && player->SuitableForTransmogrification(oldItem, newItem) == ERR_FAKE_OK)
                         {
-#if (GOLD_COST)
-                            player->ModifyMoney(-1*GetFakePrice(oldItem)); // take cost
-#endif
+                            player->ModifyMoney(-1*5000000);
+                            // player->ModifyMoney(-1*(uint32)(GetFakePrice(oldItem)*5000000));
                             oldItem->SetFakeEntry(newItem->GetEntry());
                             newItem->SetBinding(true);
                             player->PlayDirectSound(3337);
@@ -1777,18 +1779,7 @@ bool GossipSelect_transmog(Player* player, Creature* creature, uint32 sender, ui
             } break;
         }
         return true;
-}  
-
-#if (GOLD_COST)
-    uint32 GetFakePrice(Item* item)
-    {
-        uint32 sellPrice = item->GetProto()->SellPrice;
-        uint32 minPrice = item->GetProto()->RequiredLevel * 1176;
-        if (sellPrice < minPrice)
-            sellPrice = minPrice;
-        return sellPrice;
-    }
-#endif
+}
 
 void AddSC_npcs_special()
 {

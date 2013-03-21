@@ -641,7 +641,7 @@ class Creature : public Unit, public GridObject<Creature>
 
         void SearchGroup();
         CreatureGroup *GetGroup() {return m_group;}
-        void SetGroup(CreatureGroup *group) {m_group = group;}
+        void SetGroup(CreatureGroup* group) {m_group = group;}
 
         Unit* SelectVictim();
 

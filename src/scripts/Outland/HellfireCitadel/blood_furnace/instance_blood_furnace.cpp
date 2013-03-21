@@ -112,7 +112,7 @@ struct instance_blood_furnace : public ScriptedInstance
         }
     }
 
-    void OnGameObjectCreate(GameObject* pGo, bool /*add*/)
+    void OnGameObjectCreate(GameObject* pGo, bool add)
     {
         switch(pGo->GetEntry())
         {
@@ -251,7 +251,7 @@ struct instance_blood_furnace : public ScriptedInstance
         return false;
     }
 
-    uint64 GetData64(uint32 /*identifier*/)
+    uint64 GetData64(uint32 identifier)
     {
         return 0;
     }
@@ -296,10 +296,6 @@ struct instance_blood_furnace : public ScriptedInstance
 
     void DoNextBroggokEventPhase()
     {
-        #if COMPILER == COMPILER_GNU
-        #pragma GCC diagnostic ignored "-Wuninitialized"
-        #endif
-
         float dx, dy;
         GetMovementDistanceForIndex(BroggokEventPhase, dx, dy);
 
@@ -333,10 +329,6 @@ struct instance_blood_furnace : public ScriptedInstance
         }
         BroggokEventTimer = 30000;
         ++BroggokEventPhase;
-
-        #if COMPILER == COMPILER_GNU
-        #pragma GCC diagnostic warning "-Wuninitialized"
-        #endif
     }
 
     void Update(uint32 diff)
@@ -451,7 +443,7 @@ InstanceData* GetInstanceData_instance_blood_furnace(Map* map)
     return new instance_blood_furnace(map);
 }
 
-bool GOHello_go_prison_cell_lever(Player* /*pPlayer*/, GameObject* pGo)
+bool GOHello_go_prison_cell_lever(Player* pPlayer, GameObject* pGo)
 {
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 

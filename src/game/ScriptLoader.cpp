@@ -37,7 +37,6 @@ void AddSC_npc_professions();
 void AddSC_npc_innkeeper();
 void AddSC_npcs_special();
 void AddSC_npc_taxi();
-void AddSC_npc_maniek();
 
 //eastern kingdoms
 void AddSC_alterac_valley();                 //Alterac Valley
@@ -408,7 +407,6 @@ void AddScripts()
     AddSC_npc_innkeeper();
     AddSC_npcs_special();
     AddSC_npc_taxi();
-    AddSC_npc_maniek();
 
     //eastern kingdoms
     AddSC_alterac_valley();                 //Alterac Valley

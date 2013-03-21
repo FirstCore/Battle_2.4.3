@@ -931,7 +931,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x38B*/ { "SMSG_REALM_SPLIT",                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x38C*/ { "CMSG_REALM_SPLIT",                 STATUS_AUTHED,   &WorldSession::HandleRealmStateRequestOpcode   },
     /*0x38D*/ { "CMSG_MOVE_CHNG_TRANSPORT",         STATUS_LOGGEDIN, &WorldSession::HandleMovementOpcodes           },
-    /*0x38E*/ { "MSG_PARTY_ASSIGNMENT",             STATUS_LOGGEDIN, &WorldSession::HandleGroupPromoteOpcode        },
+    /*0x38E*/ { "MSG_PARTY_ASSIGNMENT",             STATUS_LOGGEDIN, &WorldSession::HandlePartyAssignmentOpcode     },
     /*0x38F*/ { "SMSG_OFFER_PETITION_ERROR",        STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x390*/ { "SMSG_TIME_SYNC_REQ",               STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x391*/ { "CMSG_TIME_SYNC_RESP",              STATUS_LOGGEDIN, &WorldSession::HandleTimeSyncResp              },

@@ -1445,7 +1445,8 @@ bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket * p_data)
 
     *p_data << uint32(char_flags);                          // character flags
 
-    *p_data << uint8(1);                                    // unknown
+    // First login
+    *p_data << uint8(atLoginFlags & AT_LOGIN_FIRST ? 1 : 0);
 
     // Pets info
     {
@@ -16022,7 +16023,7 @@ void Player::_LoadBoundInstances(QueryResult_AutoPtr result)
     for (uint8 i = 0; i < TOTAL_DIFFICULTIES; i++)
         m_boundInstances[i].clear();
 
-    Group *group = GetGroup();
+    Group* group = GetGroup();
 
     //QueryResult_AutoPtr result = CharacterDatabase.PQuery("SELECT id, permanent, map, difficulty, resettime FROM character_instance LEFT JOIN instance ON instance = id WHERE guid = '%u'", GUID_LOPART(m_guid));
     if (result)
@@ -16079,7 +16080,7 @@ InstanceSave * Player::GetInstanceSave(uint32 mapid)
     InstancePlayerBind *pBind = GetBoundInstance(mapid, GetDifficulty());
     InstanceSave *pSave = pBind ? pBind->save : NULL;
     if (!pBind || !pBind->perm)
-        if (Group *group = GetGroup())
+        if (Group* group = GetGroup())
             if (InstanceGroupBind *groupBind = group->GetBoundInstance(this))
                 pSave = groupBind->save;
 
@@ -16209,7 +16210,7 @@ void Player::SendSavedInstances()
 }
 
 // convert the player's binds to the group
-void Player::ConvertInstancesToGroup(Player *player, Group *group, uint64 player_guid)
+void Player::ConvertInstancesToGroup(Player *player, Group* group, uint64 player_guid)
 {
     bool has_binds = false;
     bool has_solo = false;
@@ -19305,7 +19306,7 @@ void Player::ClearComboPoints()
     m_comboTarget = 0;
 }
 
-void Player::SetGroup(Group *group, int8 subgroup)
+void Player::SetGroup(Group* group, int8 subgroup)
 {
     if (group == NULL)
         m_group.unlink();
@@ -20472,7 +20473,7 @@ void Player::RemoveFromBattleGroundRaid()
     SetOriginalGroup(NULL);
 }
 
-void Player::SetOriginalGroup(Group *group, int8 subgroup)
+void Player::SetOriginalGroup(Group* group, int8 subgroup)
 {
     if (group == NULL)
         m_originalGroup.unlink();
@@ -20826,9 +20827,8 @@ void Player::AddGlobalCooldown(SpellEntry const *spellInfo, Spell const *spell)
 
     if (cdTime > 1500)
         cdTime = 1500;
-
     if (cdTime > 0)
-        m_globalCooldowns[spellInfo->StartRecoveryCategory] = cdTime;
+        m_globalCooldowns[spellInfo->StartRecoveryCategory] = cdTime;            
 }
 
 bool Player::HasGlobalCooldown(SpellEntry const *spellInfo) const
@@ -20901,6 +20901,14 @@ void Player::_SaveBGData()
             GetGUIDLow(), m_bgData.bgInstanceID, m_bgData.bgTeam, m_bgData.joinPos.GetPositionX(), m_bgData.joinPos.GetPositionY(), m_bgData.joinPos.GetPositionZ(),
             m_bgData.joinPos.GetOrientation(), m_bgData.joinPos.GetMapId(), m_bgData.taxiPath[0], m_bgData.taxiPath[1], m_bgData.mountSpell);
     }
+}
+
+void Player::RemoveAtLoginFlag(AtLoginFlags f, bool in_db_also /*= false*/)
+{
+    m_atLoginFlags &= ~f;
+
+    if (in_db_also)
+        CharacterDatabase.PExecute("UPDATE characters set at_login = at_login & ~ %u WHERE guid ='%u'", uint32(f), GetGUIDLow()); 
 }
 
 void Player::ResetMap()

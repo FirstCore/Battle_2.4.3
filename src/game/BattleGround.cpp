@@ -1110,7 +1110,7 @@ void BattleGround::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
         }
 
         // remove from raid group if player is member
-        if (Group *group = GetBgRaid(team))
+        if (Group* group = GetBgRaid(team))
         {
             if (!group->RemoveMember(guid, 0))                      // group was disbanded
             {

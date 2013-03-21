@@ -2525,7 +2525,7 @@ void InstanceMap::PermBindAllPlayers(Player *player)
         return;
     }
 
-    Group *group = player->GetGroup();
+    Group* group = player->GetGroup();
     // group members outside the instance group don't get bound
     for (MapRefManager::iterator itr = m_mapRefManager.begin(); itr != m_mapRefManager.end(); ++itr)
     {

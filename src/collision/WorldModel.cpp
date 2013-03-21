@@ -147,13 +147,13 @@ namespace VMAP
         float tx_f = (pos.x - iCorner.x)/LIQUID_TILE_SIZE;
         int32 tx = int32(tx_f);
 
-        if (tx < 0 || tx >= int32(iTilesX))
+        if (tx_f < 0.0f || tx >= int32(iTilesX))
             return false; 
 
         float ty_f = (pos.y - iCorner.y)/LIQUID_TILE_SIZE;
         int32 ty = int32(ty_f);
 
-        if (ty < 0 || ty >= int32(iTilesY))
+        if (ty_f < 0.0f || ty >= int32(iTilesY))
             return false; 
 
         // check if tile shall be used for liquid level

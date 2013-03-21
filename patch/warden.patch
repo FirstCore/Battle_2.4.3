@@ -47,10 +47,10 @@ index 0000000..57684e0
 +/*!40000 ALTER TABLE `warden_data_result` ENABLE KEYS */;
 +UNLOCK TABLES;
 \ No newline at end of file
-diff --git a/src/BlizzLikeCore/worldserver.conf.dist b/src/BlizzLikeCore/worldserver.conf.dist
+diff --git a/src/worldserver/worldserver.conf.dist b/src/worldserver/worldserver.conf.dist
 index 9b6dd63..ddcdaec 100644
---- a/src/BlizzLikeCore/worldserver.conf.dist
-+++ b/src/BlizzLikeCore/worldserver.conf.dist
+--- a/src/worldserver/worldserver.conf.dist
++++ b/src/worldserver/worldserver.conf.dist
 @@ -2040,3 +2040,51 @@ Die.Command.Mode = 1
  AutoBroadcast.On = 0
  AutoBroadcast.Center = 0
@@ -103,10 +103,10 @@ index 9b6dd63..ddcdaec 100644
 +Warden.ClientResponseDelay = 600
 +Warden.ClientCheckHoldOff = 5
 +Warden.LogFile = "warden.log"
-diff --git a/src/BlizzLikeAuth/AuthSocket.cpp b/src/BlizzLikeAuth/AuthSocket.cpp
+diff --git a/src/authserver/AuthSocket.cpp b/src/authserver/AuthSocket.cpp
 index a5e5954..b309d55 100644
---- a/src/BlizzLikeAuth/AuthSocket.cpp
-+++ b/src/BlizzLikeAuth/AuthSocket.cpp
+--- a/src/authserver/AuthSocket.cpp
++++ b/src/authserver/AuthSocket.cpp
 @@ -348,6 +348,14 @@ bool AuthSocket::_HandleLogonChallenge()
      _login = (const char*)ch->I;
      _build = ch->build;
@@ -146,10 +146,10 @@ index a5e5954..b309d55 100644
      QueryResult_AutoPtr result = LoginDatabase.PQuery ("SELECT sessionkey FROM account WHERE username = '%s'", _safelogin.c_str ());
  
      // Stop if the account is not found
-diff --git a/src/BlizzLikeAuth/AuthSocket.h b/src/BlizzLikeAuth/AuthSocket.h
+diff --git a/src/authserver/AuthSocket.h b/src/authserver/AuthSocket.h
 index 9cb7d5e..88d0d77 100644
---- a/src/BlizzLikeAuth/AuthSocket.h
-+++ b/src/BlizzLikeAuth/AuthSocket.h
+--- a/src/authserver/AuthSocket.h
++++ b/src/authserver/AuthSocket.h
 @@ -67,6 +67,7 @@ class AuthSocket: public BufferedSocket
          // Since GetLocaleByName() is _NOT_ bijective, we have to store the locale as a string. Otherwise we can't differ
          // between enUS and enGB, which is important for the patch system

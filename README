@@ -1,6 +1,6 @@
-= BlizzLike Core -- General information =
+= BattleCore_2.4.3 -- General information =
 
-Copyright (C) BlizzLike Core (https://github.com/Vitasic/blizzlikecore)
+Copyright (C) BattleCore_2.4.3 (https://github.com/Vitasic/Battle_2.4.3)
 
 BlizzLike Core is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ so, delete this exception statement from your version.
 
 BlizzLike Core is a World of Warcraft game server emulator. It is derived
 from MaNGOS. For further information on the BlizzLike Core project, 
-please visit: https://github.com/Vitasic/blizzlikecore
+please visit: https://github.com/Vitasic/Battle_2.4.3
 
 SQL files to create the database can be found in the sql directory.
 

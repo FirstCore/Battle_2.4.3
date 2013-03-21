@@ -365,7 +365,7 @@ class WorldSession
         void HandleRaidConvertOpcode(WorldPacket& recv_data);
         void HandleGroupChangeSubGroupOpcode(WorldPacket& recv_data);
         void HandleGroupAssistantOpcode(WorldPacket& recv_data);
-        void HandleGroupPromoteOpcode(WorldPacket& recv_data);
+        void HandlePartyAssignmentOpcode(WorldPacket& recv_data);
 
         void HandlePetitionBuyOpcode(WorldPacket& recv_data);
         void HandlePetitionShowSignOpcode(WorldPacket& recv_data);

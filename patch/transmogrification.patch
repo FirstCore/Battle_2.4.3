@@ -242,10 +242,10 @@ index 7370d55..6d475c9 100644
          void LoadNpcTextLocales();
          void LoadPageTextLocales();
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 83904bd..b9867a8 100644
+index 4cebad9..bbc0df1 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
-@@ -10833,7 +10833,11 @@ void Player::SetVisibleItemSlot(uint8 slot, Item *pItem)
+@@ -10834,7 +10834,11 @@ void Player::SetVisibleItemSlot(uint8 slot, Item *pItem)
          SetUInt64Value(PLAYER_VISIBLE_ITEM_1_CREATOR + (slot * MAX_VISIBLE_ITEM_OFFSET), pItem->GetUInt64Value(ITEM_FIELD_CREATOR));
  
          int VisibleBase = PLAYER_VISIBLE_ITEM_1_0 + (slot * MAX_VISIBLE_ITEM_OFFSET);
@@ -258,7 +258,7 @@ index 83904bd..b9867a8 100644
  
          for (int i = 0; i < MAX_INSPECTED_ENCHANTMENT_SLOT; ++i)
              SetUInt32Value(VisibleBase + 1 + i, pItem->GetEnchantmentId(EnchantmentSlot(i)));
-@@ -10957,6 +10961,7 @@ void Player::MoveItemFromInventory(uint8 bag, uint8 slot, bool update)
+@@ -10958,6 +10962,7 @@ void Player::MoveItemFromInventory(uint8 bag, uint8 slot, bool update)
  {
      if (Item* it = GetItemByPos(bag,slot))
      {
@@ -266,7 +266,7 @@ index 83904bd..b9867a8 100644
          ItemRemovedQuestCheck(it->GetEntry(), it->GetCount());
          RemoveItem(bag, slot, update);
          it->RemoveFromUpdateQueueOf(this);
-@@ -20854,3 +20859,56 @@ void Player::SetMap(Map * map)
+@@ -20862,3 +20867,56 @@ void Player::SetMap(Map * map)
      Unit::SetMap(map);
      m_mapRef.link(map, this);
  }
@@ -324,7 +324,7 @@ index 83904bd..b9867a8 100644
 +    return NULL;
 +}
 diff --git a/src/game/Player.h b/src/game/Player.h
-index 4e67504..16bfbc6 100644
+index 6d21c55..77574af 100644
 --- a/src/game/Player.h
 +++ b/src/game/Player.h
 @@ -80,6 +80,20 @@ enum BuyBankSlotResult
@@ -348,7 +348,7 @@ index 4e67504..16bfbc6 100644
  enum PlayerSpellState
  {
      PLAYERSPELL_UNCHANGED = 0,
-@@ -985,6 +999,7 @@ class Player : public Unit, public GridObject<Player>
+@@ -988,6 +1002,7 @@ class Player : public Unit, public GridObject<Player>
          Item* GetItemByGuid(uint64 guid) const;
          Item* GetItemByPos(uint16 pos) const;
          Item* GetItemByPos(uint8 bag, uint8 slot) const;
@@ -356,7 +356,7 @@ index 4e67504..16bfbc6 100644
          Item* GetWeaponForAttack(WeaponAttackType attackType, bool useable = false) const;
          Item* GetShield(bool useable = false) const;
          static uint32 GetAttackBySlot(uint8 slot);        // MAX_ATTACK if not weapon slot
-@@ -2115,6 +2130,8 @@ class Player : public Unit, public GridObject<Player>
+@@ -2119,6 +2134,8 @@ class Player : public Unit, public GridObject<Player>
          bool HasTitle(uint32 bitIndex);
          bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
          void SetTitle(CharTitlesEntry const* title, bool lost = false);

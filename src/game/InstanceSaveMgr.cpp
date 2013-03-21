@@ -575,7 +575,7 @@ void InstanceSaveManager::_ResetSave(InstanceSaveHashMap::iterator &itr)
     InstanceSave::GroupListType &gList = itr->second->m_groupList;
     while (!gList.empty())
     {
-        Group *group = *(gList.begin());
+        Group* group = *(gList.begin());
         group->UnbindInstance(itr->second->GetMapId(), itr->second->GetDifficulty(), true);
     }
     InstanceSaveHashMap::iterator next;
