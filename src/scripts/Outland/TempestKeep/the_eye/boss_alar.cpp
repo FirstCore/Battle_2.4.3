@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -68,7 +56,7 @@ enum WaitEventType
 
 struct boss_alarAI : public ScriptedAI
 {
-    boss_alarAI(Creature *c) : ScriptedAI(c)
+    boss_alarAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =c->GetInstanceData();
         DefaultMoveSpeedRate = me->GetSpeedRate(MOVE_RUN);
@@ -139,7 +127,7 @@ struct boss_alarAI : public ScriptedAI
             pInstance->SetData(DATA_ALAREVENT, DONE);
     }
 
-    void JustSummoned(Creature *summon)
+    void JustSummoned(Creature* summon)
     {
         if (summon->GetEntry() == CREATURE_EMBER_OF_ALAR)
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
@@ -428,7 +416,7 @@ CreatureAI* GetAI_boss_alar(Creature* pCreature)
 
 struct mob_ember_of_alarAI : public ScriptedAI
 {
-    mob_ember_of_alarAI(Creature *c) : ScriptedAI(c)
+    mob_ember_of_alarAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         me->SetUnitMovementFlags(MOVEFLAG_LEVITATING);
@@ -489,7 +477,7 @@ CreatureAI* GetAI_mob_ember_of_alar(Creature* pCreature)
 
 struct mob_flame_patch_alarAI : public ScriptedAI
 {
-    mob_flame_patch_alarAI(Creature *c) : ScriptedAI(c) {}
+    mob_flame_patch_alarAI(Creature* c) : ScriptedAI(c) {}
     void Reset() {}
     void EnterCombat(Unit* /*who*/) {}
     void AttackStart(Unit* /*who*/) {}

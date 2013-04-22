@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef __WORLD_H
@@ -252,6 +240,7 @@ enum WorldConfigs
     CONFIG_AUTOBROADCAST_ENABLED,
     CONFIG_AUTOBROADCAST_CENTER,
     CONFIG_FLOAT_RATE_PVP_RANK_EXTRA_HONOR,
+    CONFIG_BOOL_MMAP_ENABLED,
     CONFIG_VALUE_COUNT
 };
 
@@ -527,9 +516,9 @@ class World
         void SendWorldText(int32 string_id, ...);
         void SendGlobalText(const char* text, WorldSession *self);
         void SendGMText(int32 string_id, ...);
-        void SendGlobalMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
-        void SendGlobalGMMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
-        void SendZoneMessage(uint32 zone, WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
+        void SendGlobalMessage(WorldPacket* packet, WorldSession *self = 0, uint32 team = 0);
+        void SendGlobalGMMessage(WorldPacket* packet, WorldSession *self = 0, uint32 team = 0);
+        void SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession *self = 0, uint32 team = 0);
         void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
 

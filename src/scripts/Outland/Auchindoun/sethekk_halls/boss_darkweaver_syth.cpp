@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -55,7 +43,7 @@ EndScriptData */
 
 struct boss_darkweaver_sythAI : public ScriptedAI
 {
-    boss_darkweaver_sythAI(Creature *c) : ScriptedAI(c)
+    boss_darkweaver_sythAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
@@ -123,7 +111,7 @@ struct boss_darkweaver_sythAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
             summoned->AI()->AttackStart(pTarget);
@@ -218,7 +206,7 @@ CreatureAI* GetAI_boss_darkweaver_syth(Creature* pCreature)
 
 struct mob_syth_fireAI : public ScriptedAI
 {
-    mob_syth_fireAI(Creature *c) : ScriptedAI(c)
+    mob_syth_fireAI(Creature* c) : ScriptedAI(c)
 
     {
         HeroicMode = me->GetMap()->IsHeroic();
@@ -269,7 +257,7 @@ CreatureAI* GetAI_mob_syth_fire(Creature* pCreature)
 
 struct mob_syth_arcaneAI : public ScriptedAI
 {
-    mob_syth_arcaneAI(Creature *c) : ScriptedAI(c)
+    mob_syth_arcaneAI(Creature* c) : ScriptedAI(c)
 
     {
         HeroicMode = me->GetMap()->IsHeroic();
@@ -320,7 +308,7 @@ CreatureAI* GetAI_mob_syth_arcane(Creature* pCreature)
 
 struct mob_syth_frostAI : public ScriptedAI
 {
-    mob_syth_frostAI(Creature *c) : ScriptedAI(c)
+    mob_syth_frostAI(Creature* c) : ScriptedAI(c)
 
     {
         HeroicMode = me->GetMap()->IsHeroic();
@@ -371,7 +359,7 @@ CreatureAI* GetAI_mob_syth_frost(Creature* pCreature)
 
 struct mob_syth_shadowAI : public ScriptedAI
 {
-    mob_syth_shadowAI(Creature *c) : ScriptedAI(c)
+    mob_syth_shadowAI(Creature* c) : ScriptedAI(c)
 
     {
         HeroicMode = me->GetMap()->IsHeroic();

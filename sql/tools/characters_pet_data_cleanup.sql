@@ -1,7 +1,6 @@
--- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
--- --------------------------------------------------
--- Script to remove Pet Data for not existing Pets --
--- --------------------------------------------------
+-- -------------------------------------------------------------
+-- BlizzLikeCore Script to remove pet data for not existing pets
+-- -------------------------------------------------------------
 
 DELETE FROM pet_aura           WHERE guid NOT IN (SELECT id FROM character_pet);
 DELETE FROM pet_spell          WHERE guid NOT IN (SELECT id FROM character_pet);

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -56,7 +44,7 @@ enum eSurv
 
 struct npc_draenei_survivorAI : public ScriptedAI
 {
-    npc_draenei_survivorAI(Creature *c) : ScriptedAI(c) {}
+    npc_draenei_survivorAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 UnSpawnTimer;
     uint32 ResetlifeTimer;
@@ -217,7 +205,7 @@ enum eSpark
 
 struct npc_engineer_spark_overgrindAI : public ScriptedAI
 {
-    npc_engineer_spark_overgrindAI(Creature *c) : ScriptedAI(c) {}
+    npc_engineer_spark_overgrindAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Dynamite_Timer;
     uint32 Emote_Timer;
@@ -261,7 +249,7 @@ CreatureAI* GetAI_npc_engineer_spark_overgrind(Creature* pCreature)
     return new npc_engineer_spark_overgrindAI (pCreature);
 }
 
-bool GossipHello_npc_engineer_spark_overgrind(Player *player, Creature* pCreature)
+bool GossipHello_npc_engineer_spark_overgrind(Player* player, Creature* pCreature)
 {
     if (player->GetQuestStatus(9537) == QUEST_STATUS_INCOMPLETE)
         player->ADD_GOSSIP_ITEM(0, GOSSIP_FIGHT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
@@ -270,7 +258,7 @@ bool GossipHello_npc_engineer_spark_overgrind(Player *player, Creature* pCreatur
     return true;
 }
 
-bool GossipSelect_npc_engineer_spark_overgrind(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_engineer_spark_overgrind(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF)
     {
@@ -288,7 +276,7 @@ bool GossipSelect_npc_engineer_spark_overgrind(Player *player, Creature* pCreatu
 
 struct npc_injured_draeneiAI : public ScriptedAI
 {
-    npc_injured_draeneiAI(Creature *c) : ScriptedAI(c) {}
+    npc_injured_draeneiAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -335,7 +323,7 @@ enum eMagwin
 
 struct npc_magwinAI : public npc_escortAI
 {
-    npc_magwinAI(Creature *c) : npc_escortAI(c) {}
+    npc_magwinAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
@@ -408,7 +396,7 @@ static float SparkPos[3] = {-5030.95f, -11291.99f, 7.97f};
 
 struct npc_geezleAI : public ScriptedAI
 {
-    npc_geezleAI(Creature *c) : ScriptedAI(c) {}
+    npc_geezleAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 SparkGUID;
 
@@ -525,7 +513,7 @@ CreatureAI* GetAI_npc_geezleAI(Creature* pCreature)
 
 struct mob_nestlewood_owlkinAI : public ScriptedAI
 {
-    mob_nestlewood_owlkinAI(Creature *c) : ScriptedAI(c) {}
+    mob_nestlewood_owlkinAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 ChannelTimer;
     bool Channeled;
@@ -598,7 +586,7 @@ bool go_ravager_cage(Player* pPlayer, GameObject* pGo)
 
 struct npc_death_ravagerAI : public ScriptedAI
 {
-    npc_death_ravagerAI(Creature *c) : ScriptedAI(c){}
+    npc_death_ravagerAI(Creature* c) : ScriptedAI(c){}
 
     uint32 RendTimer;
     uint32 EnragingBiteTimer;
@@ -659,7 +647,7 @@ enum BristlelimbCage
 
 struct npc_stillpine_capitiveAI : public ScriptedAI
 {
-    npc_stillpine_capitiveAI(Creature *c) : ScriptedAI(c){}
+    npc_stillpine_capitiveAI(Creature* c) : ScriptedAI(c){}
 
     uint32 FleeTimer;
 

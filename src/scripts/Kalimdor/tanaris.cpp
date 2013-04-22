@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -51,7 +39,7 @@ enum eAqua
 
 struct mob_aquementasAI : public ScriptedAI
 {
-    mob_aquementasAI(Creature *c) : ScriptedAI(c) {}
+    mob_aquementasAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 SendItem_Timer;
     uint32 SwitchFaction_Timer;
@@ -158,11 +146,11 @@ enum eCustodian
 
 struct npc_custodian_of_timeAI : public npc_escortAI
 {
-    npc_custodian_of_timeAI(Creature *c) : npc_escortAI(c) {}
+    npc_custodian_of_timeAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
-        Player *pPlayer = GetPlayerForEscort();
+        Player* pPlayer = GetPlayerForEscort();
         if (!pPlayer)
             return;
 
@@ -366,7 +354,7 @@ enum e00X17
 
 struct npc_OOX17AI : public npc_escortAI
 {
-    npc_OOX17AI(Creature *c) : npc_escortAI(c) {}
+    npc_OOX17AI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
@@ -454,12 +442,12 @@ CreatureAI* GetAI_npc_OOX17(Creature* pCreature)
 #define PATH_ENTRY_4       2093
 #define PATH_ENTRY_5       2094
 
-bool GOHello_go_landmark_treasure(Player *player, GameObject* /*_GO*/)
+bool GOHello_go_landmark_treasure(Player* player, GameObject* /*_GO*/)
 {
     if (player->GetQuestStatus(QUEST_CUERGOS_GOLD) != QUEST_STATUS_INCOMPLETE)
         return false;
 
-    Creature * spawn = NULL;
+    Creature* spawn = NULL;
 
     spawn = player->SummonCreature(NPC_PIRATE, -10029.78f, -4032.54f, 19.41f, 3.40f, TEMPSUMMON_TIMED_DESPAWN, 340000);
     if (spawn)

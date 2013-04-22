@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -45,6 +33,7 @@
 #include "BattleGround.h"
 #include "Util.h"
 #include "TemporarySummon.h"
+#include "PathFinder.h"
 
 #define SPELL_CHANNEL_UPDATE_INTERVAL (1*IN_MILLISECONDS)
 
@@ -122,7 +111,7 @@ void SpellCastTargets::setDst(Position *pos)
     }
 }
 
-void SpellCastTargets::setGOTarget(GameObject *target)
+void SpellCastTargets::setGOTarget(GameObject* target)
 {
     m_GOTarget = target;
     m_GOTargetGUID = target->GetGUID();
@@ -494,7 +483,7 @@ void Spell::FillTargetMap()
                         AddUnitTarget(m_targets.getUnitTarget(), i);
                     if (m_targets.getCorpseTargetGUID())
                     {
-                        Corpse *corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
+                        Corpse* corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
                         if (corpse)
                         {
                             Player* owner = ObjectAccessor::FindPlayer(corpse->GetOwnerGUID());
@@ -544,7 +533,7 @@ void Spell::FillTargetMap()
                     }
                     else if (m_targets.getCorpseTargetGUID())
                     {
-                        Corpse *corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
+                        Corpse* corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
                         if (corpse)
                         {
                             Player* owner = ObjectAccessor::FindPlayer(corpse->GetOwnerGUID());
@@ -927,7 +916,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
 
         unitTarget->getHostileRefManager().threatAssist(caster, float(gain) * 0.5f, m_spellInfo);
         if (caster->GetTypeId() == TYPEID_PLAYER)
-            if (BattleGround *bg = caster->ToPlayer()->GetBattleGround())
+            if (BattleGround* bg = caster->ToPlayer()->GetBattleGround())
                 bg->UpdatePlayerScore(caster->ToPlayer(), SCORE_HEALING_DONE, gain);
     }
     // Do damage and triggers
@@ -1414,7 +1403,7 @@ WorldObject* Spell::SearchNearbyTarget(float range, SpellTargets TargetType)
                     case SPELL_TARGET_TYPE_GAMEOBJECT:
                         if (i_spellST->second.targetEntry)
                         {
-                            if (GameObject *go = m_caster->FindNearestGameObject(i_spellST->second.targetEntry, range))
+                            if (GameObject* go = m_caster->FindNearestGameObject(i_spellST->second.targetEntry, range))
                             {
                                 // remember found target and range, next attempt will find more near target with another entry
                                 goScriptTarget = go;
@@ -1436,7 +1425,7 @@ WorldObject* Spell::SearchNearbyTarget(float range, SpellTargets TargetType)
                     case SPELL_TARGET_TYPE_CREATURE:
                     case SPELL_TARGET_TYPE_DEAD:
                     default:
-                        if (Creature *cre = m_caster->FindNearestCreature(i_spellST->second.targetEntry, range, i_spellST->second.type != SPELL_TARGET_TYPE_DEAD))
+                        if (Creature* cre = m_caster->FindNearestCreature(i_spellST->second.targetEntry, range, i_spellST->second.type != SPELL_TARGET_TYPE_DEAD))
                         {
                             creatureScriptTarget = cre;
                             goScriptTarget = NULL;
@@ -1474,7 +1463,7 @@ WorldObject* Spell::SearchNearbyTarget(float range, SpellTargets TargetType)
 void Spell::SetTargetMap(uint32 i, uint32 cur)
 {
     SpellNotifyPushType pushType = PUSH_NONE;
-    Player *modOwner = NULL;
+    Player* modOwner = NULL;
     if (m_originalCaster)
         modOwner = m_originalCaster->GetSpellModOwner();
 
@@ -1647,16 +1636,16 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
             }
 
             Position pos;
-               switch (cur)
-             {
-             case TARGET_DEST_CASTER_FRONT_LEAP:
-             case TARGET_DEST_CASTER_FRONT_LEFT:
-             case TARGET_DEST_CASTER_BACK_LEFT:
-             case TARGET_DEST_CASTER_BACK_RIGHT:
-             case TARGET_DEST_CASTER_FRONT_RIGHT:
-                     m_caster->GetFirstCollisionPosition(pos, dist, angle);
-                     break;
-            default:
+            switch (cur)
+            {
+                case TARGET_DEST_CASTER_FRONT_LEAP:
+                case TARGET_DEST_CASTER_FRONT_LEFT:
+                case TARGET_DEST_CASTER_BACK_LEFT:
+                case TARGET_DEST_CASTER_BACK_RIGHT:
+                case TARGET_DEST_CASTER_FRONT_RIGHT:
+                    m_caster->GetFirstCollisionPosition(pos, dist, angle);
+                    break;
+                default:
                     m_caster->GetNearPosition(pos, dist, angle);
                     break;
             }
@@ -1712,14 +1701,14 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
             case TARGET_DEST_TARGET_BACK_LEFT:
             case TARGET_DEST_TARGET_BACK_RIGHT:
             case TARGET_DEST_TARGET_FRONT_RIGHT:
-                    {
-                    target->GetContactPoint(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ, dist);
-                    target->GetFirstCollisionPosition(pos, dist, angle);
-                    }
-                    break;
+            {
+                target->GetContactPoint(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ, dist);
+                target->GetFirstCollisionPosition(pos, dist, angle);
+                break;
+            }
             default:
-                    target->GetNearPosition(pos, dist, angle);
-                    break;
+                target->GetNearPosition(pos, dist, angle);
+                break;
             }
             m_targets.setDst(&pos);
             break;
@@ -2199,6 +2188,14 @@ void Spell::cast(bool skipCheck)
         return;
     }
 
+    if ((m_customAttr & SPELL_ATTR_CU_CHARGE) && !CheckCharge())
+    {
+        SendCastResult(SPELL_FAILED_NOPATH);
+        cancel();
+        SetExecutedCurrently(false);
+        return;
+    }
+
     if (m_caster->GetTypeId() != TYPEID_PLAYER && m_targets.getUnitTarget() && m_targets.getUnitTarget() != m_caster)
         m_caster->SetInFront(m_targets.getUnitTarget());
 
@@ -2309,6 +2306,30 @@ void Spell::cast(bool skipCheck)
     }
 
     SetExecutedCurrently(false);
+}
+
+bool Spell::CheckCharge()
+{
+    if (!m_caster)
+        return false;
+
+    Unit *target = m_targets.getUnitTarget();
+    if (!target)
+        return false;
+
+    float angle = target->GetAngle(m_caster) - target->GetOrientation();
+    Position pos;
+    target->GetContactPoint(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ);
+    target->GetFirstCollisionPosition(pos, target->GetObjectSize(), angle);
+
+    PathInfo path(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ + target->GetObjectSize());
+    PointPath pointPath = path.getFullPath();
+
+    if (pointPath.GetTotalLength() > 25.0f)
+        return false;
+    else
+        return true;
+
 }
 
 void Spell::handle_immediate()
@@ -2911,7 +2932,7 @@ void Spell::SendSpellGo()
     m_caster->SendMessageToSet(&data, true);
 }
 
-void Spell::WriteAmmoToPacket(WorldPacket * data)
+void Spell::WriteAmmoToPacket(WorldPacket* data)
 {
     uint32 ammoInventoryType = 0;
     uint32 ammoDisplayID = 0;
@@ -2950,7 +2971,7 @@ void Spell::WriteAmmoToPacket(WorldPacket * data)
     *data << uint32(ammoInventoryType);
 }
 
-void Spell::WriteSpellGoTargets(WorldPacket * data)
+void Spell::WriteSpellGoTargets(WorldPacket* data)
 {
     *data << (uint8)m_countOfHit;
     for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin();ihit != m_UniqueTargetInfo.end();++ihit)
@@ -3064,7 +3085,7 @@ void Spell::SendLogExecute()
                         data << unit->GetPackGUID();
                     else if (m_targets.getItemTargetGUID())
                         data.appendPackGUID(m_targets.getItemTargetGUID());
-                    else if (GameObject *go = m_targets.getGOTarget())
+                    else if (GameObject* go = m_targets.getGOTarget())
                         data << go->GetPackGUID();
                     else
                         data << uint8(0);                   // guid
@@ -3371,7 +3392,7 @@ void Spell::HandleThreatSpells(uint32 spellId)
     DEBUG_LOG("Spell %u, rank %u, added an additional %i threat", spellId, spellmgr.GetSpellRank(spellId), threatSpell->threat);
 }
 
-void Spell::HandleEffects(Unit* pUnitTarget,Item *pItemTarget,GameObject *pGOTarget,uint32 i, float /*DamageMultiplier*/)
+void Spell::HandleEffects(Unit* pUnitTarget,Item *pItemTarget,GameObject* pGOTarget,uint32 i, float /*DamageMultiplier*/)
 {
     unitTarget = pUnitTarget;
     itemTarget = pItemTarget;
@@ -3427,7 +3448,7 @@ uint8 Spell::CanCast(bool strict)
 
     // only allow triggered spells if at an ended battleground
     if (!m_IsTriggeredSpell && m_caster->GetTypeId() == TYPEID_PLAYER)
-        if (BattleGround * bg = m_caster->ToPlayer()->GetBattleGround())
+        if (BattleGround* bg = m_caster->ToPlayer()->GetBattleGround())
             if (bg->GetStatus() == STATUS_WAIT_LEAVE)
                 return SPELL_FAILED_DONT_REPORT;
 
@@ -3686,7 +3707,7 @@ uint8 Spell::CanCast(bool strict)
                         case SPELL_TARGET_TYPE_DEAD:
                         default:
                         {
-                            Creature *p_Creature = NULL;
+                            Creature* p_Creature = NULL;
 
                             CellPair p(BlizzLike::ComputeCellPair(m_caster->GetPositionX(), m_caster->GetPositionY()));
                             Cell cell(p);
@@ -4084,7 +4105,7 @@ uint8 Spell::CanCast(bool strict)
             }
             case SPELL_EFFECT_SUMMON_DEAD_PET:
             {
-                Creature *pet = m_caster->GetGuardianPet();
+                Creature* pet = m_caster->GetGuardianPet();
                 if (!pet)
                     return SPELL_FAILED_NO_PET;
 
@@ -5190,7 +5211,7 @@ bool Spell::CheckTarget(Unit* target, uint32 eff)
                 if (!m_targets.getCorpseTargetGUID())
                     return false;
 
-                Corpse *corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
+                Corpse* corpse = ObjectAccessor::GetCorpse(*m_caster,m_targets.getCorpseTargetGUID());
                 if (!corpse)
                     return false;
 

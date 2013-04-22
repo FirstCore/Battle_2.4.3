@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -51,7 +39,7 @@ EndScriptData */
 
 struct boss_pathaleon_the_calculatorAI : public ScriptedAI
 {
-    boss_pathaleon_the_calculatorAI(Creature *c) : ScriptedAI(c), summons(me)
+    boss_pathaleon_the_calculatorAI(Creature* c) : ScriptedAI(c), summons(me)
     {
         HeroicMode = me->GetMap()->IsHeroic();
     }
@@ -101,8 +89,8 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
         summons.DespawnAll();
     }
 
-    void JustSummoned(Creature *summon) { summons.Summon(summon); }
-    void SummonedCreatureDespawn(Creature *summon) { summons.Despawn(summon); }
+    void JustSummoned(Creature* summon) { summons.Summon(summon); }
+    void SummonedCreatureDespawn(Creature* summon) { summons.Despawn(summon); }
 
     void UpdateAI(const uint32 diff)
     {
@@ -178,7 +166,7 @@ CreatureAI* GetAI_boss_pathaleon_the_calculator(Creature* pCreature)
 
 struct mob_nether_wraithAI : public ScriptedAI
 {
-    mob_nether_wraithAI(Creature *c) : ScriptedAI(c) {}
+    mob_nether_wraithAI(Creature* c) : ScriptedAI(c) {}
 
     ScriptedInstance *pInstance;
 

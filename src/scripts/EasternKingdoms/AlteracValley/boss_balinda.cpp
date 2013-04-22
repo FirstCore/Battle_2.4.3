@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -49,7 +37,7 @@ enum WaterElementalSpells
 
 struct mob_water_elementalAI : public ScriptedAI
 {
-    mob_water_elementalAI(Creature *c) : ScriptedAI(c) {}
+    mob_water_elementalAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 uiWaterBoltTimer;
     uint64 uiBalindaGUID;
@@ -75,7 +63,7 @@ struct mob_water_elementalAI : public ScriptedAI
         // check if creature is not outside of building
         if (uiResetTimer <= diff)
         {
-            if (Creature *pBalinda = Unit::GetCreature(*me, uiBalindaGUID))
+            if (Creature* pBalinda = Unit::GetCreature(*me, uiBalindaGUID))
                 if (me->GetDistance2d(pBalinda->GetHomePosition().GetPositionX(), pBalinda->GetHomePosition().GetPositionY()) > 50)
                     EnterEvadeMode();
                 uiResetTimer = 5*IN_MILLISECONDS;
@@ -87,7 +75,7 @@ struct mob_water_elementalAI : public ScriptedAI
 
 struct boss_balindaAI : public ScriptedAI
 {
-    boss_balindaAI(Creature *c) : ScriptedAI(c), Summons(me) {}
+    boss_balindaAI(Creature* c) : ScriptedAI(c), Summons(me) {}
 
     uint32 uiArcaneExplosionTimer;
     uint32 uiConeOfColdTimer;
@@ -190,7 +178,7 @@ CreatureAI* GetAI_boss_balinda(Creature* pCreature)
     return new boss_balindaAI (pCreature);
 }
 
-CreatureAI* GetAI_mob_water_elemental(Creature *_Creature)
+CreatureAI* GetAI_mob_water_elemental(Creature* _Creature)
 {
     return new mob_water_elementalAI (_Creature);
 }

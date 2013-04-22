@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -47,7 +35,7 @@ EndScriptData */
 
 struct boss_midnightAI : public ScriptedAI
 {
-    boss_midnightAI(Creature *c) : ScriptedAI(c) {}
+    boss_midnightAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 Attumen;
     uint8 Phase;
@@ -147,7 +135,7 @@ struct boss_midnightAI : public ScriptedAI
         Mount_Timer = 1000;
     }
 
-    void SetMidnight(Creature *, uint64);                   //Below ..
+    void SetMidnight(Creature*, uint64);                   //Below ..
 };
 
 CreatureAI* GetAI_boss_midnight(Creature* pCreature)
@@ -157,7 +145,7 @@ CreatureAI* GetAI_boss_midnight(Creature* pCreature)
 
 struct boss_attumenAI : public ScriptedAI
 {
-    boss_attumenAI(Creature *c) : ScriptedAI(c)
+    boss_attumenAI(Creature* c) : ScriptedAI(c)
     {
         Phase = 1;
 
@@ -262,7 +250,7 @@ struct boss_attumenAI : public ScriptedAI
         {
             if ((me->GetHealth()*100)/me->GetMaxHealth() < 25)
             {
-                Creature *pMidnight = Unit::GetCreature(*me, Midnight);
+                Creature* pMidnight = Unit::GetCreature(*me, Midnight);
                 if (pMidnight && pMidnight->GetTypeId() == TYPEID_UNIT)
                 {
                     CAST_AI(boss_midnightAI, (pMidnight->AI()))->Mount(me);
@@ -281,7 +269,7 @@ struct boss_attumenAI : public ScriptedAI
     }
 };
 
-void boss_midnightAI::SetMidnight(Creature *pAttumen, uint64 value)
+void boss_midnightAI::SetMidnight(Creature* pAttumen, uint64 value)
 {
     CAST_AI(boss_attumenAI, pAttumen->AI())->Midnight = value;
 }

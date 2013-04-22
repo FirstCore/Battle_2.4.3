@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef __WORLDSESSION_H
@@ -89,7 +77,7 @@ class WorldSession
         char const* GetPlayerName() const;
         void SetSecurity(uint32 security) { _security = security; }
         std::string const& GetRemoteAddress() { return m_Address; }
-        void SetPlayer(Player *plr) { _player = plr; }
+        void SetPlayer(Player* plr) { _player = plr; }
         uint8 Expansion() const { return m_expansion; }
 
         // Session in auth.queue currently
@@ -153,7 +141,7 @@ class WorldSession
         static void SendExternalMails();
 
         //auction
-        void SendAuctionHello(uint64 guid, Creature * unit);
+        void SendAuctionHello(uint64 guid, Creature* unit);
         void SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint32 bidError = 0);
         void SendAuctionBidderNotification(uint32 location, uint32 auctionId, uint64 bidder, uint32 bidSum, uint32 diff, uint32 item_template);
         void SendAuctionOwnerNotification(AuctionEntry * auction);
@@ -184,7 +172,7 @@ class WorldSession
         bool LookingForGroup_auto_join;
         bool LookingForGroup_auto_add;
 
-        void BuildPartyMemberStatsChangedPacket(Player *player, WorldPacket *data);
+        void BuildPartyMemberStatsChangedPacket(Player* player, WorldPacket* data);
 
         void DoLootRelease(uint64 lguid);
 
@@ -198,7 +186,7 @@ class WorldSession
 
         uint32 GetLatency() const { return m_latency; }
         void SetLatency(uint32 latency) { m_latency = latency; }
-        uint32 getDialogStatus(Player *pPlayer, Object* questgiver, uint32 defstatus);
+        uint32 getDialogStatus(Player* pPlayer, Object* questgiver, uint32 defstatus);
 
         time_t m_timeOutTime;
         void UpdateTimeOutTime(uint32 diff)
@@ -468,9 +456,9 @@ class WorldSession
         void HandleBuyItemOpcode(WorldPacket& recvPacket);
         void HandleListInventoryOpcode(WorldPacket& recvPacket);
         void HandleAutoStoreBagItemOpcode(WorldPacket& recvPacket);
-        void HandleReadItem(WorldPacket& recvPacket);
+        void HandleReadItemOpcode(WorldPacket& recvPacket);
         void HandleAutoEquipItemSlotOpcode(WorldPacket & recvPacket);
-        void HandleSwapItem(WorldPacket & recvPacket);
+        void HandleSwapItemOpcode(WorldPacket & recvPacket);
         void HandleBuybackItem(WorldPacket & recvPacket);
         void HandleAutoBankItemOpcode(WorldPacket& recvPacket);
         void HandleAutoStoreBankItemOpcode(WorldPacket& recvPacket);
@@ -504,7 +492,7 @@ class WorldSession
         void HandleQuestLogSwapQuest(WorldPacket& recv_data);
         void HandleQuestLogRemoveQuest(WorldPacket& recv_data);
         void HandleQuestConfirmAccept(WorldPacket& recv_data);
-        void HandleQuestComplete(WorldPacket& recv_data);
+        void HandleQuestgiverCompleteQuest(WorldPacket& recv_data);
         void HandleQuestAutoLaunch(WorldPacket& recvPacket);
         void HandleQuestPushToParty(WorldPacket& recvPacket);
         void HandleQuestPushResult(WorldPacket& recvPacket);
@@ -541,7 +529,7 @@ class WorldSession
         void HandleChannelInfoQuery(WorldPacket& recvPacket);
         void HandleChannelJoinNotify(WorldPacket& recvPacket);
 
-        void HandleCompleteCinema(WorldPacket& recvPacket);
+        void HandleCompleteCinematic(WorldPacket& recvPacket);
         void HandleNextCinematicCamera(WorldPacket& recvPacket);
 
         void HandlePageQuerySkippedOpcode(WorldPacket& recvPacket);
@@ -567,9 +555,9 @@ class WorldSession
 
         void HandleChangePlayerNameOpcode(WorldPacket& recv_data);
         static void HandleChangePlayerNameOpcodeCallBack(QueryResult_AutoPtr result, uint32 accountId, std::string newname);
-        void HandleDeclinedPlayerNameOpcode(WorldPacket& recv_data);
+        void HandleSetPlayerDeclinedNamesOpcode(WorldPacket& recv_data);
 
-        void HandleTotemDestroy(WorldPacket& recv_data);
+        void HandleTotemDestroyed(WorldPacket& recv_data);
 
         //BattleGround
         void HandleBattleGroundHelloOpcode(WorldPacket& recv_data);
@@ -589,7 +577,7 @@ class WorldSession
         void HandleFarSightOpcode(WorldPacket& recv_data);
         void HandleSetLfgOpcode(WorldPacket& recv_data);
         void HandleDungeonDifficultyOpcode(WorldPacket& recv_data);
-        void HandleMoveFlyModeChangeAckOpcode(WorldPacket& recv_data);
+        void HandleMoveSetCanFlyAckOpcode(WorldPacket& recv_data);
         void HandleLfgAutoJoinOpcode(WorldPacket& recv_data);
         void HandleLfgCancelAutoJoinOpcode(WorldPacket& recv_data);
         void HandleLfmAutoAddMembersOpcode(WorldPacket& recv_data);
@@ -653,10 +641,10 @@ class WorldSession
         void ExecuteOpcode(OpcodeHandler const& opHandle, WorldPacket* packet);
 
         // logging helper
-        void LogUnexpectedOpcode(WorldPacket *packet, const char * reason);
-        void LogUnprocessedTail(WorldPacket *packet);
+        void LogUnexpectedOpcode(WorldPacket* packet, const char * reason);
+        void LogUnprocessedTail(WorldPacket* packet);
 
-        Player *_player;
+        Player* _player;
         WorldSocket *m_Socket;
         std::string m_Address;
 

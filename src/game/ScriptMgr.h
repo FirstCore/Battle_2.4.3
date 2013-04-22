@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef SC_SCRIPTMGR_H
@@ -65,7 +53,7 @@ struct Script
     bool (*pQuestSelect         )(Player*, Creature*, Quest const*);
     bool (*pQuestComplete       )(Player*, Creature*, Quest const*);
     uint32 (*pNPCDialogStatus   )(Player*, Creature*);
-    uint32 (*pGODialogStatus    )(Player*, GameObject * _GO);
+    uint32 (*pGODialogStatus    )(Player*, GameObject* _GO);
     bool (*pChooseReward        )(Player*, Creature*, Quest const*, uint32);
     bool (*pItemHello           )(Player*, Item*, Quest const*);
     bool (*pGOHello             )(Player*, GameObject*);
@@ -93,10 +81,10 @@ class ScriptMgr
         char const* ScriptsVersion();
 
     //event handlers
-        void OnLogin(Player *pPlayer);
-        void OnLogout(Player *pPlayer);
-        void OnPVPKill(Player *killer, Player *killed);
-        bool GossipHello (Player * pPlayer, Creature* pCreature);
+        void OnLogin(Player* pPlayer);
+        void OnLogout(Player* pPlayer);
+        void OnPVPKill(Player* killer, Player* killed);
+        bool GossipHello (Player* pPlayer, Creature* pCreature);
         bool GossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction);
         bool GossipSelectWithCode(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction, const char* sCode);
         bool GOSelect(Player* pPlayer, GameObject* pGO, uint32 uiSender, uint32 uiAction);
@@ -115,7 +103,7 @@ class ScriptMgr
         bool AreaTrigger(Player* pPlayer,AreaTriggerEntry const* atEntry);
         CreatureAI* GetAI(Creature* pCreature);
         bool ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets);
-        bool EffectDummyCreature(Unit* caster, uint32 spellId, uint32 effIndex, Creature *crTarget);
+        bool EffectDummyCreature(Unit* caster, uint32 spellId, uint32 effIndex, Creature* crTarget);
         InstanceData* CreateInstanceData(Map *map);
 };
 

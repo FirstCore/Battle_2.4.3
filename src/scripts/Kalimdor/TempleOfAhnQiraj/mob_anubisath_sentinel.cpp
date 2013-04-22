@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -103,20 +91,20 @@ struct aqsentinelAI : public ScriptedAI
         }
     }
 
-    aqsentinelAI(Creature *c) : ScriptedAI(c)
+    aqsentinelAI(Creature* c) : ScriptedAI(c)
     {
         ClearBudyList();
         abselected = 0;                                     // just initialization of variable
     }
 
-    Creature *nearby[3];
+    Creature* nearby[3];
 
     void ClearBudyList()
     {
         nearby[0] = nearby[1] = nearby[2] = NULL;
     }
 
-    void AddBuddyToList(Creature *c)
+    void AddBuddyToList(Creature* c)
     {
         if (c == me)
             return;
@@ -132,7 +120,7 @@ struct aqsentinelAI : public ScriptedAI
         }
     }
 
-    void GiveBuddyMyList(Creature *c)
+    void GiveBuddyMyList(Creature* c)
     {
         aqsentinelAI *cai = CAST_AI(aqsentinelAI, (c)->AI());
         for (int i=0; i<3; ++i)
@@ -152,7 +140,7 @@ struct aqsentinelAI : public ScriptedAI
     {
         for (int i=0; i<3; ++i)
         {
-            Creature *c = nearby[i];
+            Creature* c = nearby[i];
             if (c)
             {
                 if (!c->isInCombat())
@@ -259,7 +247,7 @@ struct aqsentinelAI : public ScriptedAI
     {
         for (int ni=0; ni<3; ++ni)
         {
-            Creature *sent = nearby[ni];
+            Creature* sent = nearby[ni];
             if (!sent)
                 continue;
             if (sent->isDead())

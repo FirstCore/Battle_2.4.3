@@ -1,7 +1,6 @@
--- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
--- ---------------------------------------------------
--- BlizzLike Script to Create MySQL User and Tables --
--- ---------------------------------------------------
+-- ----------------------------------------------------
+-- BlizzLikeCore Script to create MySQL user and tables
+-- ----------------------------------------------------
 
 GRANT USAGE ON * . * TO 'blizzlike'@'localhost' IDENTIFIED BY 'blizzlike' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 ;
 

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -90,7 +78,7 @@ struct mob_unkor_the_ruthlessAI : public ScriptedAI
             {
                 for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
                 {
-                    Player *pGroupie = itr->getSource();
+                    Player* pGroupie = itr->getSource();
                     if (pGroupie &&
                         pGroupie->GetQuestStatus(QUEST_DONTKILLTHEFATONE) == QUEST_STATUS_INCOMPLETE &&
                         pGroupie->GetReqKillOrCastCurrentCount(QUEST_DONTKILLTHEFATONE, 18260) == 10)
@@ -153,7 +141,7 @@ CreatureAI* GetAI_mob_unkor_the_ruthless(Creature* pCreature)
 
 struct mob_infested_root_walkerAI : public ScriptedAI
 {
-    mob_infested_root_walkerAI(Creature *c) : ScriptedAI(c) {}
+    mob_infested_root_walkerAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset() { }
     void EnterCombat(Unit* /*who*/) { }
@@ -178,7 +166,7 @@ CreatureAI* GetAI_mob_infested_root_walker(Creature* pCreature)
 
 struct mob_rotting_forest_ragerAI : public ScriptedAI
 {
-    mob_rotting_forest_ragerAI(Creature *c) : ScriptedAI(c) {}
+    mob_rotting_forest_ragerAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset() { }
     void EnterCombat(Unit* /*who*/) { }
@@ -210,7 +198,7 @@ const uint32 netherwebVictims[6] =
 };
 struct mob_netherweb_victimAI : public ScriptedAI
 {
-    mob_netherweb_victimAI(Creature *c) : ScriptedAI(c) {}
+    mob_netherweb_victimAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset() { }
     void EnterCombat(Unit* /*who*/) { }
@@ -309,7 +297,7 @@ CreatureAI* GetAI_npc_floon(Creature* pCreature)
     return new npc_floonAI (pCreature);
 }
 
-bool GossipHello_npc_floon(Player *player, Creature* pCreature)
+bool GossipHello_npc_floon(Player* player, Creature* pCreature)
 {
     if (player->GetQuestStatus(10009) == QUEST_STATUS_INCOMPLETE)
         player->ADD_GOSSIP_ITEM(1, GOSSIP_FLOON1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
@@ -318,7 +306,7 @@ bool GossipHello_npc_floon(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_floon(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_floon(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF)
     {
@@ -430,7 +418,7 @@ CreatureAI* GetAI_npc_isla_starmaneAI(Creature* pCreature)
 #define GOSSIP_S_GEZZARAK_THE_HUNTRESS   "Summon Gezzarak the Huntress"
 #define GOSSIP_S_VAKKIZ_THE_WINDRAGER    "Summon Vakkiz the Windrager"
 
-bool GossipHello_go_skull_pile(Player *player, GameObject* _GO)
+bool GossipHello_go_skull_pile(Player* player, GameObject* _GO)
 {
     if ((player->GetQuestStatus(11885) == QUEST_STATUS_INCOMPLETE) || player->GetQuestRewardStatus(11885))
     {
@@ -444,7 +432,7 @@ bool GossipHello_go_skull_pile(Player *player, GameObject* _GO)
     return true;
 }
 
-void SendActionMenu_go_skull_pile(Player *player, GameObject* /*_GO*/, uint32 action)
+void SendActionMenu_go_skull_pile(Player* player, GameObject* /*_GO*/, uint32 action)
 {
     switch(action)
     {
@@ -463,7 +451,7 @@ void SendActionMenu_go_skull_pile(Player *player, GameObject* /*_GO*/, uint32 ac
     }
 }
 
-bool GossipSelect_go_skull_pile(Player *player, GameObject* _GO, uint32 sender, uint32 action)
+bool GossipSelect_go_skull_pile(Player* player, GameObject* _GO, uint32 sender, uint32 action)
 {
     switch(sender)
     {
@@ -485,7 +473,7 @@ enum
 
 struct npc_skywingAI : public npc_escortAI
 {
-    npc_skywingAI(Creature *c) : npc_escortAI(c) {}
+    npc_skywingAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {

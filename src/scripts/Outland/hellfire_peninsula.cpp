@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -215,7 +203,7 @@ CreatureAI* GetAI_npc_ancestral_wolf(Creature* pCreature)
 ## go_haaleshi_altar
 ######*/
 
-bool GOHello_go_haaleshi_altar(Player *, GameObject* _GO)
+bool GOHello_go_haaleshi_altar(Player*, GameObject* _GO)
 {
     _GO->SummonCreature(C_AERANAS,-1321.79f, 4043.80f, 116.24f, 1.25f, TEMPSUMMON_TIMED_DESPAWN, 180000);
     return false;
@@ -417,7 +405,7 @@ CreatureAI* GetAI_npc_fel_guard_hound(Creature* pCreature)
 #define GOSSIP_ITEM1_DAB "Fly me to Murketh and Shaadraz Gateways"
 #define GOSSIP_ITEM2_DAB "Fly me to Shatter Point"
 
-bool GossipHello_npc_wing_commander_dabiree(Player *player, Creature* pCreature)
+bool GossipHello_npc_wing_commander_dabiree(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -435,7 +423,7 @@ bool GossipHello_npc_wing_commander_dabiree(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_wing_commander_dabiree(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_wing_commander_dabiree(Player* player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -461,7 +449,7 @@ enum
 
 #define GOSSIP_ITEM1_LEAF       "Fly me to Shatter Point"
 
-bool GossipHello_npc_gryphoneer_leafbeard(Player *player, Creature* pCreature)
+bool GossipHello_npc_gryphoneer_leafbeard(Player* player, Creature* pCreature)
 {
     //Go back to Shatter Point if player has completed the quest 10340 - Shatter Point
     if (player->GetQuestStatus(10340) == QUEST_STATUS_COMPLETE)
@@ -471,7 +459,7 @@ bool GossipHello_npc_gryphoneer_leafbeard(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_gryphoneer_leafbeard(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_gryphoneer_leafbeard(Player* player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -490,7 +478,7 @@ bool GossipSelect_npc_gryphoneer_leafbeard(Player *player, Creature* /*pCreature
 #define GOSSIP_ITEM2_BRA "Fly me to The Abyssal Shelf"
 #define GOSSIP_ITEM3_BRA "Fly me to Spinebreaker Post"
 
-bool GossipHello_npc_wing_commander_brack(Player *player, Creature* pCreature)
+bool GossipHello_npc_wing_commander_brack(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -512,7 +500,7 @@ bool GossipHello_npc_wing_commander_brack(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_wing_commander_brack(Player *player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_wing_commander_brack(Player* player, Creature* /*pCreature*/, uint32 /*sender*/, uint32 action)
 {
     switch(action)
     {
@@ -550,7 +538,7 @@ enum eWoundedBloodElf
 
 struct npc_wounded_blood_elfAI : public npc_escortAI
 {
-    npc_wounded_blood_elfAI(Creature *c) : npc_escortAI(c) {}
+    npc_wounded_blood_elfAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
@@ -675,7 +663,7 @@ struct npc_hand_berserkerAI : public ScriptedAI
     void JustDied(Unit* pWho)
     {
 
-        if (pWho->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(((Player *)pWho), 15) && ((Player *)pWho)->GetQuestStatus(10909) == QUEST_STATUS_COMPLETE)
+        if (pWho->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(((Player* )pWho), 15) && ((Player* )pWho)->GetQuestStatus(10909) == QUEST_STATUS_COMPLETE)
         {return;}
 
         if (Creature* Bunny = me->FindNearestCreature(NPC_BUNNY, 17.5f))
@@ -830,7 +818,7 @@ struct npc_anchorite_baradaAI : public ScriptedAI
         {
             if (CAST_PLR(pWho)->GetQuestStatus(QUEST_THE_EXORCIM) == QUEST_STATUS_INCOMPLETE)
             {
-                if (me->IsWithinDistInMap(((Player *)pWho), 5))
+                if (me->IsWithinDistInMap(((Player* )pWho), 5))
                 {
                     uiPlayerGUID = pWho->GetGUID();
                 }
@@ -960,7 +948,7 @@ CreatureAI* GetAI_npc_anchorite_barada(Creature* pCreature)
     return new npc_anchorite_baradaAI(pCreature);
 }
 
-bool GossipHello_npc_anchorite_barada(Player *pPlayer, Creature *pCreature)
+bool GossipHello_npc_anchorite_barada(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_THE_EXORCIM) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_START, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -1230,7 +1218,7 @@ struct npc_vindicator_sedaiAI : public ScriptedAI
         {
             if (CAST_PLR(who)->GetQuestStatus(9545) == QUEST_STATUS_INCOMPLETE)
             {
-                if (Creature * pCr = me->FindNearestCreature(17413, 6.0f))
+                if (Creature* pCr = me->FindNearestCreature(17413, 6.0f))
                 {
                     float Radius = 10.0;
                     if (me->IsWithinDistInMap(who, Radius))

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Creature.h"
@@ -29,7 +17,7 @@ INSTANTIATE_SINGLETON_1(CreatureGroupManager);
 CreatureGroupInfoType   CreatureGroupMap;
 CreatureGroupDataType   CreatureGroupDataMap;
 
-void CreatureGroupManager::AddCreatureToGroup(uint32 groupId, Creature *member)
+void CreatureGroupManager::AddCreatureToGroup(uint32 groupId, Creature* member)
 {
     Map *map = member->FindMap();
     if (!map)
@@ -53,7 +41,7 @@ void CreatureGroupManager::AddCreatureToGroup(uint32 groupId, Creature *member)
     }
 }
 
-void CreatureGroupManager::RemoveCreatureFromGroup(CreatureGroup* group, Creature *member)
+void CreatureGroupManager::RemoveCreatureFromGroup(CreatureGroup* group, Creature* member)
 {
     sLog.outDebug("Deleting member pointer to GUID: %u from group %u", group->GetId(), member->GetDBTableGUIDLow());
     group->RemoveMember(member);
@@ -204,7 +192,7 @@ void CreatureGroupManager::LoadCreatureGroups()
     sLog.outString();
 }
 
-void CreatureGroup::AddMember(Creature *member)
+void CreatureGroup::AddMember(Creature* member)
 {
     if (!member)
         return;
@@ -215,7 +203,7 @@ void CreatureGroup::AddMember(Creature *member)
     member->SetGroup(this);
 }
 
-void CreatureGroup::RemoveMember(Creature *member)
+void CreatureGroup::RemoveMember(Creature* member)
 {
     if (!member)
         return;
@@ -224,7 +212,7 @@ void CreatureGroup::RemoveMember(Creature *member)
     member->SetGroup(NULL);
 }
 
-void CreatureGroup::MemberAttackStart(Creature *member, Unit* target)
+void CreatureGroup::MemberAttackStart(Creature* member, Unit* target)
 {
     for (CreatureGroupMemberType::iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
@@ -247,7 +235,7 @@ void CreatureGroup::MemberAttackStart(Creature *member, Unit* target)
     }
 }
 
-bool CreatureGroup::IsAllowedToRespawn(Creature *member)
+bool CreatureGroup::IsAllowedToRespawn(Creature* member)
 {
     uint8 groupType = CreatureGroupMap[m_groupID]->groupType;
 

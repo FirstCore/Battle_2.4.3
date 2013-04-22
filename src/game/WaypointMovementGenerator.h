@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef BLIZZLIKE_WAYPOINTMOVEMENTGENERATOR_H
@@ -29,7 +17,7 @@
 #include "WaypointManager.h"
 #include "Path.h"
 #include "Traveller.h"
-
+#include "PathFinder.h"
 #include "Player.h"
 
 #include <vector>
@@ -39,18 +27,24 @@
 #define STOP_TIME_FOR_PLAYER  3 * MINUTE * IN_MILLISECONDS          // 3 Minutes
 #define TIMEDIFF_NEXT_WP      250
 
-template<class T, class P = Path>
+template<class T, class P>
 class PathMovementBase
 {
     public:
         PathMovementBase() : i_currentNode(0) {}
         virtual ~PathMovementBase() {};
 
-        bool MovementInProgress(void) const { return i_currentNode < i_path.Size(); }
+        bool MovementInProgress(void) const { return i_currentNode < i_path->size(); }
 
         void LoadPath(T &);
         void ReloadPath(T &);
         uint32 GetCurrentNode() const { return i_currentNode; }
+
+        bool GetDestination(float& x, float& y, float& z) const { i_destinationHolder.GetDestination(x,y,z); return true; }
+        bool GetPosition(float& x, float& y, float& z) const { i_destinationHolder.GetLocationNowNoMicroMovement(x,y,z); return true; }
+
+        void PreloadEndGrid();
+        void InitEndGridInfo();
 
     protected:
         uint32 i_currentNode;
@@ -61,7 +55,7 @@ class PathMovementBase
 template<class T>
 
 class WaypointMovementGenerator
-    : public MovementGeneratorMedium< T, WaypointMovementGenerator<T> >, public PathMovementBase<T>
+    : public MovementGeneratorMedium< T, WaypointMovementGenerator<T> >, public PathMovementBase<T, WaypointPath const*>
 {
     public:
         WaypointMovementGenerator(uint32 _path_id = 0, bool _repeating = true) :
@@ -78,6 +72,7 @@ class WaypointMovementGenerator
         MovementGeneratorType GetMovementGeneratorType() { return WAYPOINT_MOTION_TYPE; }
 
     private:
+        void MoveToNextNode(CreatureTraveller &traveller);
         WaypointData *node;
         uint32 path_id;
         TimeTrackerSmall i_nextMoveTime;
@@ -90,27 +85,31 @@ class WaypointMovementGenerator
  */
 class FlightPathMovementGenerator
 : public MovementGeneratorMedium< Player, FlightPathMovementGenerator >,
-public PathMovementBase<Player>
+public PathMovementBase<Player, TaxiPathNodeList const*>
 {
     uint32 i_pathId;
     std::vector<uint32> i_mapIds;
     public:
-        explicit FlightPathMovementGenerator(uint32 id, uint32 startNode = 0) : i_pathId(id) { i_currentNode = startNode; }
+        explicit FlightPathMovementGenerator(TaxiPathNodeList const& pathnodes, uint32 startNode = 0)
+        {
+            i_path = &pathnodes;
+            i_currentNode = startNode;
+        }
         void Initialize(Player &);
         void Finalize(Player &);
         void Reset(Player &) {}
         bool Update(Player &, const uint32 &);
         MovementGeneratorType GetMovementGeneratorType() { return FLIGHT_MOTION_TYPE; }
 
-        void LoadPath(Player &);
-        void ReloadPath(Player &) { /* don't reload flight path */ }
-
-        Path& GetPath() { return i_path; }
+        TaxiPathNodeList const& GetPath() { return *i_path; }
         uint32 GetPathAtMapEnd() const;
-        bool HasArrived() const { return (i_currentNode >= i_path.Size()); }
+        bool HasArrived() const { return (i_currentNode >= i_path->size()); }
         void SetCurrentNodeAfterTeleport();
         void SkipCurrentNode() { ++i_currentNode; }
         bool GetDestination(float& x, float& y, float& z) const { i_destinationHolder.GetDestination(x,y,z); return true; }
+
+        void PreloadEndGrid();
+        void InitEndGridInfo();
 
     private:
         // storage for preloading the flightmaster grid at end
@@ -119,7 +118,6 @@ public PathMovementBase<Player>
         uint32 m_preloadTargetNode;
         float m_endGridX;
         float m_endGridY;
-        void PreloadEndGrid();
 };
 #endif
 

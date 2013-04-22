@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -365,7 +353,7 @@ void GameObject::Update(uint32 diff)
                         {
                             //BattleGround gameobjects case
                             if (ok->ToPlayer()->InBattleGround())
-                                if (BattleGround *bg = ok->ToPlayer()->GetBattleGround())
+                                if (BattleGround* bg = ok->ToPlayer()->GetBattleGround())
                                     bg->HandleTriggerBuff(GetGUID());
                         }
                     }
@@ -801,7 +789,7 @@ void GameObject::Respawn()
     }
 }
 
-bool GameObject::ActivateToQuest(Player *pTarget) const
+bool GameObject::ActivateToQuest(Player* pTarget) const
 {
     if (!objmgr.IsGameObjectForQuests(GetEntry()))
         return false;
@@ -816,7 +804,7 @@ bool GameObject::ActivateToQuest(Player *pTarget) const
                 //TODO: fix this hack
                 //look for battlegroundAV for some objects which are only activated after mine gots captured by own team
                 if (GetEntry() == BG_AV_OBJECTID_MINE_N || GetEntry() == BG_AV_OBJECTID_MINE_S)
-                    if (BattleGround *bg = pTarget->GetBattleGround())
+                    if (BattleGround* bg = pTarget->GetBattleGround())
                         if (bg->GetTypeID() == BATTLEGROUND_AV && !(((BattleGroundAV*)bg)->PlayerCanDoMineQuest(GetEntry(),pTarget->GetTeam())))
                             return false;
                 return true;
@@ -1292,7 +1280,7 @@ void GameObject::Use(Unit* user)
             if (player->CanUseBattleGroundObject())
             {
                 // in battleground check
-                BattleGround *bg = player->GetBattleGround();
+                BattleGround* bg = player->GetBattleGround();
                 if (!bg)
                     return;
                 // BG flag click
@@ -1317,7 +1305,7 @@ void GameObject::Use(Unit* user)
             if (player->CanUseBattleGroundObject())
             {
                 // in battleground check
-                BattleGround *bg = player->GetBattleGround();
+                BattleGround* bg = player->GetBattleGround();
                 if (!bg)
                     return;
                 // BG flag dropped
@@ -1382,7 +1370,7 @@ void GameObject::Use(Unit* user)
 void GameObject::CastSpell(Unit* target, uint32 spell)
 {
     //summon world trigger
-    Creature *trigger = SummonTrigger(GetPositionX(), GetPositionY(), GetPositionZ(), 0, 1);
+    Creature* trigger = SummonTrigger(GetPositionX(), GetPositionY(), GetPositionZ(), 0, 1);
     if (!trigger) return;
 
     trigger->SetVisibility(VISIBILITY_OFF); //should this be true?

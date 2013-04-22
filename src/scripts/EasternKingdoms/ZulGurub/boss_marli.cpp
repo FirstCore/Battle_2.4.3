@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -49,7 +37,7 @@ enum Spells
 
 struct boss_marliAI : public ScriptedAI
 {
-    boss_marliAI(Creature *c) : ScriptedAI(c)
+    boss_marliAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -137,7 +125,7 @@ struct boss_marliAI : public ScriptedAI
                 if (!pTarget)
                     return;
 
-                Creature *Spider = NULL;
+                Creature* Spider = NULL;
 
                 Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                 if (Spider)
@@ -163,7 +151,7 @@ struct boss_marliAI : public ScriptedAI
                 if (!pTarget)
                     return;
 
-                Creature *Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                Creature* Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                 if (Spider)
                     Spider->AI()->AttackStart(pTarget);
                 SpawnSpider_Timer = 12000 + rand()%5000;
@@ -249,7 +237,7 @@ struct boss_marliAI : public ScriptedAI
 // Spawn of Marli
 struct mob_spawn_of_marliAI : public ScriptedAI
 {
-    mob_spawn_of_marliAI(Creature *c) : ScriptedAI(c) {}
+    mob_spawn_of_marliAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Grow_Timer;
     float Growth_Level;

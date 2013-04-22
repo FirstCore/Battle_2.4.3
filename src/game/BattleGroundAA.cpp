@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Player.h"
@@ -51,7 +39,7 @@ void BattleGroundAA::StartingEventOpenDoors()
 {
 }
 
-void BattleGroundAA::AddPlayer(Player *plr)
+void BattleGroundAA::AddPlayer(Player* plr)
 {
     BattleGround::AddPlayer(plr);
     //create score and add it to map, default values are set in constructor
@@ -60,7 +48,7 @@ void BattleGroundAA::AddPlayer(Player *plr)
     m_PlayerScores[plr->GetGUID()] = sc;
 }
 
-void BattleGroundAA::RemovePlayer(Player * /*plr*/, uint64 /*guid*/)
+void BattleGroundAA::RemovePlayer(Player* /*plr*/, uint64 /*guid*/)
 {
 }
 
@@ -69,7 +57,7 @@ void BattleGroundAA::HandleKillPlayer(Player* player, Player* killer)
     BattleGround::HandleKillPlayer(player, killer);
 }
 
-void BattleGroundAA::HandleAreaTrigger(Player * /*Source*/, uint32 /*Trigger*/)
+void BattleGroundAA::HandleAreaTrigger(Player* /*Source*/, uint32 /*Trigger*/)
 {
 }
 

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef BLIZZLIKE_MAP_H
@@ -33,6 +21,7 @@
 
 #include <bitset>
 #include <list>
+#include <set>
 
 class Unit;
 class WorldPacket;
@@ -49,6 +38,7 @@ struct ScriptInfo;
 struct ScriptAction;
 struct Position;
 class BattleGround;
+namespace BlizzLike { struct ObjectUpdater; }
 
 struct ScriptAction
 {
@@ -61,22 +51,25 @@ struct ScriptAction
 //******************************************
 // Map file format defines
 //******************************************
-#define MAP_MAGIC             0x5350414D // SPAM
-#define MAP_VERSION_MAGIC     0x352E3077 // 5.0w
-#define MAP_AREA_MAGIC        0x41455241 // AERA
-#define MAP_HEIGHT_MAGIC      0x5447484D // TGHM
-#define MAP_LIQUID_MAGIC      0x51494C4D // QILM
+static char const* MAP_MAGIC         = "MAPS";
+static char const* MAP_VERSION_MAGIC = "v1.2";
+static char const* MAP_AREA_MAGIC    = "AREA";
+static char const* MAP_HEIGHT_MAGIC  = "MHGT";
+static char const* MAP_LIQUID_MAGIC  = "MLIQ";
 
 struct map_fileheader
 {
     uint32 mapMagic;
     uint32 versionMagic;
+    uint32 buildMagic;
     uint32 areaMapOffset;
     uint32 areaMapSize;
     uint32 heightMapOffset;
     uint32 heightMapSize;
     uint32 liquidMapOffset;
     uint32 liquidMapSize;
+    uint32 holesOffset;
+    uint32 holesSize;
 };
 
 #define MAP_AREA_NO_AREA      0x0001
@@ -263,26 +256,29 @@ class Map : public GridRefManager<NGridType>, public BlizzLike::ObjectLevelLocka
             return false;
         }
 
-        virtual bool Add(Player *);
-        virtual void Remove(Player *, bool);
+        virtual bool Add(Player* );
+        virtual void Remove(Player*, bool);
         template<class T> void Add(T *);
         template<class T> void Remove(T *, bool);
 
+        void VisitNearbyCellsOf(WorldObject* obj, TypeContainerVisitor<BlizzLike::ObjectUpdater, GridTypeMapContainer> &gridVisitor, TypeContainerVisitor<BlizzLike::ObjectUpdater, WorldTypeMapContainer> &worldVisitor);
         virtual void Update(const uint32&);
 
+        float GetVisibilityRange() const { return m_VisibleDistance; }
+
         /*
-        void MessageBroadcast(Player *, WorldPacket *, bool to_self);
-        void MessageBroadcast(WorldObject *, WorldPacket *);
-        void MessageDistBroadcast(Player *, WorldPacket *, float dist, bool to_self, bool own_team_only = false);
-        void MessageDistBroadcast(WorldObject *, WorldPacket *, float dist);
+        void MessageBroadcast(Player*, WorldPacket*, bool to_self);
+        void MessageBroadcast(WorldObject*, WorldPacket* );
+        void MessageDistBroadcast(Player*, WorldPacket*, float dist, bool to_self, bool own_team_only = false);
+        void MessageDistBroadcast(WorldObject*, WorldPacket*, float dist);
         */
 
         float GetVisibilityDistance() const { return m_VisibleDistance; }
         //function for setting up visibility distance for maps on per-type/per-Id basis
         virtual void InitVisibilityDistance();
 
-        void PlayerRelocation(Player *, float x, float y, float z, float orientation);
-        void CreatureRelocation(Creature *creature, float x, float y, float z, float ang);
+        void PlayerRelocation(Player*, float x, float y, float z, float orientation);
+        void CreatureRelocation(Creature* creature, float x, float y, float z, float ang, bool respawnRelocationOnFail = true);
 
         template<class T, class CONTAINER> void Visit(const Cell& cell, TypeContainerVisitor<T, CONTAINER> &visitor);
 
@@ -353,7 +349,7 @@ class Map : public GridRefManager<NGridType>, public BlizzLike::ObjectLevelLocka
         void RemoveAllObjectsInRemoveList();
         virtual void RemoveAllPlayers();
 
-        bool CreatureRespawnRelocation(Creature *c);        // used only in MoveAllCreaturesInMoveList and ObjectGridUnloader
+        bool CreatureRespawnRelocation(Creature* c);        // used only in MoveAllCreaturesInMoveList and ObjectGridUnloader
 
         // assert print helper
         bool CheckGridIntegrity(Creature* c, bool moved) const;
@@ -418,7 +414,7 @@ class Map : public GridRefManager<NGridType>, public BlizzLike::ObjectLevelLocka
         CreatureFormationHolderType CreatureFormationHolder;
         CreatureGroupHolderType CreatureGroupHolder;
 
-        void UpdateIteratorBack(Player *player);
+        void UpdateIteratorBack(Player* player);
 
         TempSummon *SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties = NULL, uint32 duration = 0, Unit* summoner = NULL, SpellEntry const* spellInfo = NULL);
         Creature* GetCreature(uint64 guid);
@@ -432,14 +428,14 @@ class Map : public GridRefManager<NGridType>, public BlizzLike::ObjectLevelLocka
 
         void SetTimer(uint32 t) { i_gridExpiry = t < MIN_GRID_DELAY ? MIN_GRID_DELAY : t; }
 
-        void SendInitSelf(Player * player);
+        void SendInitSelf(Player* player);
 
-        void SendInitTransports(Player * player);
-        void SendRemoveTransports(Player * player);
+        void SendInitTransports(Player* player);
+        void SendRemoveTransports(Player* player);
 
-        bool CreatureCellRelocation(Creature *creature, Cell new_cell);
+        bool CreatureCellRelocation(Creature* creature, Cell new_cell);
 
-        void AddCreatureToMoveList(Creature *c, float x, float y, float z, float ang);
+        void AddCreatureToMoveList(Creature* c, float x, float y, float z, float ang);
         CreatureMoveList i_creaturesToMove;
 
         bool loaded(const GridPair &) const;
@@ -565,14 +561,14 @@ class InstanceMap : public Map
     public:
         InstanceMap(uint32 id, time_t, uint32 InstanceId, uint8 SpawnMode, Map* _parent);
         ~InstanceMap();
-        bool Add(Player *);
-        void Remove(Player *, bool);
+        bool Add(Player* );
+        void Remove(Player*, bool);
         void Update(const uint32&);
         void CreateInstanceData(bool load);
         bool Reset(uint8 method);
         uint32 GetScriptId() { return i_script_id; }
         InstanceData* GetInstanceData() { return i_data; }
-        void PermBindAllPlayers(Player *player);
+        void PermBindAllPlayers(Player* player);
         time_t GetResetTime();
         void UnloadAll();
         bool CanEnter(Player* player);
@@ -593,8 +589,8 @@ class BattleGroundMap : public Map
         BattleGroundMap(uint32 id, time_t, uint32 InstanceId, Map* _parent);
         ~BattleGroundMap();
 
-        bool Add(Player *);
-        void Remove(Player *, bool);
+        bool Add(Player* );
+        void Remove(Player*, bool);
         bool CanEnter(Player* player);
         void SetUnload();
         void RemoveAllPlayers();

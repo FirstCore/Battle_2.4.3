@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -107,7 +95,7 @@ bool CheckAllBossDied(ScriptedInstance* pInstance, Creature* me)
 //High King Maulgar AI
 struct boss_high_king_maulgarAI : public ScriptedAI
 {
-    boss_high_king_maulgarAI(Creature *c) : ScriptedAI(c)
+    boss_high_king_maulgarAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         for (uint8 i = 0; i < 4; ++i)
@@ -138,7 +126,7 @@ struct boss_high_king_maulgarAI : public ScriptedAI
 
         Phase2 = false;
 
-        Creature *pCreature = NULL;
+        Creature* pCreature = NULL;
         for (uint8 i = 0; i < 4; i++)
         {
             if (Council[i])
@@ -303,7 +291,7 @@ struct boss_high_king_maulgarAI : public ScriptedAI
 //Olm The Summoner AI
 struct boss_olm_the_summonerAI : public ScriptedAI
 {
-    boss_olm_the_summonerAI(Creature *c) : ScriptedAI(c)
+    boss_olm_the_summonerAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -338,7 +326,7 @@ struct boss_olm_the_summonerAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Maulgar = NULL;
+            Creature* Maulgar = NULL;
             Maulgar = (Creature*)(Unit::GetUnit((*me), pInstance->GetData64(DATA_MAULGAR)));
 
             if (Maulgar)
@@ -405,7 +393,7 @@ struct boss_olm_the_summonerAI : public ScriptedAI
 //Kiggler The Crazed AI
 struct boss_kiggler_the_crazedAI : public ScriptedAI
 {
-    boss_kiggler_the_crazedAI(Creature *c) : ScriptedAI(c)
+    boss_kiggler_the_crazedAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -442,7 +430,7 @@ struct boss_kiggler_the_crazedAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Maulgar = NULL;
+            Creature* Maulgar = NULL;
             Maulgar = (Creature*)(Unit::GetUnit((*me), pInstance->GetData64(DATA_MAULGAR)));
 
             if (Maulgar)
@@ -515,7 +503,7 @@ struct boss_kiggler_the_crazedAI : public ScriptedAI
 //Blindeye The Seer AI
 struct boss_blindeye_the_seerAI : public ScriptedAI
 {
-    boss_blindeye_the_seerAI(Creature *c) : ScriptedAI(c)
+    boss_blindeye_the_seerAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -548,7 +536,7 @@ struct boss_blindeye_the_seerAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Maulgar = NULL;
+            Creature* Maulgar = NULL;
             Maulgar = (Creature*)(Unit::GetUnit((*me), pInstance->GetData64(DATA_MAULGAR)));
 
             if (Maulgar)
@@ -604,7 +592,7 @@ struct boss_blindeye_the_seerAI : public ScriptedAI
 //Krosh Firehand AI
 struct boss_krosh_firehandAI : public ScriptedAI
 {
-    boss_krosh_firehandAI(Creature *c) : ScriptedAI(c)
+    boss_krosh_firehandAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -639,7 +627,7 @@ struct boss_krosh_firehandAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Maulgar = NULL;
+            Creature* Maulgar = NULL;
             Maulgar = (Creature*)(Unit::GetUnit((*me), pInstance->GetData64(DATA_MAULGAR)));
 
             if (Maulgar)

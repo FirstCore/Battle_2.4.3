@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -1537,7 +1525,7 @@ bool ChatHandler::HandleSetSkillCommand(const char *args)
 
     int32 level = atol (level_p);
 
-    Player * target = getSelectedPlayer();
+    Player* target = getSelectedPlayer();
     if (!target)
     {
         SendSysMessage(LANG_NO_CHAR_SELECTED);
@@ -2442,7 +2430,7 @@ bool ChatHandler::HandleLearnAllLangCommand(const char* /*args*/)
 bool ChatHandler::HandleLearnAllDefaultCommand(const char *args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     if (pName)
     {
         std::string name = pName;
@@ -3883,7 +3871,7 @@ bool ChatHandler::HandleAddWeaponCommand(const char* /*args*/)
         return true;
     }
 
-    Creature *pCreature = ObjectAccessor::GetCreature(*m_session->GetPlayer(), guid);
+    Creature* pCreature = ObjectAccessor::GetCreature(*m_session->GetPlayer(), guid);
 
     if (!pCreature)
     {
@@ -4042,7 +4030,7 @@ bool ChatHandler::HandleModifyArenaCommand(const char * args)
     if (!*args)
         return false;
 
-    Player *target = getSelectedPlayer();
+    Player* target = getSelectedPlayer();
     if (!target)
     {
         SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -4356,7 +4344,7 @@ bool ChatHandler::HandleExploreCheatCommand(const char *args)
 
     int flag = atoi((char*)args);
 
-    Player *chr = getSelectedPlayer();
+    Player* chr = getSelectedPlayer();
     if (chr == NULL)
     {
         SendSysMessage(LANG_NO_CHAR_SELECTED);
@@ -4416,7 +4404,7 @@ bool ChatHandler::HandleWaterwalkCommand(const char *args)
     if (!*args)
         return false;
 
-    Player *player = getSelectedPlayer();
+    Player* player = getSelectedPlayer();
     if (!player)
     {
         PSendSysMessage(LANG_NO_CHAR_SELECTED);
@@ -4465,7 +4453,7 @@ bool ChatHandler::HandleLevelUpCommand(const char *args)
     // else .levelup - nothing do for preparing
 
     // player
-    Player *chr = NULL;
+    Player* chr = NULL;
     uint64 chr_guid = 0;
 
     std::string name;
@@ -4550,7 +4538,7 @@ bool ChatHandler::HandleShowAreaCommand(const char *args)
 
     int area = atoi((char*)args);
 
-    Player *chr = getSelectedPlayer();
+    Player* chr = getSelectedPlayer();
     if (chr == NULL)
     {
         SendSysMessage(LANG_NO_CHAR_SELECTED);
@@ -4582,7 +4570,7 @@ bool ChatHandler::HandleHideAreaCommand(const char *args)
 
     int area = atoi((char*)args);
 
-    Player *chr = getSelectedPlayer();
+    Player* chr = getSelectedPlayer();
     if (chr == NULL)
     {
         SendSysMessage(LANG_NO_CHAR_SELECTED);
@@ -4688,7 +4676,7 @@ bool ChatHandler::HandleChangeWeather(const char *args)
     uint32 type = (uint32)atoi(px);                         //0 to 3, 0: fine, 1: rain, 2: snow, 3: sand
     float grade = (float)atof(py);                          //0 to 1, sending -1 is instand good weather
 
-    Player *player = m_session->GetPlayer();
+    Player* player = m_session->GetPlayer();
     uint32 zoneid = player->GetZoneId();
 
     Weather* wth = sWorld.FindWeather(zoneid);
@@ -4743,14 +4731,14 @@ bool ChatHandler::HandleSetValue(const char *args)
     if (isint32)
     {
         iValue = (uint32)atoi(py);
-        sLog.outDebug(GetBlizzLikeString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
+     // sLog.outDebug(GetBlizzLikeString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
         target->SetUInt32Value(Opcode , iValue);
         PSendSysMessage(LANG_SET_UINT_FIELD, GUID_LOPART(guid), Opcode,iValue);
     }
     else
     {
         fValue = (float)atof(py);
-        sLog.outDebug(GetBlizzLikeString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+     // sLog.outDebug(GetBlizzLikeString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
         target->SetFloatValue(Opcode , fValue);
         PSendSysMessage(LANG_SET_FLOAT_FIELD, GUID_LOPART(guid), Opcode,fValue);
     }
@@ -4794,13 +4782,13 @@ bool ChatHandler::HandleGetValue(const char *args)
     if (isint32)
     {
         iValue = target->GetUInt32Value(Opcode);
-        sLog.outDebug(GetBlizzLikeString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
+     // sLog.outDebug(GetBlizzLikeString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
         PSendSysMessage(LANG_GET_UINT_FIELD, GUID_LOPART(guid), Opcode,    iValue);
     }
     else
     {
         fValue = target->GetFloatValue(Opcode);
-        sLog.outDebug(GetBlizzLikeString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+     // sLog.outDebug(GetBlizzLikeString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
         PSendSysMessage(LANG_GET_FLOAT_FIELD, GUID_LOPART(guid), Opcode, fValue);
     }
 
@@ -4823,7 +4811,7 @@ bool ChatHandler::HandleSet32Bit(const char *args)
     if (Value > 32)                                         //uint32 = 32 bits
         return false;
 
-    sLog.outDebug(GetBlizzLikeString(LANG_SET_32BIT), Opcode, Value);
+ // sLog.outDebug(GetBlizzLikeString(LANG_SET_32BIT), Opcode, Value);
 
     m_session->GetPlayer()->SetUInt32Value(Opcode , 2^Value);
 
@@ -4851,7 +4839,7 @@ bool ChatHandler::HandleMod32Value(const char *args)
         return false;
     }
 
-    sLog.outDebug(GetBlizzLikeString(LANG_CHANGE_32BIT), Opcode, Value);
+ // sLog.outDebug(GetBlizzLikeString(LANG_CHANGE_32BIT), Opcode, Value);
 
     int CurrentValue = (int)m_session->GetPlayer()->GetUInt32Value(Opcode);
 
@@ -4868,7 +4856,7 @@ bool ChatHandler::HandleAddTeleCommand(const char * args)
     if (!*args)
         return false;
 
-    Player *player=m_session->GetPlayer();
+    Player* player=m_session->GetPlayer();
     if (!player)
         return false;
 
@@ -4964,7 +4952,7 @@ bool ChatHandler::HandleListAurasCommand (const char * /*args*/)
 bool ChatHandler::HandleResetHonorCommand (const char * args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     if (pName)
     {
         std::string name = pName;
@@ -5069,7 +5057,7 @@ static bool HandleResetStatsOrLevelHelper(Player* player)
 bool ChatHandler::HandleResetLevelCommand(const char * args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     if (pName)
     {
         std::string name = pName;
@@ -5113,7 +5101,7 @@ bool ChatHandler::HandleResetLevelCommand(const char * args)
 bool ChatHandler::HandleResetStatsCommand(const char * args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     if (pName)
     {
         std::string name = pName;
@@ -5150,7 +5138,7 @@ bool ChatHandler::HandleResetStatsCommand(const char * args)
 bool ChatHandler::HandleResetSpellsCommand(const char * args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     uint64 playerGUID = 0;
     if (pName)
     {
@@ -5198,7 +5186,7 @@ bool ChatHandler::HandleResetSpellsCommand(const char * args)
 bool ChatHandler::HandleResetTalentsCommand(const char * args)
 {
     char* pName = strtok((char*)args, "");
-    Player *player = NULL;
+    Player* player = NULL;
     uint64 playerGUID = 0;
     if (pName)
     {
@@ -7021,7 +7009,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
 
     uint32 itemTextId = !text.empty() ? objmgr.CreateItemText(text) : 0;
 
-    Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
+    Player* receiver = ObjectAccessor::FindPlayer(receiver_guid);
 
     // fill mail
     MailDraft draft(subject, itemTextId);
@@ -7121,7 +7109,7 @@ bool ChatHandler::HandleSendMoneyCommand(const char *args)
 
     uint32 itemTextId = !text.empty() ? objmgr.CreateItemText(text) : 0;
 
-    Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
+    Player* receiver = ObjectAccessor::FindPlayer(receiver_guid);
 
         MailDraft(subject, itemTextId)
         .AddMoney(money)
@@ -7147,7 +7135,7 @@ bool ChatHandler::HandleSendMessageCommand(const char *args)
         return false;
 
     // Find the player and check that he is not logging out.
-    Player *rPlayer = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
+    Player* rPlayer = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
     if (!rPlayer)
     {
         SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -7183,7 +7171,7 @@ bool ChatHandler::HandleModifyGenderCommand(const char *args)
     if (!*args)
         return false;
 
-    Player *player = getSelectedPlayer();
+    Player* player = getSelectedPlayer();
 
     if (!player)
     {
@@ -7269,7 +7257,7 @@ bool ChatHandler::HandlePlayAllCommand(const char *args)
 bool ChatHandler::HandleFreezeCommand(const char *args)
 {
     std::string name;
-    Player *player;
+    Player* player;
     char *TargetName = strtok((char*)args, " "); //get entered name
     if (!TargetName) //if no name entered use target
     {
@@ -7351,7 +7339,7 @@ bool ChatHandler::HandleFreezeCommand(const char *args)
 bool ChatHandler::HandleUnFreezeCommand(const char *args)
 {
     std::string name;
-    Player *player;
+    Player* player;
     char *TargetName = strtok((char*)args, " "); //get entered name
     if (!TargetName) //if no name entered use target
     {
@@ -7708,5 +7696,75 @@ bool ChatHandler::HandleWarpCommand(const char* args)
         }
         break;
     }
+    return true;
+}
+
+bool ChatHandler::HandleMmap(const char* args)
+{
+    if (*args)
+    {
+        std::string argstr = (char*)args;
+        if (argstr == "on")
+        {
+            sWorld.setConfig(CONFIG_BOOL_MMAP_ENABLED, true);
+            SendSysMessage("WORLD: mmaps are now ENABLED (individual map settings still in effect)");
+        }
+        else
+        {
+            sWorld.setConfig(CONFIG_BOOL_MMAP_ENABLED, false);
+            SendSysMessage("WORLD: mmaps are now DISABLED");
+        }
+        return true;
+    }
+
+    bool on = sWorld.getConfig(CONFIG_BOOL_MMAP_ENABLED);
+    PSendSysMessage("mmaps are %sabled", on ? "en" : "dis");
+
+    return true;
+}
+
+bool ChatHandler::HandleMmapTestArea(const char* args)
+{
+    float radius = 40.0f;
+
+    if (*args)
+        radius = (float)atof((char*)args);
+
+    CellPair pair(BlizzLike::ComputeCellPair( m_session->GetPlayer()->GetPositionX(), m_session->GetPlayer()->GetPositionY()) );
+    Cell cell(pair);
+    cell.SetNoCreate();
+
+    std::list<Creature*> creatureList;
+
+    BlizzLike::AnyUnitInObjectRangeCheck go_check(m_session->GetPlayer(), radius);
+    BlizzLike::CreatureListSearcher<BlizzLike::AnyUnitInObjectRangeCheck> go_search(creatureList, go_check);
+    TypeContainerVisitor<BlizzLike::CreatureListSearcher<BlizzLike::AnyUnitInObjectRangeCheck>, GridTypeMapContainer> go_visit(go_search);
+
+    // Get Creatures
+    cell.Visit(pair, go_visit, *(m_session->GetPlayer()->GetMap()), *(m_session->GetPlayer()), radius);
+
+    if (!creatureList.empty())
+    {
+        PSendSysMessage("Found %i Creatures.", creatureList.size());
+
+        uint32 paths = 0;
+        uint32 uStartTime = getMSTime();
+
+        float gx,gy,gz;
+        m_session->GetPlayer()->GetPosition(gx,gy,gz);
+        for (std::list<Creature*>::iterator itr = creatureList.begin(); itr != creatureList.end(); ++itr)
+        {
+            PathInfo((*itr), gx, gy, gz);
+            ++paths;
+        }
+
+        uint32 uPathLoadTime = getMSTimeDiff(uStartTime, getMSTime());
+        PSendSysMessage("Generated %i paths in %i ms", paths, uPathLoadTime);
+    }
+    else
+    {
+        PSendSysMessage("No creatures in %f yard range.", radius);
+    }
+
     return true;
 }

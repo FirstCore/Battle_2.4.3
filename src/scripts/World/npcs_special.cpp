@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -59,7 +47,7 @@ enum eLunaclaw
 
 #define GOSSIP_ITEM_GRANT   "You have thought well, spirit. I ask you to grant me the strength of your body and the strength of your heart."
 
-bool GossipHello_npc_lunaclaw_spirit(Player *pPlayer, Creature *pCreature)
+bool GossipHello_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_BODY_HEART_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_BODY_HEART_H) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GRANT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -95,7 +83,7 @@ enum eChicken
 
 struct npc_chicken_cluckAI : public ScriptedAI
 {
-    npc_chicken_cluckAI(Creature *c) : ScriptedAI(c) {}
+    npc_chicken_cluckAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 ResetFlagTimer;
 
@@ -184,7 +172,7 @@ bool QuestComplete_npc_chicken_cluck(Player* /*pPlayer*/, Creature* pCreature, c
 
 struct npc_dancing_flamesAI : public ScriptedAI
 {
-    npc_dancing_flamesAI(Creature *c) : ScriptedAI(c) {}
+    npc_dancing_flamesAI(Creature* c) : ScriptedAI(c) {}
 
     bool active;
     uint32 can_iteract;
@@ -323,7 +311,7 @@ const uint32 HordeSoldierId[3] =
 
 struct npc_doctorAI : public ScriptedAI
 {
-    npc_doctorAI(Creature *c) : ScriptedAI(c) {}
+    npc_doctorAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 PlayerGUID;
 
@@ -368,7 +356,7 @@ struct npc_doctorAI : public ScriptedAI
 
 struct npc_injured_patientAI : public ScriptedAI
 {
-    npc_injured_patientAI(Creature *c) : ScriptedAI(c) {}
+    npc_injured_patientAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 Doctorguid;
     Location* Coord;
@@ -665,7 +653,7 @@ enum eGarments
 
 struct npc_garments_of_questsAI : public npc_escortAI
 {
-    npc_garments_of_questsAI(Creature *c) : npc_escortAI(c) {Reset();}
+    npc_garments_of_questsAI(Creature* c) : npc_escortAI(c) {Reset();}
 
     uint64 caster;
 
@@ -848,7 +836,7 @@ CreatureAI* GetAI_npc_garments_of_quests(Creature* pCreature)
 
 struct npc_guardianAI : public ScriptedAI
 {
-    npc_guardianAI(Creature *c) : ScriptedAI(c) {}
+    npc_guardianAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -1169,7 +1157,7 @@ bool GossipSelect_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiSende
 
 struct npc_steam_tonkAI : public ScriptedAI
 {
-    npc_steam_tonkAI(Creature *c) : ScriptedAI(c) {}
+    npc_steam_tonkAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset() {}
     void EnterCombat(Unit* /*who*/) {}
@@ -1199,7 +1187,7 @@ CreatureAI* GetAI_npc_steam_tonk(Creature* pCreature)
 
 struct npc_tonk_mineAI : public ScriptedAI
 {
-    npc_tonk_mineAI(Creature *c) : ScriptedAI(c)
+    npc_tonk_mineAI(Creature* c) : ScriptedAI(c)
     {
         me->SetReactState(REACT_PASSIVE);
     }
@@ -1345,7 +1333,7 @@ CreatureAI* GetAI_npc_force_of_nature_treants(Creature* pCreature)
 
 struct npc_snake_trap_serpentsAI : public ScriptedAI
 {
-    npc_snake_trap_serpentsAI(Creature *c) : ScriptedAI(c), SpellTimer(0) {}
+    npc_snake_trap_serpentsAI(Creature* c) : ScriptedAI(c), SpellTimer(0) {}
 
     int32 SpellTimer;
     Unit* Owner;
@@ -1443,7 +1431,7 @@ CreatureAI* GetAI_npc_snake_trap_serpents(Creature* pCreature)
 
 struct mob_mojoAI : public ScriptedAI
 {
-    mob_mojoAI(Creature *c) : ScriptedAI(c) {Reset();}
+    mob_mojoAI(Creature* c) : ScriptedAI(c) {Reset();}
     uint32 hearts;
     uint64 victimGUID;
     void Reset()
@@ -1514,7 +1502,7 @@ CreatureAI* GetAI_mob_mojo(Creature* pCreature)
 ## npc_spirtofazuregos 
 ####*/ 
  
-bool GossipHello_npc_spiritofazuregos(Player *player, Creature *creature) 
+bool GossipHello_npc_spiritofazuregos(Player* player, Creature* creature) 
 { 
 if (player->GetQuestStatus(8575) == QUEST_STATUS_NONE && !player->HasItemCount(20949, 1)) 
                 player->PrepareQuestMenu(creature->GetGUID()); 
@@ -1525,7 +1513,7 @@ if (player->GetQuestStatus(8575) == QUEST_STATUS_NONE && !player->HasItemCount(2
 } 
  
  
-bool GossipSelect_npc_spiritofazuregos(Player *player, Creature *creature, uint32 sender, uint32 action) 
+bool GossipSelect_npc_spiritofazuregos(Player* player, Creature* creature, uint32 sender, uint32 action) 
 { 
         ItemPosCountVec dest; 
         uint8 msg; 

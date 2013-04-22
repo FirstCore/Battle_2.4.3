@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef OUTDOOR_PVP_H_
@@ -95,15 +83,15 @@ public:
     void SendObjectiveComplete(uint32 id, uint64 guid);
 
     // used when player is activated/inactivated in the area
-    virtual bool HandlePlayerEnter(Player * plr);
-    virtual void HandlePlayerLeave(Player * plr);
-    //virtual void HandlePlayerActivityChanged(Player * plr);
+    virtual bool HandlePlayerEnter(Player* plr);
+    virtual void HandlePlayerLeave(Player* plr);
+    //virtual void HandlePlayerActivityChanged(Player* plr);
 
     // checks if player is in range of a capture credit marker
-    bool IsInsideObjective(Player * plr) const;
+    bool IsInsideObjective(Player* plr) const;
 
-    virtual bool HandleCustomSpell(Player *plr, uint32 spellId, GameObject * go);
-    virtual int32 HandleOpenGo(Player *plr, uint64 guid);
+    virtual bool HandleCustomSpell(Player* plr, uint32 spellId, GameObject* go);
+    virtual int32 HandleOpenGo(Player* plr, uint64 guid);
 
     // returns true if the state of the objective has changed, in this case, the OutdoorPvP must send a world state ui update.
     virtual bool Update(uint32 diff);
@@ -111,16 +99,16 @@ public:
     virtual void ChangeTeam(TeamId /*oldTeam*/) {}
     virtual void SendChangePhase();
 
-    virtual bool HandleGossipOption(Player *plr, uint64 guid, uint32 gossipid);
+    virtual bool HandleGossipOption(Player* plr, uint64 guid, uint32 gossipid);
 
-    virtual bool CanTalkTo(Player * plr, Creature * c, GossipMenuItems gso);
+    virtual bool CanTalkTo(Player* plr, Creature* c, GossipMenuItems gso);
 
-    virtual bool HandleDropFlag(Player * plr, uint32 spellId);
+    virtual bool HandleDropFlag(Player* plr, uint32 spellId);
 
     virtual void DeleteSpawns();
 
     uint32 m_capturePointGUID;
-    GameObject *m_capturePoint;
+    GameObject* m_capturePoint;
 
     void AddGO(uint32 type, uint32 guid, uint32 entry = 0);
     void AddCre(uint32 type, uint32 guid, uint32 entry = 0);
@@ -179,17 +167,17 @@ public:
 
     virtual void FillInitialWorldStates(WorldPacket & /*data*/) {}
     // called when a player triggers an areatrigger
-    virtual bool HandleAreaTrigger(Player * plr, uint32 trigger);
+    virtual bool HandleAreaTrigger(Player* plr, uint32 trigger);
     // called on custom spell
-    virtual bool HandleCustomSpell(Player *plr, uint32 spellId, GameObject * go);
+    virtual bool HandleCustomSpell(Player* plr, uint32 spellId, GameObject* go);
     // called on go use
-    virtual bool HandleOpenGo(Player *plr, uint64 guid);
+    virtual bool HandleOpenGo(Player* plr, uint64 guid);
 
     // setup stuff
     virtual bool SetupOutdoorPvP() {return true;}
 
-    void OnGameObjectCreate(GameObject *go, bool add);
-    void OnCreatureCreate(Creature *, bool /*add*/) {}
+    void OnGameObjectCreate(GameObject* go, bool add);
+    void OnCreatureCreate(Creature*, bool /*add*/) {}
 
     // send world state update to all players present
     void SendUpdateWorldState(uint32 field, uint32 value);
@@ -198,22 +186,22 @@ public:
     virtual bool Update(uint32 diff);
 
     // handle npc/player kill
-    virtual void HandleKill(Player * killer, Unit* killed);
-    virtual void HandleKillImpl(Player * /*killer*/, Unit* /*killed*/) {}
+    virtual void HandleKill(Player* killer, Unit* killed);
+    virtual void HandleKillImpl(Player* /*killer*/, Unit* /*killed*/) {}
 
     // checks if player is in range of a capture credit marker
-    bool IsInsideObjective(Player * plr) const;
+    bool IsInsideObjective(Player* plr) const;
 
     // awards rewards for player kill
-    virtual void AwardKillBonus(Player * /*plr*/) {}
+    virtual void AwardKillBonus(Player* /*plr*/) {}
 
     uint32 GetTypeId() {return m_TypeId;}
 
-    virtual bool HandleDropFlag(Player * plr, uint32 spellId);
+    virtual bool HandleDropFlag(Player* plr, uint32 spellId);
 
-    virtual bool HandleGossipOption(Player *plr, uint64 guid, uint32 gossipid);
+    virtual bool HandleGossipOption(Player* plr, uint64 guid, uint32 gossipid);
 
-    virtual bool CanTalkTo(Player * plr, Creature * c, GossipMenuItems gso);
+    virtual bool CanTalkTo(Player* plr, Creature* c, GossipMenuItems gso);
 
     void TeamApplyBuff(TeamId team, uint32 spellId, uint32 spellId2 = 0);
 protected:
@@ -224,10 +212,10 @@ protected:
     uint32 m_TypeId;
 
     // world state stuff
-    virtual void SendRemoveWorldStates(Player * /*plr*/) {}
+    virtual void SendRemoveWorldStates(Player* /*plr*/) {}
 
-    virtual void HandlePlayerEnterZone(Player * plr, uint32 zone);
-    virtual void HandlePlayerLeaveZone(Player * plr, uint32 zone);
+    virtual void HandlePlayerEnterZone(Player* plr, uint32 zone);
+    virtual void HandlePlayerLeaveZone(Player* plr, uint32 zone);
 
     void AddCapturePoint(OPvPCapturePoint* cp)
     {
@@ -243,7 +231,7 @@ protected:
     }
 
     void RegisterZone(uint32 zoneid);
-    bool HasPlayer(Player *plr) const;
+    bool HasPlayer(Player* plr) const;
     void TeamCastSpell(TeamId team, int32 spellId);
 };
 

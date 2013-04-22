@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -94,7 +82,7 @@ uint32 RingBoss[]=
     9032,                                                   // Hedrum
 };
 
-bool AreaTrigger_at_ring_of_law(Player* pPlayer, const AreaTriggerEntry * /*at*/)
+bool AreaTrigger_at_ring_of_law(Player* pPlayer, const AreaTriggerEntry* /*at*/)
 {
     if (ScriptedInstance* pInstance = pPlayer->GetInstanceData())
     {
@@ -126,7 +114,7 @@ enum GrimstoneTexts
 //TODO: implement quest part of event (different end boss)
 struct npc_grimstoneAI : public npc_escortAI
 {
-    npc_grimstoneAI(Creature *c) : npc_escortAI(c)
+    npc_grimstoneAI(Creature* c) : npc_escortAI(c)
     {
         pInstance = c->GetInstanceData();
         MobSpawnId = rand()%6;
@@ -238,7 +226,7 @@ struct npc_grimstoneAI : public npc_escortAI
 
                 if (RingBossGUID)
                 {
-                    Creature *boss = Unit::GetCreature(*me,RingBossGUID);
+                    Creature* boss = Unit::GetCreature(*me,RingBossGUID);
                     if (boss && !boss->isAlive() && boss->isDead())
                     {
                         RingBossGUID = 0;
@@ -251,7 +239,7 @@ struct npc_grimstoneAI : public npc_escortAI
 
                 for (uint8 i = 0; i < MAX_MOB_AMOUNT; ++i)
                 {
-                    Creature *mob = Unit::GetCreature(*me,RingMobGUID[i]);
+                    Creature* mob = Unit::GetCreature(*me,RingMobGUID[i]);
                     if (mob && !mob->isAlive() && mob->isDead())
                     {
                         RingMobGUID[i] = 0;
@@ -359,7 +347,7 @@ enum PhalanxSpells
 
 struct mob_phalanxAI : public ScriptedAI
 {
-    mob_phalanxAI(Creature *c) : ScriptedAI(c) {}
+    mob_phalanxAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 ThunderClap_Timer;
     uint32 FireballVolley_Timer;
@@ -573,7 +561,7 @@ enum DughalQuests
 /*
 struct npc_dughal_stormwingAI : public npc_escortAI
 {
-    npc_dughal_stormwingAI(Creature *c) : npc_escortAI(c) {}
+    npc_dughal_stormwingAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
@@ -673,7 +661,7 @@ Player* pPlayerStart;
 /*
 struct npc_marshal_windsorAI : public npc_escortAI
 {
-    npc_marshal_windsorAI(Creature *c) : npc_escortAI(c)
+    npc_marshal_windsorAI(Creature* c) : npc_escortAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -838,7 +826,7 @@ int wp = 0;
 /*
 struct npc_marshal_reginald_windsorAI : public npc_escortAI
 {
-    npc_marshal_reginald_windsorAI(Creature *c) : npc_escortAI(c)
+    npc_marshal_reginald_windsorAI(Creature* c) : npc_escortAI(c)
     {
     }
 
@@ -1033,7 +1021,7 @@ CreatureAI* GetAI_npc_marshal_reginald_windsor(Creature* pCreature)
 /*
 struct npc_tobias_seecherAI : public npc_escortAI
 {
-    npc_tobias_seecherAI(Creature *c) :npc_escortAI(c) {}
+    npc_tobias_seecherAI(Creature* c) :npc_escortAI(c) {}
 
     void EnterCombat(Unit* who) {}
     void Reset() {}
@@ -1141,7 +1129,7 @@ enum RocknotQuests
 
 struct npc_rocknotAI : public npc_escortAI
 {
-    npc_rocknotAI(Creature *c) : npc_escortAI(c)
+    npc_rocknotAI(Creature* c) : npc_escortAI(c)
     {
         pInstance = c->GetInstanceData();
     }

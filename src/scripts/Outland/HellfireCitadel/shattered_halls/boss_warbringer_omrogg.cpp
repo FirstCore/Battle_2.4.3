@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -98,7 +86,7 @@ static Yell KillingDelay[]=
 
 struct mob_omrogg_headsAI : public ScriptedAI
 {
-    mob_omrogg_headsAI(Creature *c) : ScriptedAI(c) {}
+    mob_omrogg_headsAI(Creature* c) : ScriptedAI(c) {}
 
     bool DeathYell;
     uint32 Death_Timer;
@@ -127,7 +115,7 @@ struct mob_omrogg_headsAI : public ScriptedAI
 
 struct boss_warbringer_omroggAI : public ScriptedAI
 {
-    boss_warbringer_omroggAI(Creature *c) : ScriptedAI(c)
+    boss_warbringer_omroggAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
@@ -217,7 +205,7 @@ struct boss_warbringer_omroggAI : public ScriptedAI
             pInstance->SetData(TYPE_WARBRINGER, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         if (summoned->GetEntry() == ENTRY_LEFT_HEAD)
             LeftHead = summoned->GetGUID();

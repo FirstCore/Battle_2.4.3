@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "ScriptPCH.h"
@@ -222,21 +210,21 @@ void Script::RegisterSelf()
     }
 }
 
-void ScriptMgr::OnLogin(Player *pPlayer)
+void ScriptMgr::OnLogin(Player* pPlayer)
 {
     Script *tmpscript = m_scripts[GetScriptId("scripted_on_events")];
     if (!tmpscript || !tmpscript->pOnLogin) return;
     tmpscript->pOnLogin(pPlayer);
 }
 
-void ScriptMgr::OnLogout(Player *pPlayer)
+void ScriptMgr::OnLogout(Player* pPlayer)
 {
     Script *tmpscript = m_scripts[GetScriptId("scripted_on_events")];
     if (!tmpscript || !tmpscript->pOnLogout) return;
     tmpscript->pOnLogout(pPlayer);
 }
 
-void ScriptMgr::OnPVPKill(Player *killer, Player *killed)
+void ScriptMgr::OnPVPKill(Player* killer, Player* killed)
 {
     Script *tmpscript = m_scripts[GetScriptId("scripted_on_events")];
     if (!tmpscript || !tmpscript->pOnPVPKill) return;
@@ -248,7 +236,7 @@ char const* ScriptMgr::ScriptsVersion()
     return "Integrated blizzlike Scripts";
 }
 
-bool ScriptMgr::GossipHello (Player * pPlayer, Creature* pCreature)
+bool ScriptMgr::GossipHello (Player* pPlayer, Creature* pCreature)
 {
     Script *tmpscript = m_scripts[pCreature->GetScriptId()];
     if (!tmpscript || !tmpscript->pGossipHello) return false;
@@ -428,7 +416,7 @@ bool ScriptMgr::ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& ta
     return tmpscript->pItemUse(pPlayer, pItem, targets);
 }
 
-bool ScriptMgr::EffectDummyCreature(Unit* caster, uint32 spellId, uint32 effIndex, Creature *crTarget)
+bool ScriptMgr::EffectDummyCreature(Unit* caster, uint32 spellId, uint32 effIndex, Creature* crTarget)
 {
     Script *tmpscript = m_scripts[crTarget->GetScriptId()];
 

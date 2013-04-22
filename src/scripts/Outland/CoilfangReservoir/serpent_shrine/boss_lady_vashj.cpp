@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -134,7 +122,7 @@ float ShieldGeneratorChannelPos[4][4] =
 //Lady Vashj AI
 struct boss_lady_vashjAI : public ScriptedAI
 {
-    boss_lady_vashjAI (Creature *c) : ScriptedAI(c)
+    boss_lady_vashjAI (Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         Intro = false;
@@ -408,7 +396,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                     me->GetMotionMaster()->Clear();
                     DoTeleportTo(MIDDLE_X, MIDDLE_Y, MIDDLE_Z);
 
-                    Creature *pCreature;
+                    Creature* pCreature;
                     for (uint8 i = 0; i < 4; ++i)
                     {
                         pCreature = me->SummonCreature(SHIED_GENERATOR_CHANNEL, ShieldGeneratorChannelPos[i][0],  ShieldGeneratorChannelPos[i][1],  ShieldGeneratorChannelPos[i][2],  ShieldGeneratorChannelPos[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
@@ -424,7 +412,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 //SummonSporebat_Timer
                 if (SummonSporebat_Timer <= diff)
                 {
-                    Creature *Sporebat = NULL;
+                    Creature* Sporebat = NULL;
                     Sporebat = me->SummonCreature(TOXIC_SPOREBAT, SPOREBAT_X, SPOREBAT_Y, SPOREBAT_Z, SPOREBAT_O, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
                     if (Sporebat)
@@ -584,7 +572,7 @@ class VashjSurgeAura : public Aura
 //If one of them reaches Vashj he will increase her damage done by 5%.
 struct mob_enchanted_elementalAI : public ScriptedAI
 {
-    mob_enchanted_elementalAI(Creature *c) : ScriptedAI(c)
+    mob_enchanted_elementalAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -639,7 +627,7 @@ struct mob_enchanted_elementalAI : public ScriptedAI
         if (!VashjGUID)
             return;
 
-        Creature *Vashj = Unit::GetCreature(*me, VashjGUID);
+        Creature* Vashj = Unit::GetCreature(*me, VashjGUID);
 
         if (move <= diff)
         {
@@ -690,7 +678,7 @@ struct mob_enchanted_elementalAI : public ScriptedAI
 //This mob has 7,900 life, doesn't move, and shoots Poison Bolts at one person anywhere in the area, doing 3,000 nature damage and placing a posion doing 2,000 damage every 2 seconds. He will switch targets often, or sometimes just hang on a single player, but there is nothing you can do about it except heal the damage and kill the Tainted Elemental
 struct mob_tainted_elementalAI : public ScriptedAI
 {
-    mob_tainted_elementalAI(Creature *c) : ScriptedAI(c)
+    mob_tainted_elementalAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -710,7 +698,7 @@ struct mob_tainted_elementalAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Vashj = NULL;
+            Creature* Vashj = NULL;
             Vashj = (Unit::GetCreature((*me), pInstance->GetData64(DATA_LADYVASHJ)));
 
             if (Vashj)
@@ -753,7 +741,7 @@ struct mob_tainted_elementalAI : public ScriptedAI
 //Toxic Spores: Used in Phase 3 by the Spore Bats, it creates a contaminated green patch of ground, dealing about 2775-3225 nature damage every second to anyone who stands in it.
 struct mob_toxic_sporebatAI : public ScriptedAI
 {
-    mob_toxic_sporebatAI(Creature *c) : ScriptedAI(c)
+    mob_toxic_sporebatAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         EnterEvadeMode();
@@ -870,7 +858,7 @@ CreatureAI* GetAI_mob_coilfang_elite(Creature* pCreature)
 
 struct mob_coilfang_striderAI : public ScriptedAI
 {
-    mob_coilfang_striderAI(Creature *c) : ScriptedAI(c)
+    mob_coilfang_striderAI(Creature* c) : ScriptedAI(c)
     {
         Reset();
     }
@@ -903,14 +891,14 @@ struct mob_coilfang_striderAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_coilfang_strider(Creature *pCreature)
+CreatureAI* GetAI_mob_coilfang_strider(Creature* pCreature)
 {
     return new mob_coilfang_striderAI (pCreature);
 }
 
 struct mob_shield_generator_channelAI : public ScriptedAI
 {
-    mob_shield_generator_channelAI(Creature *c) : ScriptedAI(c)
+    mob_shield_generator_channelAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -965,7 +953,7 @@ bool ItemUse_item_tainted_core(Player* pPlayer, Item* /*_Item*/, SpellCastTarget
         return true;
     }
 
-    Creature *Vashj = NULL;
+    Creature* Vashj = NULL;
     Vashj = (Unit::GetCreature((*pPlayer), pInstance->GetData64(DATA_LADYVASHJ)));
     if (Vashj && CAST_AI(boss_lady_vashjAI, Vashj->AI())->Phase == 2)
     {

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -71,7 +59,7 @@ void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
     //sLog.outDebug("WORLD: Received CMSG_GUILD_INVITE");
 
     std::string Invitedname, plname;
-    Player * player = NULL;
+    Player* player = NULL;
     recvPacket >> Invitedname;
 
     if (normalizePlayerName(Invitedname))
@@ -187,7 +175,7 @@ void WorldSession::HandleGuildRemoveOpcode(WorldPacket& recvPacket)
 void WorldSession::HandleGuildAcceptOpcode(WorldPacket& /*recvPacket*/)
 {
     Guild *guild;
-    Player *player = GetPlayer();
+    Player* player = GetPlayer();
 
     //sLog.outDebug("WORLD: Received CMSG_GUILD_ACCEPT");
 
@@ -434,7 +422,7 @@ void WorldSession::HandleGuildDisbandOpcode(WorldPacket& /*recvPacket*/)
 void WorldSession::HandleGuildLeaderOpcode(WorldPacket& recvPacket)
 {
     std::string name;
-    Player *oldLeader = GetPlayer();
+    Player* oldLeader = GetPlayer();
     Guild *guild;
 
     //sLog.outDebug("WORLD: Received CMSG_GUILD_LEADER");
@@ -746,7 +734,7 @@ void WorldSession::HandleGuildSaveEmblemOpcode(WorldPacket& recvPacket)
 
     recvPacket >> vendorGuid;
 
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(vendorGuid,UNIT_NPC_FLAG_TABARDDESIGNER);
+    Creature* pCreature = GetPlayer()->GetNPCIfCanInteractWith(vendorGuid,UNIT_NPC_FLAG_TABARDDESIGNER);
     if (!pCreature)
     {
         //"That's not an emblem vendor!"
@@ -1068,7 +1056,7 @@ void WorldSession::HandleGuildBankDepositItem(WorldPacket& recv_data)
     if (!pGuild)
         return;
 
-    Player *pl = GetPlayer();
+    Player* pl = GetPlayer();
 
     // player->bank or bank->bank check if tab is correct to prevent crash
     if (!ToChar && !pGuild->GetBankTab(BankTab))

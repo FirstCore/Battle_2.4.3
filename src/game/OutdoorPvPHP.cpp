@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "OutdoorPvPHP.h"
@@ -81,7 +69,7 @@ bool OutdoorPvPHP::SetupOutdoorPvP()
     return true;
 }
 
-void OutdoorPvPHP::HandlePlayerEnterZone(Player * plr, uint32 zone)
+void OutdoorPvPHP::HandlePlayerEnterZone(Player* plr, uint32 zone)
 {
     // add buffs
     if (plr->GetTeam() == ALLIANCE)
@@ -97,7 +85,7 @@ void OutdoorPvPHP::HandlePlayerEnterZone(Player * plr, uint32 zone)
     OutdoorPvP::HandlePlayerEnterZone(plr,zone);
 }
 
-void OutdoorPvPHP::HandlePlayerLeaveZone(Player * plr, uint32 zone)
+void OutdoorPvPHP::HandlePlayerLeaveZone(Player* plr, uint32 zone)
 {
     // remove buffs
     if (plr->GetTeam() == ALLIANCE)
@@ -131,7 +119,7 @@ bool OutdoorPvPHP::Update(uint32 diff)
     return changed;
 }
 
-void OutdoorPvPHP::SendRemoveWorldStates(Player *plr)
+void OutdoorPvPHP::SendRemoveWorldStates(Player* plr)
 {
     plr->SendUpdateWorldState(HP_UI_TOWER_DISPLAY_A,0);
     plr->SendUpdateWorldState(HP_UI_TOWER_DISPLAY_H,0);
@@ -296,7 +284,7 @@ void OPvPCapturePointHP::FillInitialWorldStates(WorldPacket &data)
     }
 }
 
-bool OPvPCapturePointHP::HandlePlayerEnter(Player *plr)
+bool OPvPCapturePointHP::HandlePlayerEnter(Player* plr)
 {
     if (OPvPCapturePoint::HandlePlayerEnter(plr))
     {
@@ -309,13 +297,13 @@ bool OPvPCapturePointHP::HandlePlayerEnter(Player *plr)
     return false;
 }
 
-void OPvPCapturePointHP::HandlePlayerLeave(Player *plr)
+void OPvPCapturePointHP::HandlePlayerLeave(Player* plr)
 {
     plr->SendUpdateWorldState(HP_UI_TOWER_SLIDER_DISPLAY, 0);
     OPvPCapturePoint::HandlePlayerLeave(plr);
 }
 
-void OutdoorPvPHP::HandleKillImpl(Player *plr, Unit* killed)
+void OutdoorPvPHP::HandleKillImpl(Player* plr, Unit* killed)
 {
     if (killed->GetTypeId() != TYPEID_PLAYER)
         return;

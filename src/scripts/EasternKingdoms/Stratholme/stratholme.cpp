@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -80,7 +68,7 @@ bool GOHello_go_gauntlet_gate(Player* pPlayer, GameObject* pGo)
 
 struct mob_freed_soulAI : public ScriptedAI
 {
-    mob_freed_soulAI(Creature *c) : ScriptedAI(c) {}
+    mob_freed_soulAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -107,7 +95,7 @@ CreatureAI* GetAI_mob_freed_soul(Creature* pCreature)
 
 struct mob_restless_soulAI : public ScriptedAI
 {
-    mob_restless_soulAI(Creature *c) : ScriptedAI(c) {}
+    mob_restless_soulAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 Tagger;
     uint32 Die_Timer;
@@ -134,7 +122,7 @@ struct mob_restless_soulAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         summoned->CastSpell(summoned,SPELL_SOUL_FREED,false);
     }
@@ -178,7 +166,7 @@ enum eGhostlyCitizenSpells
 
 struct mobs_spectral_ghostly_citizenAI : public ScriptedAI
 {
-    mobs_spectral_ghostly_citizenAI(Creature *c) : ScriptedAI(c) {}
+    mobs_spectral_ghostly_citizenAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Die_Timer;
     bool Tagged;

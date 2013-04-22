@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -57,7 +45,7 @@ EndContentData */
 
 struct npc_medivh_bmAI : public ScriptedAI
 {
-    npc_medivh_bmAI(Creature *c) : ScriptedAI(c)
+    npc_medivh_bmAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -232,14 +220,14 @@ struct Wave
 
 static Wave PortalWaves[]=
 {
-    {{C_ASSAS, C_WHELP, C_CHRON, 0}},
-    {{C_EXECU, C_CHRON, C_WHELP, C_ASSAS}},
-    {{C_EXECU, C_VANQU, C_CHRON, C_ASSAS}}
+    {C_ASSAS, C_WHELP, C_CHRON, 0},
+    {C_EXECU, C_CHRON, C_WHELP, C_ASSAS},
+    {C_EXECU, C_VANQU, C_CHRON, C_ASSAS}
 };
 
 struct npc_time_riftAI : public ScriptedAI
 {
-    npc_time_riftAI(Creature *c) : ScriptedAI(c)
+    npc_time_riftAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -253,7 +241,6 @@ struct npc_time_riftAI : public ScriptedAI
 
     void Reset()
     {
-
         TimeRiftWave_Timer = 15000;
         mRiftWaveCount = 0;
 
@@ -267,7 +254,6 @@ struct npc_time_riftAI : public ScriptedAI
         else if (mPortalCount > 12)
             mWaveId = 2;
         else mWaveId = 1;
-
     }
     void EnterCombat(Unit*) {}
 
@@ -345,7 +331,7 @@ CreatureAI* GetAI_npc_time_rift(Creature* pCreature)
 #define SPELL_CHRONO_BEACON     34975
 #define ITEM_CHRONO_BEACON      24289
 
-bool GossipHello_npc_saat(Player *player, Creature* pCreature)
+bool GossipHello_npc_saat(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -367,7 +353,7 @@ bool GossipHello_npc_saat(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_saat(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_saat(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     if (action == GOSSIP_ACTION_INFO_DEF+1)
     {

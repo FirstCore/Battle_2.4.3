@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -74,7 +62,7 @@ bool GossipSelect_npc_archmage_malin(Player* pPlayer, Creature* pCreature, uint3
 
 struct npc_bartlebyAI : public ScriptedAI
 {
-    npc_bartlebyAI(Creature *c) : ScriptedAI(c) {}
+    npc_bartlebyAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 PlayerGUID;
 
@@ -131,7 +119,7 @@ CreatureAI* GetAI_npc_bartleby(Creature* pCreature)
 
 struct npc_dashel_stonefistAI : public ScriptedAI
 {
-    npc_dashel_stonefistAI(Creature *c) : ScriptedAI(c) {}
+    npc_dashel_stonefistAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -177,7 +165,7 @@ CreatureAI* GetAI_npc_dashel_stonefist(Creature* pCreature)
 
 struct npc_general_marcus_jonathanAI : public ScriptedAI
 {
-    npc_general_marcus_jonathanAI(Creature *c) : ScriptedAI(c) {}
+    npc_general_marcus_jonathanAI(Creature* c) : ScriptedAI(c) {}
 
     void ReceiveEmote(Player* pPlayer, uint32 emote)
     {
@@ -425,7 +413,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
     {
         me->ForcedDespawn();
 
-        if (Creature *pMarzon = Unit::GetCreature(*me, MarzonGUID))
+        if (Creature* pMarzon = Unit::GetCreature(*me, MarzonGUID))
         {
             if (pMarzon->isAlive())
                 pMarzon->DisappearAndDie();
@@ -463,7 +451,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
 
     void EnterCombat(Unit* pWho)
     {
-        if (Creature *pMarzon = Unit::GetCreature(*me, MarzonGUID))
+        if (Creature* pMarzon = Unit::GetCreature(*me, MarzonGUID))
         {
             if (pMarzon->isAlive() && !pMarzon->isInCombat())
                 pMarzon->AI()->AttackStart(pWho);
@@ -485,7 +473,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
                 break;
             case 5:
                 SetEscortPaused(true);
-                if (Creature *pMarzon = me->SummonCreature(NPC_MARZON_BLADE,-8411.360352f, 480.069733f, 123.760895f, 4.941504f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 1000))
+                if (Creature* pMarzon = me->SummonCreature(NPC_MARZON_BLADE,-8411.360352f, 480.069733f, 123.760895f, 4.941504f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 1000))
                 {
                     pMarzon->GetMotionMaster()->MovePoint(0,-8406.08f, 469.349f, 123.76f);
                     MarzonGUID = pMarzon->GetGUID();
@@ -524,7 +512,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
                         uiPhase = 0;
                         break;
                     case 5:
-                        if (Creature *pMarzon = Unit::GetCreature(*me, MarzonGUID))
+                        if (Creature* pMarzon = Unit::GetCreature(*me, MarzonGUID))
                             DoScriptText(SAY_MARZON_1, pMarzon);
                         uiTimer = 3000;
                         uiPhase = 6;
@@ -539,7 +527,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
                     case 7:
                         if (Creature* pTyrion = me->FindNearestCreature(NPC_TYRION, 20.0f, true))
                             DoScriptText(SAY_TYRION_2, pTyrion);
-                        if (Creature *pMarzon = Unit::GetCreature(*me, MarzonGUID))
+                        if (Creature* pMarzon = Unit::GetCreature(*me, MarzonGUID))
                             pMarzon->setFaction(14);
                         me->setFaction(14);
                         uiTimer = 0;

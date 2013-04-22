@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -40,7 +28,7 @@ EndContentData */
 
 struct npc_astor_hadrenAI : public ScriptedAI
 {
-    npc_astor_hadrenAI(Creature *c) : ScriptedAI(c) {}
+    npc_astor_hadrenAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -119,7 +107,7 @@ enum eErland
 
 struct npc_deathstalker_erlandAI : public npc_escortAI
 {
-    npc_deathstalker_erlandAI(Creature *c) : npc_escortAI(c) {}
+    npc_deathstalker_erlandAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {
@@ -201,7 +189,7 @@ static float PyrewoodSpawnPoints[3][4] =
 
 struct pyrewood_ambushAI : public ScriptedAI
 {
-    pyrewood_ambushAI(Creature *c) : ScriptedAI(c), Summons(me)
+    pyrewood_ambushAI(Creature* c) : ScriptedAI(c), Summons(me)
     {
        QuestInProgress = false;
     }
@@ -229,13 +217,13 @@ struct pyrewood_ambushAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/){}
 
-    void JustSummoned(Creature *pSummoned)
+    void JustSummoned(Creature* pSummoned)
     {
         Summons.Summon(pSummoned);
         ++KillCount;
     }
 
-    void SummonedCreatureDespawn(Creature *pSummoned)
+    void SummonedCreatureDespawn(Creature* pSummoned)
     {
         Summons.Despawn(pSummoned);
         --KillCount;
@@ -243,9 +231,9 @@ struct pyrewood_ambushAI : public ScriptedAI
 
     void SummonCreatureWithRandomTarget(uint32 creatureId, int position)
     {
-        if (Creature *pSummoned = me->SummonCreature(creatureId, PyrewoodSpawnPoints[position][0], PyrewoodSpawnPoints[position][1], PyrewoodSpawnPoints[position][2], PyrewoodSpawnPoints[position][3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 15000))
+        if (Creature* pSummoned = me->SummonCreature(creatureId, PyrewoodSpawnPoints[position][0], PyrewoodSpawnPoints[position][1], PyrewoodSpawnPoints[position][2], PyrewoodSpawnPoints[position][3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 15000))
         {
-            Player *pPlayer = NULL;
+            Player* pPlayer = NULL;
             Unit* pTarget = NULL;
             if (PlayerGUID)
             {
@@ -267,7 +255,7 @@ struct pyrewood_ambushAI : public ScriptedAI
     void JustDied(Unit* /*pKiller*/)
     {
         if (PlayerGUID)
-            if (Player *pPlayer = Unit::GetPlayer(*me, PlayerGUID))
+            if (Player* pPlayer = Unit::GetPlayer(*me, PlayerGUID))
                 if (pPlayer->GetQuestStatus(QUEST_PYREWOOD_AMBUSH) == QUEST_STATUS_INCOMPLETE)
                     pPlayer->FailQuest(QUEST_PYREWOOD_AMBUSH);
     }
@@ -320,7 +308,7 @@ struct pyrewood_ambushAI : public ScriptedAI
             case 5: //end
                 if (PlayerGUID)
                 {
-                    if (Player *pPlayer = Unit::GetPlayer(*me, PlayerGUID))
+                    if (Player* pPlayer = Unit::GetPlayer(*me, PlayerGUID))
                     {
                         me->MonsterSay(NPCSAY_END, LANG_UNIVERSAL, 0); //not blizzlike
                         pPlayer->GroupEventHappens(QUEST_PYREWOOD_AMBUSH, me);
@@ -334,12 +322,12 @@ struct pyrewood_ambushAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_pyrewood_ambush(Creature *pCreature)
+CreatureAI* GetAI_pyrewood_ambush(Creature* pCreature)
 {
     return new pyrewood_ambushAI (pCreature);
 }
 
-bool QuestAccept_pyrewood_ambush(Player *pPlayer, Creature *pCreature, const Quest *pQuest)
+bool QuestAccept_pyrewood_ambush(Player* pPlayer, Creature* pCreature, const Quest *pQuest)
 {
     if (pQuest->GetQuestId() == QUEST_PYREWOOD_AMBUSH && !CAST_AI(pyrewood_ambushAI, pCreature->AI())->QuestInProgress)
     {

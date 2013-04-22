@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "WorldSession.h"
@@ -33,7 +21,7 @@ static void AttemptJoin(Player* _player)
     HashMapHolder<Player>::MapType const& players = ObjectAccessor::Instance().GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator iter = players.begin(); iter != players.end(); ++iter)
     {
-        Player *plr = iter->second;
+        Player* plr = iter->second;
 
         // skip enemies and self
         if (!plr || plr == _player || plr->GetTeam() != _player->GetTeam())
@@ -93,7 +81,7 @@ static void AttemptAddMore(Player* _player)
     HashMapHolder<Player>::MapType const& players = ObjectAccessor::Instance().GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator iter = players.begin(); iter != players.end(); ++iter)
     {
-        Player *plr = iter->second;
+        Player* plr = iter->second;
 
         // skip enemies and self
         if (!plr || plr == _player || plr->GetTeam() != _player->GetTeam())
@@ -262,7 +250,7 @@ void WorldSession::SendLfgResult(uint32 type, uint32 entry, uint8 lfg_type)
     HashMapHolder<Player>::MapType const& players = ObjectAccessor::Instance().GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator iter = players.begin(); iter != players.end(); ++iter)
     {
-        Player *plr = iter->second;
+        Player* plr = iter->second;
 
         if (!plr || plr->GetTeam() != _player->GetTeam())
             continue;
@@ -292,7 +280,7 @@ void WorldSession::SendLfgResult(uint32 type, uint32 entry, uint8 lfg_type)
             data << group->GetMembersCount()-1;             // count of group members without group leader
             for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
             {
-                Player *member = itr->getSource();
+                Player* member = itr->getSource();
                 if (member && member->GetGUID() != plr->GetGUID())
                 {
                     data << member->GetPackGUID();          // packed guid

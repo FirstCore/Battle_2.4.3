@@ -1,7 +1,6 @@
--- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
--- -------------------------------------
--- Script to cleanup doublicate Items --
--- -------------------------------------
+-- ------------------------------------------------
+-- BlizzLikeCore Script to cleanup doublicate items
+-- ------------------------------------------------
 
 DROP TABLE IF EXISTS item_test;
 CREATE TABLE item_test

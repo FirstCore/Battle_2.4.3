@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -249,12 +237,12 @@ struct boss_shade_of_akamaAI : public ScriptedAI
     {
         summons.DespawnAll();
     }
-    void JustSummoned(Creature *summon)
+    void JustSummoned(Creature* summon)
     {
         if (summon->GetEntry() == CREATURE_DEFENDER || summon->GetEntry() == 23523 || summon->GetEntry() == 23318 || summon->GetEntry() == 23524)
             summons.Summon(summon);
     }
-    void SummonedCreatureDespawn(Creature *summon)
+    void SummonedCreatureDespawn(Creature* summon)
     {
         if (summon->GetEntry() == CREATURE_DEFENDER || summon->GetEntry() == 23523 || summon->GetEntry() == 23318 || summon->GetEntry() == 23524)
             summons.Despawn(summon);
@@ -577,12 +565,12 @@ struct npc_akamaAI : public ScriptedAI
         me->setActive(true);
     }
 
-    void JustSummoned(Creature *summon)
+    void JustSummoned(Creature* summon)
     {
         if (summon->GetEntry() == CREATURE_BROKEN)
             summons.Summon(summon);
     }
-    void SummonedCreatureDespawn(Creature *summon)
+    void SummonedCreatureDespawn(Creature* summon)
     {
         if (summon->GetEntry() == CREATURE_BROKEN)
             summons.Despawn(summon);
@@ -857,7 +845,7 @@ bool GossipSelect_npc_akama(Player* pPlayer, Creature* pCreature, uint32 /*uiSen
     return true;
 }
 
-bool GossipHello_npc_akama(Player *player, Creature* pCreature)
+bool GossipHello_npc_akama(Player* player, Creature* pCreature)
 {
     ScriptedInstance* pInstance = (pCreature->GetInstanceData());
 

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -72,9 +60,9 @@ struct boss_twinemperorsAI : public ScriptedAI
 
     virtual bool IAmVeklor() = 0;
     virtual void Reset() = 0;
-    virtual void CastSpellOnBug(Creature *pTarget) = 0;
+    virtual void CastSpellOnBug(Creature* pTarget) = 0;
 
-    boss_twinemperorsAI(Creature *c): ScriptedAI(c)
+    boss_twinemperorsAI(Creature* c): ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -93,15 +81,15 @@ struct boss_twinemperorsAI : public ScriptedAI
         EnrageTimer = 15*60000;
     }
 
-    Creature *GetOtherBoss()
+    Creature* GetOtherBoss()
     {
         if (pInstance)
         {
-            return (Creature *)Unit::GetUnit((*me), pInstance->GetData64(IAmVeklor() ? DATA_VEKNILASH : DATA_VEKLOR));
+            return (Creature* )Unit::GetUnit((*me), pInstance->GetData64(IAmVeklor() ? DATA_VEKNILASH : DATA_VEKLOR));
         }
         else
         {
-            return (Creature *)0;
+            return (Creature* )0;
         }
     }
 
@@ -124,7 +112,7 @@ struct boss_twinemperorsAI : public ScriptedAI
 
     void JustDied(Unit* /*Killer*/)
     {
-        Creature *pOtherBoss = GetOtherBoss();
+        Creature* pOtherBoss = GetOtherBoss();
         if (pOtherBoss)
         {
             pOtherBoss->SetHealth(0);
@@ -144,7 +132,7 @@ struct boss_twinemperorsAI : public ScriptedAI
     void EnterCombat(Unit* who)
     {
         DoZoneInCombat();
-        Creature *pOtherBoss = GetOtherBoss();
+        Creature* pOtherBoss = GetOtherBoss();
         if (pOtherBoss)
         {
             // TODO: we should activate the other boss location so he can start attackning even if nobody
@@ -164,7 +152,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         if (caster == me)
             return;
 
-        Creature *pOtherBoss = GetOtherBoss();
+        Creature* pOtherBoss = GetOtherBoss();
         if (entry->Id != SPELL_HEAL_BROTHER || !pOtherBoss)
             return;
 
@@ -198,7 +186,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         if (Heal_Timer <= diff)
         {
             Unit* pOtherBoss = GetOtherBoss();
-            if (pOtherBoss && (pOtherBoss->GetDistance((const Creature *)me) <= 60))
+            if (pOtherBoss && (pOtherBoss->GetDistance((const Creature* )me) <= 60))
             {
                 DoCast(pOtherBoss, SPELL_HEAL_BROTHER);
                 Heal_Timer = 1000;
@@ -216,7 +204,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         if (IAmVeklor())
             return;                                         // mechanics handled by veknilash so they teleport exactly at the same time and to correct coordinates
 
-        Creature *pOtherBoss = GetOtherBoss();
+        Creature* pOtherBoss = GetOtherBoss();
         if (pOtherBoss)
         {
             //me->MonsterYell("Teleporting ...", LANG_UNIVERSAL, 0);
@@ -319,7 +307,7 @@ struct boss_twinemperorsAI : public ScriptedAI
             AnyBugCheck(WorldObject const* obj, float range) : i_obj(obj), i_range(range) {}
             bool operator()(Unit* u)
             {
-                Creature *c = (Creature *)u;
+                Creature* c = (Creature* )u;
                 if (!i_obj->IsWithinDistInMap(c, i_range))
                     return false;
                 return (c->GetEntry() == 15316 || c->GetEntry() == 15317);
@@ -329,7 +317,7 @@ struct boss_twinemperorsAI : public ScriptedAI
             float i_range;
     };
 
-    Creature *RespawnNearbyBugsAndGetOne()
+    Creature* RespawnNearbyBugsAndGetOne()
     {
         CellPair p(BlizzLike::ComputeCellPair(me->GetPositionX(), me->GetPositionY()));
         Cell cell(p);
@@ -343,11 +331,11 @@ struct boss_twinemperorsAI : public ScriptedAI
         TypeContainerVisitor<BlizzLike::CreatureListSearcher<AnyBugCheck>, GridTypeMapContainer >  grid_creature_searcher(searcher);
         cell.Visit(p, grid_creature_searcher, *(me->GetMap()));
 
-        Creature *nearb = NULL;
+        Creature* nearb = NULL;
 
         for (std::list<Creature*>::iterator iter = unitList.begin(); iter != unitList.end(); ++iter)
         {
-            Creature *c = (Creature *)(*iter);
+            Creature* c = (Creature* )(*iter);
             if (c && c->isDead())
             {
                 c->Respawn();
@@ -367,7 +355,7 @@ struct boss_twinemperorsAI : public ScriptedAI
     {
         if (BugsTimer <= diff || Abuse_Bug_Timer <= diff)
         {
-            Creature *c = RespawnNearbyBugsAndGetOne();
+            Creature* c = RespawnNearbyBugsAndGetOne();
             if (Abuse_Bug_Timer <= diff)
             {
                 if (c)
@@ -416,7 +404,7 @@ class BugAura : public Aura
 struct boss_veknilashAI : public boss_twinemperorsAI
 {
     bool IAmVeklor() {return false;}
-    boss_veknilashAI(Creature *c) : boss_twinemperorsAI(c) {}
+    boss_veknilashAI(Creature* c) : boss_twinemperorsAI(c) {}
 
     uint32 UpperCut_Timer;
     uint32 UnbalancingStrike_Timer;
@@ -438,7 +426,7 @@ struct boss_veknilashAI : public boss_twinemperorsAI
         me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_MAGIC, true);
     }
 
-    void CastSpellOnBug(Creature *pTarget)
+    void CastSpellOnBug(Creature* pTarget)
     {
         pTarget->setFaction(14);
         ((CreatureAI*)pTarget->AI())->AttackStart(me->getThreatManager().getHostileTarget());
@@ -496,7 +484,7 @@ struct boss_veknilashAI : public boss_twinemperorsAI
 struct boss_veklorAI : public boss_twinemperorsAI
 {
     bool IAmVeklor() {return true;}
-    boss_veklorAI(Creature *c) : boss_twinemperorsAI(c) {}
+    boss_veklorAI(Creature* c) : boss_twinemperorsAI(c) {}
 
     uint32 ShadowBolt_Timer;
     uint32 Blizzard_Timer;
@@ -522,7 +510,7 @@ struct boss_veklorAI : public boss_twinemperorsAI
         me->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, 0);
     }
 
-    void CastSpellOnBug(Creature *pTarget)
+    void CastSpellOnBug(Creature* pTarget)
     {
         pTarget->setFaction(14);
         SpellEntry *spell = (SpellEntry *)GetSpellStore()->LookupEntry(SPELL_EXPLODEBUG);

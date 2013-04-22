@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Player.h"
@@ -47,7 +35,7 @@ uint16 BattleGroundAV::GetBonusHonor(uint8 kills) //TODO: move this function to 
     return BlizzLike::Honor::hk_honor_at_level(m_MaxLevel, kills);
 }
 
-void BattleGroundAV::HandleKillPlayer(Player *player, Player *killer)
+void BattleGroundAV::HandleKillPlayer(Player* player, Player* killer)
 {
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
@@ -56,7 +44,7 @@ void BattleGroundAV::HandleKillPlayer(Player *player, Player *killer)
     UpdateScore(player->GetTeam(),-1);
 }
 
-void BattleGroundAV::HandleKillUnit(Creature *unit, Player *killer)
+void BattleGroundAV::HandleKillUnit(Creature* unit, Player* killer)
 {
     sLog.outDebug("bg_av HandleKillUnit %i",unit->GetEntry());
     if (GetStatus() != STATUS_IN_PROGRESS)
@@ -119,7 +107,7 @@ void BattleGroundAV::HandleKillUnit(Creature *unit, Player *killer)
         ChangeMineOwner(BG_AV_SOUTH_MINE,killer->GetTeam());
 }
 
-void BattleGroundAV::HandleQuestComplete(uint32 questid, Player *player)
+void BattleGroundAV::HandleQuestgiverCompleteQuest(uint32 questid, Player* player)
 {
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;//maybe we should log this, cause this must be a cheater or a big bug
@@ -379,7 +367,7 @@ void BattleGroundAV::StartingEventOpenDoors()
     DoorOpen(BG_AV_OBJECT_DOOR_A);
 }
 
-void BattleGroundAV::AddPlayer(Player *plr)
+void BattleGroundAV::AddPlayer(Player* plr)
 {
     BattleGround::AddPlayer(plr);
     // create score and add it to map, default values are set in constructor
@@ -443,7 +431,7 @@ void BattleGroundAV::RemovePlayer(Player* plr,uint64 /*guid*/)
     plr->RemoveAurasDueToSpell(AV_BUFF_H_CAPTAIN);
 }
 
-void BattleGroundAV::HandleAreaTrigger(Player *Source, uint32 Trigger)
+void BattleGroundAV::HandleAreaTrigger(Player* Source, uint32 Trigger)
 {
     // this is wrong way to implement these things. On official it done by gameobject spell cast.
     if (GetStatus() != STATUS_IN_PROGRESS)
@@ -782,7 +770,7 @@ uint32 BattleGroundAV::GetObjectThroughNode(BG_AV_Nodes node)
 
 //called when using banner
 
-void BattleGroundAV::EventPlayerClickedOnFlag(Player *source, GameObject* target_obj)
+void BattleGroundAV::EventPlayerClickedOnFlag(Player* source, GameObject* target_obj)
 {
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
@@ -954,7 +942,7 @@ void BattleGroundAV::EventPlayerAssaultsPoint(Player* player, uint32 object)
             std::vector<uint64> ghost_list = m_ReviveQueue[m_BgCreatures[node]];
             if (!ghost_list.empty())
             {
-                Player *plr;
+                Player* plr;
                 WorldSafeLocsEntry const *ClosestGrave = NULL;
                 for (std::vector<uint64>::iterator itr = ghost_list.begin(); itr != ghost_list.end(); ++itr)
                 {

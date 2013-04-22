@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -228,7 +216,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 break;
             }
 
-            Player *player = ObjectAccessor::Instance().FindPlayerByName(to.c_str());
+            Player* player = ObjectAccessor::Instance().FindPlayerByName(to.c_str());
             uint32 tSecurity = GetSecurity();
             uint32 pSecurity = player ? player->GetSession()->GetSecurity() : uint32(SEC_PLAYER);
             if (!player || (tSecurity == SEC_PLAYER && pSecurity > SEC_PLAYER && !player->isAcceptWhispers()))
@@ -283,7 +271,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_PARTY, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_PARTY, lang, GetPlayer());
 
             WorldPacket data;
@@ -393,7 +381,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID, lang, GetPlayer());
 
             WorldPacket data;
@@ -429,7 +417,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang, GetPlayer());
 
             WorldPacket data;
@@ -458,7 +446,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID_WARNING, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID_WARNING, lang, GetPlayer());
 
             WorldPacket data;
@@ -490,7 +478,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND, lang, GetPlayer());
 
             WorldPacket data;
@@ -521,7 +509,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             // ChatSpy
             GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND_LEADER, lang);
             for(GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-                if(Player *pl = itr->getSource())
+                if(Player* pl = itr->getSource())
                     pl->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND_LEADER, lang, GetPlayer());
 
             WorldPacket data;
@@ -701,7 +689,7 @@ void WorldSession::HandleChatIgnoredOpcode(WorldPacket& recv_data)
     recv_data >> iguid;
     recv_data >> unk;                                       // probably related to spam reporting
 
-    Player *player = ObjectAccessor::FindPlayer(iguid);
+    Player* player = ObjectAccessor::FindPlayer(iguid);
     if (!player || !player->GetSession())
         return;
 

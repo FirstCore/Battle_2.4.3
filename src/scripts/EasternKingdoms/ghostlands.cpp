@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -121,11 +109,11 @@ bool GossipSelect_npc_rathis_tomber(Player* pPlayer, Creature* pCreature, uint32
 ## go_gilded_brazier (Paladin First Trail quest (9678))
 #####*/
 
-bool GOHello_gilded_brazier(Player *player, GameObject* /*_GO*/)
+bool GOHello_gilded_brazier(Player* player, GameObject* /*_GO*/)
 {
     if (player->GetQuestStatus(9678) == QUEST_STATUS_INCOMPLETE)
     {
-        Creature *Stillblade = player->SummonCreature(17716, 8106.11f, -7542.06f, 151.775f, 3.02598f, TEMPSUMMON_DEAD_DESPAWN, 60000);
+        Creature* Stillblade = player->SummonCreature(17716, 8106.11f, -7542.06f, 151.775f, 3.02598f, TEMPSUMMON_DEAD_DESPAWN, 60000);
         if (Stillblade)
             ((CreatureAI*)Stillblade->AI())->AttackStart(player);
     }
@@ -154,7 +142,7 @@ enum eEnums
 
 struct npc_ranger_lilathaAI : public npc_escortAI
 {
-    npc_ranger_lilathaAI(Creature *c) : npc_escortAI(c) {}
+    npc_ranger_lilathaAI(Creature* c) : npc_escortAI(c) {}
 
     void WaypointReached(uint32 i)
     {

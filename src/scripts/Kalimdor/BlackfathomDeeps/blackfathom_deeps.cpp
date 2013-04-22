@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "ScriptPCH.h"
@@ -32,14 +20,14 @@ enum eSpells
 
 const Position HomePosition = {-815.817,-145.299,-25.870, 0};
 
-bool GoHello_blackfathom_altar(Player *pPlayer, GameObject* /*pGo*/)
+bool GoHello_blackfathom_altar(Player* pPlayer, GameObject* /*pGo*/)
 {
     if (!pPlayer->HasAura(SPELL_BLESSING_OF_BLACKFATHOM, 0))
         pPlayer->AddAura(SPELL_BLESSING_OF_BLACKFATHOM,pPlayer);
     return true;
 }
 
-bool GoHello_blackfathom_fire(Player * /*pPlayer*/, GameObject* pGo)
+bool GoHello_blackfathom_fire(Player* /*pPlayer*/, GameObject* pGo)
 {
     ScriptedInstance *pInstance = pGo->GetInstanceData();
 

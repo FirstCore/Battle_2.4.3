@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include <iostream>
@@ -77,10 +65,35 @@ namespace VMAP
         return fname.str();
     }
 
+    // Block maps from being used.
+    void VMapManager2::preventMapsFromBeingUsed(const char* pMapIdString)
+    {
+        iIgnoreMapIds.clear();
+        if (pMapIdString != NULL)
+        {
+            std::string map_str;
+            std::stringstream map_ss;
+            map_ss.str(std::string(pMapIdString));
+            while (std::getline(map_ss, map_str, ','))
+            {
+                std::stringstream ss2(map_str);
+                int map_num = -1;
+                ss2 >> map_num;
+                if (map_num >= 0)
+                {
+                    DETAIL_LOG("Ignoring Map %i for VMaps", map_num);
+                    iIgnoreMapIds[map_num] = true;
+                    // unload map in case it is loaded
+                    unloadMap(map_num);
+                }
+            }
+        }
+    }
+
     VMAPLoadResult VMapManager2::loadMap(const char* pBasePath, unsigned int pMapId, int x, int y)
     {
         VMAPLoadResult result = VMAP_LOAD_RESULT_IGNORED;
-        if (isMapLoadingEnabled())
+        if (isMapLoadingEnabled() && !iIgnoreMapIds.count(pMapId))
         {
             if (_loadMap(pMapId, pBasePath, x, y))
                 result = VMAP_LOAD_RESULT_OK;

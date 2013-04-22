@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -197,7 +185,7 @@ struct mob_blood_elf_council_voice_triggerAI : public ScriptedAI
 
 struct mob_illidari_councilAI : public ScriptedAI
 {
-    mob_illidari_councilAI(Creature *c) : ScriptedAI(c)
+    mob_illidari_councilAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         for (uint8 i = 0; i < 4; ++i)
@@ -457,7 +445,7 @@ struct boss_illidari_councilAI : public ScriptedAI
 
 struct boss_gathios_the_shattererAI : public boss_illidari_councilAI
 {
-    boss_gathios_the_shattererAI(Creature *c) : boss_illidari_councilAI(c) {}
+    boss_gathios_the_shattererAI(Creature* c) : boss_illidari_councilAI(c) {}
 
     uint32 ConsecrationTimer;
     uint32 HammerOfJusticeTimer;
@@ -608,7 +596,7 @@ struct boss_gathios_the_shattererAI : public boss_illidari_councilAI
 
 struct boss_high_nethermancer_zerevorAI : public boss_illidari_councilAI
 {
-    boss_high_nethermancer_zerevorAI(Creature *c) : boss_illidari_councilAI(c) {}
+    boss_high_nethermancer_zerevorAI(Creature* c) : boss_illidari_councilAI(c) {}
 
     uint32 BlizzardTimer;
     uint32 FlamestrikeTimer;
@@ -701,7 +689,7 @@ struct boss_high_nethermancer_zerevorAI : public boss_illidari_councilAI
 
 struct boss_lady_malandeAI : public boss_illidari_councilAI
 {
-    boss_lady_malandeAI(Creature *c) : boss_illidari_councilAI(c) {}
+    boss_lady_malandeAI(Creature* c) : boss_illidari_councilAI(c) {}
 
     uint32 EmpoweredSmiteTimer;
     uint32 CircleOfHealingTimer;
@@ -767,7 +755,7 @@ struct boss_lady_malandeAI : public boss_illidari_councilAI
 
 struct boss_veras_darkshadowAI : public boss_illidari_councilAI
 {
-    boss_veras_darkshadowAI(Creature *c) : boss_illidari_councilAI(c) {}
+    boss_veras_darkshadowAI(Creature* c) : boss_illidari_councilAI(c) {}
 
     uint64 EnvenomTargetGUID;
 

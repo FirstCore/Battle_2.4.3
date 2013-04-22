@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -61,7 +49,7 @@ const float VazrudenRing[2][3] =
 
 struct boss_nazanAI : public ScriptedAI
 {
-    boss_nazanAI(Creature *c) : ScriptedAI(c)
+    boss_nazanAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
@@ -92,7 +80,7 @@ struct boss_nazanAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/) {}
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         if (summoned && summoned->GetEntry() == ENTRY_LIQUID_FIRE)
         {
@@ -132,7 +120,7 @@ struct boss_nazanAI : public ScriptedAI
 
         if (flight) // phase 1 - the flight
         {
-            Creature *Vazruden = Unit::GetCreature(*me,VazrudenGUID);
+            Creature* Vazruden = Unit::GetCreature(*me,VazrudenGUID);
             if (Fly_Timer <= diff || !(Vazruden && Vazruden->isAlive() && (Vazruden->GetHealth()*5 > Vazruden->GetMaxHealth())))
             {
                 flight = false;
@@ -178,7 +166,7 @@ struct boss_nazanAI : public ScriptedAI
 
 struct boss_vazrudenAI : public ScriptedAI
 {
-    boss_vazrudenAI(Creature *c) : ScriptedAI(c)
+    boss_vazrudenAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
@@ -256,7 +244,7 @@ struct boss_vazrudenAI : public ScriptedAI
 
 struct boss_vazruden_the_heraldAI : public ScriptedAI
 {
-    boss_vazruden_the_heraldAI(Creature *c) : ScriptedAI(c)
+    boss_vazruden_the_heraldAI(Creature* c) : ScriptedAI(c)
     {
         summoned = false;
         sentryDown = false;
@@ -301,7 +289,7 @@ struct boss_vazruden_the_heraldAI : public ScriptedAI
     {
         if (summoned)
         {
-            Creature *Nazan = Unit::GetCreature(*me, NazanGUID);
+            Creature* Nazan = Unit::GetCreature(*me, NazanGUID);
             if (!Nazan)
                 Nazan = me->FindNearestCreature(ENTRY_NAZAN, 5000);
             if (Nazan)
@@ -310,7 +298,7 @@ struct boss_vazruden_the_heraldAI : public ScriptedAI
                 NazanGUID = 0;
             }
 
-            Creature *Vazruden = Unit::GetCreature(*me, VazrudenGUID);
+            Creature* Vazruden = Unit::GetCreature(*me, VazrudenGUID);
             if (!Vazruden)
                 Vazruden = me->FindNearestCreature(ENTRY_VAZRUDEN, 5000);
             if (Vazruden)
@@ -365,7 +353,7 @@ struct boss_vazruden_the_heraldAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         if (!summoned) return;
         Unit* victim = me->getVictim();
@@ -419,8 +407,8 @@ struct boss_vazruden_the_heraldAI : public ScriptedAI
         default: // adds do the job now
             if (check <= diff)
             {
-                Creature *Nazan = Unit::GetCreature(*me, NazanGUID);
-                Creature *Vazruden = Unit::GetCreature(*me, VazrudenGUID);
+                Creature* Nazan = Unit::GetCreature(*me, NazanGUID);
+                Creature* Vazruden = Unit::GetCreature(*me, VazrudenGUID);
                 if ((Nazan && Nazan->isAlive()) || (Vazruden && Vazruden->isAlive()))
                 {
                     if ((Nazan && Nazan->getVictim()) || (Vazruden && Vazruden->getVictim()))
@@ -448,7 +436,7 @@ struct boss_vazruden_the_heraldAI : public ScriptedAI
 
 struct mob_hellfire_sentryAI : public ScriptedAI
 {
-    mob_hellfire_sentryAI(Creature *c) : ScriptedAI(c) {}
+    mob_hellfire_sentryAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 KidneyShot_Timer;
 
@@ -461,7 +449,7 @@ struct mob_hellfire_sentryAI : public ScriptedAI
 
     void JustDied(Unit* who)
     {
-        if (Creature *herald = me->FindNearestCreature(ENTRY_VAZRUDEN_HERALD,150))
+        if (Creature* herald = me->FindNearestCreature(ENTRY_VAZRUDEN_HERALD,150))
             CAST_AI(boss_vazruden_the_heraldAI, herald->AI())->SentryDownBy(who);
     }
 

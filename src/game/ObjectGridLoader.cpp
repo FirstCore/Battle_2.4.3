@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "ObjectGridLoader.h"
@@ -52,7 +40,7 @@ ObjectGridRespawnMover::Visit(CreatureMapType &m)
     // move to respawn point to prevent this case. For player view in respawn grid this will be normal respawn.
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end();)
     {
-        Creature * c = iter->getSource();
+        Creature* c = iter->getSource();
         ++iter;
 
         ASSERT(!c->isPet() && "ObjectGridRespawnMover don't must be called for pets");
@@ -96,7 +84,7 @@ template<class T> void addUnitState(T* /*obj*/, CellPair const& /*cell_pair*/)
 {
 }
 
-template<> void addUnitState(Creature *obj, CellPair const& cell_pair)
+template<> void addUnitState(Creature* obj, CellPair const& cell_pair)
 {
     Cell cell(cell_pair);
 
@@ -147,7 +135,7 @@ void LoadHelper(CellCorpseSet const& cell_corpses, CellPair &cell, CorpseMapType
 
         uint32 player_guid = itr->first;
 
-        Corpse *obj = ObjectAccessor::Instance().GetCorpseForPlayerGUID(player_guid);
+        Corpse* obj = ObjectAccessor::Instance().GetCorpseForPlayerGUID(player_guid);
         if (!obj)
             continue;
 

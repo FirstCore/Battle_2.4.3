@@ -1,21 +1,21 @@
 diff --git a/sql/warden/auth_warden.sql b/sql/warden/auth_warden.sql
 new file mode 100644
-index 0000000..6712b9d
+index 0000000..ca57236
 --- /dev/null
 +++ b/sql/warden/auth_warden.sql
 @@ -0,0 +1,3 @@
-+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- BlizzLikeCore Warden
 +ALTER TABLE `account` 
 +ADD COLUMN `os` VARCHAR(4) DEFAULT '' NOT NULL AFTER `locale`;
 diff --git a/sql/warden/world_warden.sql b/sql/warden/world_warden.sql
 new file mode 100644
-index 0000000..57684e0
+index 0000000..5a6f40c
 --- /dev/null
 +++ b/sql/warden/world_warden.sql
 @@ -0,0 +1,33 @@
-+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+
-+INSERT INTO `blizzlike_string` VALUES (6617,'|cfff00000Account [%s] has been banned.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6618,'|cfff00000Account [%s] has been kicked.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6619,'|cfff00000Account [%s] has been detected by Anti-Cheat.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
++-- BlizzLikeCore Warden
++DELETE FROM `blizzlike_string` WHERE `entry` IN (6617,6618,6619);
++INSERT INTO `blizzlike_string` VALUES (6617,'|cfff00000Account [%s] was banned by warden anticheat.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6618,'|cfff00000Account [%s] was kicked by warden anticheat.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6619,'|cfff00000Account [%s] was detected by warden anticheat.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 +
 +--
 +-- Table structure for table `warden_data_result`
@@ -43,71 +43,15 @@ index 0000000..57684e0
 +
 +LOCK TABLES `warden_data_result` WRITE;
 +/*!40000 ALTER TABLE `warden_data_result` DISABLE KEYS */;
-+INSERT INTO `warden_data_result` VALUES (11,243,'','',8095301,2,'7513','Air Jump 2'),(10,243,'','',9208728,4,'BB8D243F','Wallclimb'),(9,243,'','',6518444,2,'DECA','Wallclimb 1'),(8,243,'','',8095954,3,'8B4908 ','Teleport To Plane 2'),(7,243,'','',8095957,3,'894808 ','Teleport To Plane'),(6,243,'','',8103107,3,'894E3C','No Fall DMG'),(5,243,'','',8100062,2,'7541','Air Jump'),(4,243,'','',8979979,5,'E04D62503F','Hyper Speed'),(3,243,'','',4840352,2,'558B','Lua Protection'),(2,243,'','',9208923,5,'C0854A3340','WoWEmuHacker Detect + Gravity'),(1,243,'','',1342508000,1,'00','WowMaelStrom Detect. Need BC Warden mod.');
++INSERT INTO `warden_data_result` VALUES (11,243,'','',8095301,2,'7513','Air Jump 2'),(10,243,'','',9208728,4,'BB8D243F','Wallclimb'),(9,243,'','',6518444,2,'DECA','Wallclimb 1'),(8,243,'','',8095954,3,'8B4908 ','Teleport To Plane 2'),(7,243,'','',8095957,3,'894808 ','Teleport To Plane'),(6,243,'','',8103107,3,'894E3C','No Fall DMG'),(5,243,'','',8100062,2,'7541','Air Jump'),(4,243,'','',8979979,5,'E04D62503F','Hyper Speed'),(3,243,'','',4840352,2,'558B','Lua Protection'),(2,243,'','',9208923,5,'C0854A3340','WoWEmuHacker Detect + Gravity'),(1,243,'','',1342508000,1,'00','WowMaelStrom Detect.');
 +/*!40000 ALTER TABLE `warden_data_result` ENABLE KEYS */;
 +UNLOCK TABLES;
 \ No newline at end of file
-diff --git a/src/worldserver/worldserver.conf.dist b/src/worldserver/worldserver.conf.dist
-index 9b6dd63..ddcdaec 100644
---- a/src/worldserver/worldserver.conf.dist
-+++ b/src/worldserver/worldserver.conf.dist
-@@ -2040,3 +2040,51 @@ Die.Command.Mode = 1
- AutoBroadcast.On = 0
- AutoBroadcast.Center = 0
- AutoBroadcast.Timer = 60000
-+
-+###############################################################################
-+# WARDEN SETTINGS
-+#
-+#    Warden.Enabled
-+#        Enable Warden anticheat system
-+#        Default: 1 (Enabled)
-+#                 0 (Disabled)
-+#
-+#    Warden.Action
-+#        Action on failed check
-+#        Default: 1 (Kick)
-+#                 2 (Ban)
-+#                 0 (Log)
-+#
-+#    Warden.BanDuration
-+#        Time (in seconds) an account will be banned.
-+#        Default: 86400 - (24 hours)
-+#
-+#    Warden.NumChecks
-+#        Number of Warden checks that are sent to the client each cycle.
-+#        Default: 3 - (Enabled)
-+#                 0 - (Disabled)
-+#
-+#    Warden.ClientResponseDelay
-+#        Time (in seconds) before client is getting disconnecting for not responding.
-+#        Default: 600 - (600 Seconds)
-+#                 0 - (Disabled, client won't be kicked)
-+#
-+#    Warden.ClientCheckHoldOff
-+#        Time (in seconds) to wait before sending the next check request to the client.
-+#        A low number increases traffic and load on client and server side.
-+#        Default: 5 - (5 Seconds)
-+#
-+#    Warden.LogFile
-+#        Log file of Warden Fail
-+#        Default: "warden.log"
-+#                 "" - Empty name for disable
-+#
-+###############################################################################
-+
-+Warden.Enabled = 1
-+Warden.Action = 1
-+Warden.BanDuration = 86400
-+Warden.NumChecks = 3
-+Warden.ClientResponseDelay = 600
-+Warden.ClientCheckHoldOff = 5
-+Warden.LogFile = "warden.log"
 diff --git a/src/authserver/AuthSocket.cpp b/src/authserver/AuthSocket.cpp
-index a5e5954..b309d55 100644
+index 138ff77..b9c9b39 100644
 --- a/src/authserver/AuthSocket.cpp
 +++ b/src/authserver/AuthSocket.cpp
-@@ -348,6 +348,14 @@ bool AuthSocket::_HandleLogonChallenge()
+@@ -336,6 +336,14 @@ bool AuthSocket::_HandleLogonChallenge()
      _login = (const char*)ch->I;
      _build = ch->build;
  	
@@ -122,7 +66,7 @@ index a5e5954..b309d55 100644
      // Escape the user login to avoid further SQL injection
      // Memory will be freed on AuthSocket object destruction
      _safelogin = _login;
-@@ -661,7 +669,7 @@ bool AuthSocket::_HandleLogonProof()
+@@ -649,7 +657,7 @@ bool AuthSocket::_HandleLogonProof()
          // Update the sessionkey, last_ip, last login time and reset number of failed logins in the account table for this account
          // No SQL injection (escaped user name) and IP address as received by socket
          const char* K_hex = K.AsHexStr();
@@ -131,7 +75,7 @@ index a5e5954..b309d55 100644
          OPENSSL_free((void*)K_hex);
  
          // Finish SRP6 and send the final result to the client
-@@ -767,6 +775,14 @@ bool AuthSocket::_HandleReconnectChallenge()
+@@ -755,6 +763,14 @@ bool AuthSocket::_HandleReconnectChallenge()
      EndianConvert(ch->build);
      _build = ch->build;
  	
@@ -147,10 +91,10 @@ index a5e5954..b309d55 100644
  
      // Stop if the account is not found
 diff --git a/src/authserver/AuthSocket.h b/src/authserver/AuthSocket.h
-index 9cb7d5e..88d0d77 100644
+index a20f37f..286cb1c 100644
 --- a/src/authserver/AuthSocket.h
 +++ b/src/authserver/AuthSocket.h
-@@ -67,6 +67,7 @@ class AuthSocket: public BufferedSocket
+@@ -55,6 +55,7 @@ class AuthSocket: public BufferedSocket
          // Since GetLocaleByName() is _NOT_ bijective, we have to store the locale as a string. Otherwise we can't differ
          // between enUS and enGB, which is important for the patch system
          std::string _localizationName;
@@ -159,10 +103,10 @@ index 9cb7d5e..88d0d77 100644
          AccountTypes _accountSecurityLevel;
  
 diff --git a/src/game/Language.h b/src/game/Language.h
-index 2727ac8..cf1ca4c 100644
+index 44bae6e..32fc864 100644
 --- a/src/game/Language.h
 +++ b/src/game/Language.h
-@@ -847,6 +847,9 @@ enum BlizzLikeStrings
+@@ -835,6 +835,9 @@ enum BlizzLikeStrings
      LANG_GM_ANNOUNCE_COLOR               = 6615,
  
      LANG_GM_SILENCE                      = 6616,              // GM Silenced Spell 1852
@@ -173,10 +117,10 @@ index 2727ac8..cf1ca4c 100644
      // Use for not-in-offcial-sources patches
      //                                    10000-10999
 diff --git a/src/game/MiscHandler.cpp b/src/game/MiscHandler.cpp
-index 4bfd286..d2ba2e3 100644
+index 6c118ec..2a52f59 100644
 --- a/src/game/MiscHandler.cpp
 +++ b/src/game/MiscHandler.cpp
-@@ -1012,17 +1012,6 @@ void WorldSession::HandleSetActionBar(WorldPacket& recv_data)
+@@ -1000,17 +1000,6 @@ void WorldSession::HandleSetActionBar(WorldPacket& recv_data)
      GetPlayer()->SetByteValue(PLAYER_FIELD_BYTES, 2, ActionBar);
  }
  
@@ -195,10 +139,10 @@ index 4bfd286..d2ba2e3 100644
  {
      WorldPacket data(SMSG_PLAYED_TIME, 4 + 4);
 diff --git a/src/game/Opcodes.cpp b/src/game/Opcodes.cpp
-index 8bade56..4380df9 100644
+index 4ef6ae5..79f0ef3 100644
 --- a/src/game/Opcodes.cpp
 +++ b/src/game/Opcodes.cpp
-@@ -764,7 +764,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
+@@ -752,7 +752,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
      /*0x2E4*/ { "SMSG_AREA_SPIRIT_HEALER_TIME",     STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
      /*0x2E5*/ { "CMSG_GM_UNTEACH",                  STATUS_NEVER,    &WorldSession::Handle_NULL                     },
      /*0x2E6*/ { "SMSG_WARDEN_DATA",                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
@@ -209,25 +153,13 @@ index 8bade56..4380df9 100644
      /*0x2EA*/ { "CMSG_PET_STOP_ATTACK",             STATUS_NEVER,    &WorldSession::Handle_NULL                     },
 diff --git a/src/game/WardenBase.cpp b/src/game/WardenBase.cpp
 new file mode 100644
-index 0000000..bc78986
+index 0000000..57a65a5
 --- /dev/null
 +++ b/src/game/WardenBase.cpp
-@@ -0,0 +1,225 @@
+@@ -0,0 +1,213 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#include "Common.h"
@@ -294,7 +226,7 @@ index 0000000..bc78986
 +
 +void WardenBase::SendModuleToClient()
 +{
-+    sLog.outDebug("Send module to client");
++    sLog.outDebug("WARDEN: Send module to client");
 +
 +    // Create packet structure
 +    WardenModuleTransfer pkt;
@@ -320,7 +252,7 @@ index 0000000..bc78986
 +
 +void WardenBase::RequestModule()
 +{
-+    sLog.outDebug("Request module");
++    sLog.outDebug("WARDEN: Request module");
 +
 +    // Create packet structure
 +    WardenModuleUse Request;
@@ -389,7 +321,7 @@ index 0000000..bc78986
 +    }
 +    else
 +    {
-+        sLog.outDebug("CHECKSUM IS VALID");
++        sLog.outDebug("WARDEN: CHECKSUM IS VALID");
 +        return true;
 +    }
 +}
@@ -409,7 +341,7 @@ index 0000000..bc78986
 +    m_Warden->DecryptData(const_cast<uint8*>(recv_data.contents()), recv_data.size());
 +    uint8 Opcode;
 +    recv_data >> Opcode;
-+    sLog.outDebug("Got packet, opcode %02X, size %u", Opcode, recv_data.size());
++    sLog.outDebug("WARDEN: Got packet, opcode %02X, size %u", Opcode, recv_data.size());
 +    recv_data.hexlike();
 +
 +    switch(Opcode)
@@ -424,14 +356,14 @@ index 0000000..bc78986
 +            m_Warden->HandleData(recv_data);
 +            break;
 +        case WARDEN_CMSG_MEM_CHECKS_RESULT:
-+            sLog.outDebug("NYI WARDEN_CMSG_MEM_CHECKS_RESULT received!");
++            sLog.outDebug("WARDEN: NYI WARDEN_CMSG_MEM_CHECKS_RESULT received!");
 +            break;
 +        case WARDEN_CMSG_HASH_RESULT:
 +            m_Warden->HandleHashResult(recv_data);
 +            m_Warden->InitializeModule();
 +            break;
 +        case WARDEN_CMSG_MODULE_FAILED:
-+            sLog.outDebug("NYI WARDEN_CMSG_MODULE_FAILED received!");
++            sLog.outDebug("WARDEN: NYI WARDEN_CMSG_MODULE_FAILED received!");
 +            break;
 +        default:
 +            sLog.outError("Got unknown warden opcode %02X of size %u.", Opcode, recv_data.size() - 1);
@@ -440,25 +372,13 @@ index 0000000..bc78986
 +}
 diff --git a/src/game/WardenBase.h b/src/game/WardenBase.h
 new file mode 100644
-index 0000000..e16636f
+index 0000000..8293237
 --- /dev/null
 +++ b/src/game/WardenBase.h
-@@ -0,0 +1,130 @@
+@@ -0,0 +1,118 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_BASE_H
@@ -576,25 +496,13 @@ index 0000000..e16636f
 +#endif
 diff --git a/src/game/WardenDataStorage.cpp b/src/game/WardenDataStorage.cpp
 new file mode 100644
-index 0000000..d00f8d4
+index 0000000..468731e
 --- /dev/null
 +++ b/src/game/WardenDataStorage.cpp
-@@ -0,0 +1,155 @@
+@@ -0,0 +1,143 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#include "Common.h"
@@ -737,25 +645,13 @@ index 0000000..d00f8d4
 +}
 diff --git a/src/game/WardenDataStorage.h b/src/game/WardenDataStorage.h
 new file mode 100644
-index 0000000..804ccb2
+index 0000000..674a03d
 --- /dev/null
 +++ b/src/game/WardenDataStorage.h
-@@ -0,0 +1,62 @@
+@@ -0,0 +1,50 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_DATA_STORAGE_H
@@ -805,25 +701,13 @@ index 0000000..804ccb2
 +#endif
 diff --git a/src/game/WardenMac.cpp b/src/game/WardenMac.cpp
 new file mode 100644
-index 0000000..cf748a9
+index 0000000..a616697
 --- /dev/null
 +++ b/src/game/WardenMac.cpp
-@@ -0,0 +1,278 @@
+@@ -0,0 +1,266 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#include "Auth/WardenKeyGeneration.h"
@@ -870,16 +754,16 @@ index 0000000..cf748a9
 +
 +    iCrypto.Init(InputKey);
 +    oCrypto.Init(OutputKey);
-+    sLog.outDebug("WARDEN Server side warden for client %u initializing...", pClient->GetAccountId());
-+    sLog.outDebug("WARDEN   C->S Key: %s", ByteArrayToHexStr(InputKey, 16).c_str());
-+    sLog.outDebug("WARDEN   S->C Key: %s", ByteArrayToHexStr(OutputKey, 16).c_str());
-+    sLog.outDebug("WARDEN   Seed: %s", ByteArrayToHexStr(Seed, 16).c_str());
-+    sLog.outDebug("WARDEN Loading Module...");
++    sLog.outDebug("WARDEN: Server side warden for client %u initializing...", pClient->GetAccountId());
++    sLog.outDebug("WARDEN:   C->S Key: %s", ByteArrayToHexStr(InputKey, 16).c_str());
++    sLog.outDebug("WARDEN:   S->C Key: %s", ByteArrayToHexStr(OutputKey, 16).c_str());
++    sLog.outDebug("WARDEN:   Seed: %s", ByteArrayToHexStr(Seed, 16).c_str());
++    sLog.outDebug("WARDEN: Loading Module...");
 +
 +    Module = GetModuleForClient(Client);
 +
-+    sLog.outDebug("WARDEN   Module Key: %s", ByteArrayToHexStr(Module->Key, 16).c_str());
-+    sLog.outDebug("WARDEN   Module ID: %s", ByteArrayToHexStr(Module->ID, 16).c_str());
++    sLog.outDebug("WARDEN:   Module Key: %s", ByteArrayToHexStr(Module->Key, 16).c_str());
++    sLog.outDebug("WARDEN:   Module ID: %s", ByteArrayToHexStr(Module->ID, 16).c_str());
 +    RequestModule();
 +}
 +
@@ -906,12 +790,12 @@ index 0000000..cf748a9
 +
 +void WardenMac::InitializeModule()
 +{
-+    sLog.outDebug("WARDEN Initialize module");
++    sLog.outDebug("WARDEN: Initialize module");
 +}
 +
 +void WardenMac::RequestHash()
 +{
-+    sLog.outDebug("WARDEN Request hash");
++    sLog.outDebug("WARDEN: Request hash");
 +
 +    // Create packet structure
 +    WardenHashRequest Request;
@@ -964,12 +848,12 @@ index 0000000..cf748a9
 +    // verify key not equal kick player
 +    if (memcmp(buff.contents() + 1, sha1.GetDigest(), 20) != 0)
 +    {
-+        sLog.outWarden("WARDEN Request hash reply: failed");
++        sLog.outWarden("Request hash reply: failed");
 +        Client->KickPlayer();
 +        return;
 +    }
 +
-+    sLog.outDebug("WARDEN Request hash reply: succeed");
++    sLog.outDebug("WARDEN: Request hash reply: succeed");
 +
 +    // client 7F96EEFDA5B63D20A4DF8E00CBF48304
 +    //const uint8 client_key[16] = { 0x7F, 0x96, 0xEE, 0xFD, 0xA5, 0xB6, 0x3D, 0x20, 0xA4, 0xDF, 0x8E, 0x00, 0xCB, 0xF4, 0x83, 0x04 };
@@ -991,7 +875,7 @@ index 0000000..cf748a9
 +
 +void WardenMac::RequestData()
 +{
-+    sLog.outDebug("WARDEN Request data");
++    sLog.outDebug("WARDEN: Request data");
 +
 +    ByteBuffer buff;
 +    buff << uint8(WARDEN_SMSG_CHEAT_CHECKS_REQUEST);
@@ -1015,7 +899,7 @@ index 0000000..cf748a9
 +
 +void WardenMac::HandleData(ByteBuffer &buff)
 +{
-+    sLog.outDebug("WARDEN Handle data");
++    sLog.outDebug("WARDEN: Handle data");
 +
 +    m_WardenDataSent = false;
 +    m_WardenKickTimer = 0;
@@ -1048,7 +932,7 @@ index 0000000..cf748a9
 +
 +    if (memcmp(sha1Hash, sha1.GetDigest(), 20))
 +    {
-+        sLog.outWarden("WARDEN Handle data failed: SHA1 hash is wrong!");
++        sLog.outWarden("Handle data failed: SHA1 hash is wrong!");
 +        found = true;
 +    }
 +
@@ -1063,7 +947,7 @@ index 0000000..cf748a9
 +
 +    if (memcmp(ourMD5Hash, theirsMD5Hash, 16))
 +    {
-+        sLog.outWarden("WARDEN Handle data failed: MD5 hash is wrong!");
++        sLog.outWarden("Handle data failed: MD5 hash is wrong!");
 +        found = true;
 +    }
 +
@@ -1089,25 +973,13 @@ index 0000000..cf748a9
 +}
 diff --git a/src/game/WardenMac.h b/src/game/WardenMac.h
 new file mode 100644
-index 0000000..b114425
+index 0000000..afed8b3
 --- /dev/null
 +++ b/src/game/WardenMac.h
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,32 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_MAC_H
@@ -1139,25 +1011,13 @@ index 0000000..b114425
 +#endif
 diff --git a/src/game/WardenModuleMac.h b/src/game/WardenModuleMac.h
 new file mode 100644
-index 0000000..75405d6
+index 0000000..33ef609
 --- /dev/null
 +++ b/src/game/WardenModuleMac.h
-@@ -0,0 +1,613 @@
+@@ -0,0 +1,601 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_MODULE_MAC_H
@@ -1758,25 +1618,13 @@ index 0000000..75405d6
 +#endif
 diff --git a/src/game/WardenModuleWin.h b/src/game/WardenModuleWin.h
 new file mode 100644
-index 0000000..4b33d0c
+index 0000000..d7ece10
 --- /dev/null
 +++ b/src/game/WardenModuleWin.h
-@@ -0,0 +1,1203 @@
+@@ -0,0 +1,1191 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_MODULE_WIN_H
@@ -2967,25 +2815,13 @@ index 0000000..4b33d0c
 +#endif
 diff --git a/src/game/WardenWin.cpp b/src/game/WardenWin.cpp
 new file mode 100644
-index 0000000..258325b
+index 0000000..654b275
 --- /dev/null
 +++ b/src/game/WardenWin.cpp
-@@ -0,0 +1,511 @@
+@@ -0,0 +1,499 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#include "Auth/Hmac.h"
@@ -3038,16 +2874,16 @@ index 0000000..258325b
 +
 +    iCrypto.Init(InputKey);
 +    oCrypto.Init(OutputKey);
-+    sLog.outDebug("WARDEN Server side warden for client %u initializing...", pClient->GetAccountId());
-+    sLog.outDebug("WARDEN   C->S Key: %s", ByteArrayToHexStr(InputKey, 16).c_str());
-+    sLog.outDebug("WARDEN   S->C Key: %s", ByteArrayToHexStr(OutputKey, 16).c_str());
-+    sLog.outDebug("WARDEN   Seed: %s", ByteArrayToHexStr(Seed, 16).c_str());
-+    sLog.outDebug("WARDEN Loading Module...");
++    sLog.outDebug("WARDEN: Server side warden for client %u initializing...", pClient->GetAccountId());
++    sLog.outDebug("WARDEN:   C->S Key: %s", ByteArrayToHexStr(InputKey, 16).c_str());
++    sLog.outDebug("WARDEN:   S->C Key: %s", ByteArrayToHexStr(OutputKey, 16).c_str());
++    sLog.outDebug("WARDEN:   Seed: %s", ByteArrayToHexStr(Seed, 16).c_str());
++    sLog.outDebug("WARDEN: Loading Module...");
 +
 +    Module = GetModuleForClient(Client);
 +
-+    sLog.outDebug("WARDEN   Module Key: %s", ByteArrayToHexStr(Module->Key, 16).c_str());
-+    sLog.outDebug("WARDEN   Module ID: %s", ByteArrayToHexStr(Module->ID, 16).c_str());
++    sLog.outDebug("WARDEN:   Module Key: %s", ByteArrayToHexStr(Module->Key, 16).c_str());
++    sLog.outDebug("WARDEN:   Module ID: %s", ByteArrayToHexStr(Module->ID, 16).c_str());
 +    RequestModule();
 +}
 +
@@ -3074,7 +2910,7 @@ index 0000000..258325b
 +
 +void WardenWin::InitializeModule()
 +{
-+    sLog.outDebug("WARDEN Initialize module");
++    sLog.outDebug("WARDEN: Initialize module");
 +
 +    // Create packet structure
 +    WardenInitModuleRequest Request;
@@ -3118,7 +2954,7 @@ index 0000000..258325b
 +
 +void WardenWin::RequestHash()
 +{
-+    sLog.outDebug("WARDEN Request hash");
++    sLog.outDebug("WARDEN: Request hash");
 +
 +    // Create packet structure
 +    WardenHashRequest Request;
@@ -3142,12 +2978,12 @@ index 0000000..258325b
 +    // verify key not equal kick player
 +    if (memcmp(buff.contents() + 1, validHash, sizeof(validHash)) != 0)
 +    {
-+        sLog.outWarden("WARDEN Request hash reply: failed");
++        sLog.outWarden("Request hash reply: failed");
 +        Client->KickPlayer();
 +        return;
 +    }
 +
-+    sLog.outDebug("WARDEN Request hash reply: succeed");
++    sLog.outDebug("WARDEN: Request hash reply: succeed");
 +
 +    // client 7F96EEFDA5B63D20A4DF8E00CBF48304
 +    const uint8 client_key[16] = { 0x7F, 0x96, 0xEE, 0xFD, 0xA5, 0xB6, 0x3D, 0x20, 0xA4, 0xDF, 0x8E, 0x00, 0xCB, 0xF4, 0x83, 0x04 };
@@ -3169,7 +3005,7 @@ index 0000000..258325b
 +
 +void WardenWin::RequestData()
 +{
-+    sLog.outDebug("WARDEN Request data");
++    sLog.outDebug("WARDEN: Request data");
 +
 +    if (MemCheck.empty())
 +        MemCheck.assign(WardenDataStorage.MemCheckIds.begin(), WardenDataStorage.MemCheckIds.end());
@@ -3301,7 +3137,7 @@ index 0000000..258325b
 +
 +void WardenWin::HandleData(ByteBuffer &buff)
 +{
-+    sLog.outDebug("WARDEN Handle data");
++    sLog.outDebug("WARDEN: Handle data");
 +
 +    m_WardenDataSent = false;
 +    m_WardenKickTimer = 0;
@@ -3327,7 +3163,7 @@ index 0000000..258325b
 +        // TODO: test it.
 +        if (result == 0x00)
 +        {
-+            sLog.outWarden("WARDEN TIMING CHECK FAIL result 0x00");
++            sLog.outWarden("TIMING CHECK FAIL result 0x00");
 +            found = true;
 +        }
 +
@@ -3337,10 +3173,10 @@ index 0000000..258325b
 +        uint32 ticksNow = getMSTime();
 +        uint32 ourTicks = newClientTicks + (ticksNow - ServerTicks);
 +
-+        sLog.outDebug("WARDEN ServerTicks %u", ticksNow);         // now
-+        sLog.outDebug("WARDEN RequestTicks %u", ServerTicks);     // at request
-+        sLog.outDebug("WARDEN Ticks %u", newClientTicks);         // at response
-+        sLog.outDebug("WARDEN Ticks diff %u", ourTicks - newClientTicks);
++        sLog.outDebug("WARDEN: ServerTicks %u", ticksNow);         // now
++        sLog.outDebug("WARDEN: RequestTicks %u", ServerTicks);     // at request
++        sLog.outDebug("WARDEN: Ticks %u", newClientTicks);         // at response
++        sLog.outDebug("WARDEN: Ticks diff %u", ourTicks - newClientTicks);
 +    }
 +
 +    WardenDataResult *rs;
@@ -3362,7 +3198,7 @@ index 0000000..258325b
 +
 +                if (Mem_Result != 0)
 +                {
-+                    sLog.outDebug("RESULT MEM_CHECK not 0x00 at this stage, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outDebug("WARDEN: RESULT MEM_CHECK not 0x00 at this stage, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    continue;
 +                }
 +
@@ -3375,7 +3211,7 @@ index 0000000..258325b
 +                }
 +
 +                buff.rpos(buff.rpos() + rd->Length);
-+                sLog.outDebug("RESULT MEM_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                sLog.outDebug("WARDEN: RESULT MEM_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                break;
 +            }
 +            case PAGE_CHECK_A:
@@ -3387,11 +3223,11 @@ index 0000000..258325b
 +                if (memcmp(buff.contents() + buff.rpos(), &byte, sizeof(uint8)) != 0)
 +                {
 +                    if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
-+                        sLog.outWarden("WARDEN PAGE_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                        sLog.outWarden("PAGE_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    if (type == MODULE_CHECK)
-+                        sLog.outWarden("WARDEN MODULE_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                        sLog.outWarden("MODULE_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    if (type == DRIVER_CHECK)
-+                        sLog.outWarden("WARDEN DRIVER_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                        sLog.outWarden("DRIVER_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    found = true;
 +                    buff.rpos(buff.rpos() + 1);
 +                    continue;
@@ -3399,11 +3235,11 @@ index 0000000..258325b
 +
 +                buff.rpos(buff.rpos() + 1);
 +                if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
-+                    sLog.outDebug("WARDEN PAGE_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outDebug("WARDEN: PAGE_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                else if (type == MODULE_CHECK)
-+                    sLog.outDebug("WARDEN MODULE_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outDebug("WARDEN: MODULE_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                else if (type == DRIVER_CHECK)
-+                    sLog.outDebug("WARDEN DRIVER_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outDebug("WARDEN: DRIVER_CHECK passed CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                break;
 +            }
 +            case LUA_STR_CHECK:
@@ -3413,7 +3249,7 @@ index 0000000..258325b
 +
 +                if (Lua_Result != 0)
 +                {
-+                    sLog.outWarden("WARDEN LUA_STR_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outWarden("LUA_STR_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    found = true;
 +                    continue;
 +                }
@@ -3426,11 +3262,11 @@ index 0000000..258325b
 +                    char *str = new char[luaStrLen + 1];
 +                    memset(str, 0, luaStrLen + 1);
 +                    memcpy(str, buff.contents() + buff.rpos(), luaStrLen);
-+                    sLog.outDebug("WARDEN Lua string: %s", str);
++                    sLog.outDebug("WARDEN: Lua string: %s", str);
 +                    delete[] str;
 +                }
 +                buff.rpos(buff.rpos() + luaStrLen);         // skip string
-+                sLog.outDebug("WARDEN LUA_STR_CHECK passed, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                sLog.outDebug("WARDEN: LUA_STR_CHECK passed, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                break;
 +            }
 +            case MPQ_CHECK:
@@ -3440,21 +3276,21 @@ index 0000000..258325b
 +
 +                if (Mpq_Result != 0)
 +                {
-+                    sLog.outWarden("WARDEN MPQ_CHECK not 0x00 account id %u", Client->GetAccountId());
++                    sLog.outWarden("MPQ_CHECK not 0x00 account id %u", Client->GetAccountId());
 +                    found = true;
 +                    continue;
 +                }
 +
 +                if (memcmp(buff.contents() + buff.rpos(), rs->res.AsByteArray(0), 20) != 0) // SHA1
 +                {
-+                    sLog.outWarden("WARDEN MPQ_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                    sLog.outWarden("MPQ_CHECK fail, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                    found = true;
 +                    buff.rpos(buff.rpos() + 20);            // 20 bytes SHA1
 +                    continue;
 +                }
 +
 +                buff.rpos(buff.rpos() + 20);                // 20 bytes SHA1
-+                sLog.outDebug("WARDEN MPQ_CHECK passed, CheckId %u account Id %u", rd->id, Client->GetAccountId());
++                sLog.outDebug("WARDEN: MPQ_CHECK passed, CheckId %u account Id %u", rd->id, Client->GetAccountId());
 +                break;
 +            }
 +            default:                                        // should never happens
@@ -3484,25 +3320,13 @@ index 0000000..258325b
 +}
 diff --git a/src/game/WardenWin.h b/src/game/WardenWin.h
 new file mode 100644
-index 0000000..25eacd8
+index 0000000..f6d828f
 --- /dev/null
 +++ b/src/game/WardenWin.h
-@@ -0,0 +1,104 @@
+@@ -0,0 +1,92 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or (at your
-+ * option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program. If not, see <http://www.gnu.org/licenses/>.
++ * Copyright (C) 2013  BlizzLikeGroup
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
 + */
 +
 +#ifndef _WARDEN_WIN_H
@@ -3593,10 +3417,10 @@ index 0000000..25eacd8
 +
 +#endif
 diff --git a/src/game/World.cpp b/src/game/World.cpp
-index d14320f..ff3a891 100644
+index b3fbd50..c111cd3 100644
 --- a/src/game/World.cpp
 +++ b/src/game/World.cpp
-@@ -60,6 +60,7 @@
+@@ -49,6 +49,7 @@
  #include "CreatureEventAIMgr.h"
  #include "ScriptMgr.h"
  #include "ProgressBar.h"
@@ -3604,11 +3428,10 @@ index d14320f..ff3a891 100644
  
  INSTANTIATE_SINGLETON_1(World);
  
-@@ -1102,6 +1103,14 @@ void World::LoadConfigSettings(bool reload)
-     m_configs[CONFIG_CHATLOG_PUBLIC] = sConfig.GetBoolDefault("ChatLogs.Public", false);
+@@ -1095,6 +1096,14 @@ void World::LoadConfigSettings(bool reload)
      m_configs[CONFIG_CHATLOG_ADDON] = sConfig.GetBoolDefault("ChatLogs.Addon", false);
      m_configs[CONFIG_CHATLOG_BGROUND] = sConfig.GetBoolDefault("ChatLogs.BattleGround", false);
-+    
+ 
 +    // warden
 +    m_configs[CONFIG_WARDEN_ENABLED] = sConfig.GetBoolDefault("Warden.Enabled", true);
 +    m_configs[CONFIG_WARDEN_ACTION] = sConfig.GetIntDefault("Warden.Action", 1);
@@ -3616,10 +3439,11 @@ index d14320f..ff3a891 100644
 +    m_configs[CONFIG_WARDEN_NUM_CHECKS] = sConfig.GetIntDefault("Warden.NumChecks", 3);
 +    m_configs[CONFIG_WARDEN_CLIENT_RESPONSE_DELAY] = sConfig.GetIntDefault("Warden.ClientResponseDelay", 600);	
 +    m_configs[CONFIG_WARDEN_CLIENT_CHECK_HOLDOFF] = sConfig.GetIntDefault("Warden.ClientCheckHoldOff", 5);
- }
- 
- // Initialize the World
-@@ -1494,6 +1503,10 @@ void World::SetInitialWorldSettings()
++
+     // mmaps
+     m_configs[CONFIG_BOOL_MMAP_ENABLED] = sConfig.GetBoolDefault("mmap.enable", true);
+     std::string ignoreMMapIds = sConfig.GetStringDefault("mmap.ignoreMapIds", "");
+@@ -1495,6 +1504,10 @@ void World::SetInitialWorldSettings()
      uint32 nextGameEvent = gameeventmgr.Initialize();
      m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
  
@@ -3631,10 +3455,10 @@ index d14320f..ff3a891 100644
      sLog.outString("Starting BattleGround System");
      sBattleGroundMgr.CreateInitialBattleGrounds();
 diff --git a/src/game/World.h b/src/game/World.h
-index 7ad3d80..2bd700b 100644
+index 12a1cdb..c85cf32 100644
 --- a/src/game/World.h
 +++ b/src/game/World.h
-@@ -251,6 +251,12 @@ enum WorldConfigs
+@@ -239,6 +239,12 @@ enum WorldConfigs
      CONFIG_AUTOBROADCAST_TIMER,
      CONFIG_AUTOBROADCAST_ENABLED,
      CONFIG_AUTOBROADCAST_CENTER,
@@ -3644,14 +3468,14 @@ index 7ad3d80..2bd700b 100644
 +    CONFIG_WARDEN_NUM_CHECKS,
 +    CONFIG_WARDEN_CLIENT_RESPONSE_DELAY,	
 +    CONFIG_WARDEN_CLIENT_CHECK_HOLDOFF,
+     CONFIG_BOOL_MMAP_ENABLED,
      CONFIG_VALUE_COUNT
  };
- 
 diff --git a/src/game/WorldSession.cpp b/src/game/WorldSession.cpp
-index bf7df10..f6ee1bb 100644
+index c40a18c..be24241 100644
 --- a/src/game/WorldSession.cpp
 +++ b/src/game/WorldSession.cpp
-@@ -34,6 +34,8 @@
+@@ -22,6 +22,8 @@
  #include "Chat.h"
  #include "SocialMgr.h"
  #include "ScriptMgr.h"
@@ -3660,7 +3484,7 @@ index bf7df10..f6ee1bb 100644
  
  // WorldSession constructor
  WorldSession::WorldSession(uint32 id, WorldSocket *sock, uint32 sec, uint8 expansion, time_t mute_time, LocaleConstant locale) :
-@@ -41,7 +43,7 @@ LookingForGroup_auto_join(false), LookingForGroup_auto_add(false), m_muteTime(mu
+@@ -29,7 +31,7 @@ LookingForGroup_auto_join(false), LookingForGroup_auto_add(false), m_muteTime(mu
  _player(NULL), m_Socket(sock),_security(sec), _accountId(id), m_expansion(expansion),
  m_sessionDbcLocale(sWorld.GetAvailableDbcLocale(locale)), m_sessionDbLocaleIndex(objmgr.GetIndexForLocale(locale)),
  _logoutTime(0), m_inQueue(false), m_playerLoading(false), m_playerLogout(false), m_playerRecentlyLogout(false), m_playerSave(false),
@@ -3669,7 +3493,7 @@ index bf7df10..f6ee1bb 100644
  {
      if (sock)
      {
-@@ -67,6 +69,9 @@ WorldSession::~WorldSession()
+@@ -55,6 +57,9 @@ WorldSession::~WorldSession()
          m_Socket = NULL;
      }
  
@@ -3679,7 +3503,7 @@ index bf7df10..f6ee1bb 100644
      // empty incoming packet queue
      WorldPacket* packet;
      while (_recvQueue.next(packet))
-@@ -247,6 +252,9 @@ bool WorldSession::Update(uint32 diff)
+@@ -235,6 +240,9 @@ bool WorldSession::Update(uint32 diff)
          delete packet;
      }
      
@@ -3689,7 +3513,7 @@ index bf7df10..f6ee1bb 100644
      ///- If necessary, log the player out
      time_t currTime = time(NULL);
      if (ShouldLogOut(currTime) && !m_playerLoading)
-@@ -547,6 +555,16 @@ void WorldSession::SendAuthWaitQue(uint32 position)
+@@ -535,6 +543,16 @@ void WorldSession::SendAuthWaitQue(uint32 position)
      }
  }
  
@@ -3707,10 +3531,10 @@ index bf7df10..f6ee1bb 100644
  {
      // need prevent do internal far teleports in handlers because some handlers do lot steps
 diff --git a/src/game/WorldSession.h b/src/game/WorldSession.h
-index 6e862ea..3ffccba 100644
+index 0e60bb9..b76b0cf 100644
 --- a/src/game/WorldSession.h
 +++ b/src/game/WorldSession.h
-@@ -21,6 +21,7 @@
+@@ -9,6 +9,7 @@
  #include "Common.h"
  #include "QueryResult.h"
  #include "World.h"
@@ -3718,8 +3542,8 @@ index 6e862ea..3ffccba 100644
  
  struct ItemPrototype;
  struct AuctionEntry;
-@@ -92,6 +93,8 @@ class WorldSession
-         void SetPlayer(Player *plr) { _player = plr; }
+@@ -80,6 +81,8 @@ class WorldSession
+         void SetPlayer(Player* plr) { _player = plr; }
          uint8 Expansion() const { return m_expansion; }
  
 +        void InitWarden(BigNumber *K, std::string os);
@@ -3727,7 +3551,7 @@ index 6e862ea..3ffccba 100644
          // Session in auth.queue currently
          void SetInQueue(bool state) { m_inQueue = state; }
  
-@@ -664,6 +667,9 @@ class WorldSession
+@@ -652,6 +655,9 @@ class WorldSession
          uint32 _accountId;
          uint8 m_expansion;
  
@@ -3738,10 +3562,10 @@ index 6e862ea..3ffccba 100644
          bool m_inQueue;                                     // session wait in auth.queue
          bool m_playerLoading;                               // code processed in LoginPlayer
 diff --git a/src/game/WorldSocket.cpp b/src/game/WorldSocket.cpp
-index c1e5eaf..04ceddd 100644
+index 9b54377..3b4afe2 100644
 --- a/src/game/WorldSocket.cpp
 +++ b/src/game/WorldSocket.cpp
-@@ -744,7 +744,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -732,7 +732,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
                                  "s, "                       //5
                                  "expansion, "               //6
                                  "mutetime, "                //7
@@ -3751,7 +3575,7 @@ index c1e5eaf..04ceddd 100644
                                  "FROM account "
                                  "WHERE username = '%s'",
                                  safe_account.c_str ());
-@@ -803,6 +804,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -791,6 +792,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
      K.SetHexStr (fields[1].GetString ());
  
      time_t mutetime = time_t (fields[7].GetUInt64 ());
@@ -3759,7 +3583,7 @@ index c1e5eaf..04ceddd 100644
  
      locale = LocaleConstant (fields[8].GetUInt8 ());
      if (locale >= MAX_LOCALE)
-@@ -906,6 +908,10 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -894,6 +896,10 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
      m_Crypt.SetKey(&K);
      m_Crypt.Init();
  
@@ -3771,10 +3595,10 @@ index c1e5eaf..04ceddd 100644
      uint32 sleepTime = sWorld.getConfig(CONFIG_SESSION_ADD_DELAY);
      ACE_OS::sleep(ACE_Time_Value (0, sleepTime));
 diff --git a/src/shared/Auth/BigNumber.cpp b/src/shared/Auth/BigNumber.cpp
-index fc87c09..468d97c 100644
+index 23f43e8..08cc530 100644
 --- a/src/shared/Auth/BigNumber.cpp
 +++ b/src/shared/Auth/BigNumber.cpp
-@@ -163,7 +163,7 @@ bool BigNumber::isZero() const
+@@ -151,7 +151,7 @@ bool BigNumber::isZero() const
      return BN_is_zero(_bn)!=0;
  }
  
@@ -3783,7 +3607,7 @@ index fc87c09..468d97c 100644
  {
      int length = (minSize >= GetNumBytes()) ? minSize : GetNumBytes();
  
-@@ -180,7 +180,8 @@ uint8 *BigNumber::AsByteArray(int minSize)
+@@ -168,7 +168,8 @@ uint8 *BigNumber::AsByteArray(int minSize)
  
      BN_bn2bin(_bn, (unsigned char *)_array);
  
@@ -3794,10 +3618,10 @@ index fc87c09..468d97c 100644
      return _array;
  }
 diff --git a/src/shared/Auth/BigNumber.h b/src/shared/Auth/BigNumber.h
-index 0ef834e..bef2124 100644
+index 550b6c4..9af5da8 100644
 --- a/src/shared/Auth/BigNumber.h
 +++ b/src/shared/Auth/BigNumber.h
-@@ -81,7 +81,7 @@ class BigNumber
+@@ -69,7 +69,7 @@ class BigNumber
          struct bignum_st *BN() { return _bn; }
  
          uint32 AsDword();
@@ -3807,10 +3631,10 @@ index 0ef834e..bef2124 100644
          std::vector<uint8> AsByteVector();
  
 diff --git a/src/shared/Auth/Hmac.cpp b/src/shared/Auth/Hmac.cpp
-index 8558324..92c384a 100644
+index f97e37e..0094509 100644
 --- a/src/shared/Auth/Hmac.cpp
 +++ b/src/shared/Auth/Hmac.cpp
-@@ -26,6 +26,15 @@ HmacHash::HmacHash()
+@@ -14,6 +14,15 @@ HmacHash::HmacHash()
      HMAC_Init_ex(&m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
  }
  
@@ -3826,7 +3650,7 @@ index 8558324..92c384a 100644
  HmacHash::~HmacHash()
  {
      memset(&m_key, 0x00, SEED_KEY_SIZE);
-@@ -42,6 +51,11 @@ void HmacHash::UpdateData(const uint8 *data, int length)
+@@ -30,6 +39,11 @@ void HmacHash::UpdateData(const uint8 *data, int length)
      HMAC_Update(&m_ctx, data, length);
  }
  
@@ -3838,17 +3662,17 @@ index 8558324..92c384a 100644
  void HmacHash::Initialize()
  {
      HMAC_Init_ex(&m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
-@@ -51,4 +65,5 @@ void HmacHash::Finalize()
+@@ -39,4 +53,5 @@ void HmacHash::Finalize()
  {
      uint32 length = 0;
      HMAC_Final(&m_ctx, m_digest, &length);
 +    ASSERT(length == SHA_DIGEST_LENGTH);
  }
 diff --git a/src/shared/Auth/Hmac.h b/src/shared/Auth/Hmac.h
-index f603bbc..c1b21e9 100644
+index d959ad5..91ac610 100644
 --- a/src/shared/Auth/Hmac.h
 +++ b/src/shared/Auth/Hmac.h
-@@ -30,9 +30,11 @@ class HmacHash
+@@ -18,9 +18,11 @@ class HmacHash
  {
      public:
          HmacHash();
@@ -3862,13 +3686,13 @@ index f603bbc..c1b21e9 100644
          uint8 *GetDigest() { return m_digest; };
 diff --git a/src/shared/Auth/WardenKeyGeneration.h b/src/shared/Auth/WardenKeyGeneration.h
 new file mode 100644
-index 0000000..1c4e843
+index 0000000..6953317
 --- /dev/null
 +++ b/src/shared/Auth/WardenKeyGeneration.h
 @@ -0,0 +1,72 @@
 +/*
-+ * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
-+ * Please, read the credits file.
++ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
++ * Please, look at the CREDITS.md file.
 + * This program is free software; you can redistribute it and/or modify it
 + * under the terms of the GNU General Public License as published by the
 + * Free Software Foundation; either version 2 of the License, or (at your
@@ -3939,10 +3763,10 @@ index 0000000..1c4e843
 +
 +#endif
 diff --git a/src/shared/Log.cpp b/src/shared/Log.cpp
-index 9b1473d..d0b214a 100644
+index 2d03f96..725788c 100644
 --- a/src/shared/Log.cpp
 +++ b/src/shared/Log.cpp
-@@ -29,7 +29,7 @@ INSTANTIATE_SINGLETON_1(Log);
+@@ -17,7 +17,7 @@ INSTANTIATE_SINGLETON_1(Log);
  Log::Log() :
      raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL),
      dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), m_gmlog_per_account(false),
@@ -3951,7 +3775,7 @@ index 9b1473d..d0b214a 100644
  {
      Initialize();
  }
-@@ -63,6 +63,10 @@ Log::~Log()
+@@ -51,6 +51,10 @@ Log::~Log()
      if (arenaLogFile != NULL)
          fclose(arenaLogFile);
      arenaLogFile = NULL;
@@ -3962,7 +3786,7 @@ index 9b1473d..d0b214a 100644
  }
  
  void Log::SetLogLevel(char *Level)
-@@ -154,6 +158,7 @@ void Log::Initialize()
+@@ -142,6 +146,7 @@ void Log::Initialize()
      raLogfile = openLogFile("RaLogFile",NULL,"a");
      chatLogfile = openLogFile("ChatLogFile","ChatLogTimestamp","a");
      arenaLogFile = openLogFile("ArenaLogFile",NULL,"a");
@@ -3970,7 +3794,7 @@ index 9b1473d..d0b214a 100644
  
      // Main log file settings
      m_logLevel     = sConfig.GetIntDefault("LogLevel", LOGL_NORMAL);
-@@ -918,3 +923,26 @@ void Log::outChat(const char * str, ...)
+@@ -906,3 +911,26 @@ void Log::outChat(const char * str, ...)
      fflush(stdout);
  }
  
@@ -3998,10 +3822,10 @@ index 9b1473d..d0b214a 100644
 +    fflush(stdout);
 +}
 diff --git a/src/shared/Log.h b/src/shared/Log.h
-index 3a91e98..8da71cb 100644
+index 45fb9dc..dfae96e 100644
 --- a/src/shared/Log.h
 +++ b/src/shared/Log.h
-@@ -107,6 +107,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
+@@ -95,6 +95,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
          void outCommand( uint32 account, const char * str, ...) ATTR_PRINTF(3,4);
          void outRemote( const char * str, ... )                 ATTR_PRINTF(2,3);
          void outChat( const char * str, ... )                   ATTR_PRINTF(2,3);
@@ -4009,7 +3833,7 @@ index 3a91e98..8da71cb 100644
          void outArena( const char * str, ... )                  ATTR_PRINTF(2,3);
          void outCharDump( const char * str, uint32 account_id, uint32 guid, const char * name );
  
-@@ -137,6 +138,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
+@@ -125,6 +126,7 @@ class Log : public BlizzLike::Singleton<Log, BlizzLike::ClassLevelLockable<Log,
          FILE* dberLogfile;
          FILE* chatLogfile;
          FILE* arenaLogFile;
@@ -4018,10 +3842,10 @@ index 3a91e98..8da71cb 100644
          // cache values for after initilization use (like gm log per account case)
          std::string m_logsDir;
 diff --git a/src/shared/Util.cpp b/src/shared/Util.cpp
-index 8f723b3..8d291bc 100644
+index e8972e9..aa078bb 100644
 --- a/src/shared/Util.cpp
 +++ b/src/shared/Util.cpp
-@@ -472,3 +472,15 @@ void hexEncodeByteArray(uint8* bytes, uint32 arrayLen, std::string& result)
+@@ -469,3 +469,15 @@ void hexEncodeByteArray(uint8* bytes, uint32 arrayLen, std::string& result)
      result = ss.str();
  }
  
@@ -4038,10 +3862,10 @@ index 8f723b3..8d291bc 100644
 +    return ss.str();
 +}
 diff --git a/src/shared/Util.h b/src/shared/Util.h
-index d7b7ad2..c385418 100644
+index e937a1b..381516d 100644
 --- a/src/shared/Util.h
 +++ b/src/shared/Util.h
-@@ -292,6 +292,7 @@ bool utf8ToConsole(const std::string& utf8str, std::string& conStr);
+@@ -280,6 +280,7 @@ bool utf8ToConsole(const std::string& utf8str, std::string& conStr);
  bool consoleToUtf8(const std::string& conStr,std::string& utf8str);
  bool Utf8FitTo(const std::string& str, std::wstring search);
  void hexEncodeByteArray(uint8* bytes, uint32 arrayLen, std::string& result);
@@ -4049,3 +3873,59 @@ index d7b7ad2..c385418 100644
  
  #if PLATFORM == PLATFORM_WINDOWS
  #define UTF8PRINTF(OUT,FRM,RESERR)                      \
+diff --git a/src/worldserver/worldserver.conf.dist b/src/worldserver/worldserver.conf.dist
+index e89f3d3..8f68633 100644
+--- a/src/worldserver/worldserver.conf.dist
++++ b/src/worldserver/worldserver.conf.dist
+@@ -2059,3 +2059,51 @@ Die.Command.Mode = 1
+ AutoBroadcast.On = 0
+ AutoBroadcast.Center = 0
+ AutoBroadcast.Timer = 60000
++
++###############################################################################
++# WARDEN SETTINGS
++#
++#    Warden.Enabled
++#        Enable Warden anticheat system
++#        Default: 1 (Enabled)
++#                 0 (Disabled)
++#
++#    Warden.Action
++#        Action on failed check
++#        Default: 1 (Kick)
++#                 2 (Ban)
++#                 0 (Log)
++#
++#    Warden.BanDuration
++#        Time (in seconds) an account will be banned.
++#        Default: 86400 - (24 hours)
++#
++#    Warden.NumChecks
++#        Number of Warden checks that are sent to the client each cycle.
++#        Default: 3 - (Enabled)
++#                 0 - (Disabled)
++#
++#    Warden.ClientResponseDelay
++#        Time (in seconds) before client is getting disconnecting for not responding.
++#        Default: 600 - (600 Seconds)
++#                 0 - (Disabled, client won't be kicked)
++#
++#    Warden.ClientCheckHoldOff
++#        Time (in seconds) to wait before sending the next check request to the client.
++#        A low number increases traffic and load on client and server side.
++#        Default: 5 - (5 Seconds)
++#
++#    Warden.LogFile
++#        Log file of Warden Fail
++#        Default: "warden.log"
++#                 "" - Empty name for disable
++#
++###############################################################################
++
++Warden.Enabled = 1
++Warden.Action = 1
++Warden.BanDuration = 86400
++Warden.NumChecks = 3
++Warden.ClientResponseDelay = 600
++Warden.ClientCheckHoldOff = 5
++Warden.LogFile = "warden.log"

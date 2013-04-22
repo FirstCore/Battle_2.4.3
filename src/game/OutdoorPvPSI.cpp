@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "OutdoorPvPSI.h"
@@ -40,7 +28,7 @@ void OutdoorPvPSI::FillInitialWorldStates(WorldPacket &data)
     data << SI_SILITHYST_MAX << SI_MAX_RESOURCES;
 }
 
-void OutdoorPvPSI::SendRemoveWorldStates(Player *plr)
+void OutdoorPvPSI::SendRemoveWorldStates(Player* plr)
 {
     plr->SendUpdateWorldState(SI_GATHERED_A,0);
     plr->SendUpdateWorldState(SI_GATHERED_H,0);
@@ -66,21 +54,21 @@ bool OutdoorPvPSI::Update(uint32 /*diff*/)
     return false;
 }
 
-void OutdoorPvPSI::HandlePlayerEnterZone(Player * plr, uint32 zone)
+void OutdoorPvPSI::HandlePlayerEnterZone(Player* plr, uint32 zone)
 {
     if (plr->GetTeam() == m_LastController)
         plr->CastSpell(plr,SI_CENARION_FAVOR,true);
     OutdoorPvP::HandlePlayerEnterZone(plr,zone);
 }
 
-void OutdoorPvPSI::HandlePlayerLeaveZone(Player * plr, uint32 zone)
+void OutdoorPvPSI::HandlePlayerLeaveZone(Player* plr, uint32 zone)
 {
     // remove buffs
     plr->RemoveAurasDueToSpell(SI_CENARION_FAVOR);
     OutdoorPvP::HandlePlayerLeaveZone(plr, zone);
 }
 
-bool OutdoorPvPSI::HandleAreaTrigger(Player *plr, uint32 trigger)
+bool OutdoorPvPSI::HandleAreaTrigger(Player* plr, uint32 trigger)
 {
     switch (trigger)
     {
@@ -138,7 +126,7 @@ bool OutdoorPvPSI::HandleAreaTrigger(Player *plr, uint32 trigger)
     return false;
 }
 
-bool OutdoorPvPSI::HandleDropFlag(Player *plr, uint32 spellId)
+bool OutdoorPvPSI::HandleDropFlag(Player* plr, uint32 spellId)
 {
     if (spellId == SI_SILITHYST_FLAG)
     {
@@ -154,7 +142,7 @@ bool OutdoorPvPSI::HandleDropFlag(Player *plr, uint32 spellId)
                     if (plr->GetDistance(atEntry->x,atEntry->y,atEntry->z) > 5.0f + atEntry->radius)
                     {
                         // he dropped it further, summon mound
-                        GameObject * go = new GameObject;
+                        GameObject* go = new GameObject;
                         Map * map = plr->GetMap();
                         if (!map)
                         {
@@ -184,7 +172,7 @@ bool OutdoorPvPSI::HandleDropFlag(Player *plr, uint32 spellId)
                     if (plr->GetDistance(atEntry->x,atEntry->y,atEntry->z) > 5.0f + atEntry->radius)
                     {
                         // he dropped it further, summon mound
-                        GameObject * go = new GameObject;
+                        GameObject* go = new GameObject;
                         Map * map = plr->GetMap();
                         if (!map)
                         {
@@ -210,7 +198,7 @@ bool OutdoorPvPSI::HandleDropFlag(Player *plr, uint32 spellId)
     return false;
 }
 
-bool OutdoorPvPSI::HandleCustomSpell(Player *plr, uint32 spellId, GameObject *go)
+bool OutdoorPvPSI::HandleCustomSpell(Player* plr, uint32 spellId, GameObject* go)
 {
     if (!go || spellId != SI_SILITHYST_FLAG_GO_SPELL)
         return false;

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "DatabaseEnv.h"
@@ -469,6 +457,50 @@ bool Database::DirectPExecute(const char * format,...)
     {
         sLog.outError("SQL Query truncated (and not execute) for format: %s",format);
         return false;
+    }
+
+    return DirectExecute(szQuery);
+}
+
+bool Database::DirectPExecuteLog(const char * format,...)
+{
+    if (!format)
+        return false;
+
+    va_list ap;
+    char szQuery [MAX_QUERY_LEN];
+    va_start(ap, format);
+    int res = vsnprintf(szQuery, MAX_QUERY_LEN, format, ap);
+    va_end(ap);
+
+    if (res==-1)
+    {
+        sLog.outError("SQL Query truncated (and not execute) for format: %s",format);
+        return false;
+    }
+
+    if (m_logSQL)
+    {
+        time_t curr;
+        tm local;
+        time(&curr);                                        // get current time_t value
+        local=*(localtime(&curr));                          // dereference and assign
+        char fName[128];
+        sprintf(fName, "%04d-%02d-%02d_logSQL.sql", local.tm_year+1900, local.tm_mon+1, local.tm_mday);
+
+        FILE* log_file;
+        std::string logsDir_fname = m_logsDir+fName;
+        log_file = fopen(logsDir_fname.c_str(), "a");
+        if (log_file)
+        {
+            fprintf(log_file, "%s;\n", szQuery);
+            fclose(log_file);
+        }
+        else
+        {
+            // The file could not be opened
+            sLog.outError("SQL-Logging is disabled - Log file for the SQL commands could not be openend: %s",fName);
+        }
     }
 
     return DirectExecute(szQuery);

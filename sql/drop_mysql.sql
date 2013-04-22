@@ -1,7 +1,6 @@
--- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
--- ---------------------------------------------------
--- BlizzLike Script to Remove MySQL User and Tables --
--- ---------------------------------------------------
+-- ----------------------------------------------------
+-- BlizzLikeCore Script to remove MySQL user and tables
+-- ----------------------------------------------------
 
 REVOKE ALL PRIVILEGES ON * . * FROM 'blizzlike'@'localhost';
 

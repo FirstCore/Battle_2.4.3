@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -54,7 +42,7 @@ struct mob_shattered_rumblerAI : public ScriptedAI
 {
     bool Spawn;
 
-    mob_shattered_rumblerAI(Creature *c) : ScriptedAI(c) {}
+    mob_shattered_rumblerAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -106,7 +94,7 @@ enum eLump
 
 struct mob_lumpAI : public ScriptedAI
 {
-    mob_lumpAI(Creature *c) : ScriptedAI(c)
+    mob_lumpAI(Creature* c) : ScriptedAI(c)
     {
         bReset = false;
     }
@@ -196,7 +184,7 @@ CreatureAI* GetAI_mob_lump(Creature* pCreature)
     return new mob_lumpAI(pCreature);
 }
 
-bool GossipHello_mob_lump(Player *player, Creature* pCreature)
+bool GossipHello_mob_lump(Player* player, Creature* pCreature)
 {
     if (player->GetQuestStatus(9918) == QUEST_STATUS_INCOMPLETE)
         player->ADD_GOSSIP_ITEM(0, GOSSIP_HL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
@@ -206,7 +194,7 @@ bool GossipHello_mob_lump(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_mob_lump(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_mob_lump(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -236,7 +224,7 @@ bool GossipSelect_mob_lump(Player *player, Creature* pCreature, uint32 /*sender*
 
 struct mob_sunspring_villagerAI : public ScriptedAI
 {
-    mob_sunspring_villagerAI(Creature *c) : ScriptedAI(c) {}
+    mob_sunspring_villagerAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {
@@ -275,7 +263,7 @@ CreatureAI* GetAI_mob_sunspring_villager(Creature* pCreature)
 #define GOSSIP_SATS5 "Ok."
 #define GOSSIP_SATS6 "[PH] Story done"
 
-bool GossipHello_npc_altruis_the_sufferer(Player *player, Creature* pCreature)
+bool GossipHello_npc_altruis_the_sufferer(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -297,7 +285,7 @@ bool GossipHello_npc_altruis_the_sufferer(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_altruis_the_sufferer(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_altruis_the_sufferer(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -342,7 +330,7 @@ bool GossipSelect_npc_altruis_the_sufferer(Player *player, Creature* pCreature, 
     return true;
 }
 
-bool QuestAccept_npc_altruis_the_sufferer(Player *player, Creature* /*creature*/, Quest const* /*quest*/)
+bool QuestAccept_npc_altruis_the_sufferer(Player* player, Creature* /*creature*/, Quest const* /*quest*/)
 {
     if (!player->GetQuestRewardStatus(9991))              //Survey the Land, q-id 9991
     {
@@ -378,7 +366,7 @@ bool QuestAccept_npc_altruis_the_sufferer(Player *player, Creature* /*creature*/
 #define GOSSIP_SGG11 "I will return to Azeroth at once, Greatmother."
 
 //all the textId's for the below is unknown, but i do believe the gossip item texts are proper.
-bool GossipHello_npc_greatmother_geyah(Player *player, Creature* pCreature)
+bool GossipHello_npc_greatmother_geyah(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -400,7 +388,7 @@ bool GossipHello_npc_greatmother_geyah(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_greatmother_geyah(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_greatmother_geyah(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -474,7 +462,7 @@ bool GossipSelect_npc_greatmother_geyah(Player *player, Creature* pCreature, uin
 #define GOSSIP_SLB6 "We will fight you until the end, then, Lantresor. We will not stand idly by as you pillage our towns and kill our people."
 #define GOSSIP_SLB7 "What do I need to do?"
 
-bool GossipHello_npc_lantresor_of_the_blade(Player *player, Creature* pCreature)
+bool GossipHello_npc_lantresor_of_the_blade(Player* player, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
         player->PrepareQuestMenu(pCreature->GetGUID());
@@ -487,7 +475,7 @@ bool GossipHello_npc_lantresor_of_the_blade(Player *player, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_lantresor_of_the_blade(Player *player, Creature* pCreature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_npc_lantresor_of_the_blade(Player* player, Creature* pCreature, uint32 /*sender*/, uint32 action)
 {
     switch (action)
     {
@@ -740,7 +728,7 @@ CreatureAI* GetAI_npc_creditmarker_visit_with_ancestors(Creature* pCreature)
 struct mob_sparrowhawkAI : public ScriptedAI
 {
 
-    mob_sparrowhawkAI(Creature *c) : ScriptedAI(c) {}
+    mob_sparrowhawkAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Check_Timer;
     uint64 PlayerGUID;
@@ -768,7 +756,7 @@ struct mob_sparrowhawkAI : public ScriptedAI
         if (!who || PlayerGUID)
             return;
 
-        if (!PlayerGUID && who->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(((Player *)who), 30) && ((Player *)who)->GetQuestStatus(10987) == QUEST_STATUS_INCOMPLETE)
+        if (!PlayerGUID && who->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(((Player* )who), 30) && ((Player* )who)->GetQuestStatus(10987) == QUEST_STATUS_INCOMPLETE)
         {
             PlayerGUID = who->GetGUID();
             return;
@@ -786,7 +774,7 @@ struct mob_sparrowhawkAI : public ScriptedAI
                 if (fleeing && me->GetMotionMaster()->GetCurrentMovementGeneratorType() != FLEEING_MOTION_TYPE)
                     fleeing = false;
 
-                Player *player = Unit::GetPlayer(*me, PlayerGUID);
+                Player* player = Unit::GetPlayer(*me, PlayerGUID);
                 if (player && me->IsWithinDistInMap(player, 30))
                 {
                     if (!fleeing)
@@ -853,7 +841,7 @@ enum
 
 struct npc_maghar_prisonerAI : public npc_escortAI
 {
-    npc_maghar_prisonerAI(Creature *pCreature) : npc_escortAI(pCreature) {}
+    npc_maghar_prisonerAI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
     uint64 uiPlayerGUID;
 
@@ -864,7 +852,7 @@ struct npc_maghar_prisonerAI : public npc_escortAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player *)pWho)->GetReputationRank(941) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player *)pWho), 20))
+        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player* )pWho)->GetReputationRank(941) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player* )pWho), 20))
         {
             if (uiPlayerGUID == pWho->GetGUID())
             {
@@ -1078,7 +1066,7 @@ enum
 
 struct npc_corki1AI : public npc_escortAI
 {
-    npc_corki1AI(Creature *pCreature) : npc_escortAI(pCreature) {}
+    npc_corki1AI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
     uint64 uiPlayerGUID;
 
@@ -1101,7 +1089,7 @@ struct npc_corki1AI : public npc_escortAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player *)pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player *)pWho), 20))
+        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player* )pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player* )pWho), 20))
         {
             if (uiPlayerGUID == pWho->GetGUID())
             {
@@ -1166,7 +1154,7 @@ enum
 
 struct npc_corki2AI : public npc_escortAI
 {
-    npc_corki2AI(Creature *pCreature) : npc_escortAI(pCreature) {}
+    npc_corki2AI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
     uint64 uiPlayerGUID;
 
@@ -1189,7 +1177,7 @@ struct npc_corki2AI : public npc_escortAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player *)pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player *)pWho), 20))
+        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player* )pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player* )pWho), 20))
         {	
             if (uiPlayerGUID == pWho->GetGUID())
             {
@@ -1252,7 +1240,7 @@ enum
 
 struct npc_corki3AI : public npc_escortAI
 {
-    npc_corki3AI(Creature *pCreature) : npc_escortAI(pCreature) {}
+    npc_corki3AI(Creature* pCreature) : npc_escortAI(pCreature) {}
 
     uint64 uiPlayerGUID;
 
@@ -1275,7 +1263,7 @@ struct npc_corki3AI : public npc_escortAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player *)pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player *)pWho), 20))
+        if (pWho->GetTypeId() == TYPEID_PLAYER && ((Player* )pWho)->GetReputationRank(978) >= REP_FRIENDLY && me->IsWithinDistInMap(((Player* )pWho), 20))
         { 
             if (uiPlayerGUID == pWho->GetGUID())
             {

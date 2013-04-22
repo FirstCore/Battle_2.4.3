@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -57,7 +45,7 @@ EndContentData */
 
 struct boss_nexusprince_shaffarAI : public ScriptedAI
 {
-    boss_nexusprince_shaffarAI(Creature *c) : ScriptedAI(c) {}
+    boss_nexusprince_shaffarAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Blink_Timer;
     uint32 Beacon_Timer;
@@ -156,7 +144,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
                 Beacon[i]->AI()->AttackStart(who);
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         if (summoned->GetEntry() == ENTRY_BEACON)
         {
@@ -248,7 +236,7 @@ CreatureAI* GetAI_boss_nexusprince_shaffar(Creature* pCreature)
 
 struct mob_ethereal_beaconAI : public ScriptedAI
 {
-    mob_ethereal_beaconAI(Creature *c) : ScriptedAI(c)
+    mob_ethereal_beaconAI(Creature* c) : ScriptedAI(c)
     {
         HeroicMode = me->GetMap()->IsHeroic();
     }
@@ -283,7 +271,7 @@ struct mob_ethereal_beaconAI : public ScriptedAI
             Shaffar->AI()->AttackStart(who);
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         summoned->AI()->AttackStart(me->getVictim());
     }
@@ -301,7 +289,7 @@ struct mob_ethereal_beaconAI : public ScriptedAI
 
         if (Check_Timer <= diff)
         {
-            Creature *Shaffar = me->FindNearestCreature(ENTRY_SHAFFAR, 100);
+            Creature* Shaffar = me->FindNearestCreature(ENTRY_SHAFFAR, 100);
             if (!Shaffar || Shaffar->isDead() || !Shaffar->isInCombat())
             {
                 KillSelf();
@@ -340,7 +328,7 @@ CreatureAI* GetAI_mob_ethereal_beacon(Creature* pCreature)
 
 struct mob_ethereal_apprenticeAI : public ScriptedAI
 {
-    mob_ethereal_apprenticeAI(Creature *c) : ScriptedAI(c) {}
+    mob_ethereal_apprenticeAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Cast_Timer;
 

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -104,7 +92,7 @@ uint32 WildMagic[] = { 44978, 45001, 45002, 45004, 45006, 45010 };
 
 struct boss_kalecgosAI : public ScriptedAI
 {
-    boss_kalecgosAI(Creature *c) : ScriptedAI(c)
+    boss_kalecgosAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         SathGUID = 0;
@@ -142,7 +130,7 @@ struct boss_kalecgosAI : public ScriptedAI
             pInstance->SetData(DATA_KALECGOS_EVENT, NOT_STARTED);
         }
 
-        if (Creature *Sath = Unit::GetCreature(*me, SathGUID))
+        if (Creature* Sath = Unit::GetCreature(*me, SathGUID))
             Sath->AI()->EnterEvadeMode();
 
         me->setFaction(14);
@@ -423,7 +411,7 @@ struct boss_kalecgosAI : public ScriptedAI
 
 struct boss_sathrovarrAI : public ScriptedAI
 {
-    boss_sathrovarrAI(Creature *c) : ScriptedAI(c)
+    boss_sathrovarrAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         KalecGUID = 0;
@@ -474,7 +462,7 @@ struct boss_sathrovarrAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/)
     {
-        if (Creature *Kalec = me->SummonCreature(MOB_KALEC, me->GetPositionX() + 10, me->GetPositionY() + 5, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 0))
+        if (Creature* Kalec = me->SummonCreature(MOB_KALEC, me->GetPositionX() + 10, me->GetPositionY() + 5, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 0))
         {
             KalecGUID = Kalec->GetGUID();
             me->CombatStart(Kalec);
@@ -495,7 +483,7 @@ struct boss_sathrovarrAI : public ScriptedAI
         if (pTarget->GetGUID() == KalecGUID)
         {
             TeleportAllPlayersBack();
-            if (Creature *Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
+            if (Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
             {
                 CAST_AI(boss_kalecgosAI, Kalecgos->AI())->TalkTimer = 1;
                 CAST_AI(boss_kalecgosAI, Kalecgos->AI())->isFriendly = false;
@@ -511,7 +499,7 @@ struct boss_sathrovarrAI : public ScriptedAI
         DoScriptText(SAY_SATH_DEATH, me);
         me->GetMap()->CreatureRelocation(me, me->GetPositionX(), me->GetPositionY(), DRAGON_REALM_Z, me->GetOrientation());
         TeleportAllPlayersBack();
-        if (Creature *Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
+        if (Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
         {
             CAST_AI(boss_kalecgosAI, Kalecgos->AI())->TalkTimer = 1;
             CAST_AI(boss_kalecgosAI, Kalecgos->AI())->isFriendly = true;
@@ -561,10 +549,10 @@ struct boss_sathrovarrAI : public ScriptedAI
 
         if (CheckTimer <= diff)
         {
-            Creature *Kalec = Unit::GetCreature(*me, KalecGUID);
+            Creature* Kalec = Unit::GetCreature(*me, KalecGUID);
             if (!Kalec || (Kalec && !Kalec->isAlive()))
             {
-                if (Creature *Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
+                if (Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
                     Kalecgos->AI()->EnterEvadeMode();
                     return;
             }
@@ -574,7 +562,7 @@ struct boss_sathrovarrAI : public ScriptedAI
                     Kalecgos->AI()->DoAction(DO_ENRAGE);
                 DoAction(DO_ENRAGE);
             }
-            Creature *Kalecgos = Unit::GetCreature(*me, KalecgosGUID);
+            Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID);
             if (Kalecgos)
             {
                 if (!Kalecgos->isInCombat())
@@ -659,7 +647,7 @@ struct boss_kalecAI : public ScriptedAI
 
     bool isEnraged; // if demon is enraged
 
-    boss_kalecAI(Creature *c) : ScriptedAI(c)
+    boss_kalecAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -94,7 +82,7 @@ EndScriptData */
 //Fathom-Lord Karathress AI
 struct boss_fathomlord_karathressAI : public ScriptedAI
 {
-    boss_fathomlord_karathressAI(Creature *c) : ScriptedAI(c)
+    boss_fathomlord_karathressAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         Advisors[0] = 0;
@@ -293,7 +281,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
 //Fathom-Guard Sharkkis AI
 struct boss_fathomguard_sharkkisAI : public ScriptedAI
 {
-    boss_fathomguard_sharkkisAI(Creature *c) : ScriptedAI(c)
+    boss_fathomguard_sharkkisAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -318,7 +306,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 
         pet = false;
 
-        Creature *Pet = Unit::GetCreature(*me, SummonedPet);
+        Creature* Pet = Unit::GetCreature(*me, SummonedPet);
         if (Pet && Pet->isAlive())
         {
             Pet->DealDamage(Pet, Pet->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -334,7 +322,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Karathress = NULL;
+            Creature* Karathress = NULL;
             Karathress = Unit::GetCreature((*me), pInstance->GetData64(DATA_KARATHRESS));
 
             if (Karathress && !me->isAlive())
@@ -393,7 +381,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
         if (TheBeastWithin_Timer <= diff)
         {
             DoCast(me, SPELL_THE_BEAST_WITHIN);
-            Creature *Pet = Unit::GetCreature(*me, SummonedPet);
+            Creature* Pet = Unit::GetCreature(*me, SummonedPet);
             if (Pet && Pet->isAlive())
             {
                 Pet->CastSpell(Pet, SPELL_PET_ENRAGE, true);
@@ -419,7 +407,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
                 break;
             }
             //DoCast(me, spell_id, true);
-            Creature *Pet = DoSpawnCreature(pet_id,0,0,0,0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+            Creature* Pet = DoSpawnCreature(pet_id,0,0,0,0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
             Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
             if (Pet && pTarget)
             {
@@ -435,7 +423,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 //Fathom-Guard Tidalvess AI
 struct boss_fathomguard_tidalvessAI : public ScriptedAI
 {
-    boss_fathomguard_tidalvessAI(Creature *c) : ScriptedAI(c)
+    boss_fathomguard_tidalvessAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -462,7 +450,7 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Karathress = NULL;
+            Creature* Karathress = NULL;
             Karathress = Unit::GetCreature((*me), pInstance->GetData64(DATA_KARATHRESS));
 
             if (Karathress && !me->isAlive())
@@ -549,7 +537,7 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
 //Fathom-Guard Caribdis AI
 struct boss_fathomguard_caribdisAI : public ScriptedAI
 {
-    boss_fathomguard_caribdisAI(Creature *c) : ScriptedAI(c)
+    boss_fathomguard_caribdisAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -576,7 +564,7 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
     {
         if (pInstance)
         {
-            Creature *Karathress = NULL;
+            Creature* Karathress = NULL;
             Karathress = Unit::GetCreature((*me), pInstance->GetData64(DATA_KARATHRESS));
 
             if (Karathress && !me->isAlive())
@@ -638,7 +626,7 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
         {
             //DoCast(me, SPELL_SUMMON_CYCLONE); // Doesn't work
             Cyclone_Timer = 30000+rand()%10000;
-            Creature *Cyclone = me->SummonCreature(CREATURE_CYCLONE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), float(rand()%5), TEMPSUMMON_TIMED_DESPAWN, 15000);
+            Creature* Cyclone = me->SummonCreature(CREATURE_CYCLONE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), float(rand()%5), TEMPSUMMON_TIMED_DESPAWN, 15000);
             if (Cyclone)
             {
                 CAST_CRE(Cyclone)->SetFloatValue(OBJECT_FIELD_SCALE_X, 3.0f);

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -112,7 +100,7 @@ struct instance_blood_furnace : public ScriptedInstance
         }
     }
 
-    void OnGameObjectCreate(GameObject* pGo, bool add)
+    void OnGameObjectCreate(GameObject* pGo, bool /*add*/)
     {
         switch(pGo->GetEntry())
         {
@@ -206,7 +194,7 @@ struct instance_blood_furnace : public ScriptedInstance
 
                             DoUseDoorOrButton(BroggokEvent[i].CellGuid);
                             BroggokEvent[i].IsCellOpened = false;
-                            if (GameObject *Lever = instance->GetGameObject(LeverGUID))
+                            if (GameObject* Lever = instance->GetGameObject(LeverGUID))
                             {
                                 if (Lever)
                                     Lever->ResetDoorOrButton();
@@ -251,7 +239,7 @@ struct instance_blood_furnace : public ScriptedInstance
         return false;
     }
 
-    uint64 GetData64(uint32 identifier)
+    uint64 GetData64(uint32 /*identifier*/)
     {
         return 0;
     }
@@ -346,7 +334,7 @@ struct instance_blood_furnace : public ScriptedInstance
         {
             if (DoorTimer <= diff)
             {
-                if (GameObject *Brog2 = instance->GetGameObject(Brog2GUID))
+                if (GameObject* Brog2 = instance->GetGameObject(Brog2GUID))
                 {
                     if (Brog2)
                         Brog2->ResetDoorOrButton();
@@ -443,7 +431,7 @@ InstanceData* GetInstanceData_instance_blood_furnace(Map* map)
     return new instance_blood_furnace(map);
 }
 
-bool GOHello_go_prison_cell_lever(Player* pPlayer, GameObject* pGo)
+bool GOHello_go_prison_cell_lever(Player* /*pPlayer*/, GameObject* pGo)
 {
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 

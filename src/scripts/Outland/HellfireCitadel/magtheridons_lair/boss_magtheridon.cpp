@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -91,7 +79,7 @@ typedef std::map<uint64, uint64> CubeMap;
 
 struct mob_abyssalAI : public ScriptedAI
 {
-    mob_abyssalAI(Creature *c) : ScriptedAI(c)
+    mob_abyssalAI(Creature* c) : ScriptedAI(c)
     {
         trigger = 0;
         Despawn_Timer = 60000;
@@ -169,7 +157,7 @@ struct mob_abyssalAI : public ScriptedAI
 
 struct boss_magtheridonAI : public ScriptedAI
 {
-    boss_magtheridonAI(Creature *c) : ScriptedAI(c)
+    boss_magtheridonAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =me->GetInstanceData();
         me->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 10);
@@ -366,7 +354,7 @@ struct boss_magtheridonAI : public ScriptedAI
             {
                 float x, y, z;
                 pTarget->GetPosition(x, y, z);
-                Creature *summon = me->SummonCreature(MOB_ABYSSAL, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                Creature* summon = me->SummonCreature(MOB_ABYSSAL, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                 if (summon)
                 {
                     ((mob_abyssalAI*)summon->AI())->SetTrigger(2);
@@ -398,7 +386,7 @@ struct boss_magtheridonAI : public ScriptedAI
                 {
                     float x, y, z;
                     pTarget->GetPosition(x, y, z);
-                    Creature *summon = me->SummonCreature(MOB_ABYSSAL, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    Creature* summon = me->SummonCreature(MOB_ABYSSAL, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                     if (summon) ((mob_abyssalAI*)summon->AI())->SetTrigger(1);
                 }
                 Debris_Timer = 10000;
@@ -411,7 +399,7 @@ struct boss_magtheridonAI : public ScriptedAI
 
 struct mob_hellfire_channelerAI : public ScriptedAI
 {
-    mob_hellfire_channelerAI(Creature *c) : ScriptedAI(c)
+    mob_hellfire_channelerAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =me->GetInstanceData();
     }
@@ -449,7 +437,7 @@ struct mob_hellfire_channelerAI : public ScriptedAI
         DoZoneInCombat();
     }
 
-    void JustSummoned(Creature *summon) {summon->AI()->AttackStart(me->getVictim());}
+    void JustSummoned(Creature* summon) {summon->AI()->AttackStart(me->getVictim());}
 
     void MoveInLineOfSight(Unit*) {}
 
@@ -502,12 +490,12 @@ struct mob_hellfire_channelerAI : public ScriptedAI
 };
 
 //Manticron Cube
-bool GOHello_go_Manticron_Cube(Player *player, GameObject* _GO)
+bool GOHello_go_Manticron_Cube(Player* player, GameObject* _GO)
 {
     ScriptedInstance* pInstance =_GO->GetInstanceData();
     if (!pInstance) return true;
     if (pInstance->GetData(DATA_MAGTHERIDON_EVENT) != IN_PROGRESS) return true;
-    Creature *Magtheridon =Unit::GetCreature(*_GO, pInstance->GetData64(DATA_MAGTHERIDON));
+    Creature* Magtheridon =Unit::GetCreature(*_GO, pInstance->GetData64(DATA_MAGTHERIDON));
     if (!Magtheridon || !Magtheridon->isAlive()) return true;
 
     // if exhausted or already channeling return

@@ -11,7 +11,7 @@ $user = "blizzlike";
 $pass = "blizzlike";
 // Site title.
 $title = "Registration Form";
-$title2 = "BlizzLike Group";
+$title2 = "BlizzLikeGroup";
 // End config.
 
 $page = '<?xml version="1.0" encoding="utf-8" ?>

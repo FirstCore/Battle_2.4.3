@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Mail.h"
@@ -128,7 +116,7 @@ void WorldSession::HandleSendMail(WorldPacket& recv_data)
         return;
     }
 
-    Player *receive = ObjectAccessor::FindPlayer(rc);
+    Player* receive = ObjectAccessor::FindPlayer(rc);
 
     uint32 rc_team = 0;
     uint8 mails_count = 0;                                  // do not allow to send to one player more than 100 mails
@@ -294,7 +282,7 @@ void WorldSession::HandleMarkAsRead(WorldPacket& recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
+    Player* pl = _player;
 
     if (Mail *m = pl->GetMail(mailId))
     {
@@ -362,7 +350,7 @@ void WorldSession::HandleReturnToSender(WorldPacket& recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
+    Player* pl = _player;
     Mail *m = pl->GetMail(mailId);
     if (!m || m->state == MAIL_STATE_DELETED || m->deliver_time > time(NULL))
     {
@@ -450,7 +438,7 @@ void WorldSession::HandleTakeItem(WorldPacket& recv_data)
         if (m->COD > 0)                                     // if there is COD, take COD money from player and send them to sender by mail
         {
             uint64 sender_guid = MAKE_NEW_GUID(m->sender, 0, HIGHGUID_PLAYER);
-            Player *receive = ObjectAccessor::FindPlayer(sender_guid);
+            Player* receive = ObjectAccessor::FindPlayer(sender_guid);
 
             uint32 sender_accId = 0;
 
@@ -518,7 +506,7 @@ void WorldSession::HandleTakeMoney(WorldPacket& recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
+    Player* pl = _player;
 
     Mail* m = pl->GetMail(mailId);
     if (!m || m->state == MAIL_STATE_DELETED || m->deliver_time > time(NULL))
@@ -697,7 +685,7 @@ void WorldSession::HandleMailCreateTextItem(WorldPacket& recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
+    Player* pl = _player;
 
     Mail* m = pl->GetMail(mailId);
     if (!m || (!m->itemTextId && !m->mailTemplateId) || m->state == MAIL_STATE_DELETED || m->deliver_time > time(NULL))
@@ -928,7 +916,7 @@ void MailDraft::deleteIncludedItems(bool inDB /*= false*/)
  */
 void MailDraft::SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32 receiver_guid)
 {
-    Player *receiver = ObjectAccessor::FindPlayer(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
+    Player* receiver = ObjectAccessor::FindPlayer(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
 
     uint32 rc_account = 0;
     if (!receiver)
@@ -1089,7 +1077,7 @@ void WorldSession::SendExternalMails()
                 uint32 ItemID = fields[5].GetUInt32();
                 uint32 ItemCount = fields[6].GetUInt32();
 
-                Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
+                Player* receiver = ObjectAccessor::FindPlayer(receiver_guid);
 
                 if (receiver != 0)
                 {

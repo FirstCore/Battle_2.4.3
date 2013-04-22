@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -54,7 +42,7 @@ EndContentData */
 # item_area_52_special
 #####*/
 
-bool ItemUse_item_area_52_special(Player *player, Item* _Item, SpellCastTargets const& /*targets*/)
+bool ItemUse_item_area_52_special(Player* player, Item* _Item, SpellCastTargets const& /*targets*/)
 {
     if (player->GetAreaId() == 3803)
     {
@@ -102,7 +90,7 @@ bool ItemUse_item_only_for_flight(Player* pPlayer, Item* pItem, SpellCastTargets
 # item_attuned_crystal_cores
 #####*/
 
-bool ItemUse_item_attuned_crystal_cores(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_attuned_crystal_cores(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 24972 && targets.getUnitTarget()->isDead() &&
@@ -120,7 +108,7 @@ bool ItemUse_item_attuned_crystal_cores(Player *player, Item* _Item, SpellCastTa
 # item_blackwhelp_net
 #####*/
 
-bool ItemUse_item_blackwhelp_net(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_blackwhelp_net(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 21387)
@@ -145,7 +133,7 @@ bool ItemUse_item_draenei_fishing_net(Player* pPlayer, Item* /*pItem*/, SpellCas
     {
         if (urand(0,99) < 35)
         {
-            Creature *Murloc = pPlayer->SummonCreature(17102, pPlayer->GetPositionX(), pPlayer->GetPositionY()+20, pPlayer->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+            Creature* Murloc = pPlayer->SummonCreature(17102, pPlayer->GetPositionX(), pPlayer->GetPositionY()+20, pPlayer->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
             if (Murloc)
                 Murloc->AI()->AttackStart(pPlayer);
         }
@@ -169,7 +157,7 @@ bool ItemUse_item_draenei_fishing_net(Player* pPlayer, Item* /*pItem*/, SpellCas
 # item_disciplinary_rod
 #####*/
 
-bool ItemUse_item_disciplinary_rod(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_disciplinary_rod(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         (targets.getUnitTarget()->GetEntry() == 15941 || targets.getUnitTarget()->GetEntry() == 15945))
@@ -187,7 +175,7 @@ bool ItemUse_item_nether_wraith_beacon(Player* pPlayer, Item* /*pItem*/, SpellCa
 {
     if (pPlayer->GetQuestStatus(10832) == QUEST_STATUS_INCOMPLETE)
     {
-        Creature *Nether;
+        Creature* Nether;
         Nether = pPlayer->SummonCreature(22408, pPlayer->GetPositionX(), pPlayer->GetPositionY()+20, pPlayer->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 180000);
         Nether = pPlayer->SummonCreature(22408, pPlayer->GetPositionX(), pPlayer->GetPositionY()-20, pPlayer->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 180000);
         if (Nether)
@@ -220,7 +208,7 @@ bool ItemUse_item_flying_machine(Player* pPlayer, Item* pItem, SpellCastTargets 
 # item_gor_dreks_ointment
 #####*/
 
-bool ItemUse_item_gor_dreks_ointment(Player *pPlayer, Item *pItem, SpellCastTargets const& targets)
+bool ItemUse_item_gor_dreks_ointment(Player* pPlayer, Item *pItem, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 20748 && !targets.getUnitTarget()->HasAura(32578, 0))
@@ -234,7 +222,7 @@ bool ItemUse_item_gor_dreks_ointment(Player *pPlayer, Item *pItem, SpellCastTarg
 # item_muiseks_vessel
 #####*/
 
-bool ItemUse_item_muiseks_vessel(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_muiseks_vessel(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     Unit* uTarget = targets.getUnitTarget();
     uint32 itemSpell = _Item->GetProto()->Spells[0].SpellId;
@@ -294,7 +282,7 @@ bool ItemUse_item_muiseks_vessel(Player *player, Item* _Item, SpellCastTargets c
 # item_inoculating_crystal
 #####*/
 
-bool ItemUse_item_inoculating_crystal(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_inoculating_crystal(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 16518)
@@ -313,7 +301,7 @@ bool ItemUse_item_inoculating_crystal(Player *player, Item* _Item, SpellCastTarg
 # item_razorthorn_flayer_gland
 #####*/
 
-bool ItemUse_item_razorthorn_flayer_gland(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_razorthorn_flayer_gland(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 24922)
@@ -327,7 +315,7 @@ bool ItemUse_item_razorthorn_flayer_gland(Player *player, Item* _Item, SpellCast
 # item_tame_beast_rods
 #####*/
 
-bool ItemUse_item_tame_beast_rods(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_tame_beast_rods(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     uint32 itemSpell = _Item->GetProto()->Spells[0].SpellId;
     uint32 cEntry = 0;
@@ -373,7 +361,7 @@ bool ItemUse_item_tame_beast_rods(Player *player, Item* _Item, SpellCastTargets 
 # item_protovoltaic_magneto_collector
 #####*/
 
-bool ItemUse_item_protovoltaic_magneto_collector(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_protovoltaic_magneto_collector(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 21729)
@@ -387,7 +375,7 @@ bool ItemUse_item_protovoltaic_magneto_collector(Player *player, Item* _Item, Sp
 # item_soul_cannon
 #####*/
 
-bool ItemUse_item_soul_cannon(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_soul_cannon(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     // allow use
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
@@ -403,7 +391,7 @@ bool ItemUse_item_soul_cannon(Player *player, Item* _Item, SpellCastTargets cons
 # item_sparrowhawk_net
 #####*/
 
-bool ItemUse_item_sparrowhawk_net(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_sparrowhawk_net(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 22979)
@@ -417,7 +405,7 @@ bool ItemUse_item_sparrowhawk_net(Player *player, Item* _Item, SpellCastTargets 
 # item_voodoo_charm
 #####*/
 
-bool ItemUse_item_voodoo_charm(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_voodoo_charm(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT && targets.getUnitTarget()->isDead() &&
         targets.getUnitTarget()->GetEntry() == 7318)
@@ -436,7 +424,7 @@ bool ItemUse_item_voodoo_charm(Player *player, Item* _Item, SpellCastTargets con
 # item_vorenthals_presence
 #####*/
 
-bool ItemUse_item_vorenthals_presence(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_vorenthals_presence(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     // allow use
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
@@ -452,7 +440,7 @@ bool ItemUse_item_vorenthals_presence(Player *player, Item* _Item, SpellCastTarg
 # item_yehkinyas_bramble
 #####*/
 
-bool ItemUse_item_yehkinyas_bramble(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_yehkinyas_bramble(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (player->GetQuestStatus(3520) == QUEST_STATUS_INCOMPLETE)
     {
@@ -479,7 +467,7 @@ bool ItemUse_item_yehkinyas_bramble(Player *player, Item* _Item, SpellCastTarget
 # item_zezzak_shard
 #####*/
 
-bool ItemUse_item_zezzak_shard(Player *player, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_zezzak_shard(Player* player, Item* _Item, SpellCastTargets const& targets)
 {
     if (targets.getUnitTarget() && targets.getUnitTarget()->GetTypeId() == TYPEID_UNIT &&
         targets.getUnitTarget()->GetEntry() == 19440)

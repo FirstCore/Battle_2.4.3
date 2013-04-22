@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -103,7 +91,7 @@ float Humanoides[6][5] =
 uint32 EnrageTimer = 600000;
 struct boss_entropiusAI : public ScriptedAI
 {
-    boss_entropiusAI(Creature *c) : ScriptedAI(c), Summons(me)
+    boss_entropiusAI(Creature* c) : ScriptedAI(c), Summons(me)
     {
         pInstance = c->GetInstanceData();
     }
@@ -196,7 +184,7 @@ CreatureAI* GetAI_boss_entropius(Creature* pCreature)
 
 struct boss_muruAI : public Scripted_NoMovementAI
 {
-    boss_muruAI(Creature *c) : Scripted_NoMovementAI(c), Summons(me)
+    boss_muruAI(Creature* c) : Scripted_NoMovementAI(c), Summons(me)
     {
         pInstance = c->GetInstanceData();
     }
@@ -353,7 +341,7 @@ CreatureAI* GetAI_boss_muru(Creature* pCreature)
 
 struct npc_muru_portalAI : public Scripted_NoMovementAI
 {
-    npc_muru_portalAI(Creature *c) : Scripted_NoMovementAI(c), Summons(me)
+    npc_muru_portalAI(Creature* c) : Scripted_NoMovementAI(c), Summons(me)
     {
         pInstance = c->GetInstanceData();
     }
@@ -430,7 +418,7 @@ CreatureAI* GetAI_npc_muru_portal(Creature* pCreature)
 
 struct npc_dark_fiendAI : public ScriptedAI
 {
-    npc_dark_fiendAI(Creature *c) : ScriptedAI(c) {}
+    npc_dark_fiendAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 WaitTimer;
     bool InAction;
@@ -485,7 +473,7 @@ CreatureAI* GetAI_npc_dark_fiend(Creature* pCreature)
 
 struct npc_void_sentinelAI : public ScriptedAI
 {
-    npc_void_sentinelAI(Creature *c) : ScriptedAI(c){}
+    npc_void_sentinelAI(Creature* c) : ScriptedAI(c){}
 
     uint32 PulseTimer;
     uint32 VoidBlastTimer;
@@ -534,7 +522,7 @@ CreatureAI* GetAI_npc_void_sentinel(Creature* pCreature)
 
 struct npc_blackholeAI : public ScriptedAI
 {
-    npc_blackholeAI(Creature *c) : ScriptedAI(c)
+    npc_blackholeAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }

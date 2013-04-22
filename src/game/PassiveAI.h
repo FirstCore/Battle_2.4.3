@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef BLIZZLIKE_PASSIVEAI_H
@@ -24,19 +12,19 @@
 class PassiveAI : public CreatureAI
 {
     public:
-        explicit PassiveAI(Creature *c);
+        explicit PassiveAI(Creature* c);
 
         void MoveInLineOfSight(Unit*) {}
         void AttackStart(Unit*) {}
         void UpdateAI(const uint32);
 
-        static int Permissible(const Creature *) { return PERMIT_BASE_IDLE;  }
+        static int Permissible(const Creature* ) { return PERMIT_BASE_IDLE;  }
 };
 
 class PossessedAI : public CreatureAI
 {
     public:
-        explicit PossessedAI(Creature *c);
+        explicit PossessedAI(Creature* c);
 
         void MoveInLineOfSight(Unit*) {}
         void AttackStart(Unit* target);
@@ -46,13 +34,13 @@ class PossessedAI : public CreatureAI
         void JustDied(Unit*);
         void KilledUnit(Unit* victim);
 
-        static int Permissible(const Creature *) { return PERMIT_BASE_IDLE;  }
+        static int Permissible(const Creature* ) { return PERMIT_BASE_IDLE;  }
 };
 
 class NullCreatureAI : public CreatureAI
 {
     public:
-        explicit NullCreatureAI(Creature *c);
+        explicit NullCreatureAI(Creature* c);
 
         void MoveInLineOfSight(Unit*) {}
         void AttackStart(Unit*) {}
@@ -60,13 +48,13 @@ class NullCreatureAI : public CreatureAI
         void EnterEvadeMode() {}
         void OnCharmed(bool apply) {}
 
-        static int Permissible(const Creature *) { return PERMIT_BASE_IDLE;  }
+        static int Permissible(const Creature* ) { return PERMIT_BASE_IDLE;  }
 };
 
 class CritterAI : public PassiveAI
 {
     public:
-        explicit CritterAI(Creature *c) : PassiveAI(c) {}
+        explicit CritterAI(Creature* c) : PassiveAI(c) {}
 
         void DamageTaken(Unit* done_by, uint32 & /*damage*/);
         void EnterEvadeMode();
@@ -75,7 +63,7 @@ class CritterAI : public PassiveAI
 class TriggerAI : public NullCreatureAI
 {
     public:
-        explicit TriggerAI(Creature *c) : NullCreatureAI(c) {}
+        explicit TriggerAI(Creature* c) : NullCreatureAI(c) {}
         void IsSummonedBy(Unit* summoner);
 };
 

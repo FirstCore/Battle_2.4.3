@@ -2,7 +2,7 @@
 #define __REVISION_H__
  #define _REVISION      "@rev_date@"
  #define _HASH          "@rev_hash@"
- #define LEGALCOPYRIGHT "(c)2011-2013 BlizzLike Group"
+ #define LEGALCOPYRIGHT "(c)BlizzLikeGroup"
  #define FILEVER        0,0,0,0
  #define PRODUCTVER     0,0,0,0
  #define STRFILEVER     "Full Release"

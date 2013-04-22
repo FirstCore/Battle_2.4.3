@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "ScriptPCH.h"
@@ -32,7 +20,7 @@ void SummonList::DoZoneInCombat(uint32 entry)
 {
     for (iterator i = begin(); i != end();)
     {
-        Creature *summon = Unit::GetCreature(*me, *i);
+        Creature* summon = Unit::GetCreature(*me, *i);
         ++i;
         if (summon && summon->IsAIEnabled
             && (!entry || summon->GetEntry() == entry))
@@ -44,7 +32,7 @@ void SummonList::DoAction(uint32 entry, uint32 info)
 {
     for (iterator i = begin(); i != end();)
     {
-        Creature *summon = Unit::GetCreature(*me, *i);
+        Creature* summon = Unit::GetCreature(*me, *i);
         ++i;
         if (summon && summon->IsAIEnabled
             && (!entry || summon->GetEntry() == entry))
@@ -56,7 +44,7 @@ void SummonList::DespawnEntry(uint32 entry)
 {
     for (iterator i = begin(); i != end();)
     {
-        Creature *summon = Unit::GetCreature(*me, *i);
+        Creature* summon = Unit::GetCreature(*me, *i);
         if (!summon)
             erase(i++);
         else if (summon->GetEntry() == entry)
@@ -74,7 +62,7 @@ void SummonList::DespawnAll()
 {
     while (!empty())
     {
-        Creature *summon = Unit::GetCreature(*me, *begin());
+        Creature* summon = Unit::GetCreature(*me, *begin());
         if (!summon)
             erase(begin());
         else
@@ -606,7 +594,7 @@ void Scripted_NoMovementAI::AttackStart(Unit* pWho)
     }
 }
 
-BossAI::BossAI(Creature *c, uint32 id) : ScriptedAI(c)
+BossAI::BossAI(Creature* c, uint32 id) : ScriptedAI(c)
 , bossId(id), summons(me), instance(c->GetInstanceData())
 {
 }
@@ -641,14 +629,14 @@ void BossAI::_EnterCombat()
         instance->SetBossState(bossId, IN_PROGRESS);
 }
 
-void BossAI::JustSummoned(Creature *summon)
+void BossAI::JustSummoned(Creature* summon)
 {
     summons.Summon(summon);
     if (me->isInCombat())
         DoZoneInCombat(summon);
 }
 
-void BossAI::SummonedCreatureDespawn(Creature *summon)
+void BossAI::SummonedCreatureDespawn(Creature* summon)
 {
     summons.Despawn(summon);
 }
@@ -673,11 +661,11 @@ void LoadOverridenSQLData()
 }
 
 // BSCR grid searchers.
-Creature *GetClosestCreatureWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange, bool bAlive)
+Creature* GetClosestCreatureWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange, bool bAlive)
 {
     return pSource->FindNearestCreature(uiEntry, fMaxSearchRange, bAlive);
 }
-GameObject *GetClosestGameObjectWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange)
+GameObject* GetClosestGameObjectWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange)
 {
     return pSource->FindNearestGameObject(uiEntry, fMaxSearchRange);
 }

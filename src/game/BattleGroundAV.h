@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef __BATTLEGROUNDAV_H
@@ -1460,24 +1448,24 @@ class BattleGroundAV : public BattleGround
         void Update(time_t diff);
 
         /* inherited from BattlegroundClass */
-        virtual void AddPlayer(Player *plr);
+        virtual void AddPlayer(Player* plr);
         virtual void StartingEventCloseDoors();
         virtual void StartingEventOpenDoors();
 
-        void RemovePlayer(Player *plr,uint64 guid);
-        void HandleAreaTrigger(Player *Source, uint32 Trigger);
+        void RemovePlayer(Player* plr,uint64 guid);
+        void HandleAreaTrigger(Player* Source, uint32 Trigger);
         bool SetupBattleGround();
         virtual void ResetBGSubclass();
 
         /*general stuff*/
         void UpdateScore(uint16 team, int16 points);
-        void UpdatePlayerScore(Player *Source, uint32 type, uint32 value);
+        void UpdatePlayerScore(Player* Source, uint32 type, uint32 value);
 
         /*handle stuff*/ // these are functions which get called from extern scripts
-        virtual void EventPlayerClickedOnFlag(Player *source, GameObject* target_obj);
-        void HandleKillPlayer(Player* player, Player *killer);
-        void HandleKillUnit(Creature *unit, Player *killer);
-        void HandleQuestComplete(uint32 questid, Player *player);
+        virtual void EventPlayerClickedOnFlag(Player* source, GameObject* target_obj);
+        void HandleKillPlayer(Player* player, Player* killer);
+        void HandleKillUnit(Creature* unit, Player* killer);
+        void HandleQuestgiverCompleteQuest(uint32 questid, Player* player);
         bool PlayerCanDoMineQuest(int32 GOId,uint32 team);
 
         void EndBattleGround(uint32 winner);
@@ -1514,7 +1502,7 @@ class BattleGroundAV : public BattleGround
 
         /*general */
         Creature* AddAVCreature(uint32 cinfoid, uint32 type);
-        uint16 GetBonusHonor(uint8 kills); //TODO remove this when mangos handles this right
+        uint16 GetBonusHonor(uint8 kills); //TODO remove this when BC handles this right
 
         /*variables */
         int32 m_Team_Scores[BG_TEAMS_COUNT];

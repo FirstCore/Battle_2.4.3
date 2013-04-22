@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -72,7 +60,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket& recv_data)
     sLog.outDebug("Petitioner with GUID %u tried sell petition: name %s", GUID_LOPART(guidNPC), name.c_str());
 
     // prevent cheating
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guidNPC,UNIT_NPC_FLAG_PETITIONER);
+    Creature* pCreature = GetPlayer()->GetNPCIfCanInteractWith(guidNPC,UNIT_NPC_FLAG_PETITIONER);
     if (!pCreature)
     {
         sLog.outDebug("WORLD: HandlePetitionBuyOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(guidNPC));
@@ -514,7 +502,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket& recv_data)
         SendPacket(&data);
 
         // update for owner if online
-        if (Player *owner = ObjectAccessor::FindPlayer(ownerguid))
+        if (Player* owner = ObjectAccessor::FindPlayer(ownerguid))
             owner->GetSession()->SendPacket(&data);
         return;
     }
@@ -537,7 +525,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket& recv_data)
     //    item->SetUInt32Value(ITEM_FIELD_ENCHANTMENT+1, signs);
 
     // update for owner if online
-    if (Player *owner = ObjectAccessor::FindPlayer(ownerguid))
+    if (Player* owner = ObjectAccessor::FindPlayer(ownerguid))
         owner->GetSession()->SendPacket(&data);
 }
 
@@ -557,7 +545,7 @@ void WorldSession::HandlePetitionDeclineOpcode(WorldPacket& recv_data)
     Field *fields = result->Fetch();
     ownerguid = MAKE_NEW_GUID(fields[0].GetUInt32(), 0, HIGHGUID_PLAYER);
 
-    Player *owner = ObjectAccessor::FindPlayer(ownerguid);
+    Player* owner = ObjectAccessor::FindPlayer(ownerguid);
     if (owner)                                               // petition owner online
     {
         WorldPacket data(MSG_PETITION_DECLINE, 8);
@@ -573,7 +561,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket& recv_data)
     uint8 signs = 0;
     uint64 petitionguid, plguid;
     uint32 type, junk;
-    Player *player;
+    Player* player;
     recv_data >> junk;                                      // this is not petition type!
     recv_data >> petitionguid;                              // petition guid
     recv_data >> plguid;                                    // player guid
@@ -850,7 +838,7 @@ void WorldSession::HandlePetitionShowListOpcode(WorldPacket& recv_data)
 
 void WorldSession::SendPetitionShowList(uint64 guid)
 {
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_PETITIONER);
+    Creature* pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_PETITIONER);
     if (!pCreature)
     {
         sLog.outDebug("WORLD: HandlePetitionShowListOpcode - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(guid)));

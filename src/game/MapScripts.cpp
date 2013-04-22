@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Map.h"
@@ -98,7 +86,7 @@ void Map::ScriptCommandStart(ScriptInfo const& script, uint32 delay, Object* sou
 // Helpers for ScriptProcess method.
 inline Player* Map::_GetScriptPlayerSourceOrTarget(Object* source, Object* target, const ScriptInfo* scriptInfo) const
 {
-    Player *pPlayer = NULL;
+    Player* pPlayer = NULL;
     if (!source && !target)
         sLog.outError("%s source and target objects are NULL.", scriptInfo->GetDebugInfo().c_str());
     else
@@ -120,7 +108,7 @@ inline Player* Map::_GetScriptPlayerSourceOrTarget(Object* source, Object* targe
 
 inline Creature* Map::_GetScriptCreatureSourceOrTarget(Object* source, Object* target, const ScriptInfo* scriptInfo, bool bReverse) const
 {
-    Creature *pCreature = NULL;
+    Creature* pCreature = NULL;
     if (!source && !target)
         sLog.outError("%s source and target objects are NULL.", scriptInfo->GetDebugInfo().c_str());
     else
@@ -243,7 +231,7 @@ inline void Map::_ScriptProcessDoor(Object* source, Object* target, const Script
                 scriptInfo->GetDebugInfo().c_str(), source->GetTypeId(), source->GetEntry(), source->GetGUIDLow());
         else
         {
-            GameObject *pDoor = _FindGameObject(wSource, guid);
+            GameObject* pDoor = _FindGameObject(wSource, guid);
             if (!pDoor)
                 sLog.outError("%s gameobject was not found (guid: %u).", scriptInfo->GetDebugInfo().c_str(), guid);
             else if (pDoor->GetGoType() != GAMEOBJECT_TYPE_DOOR)
@@ -266,7 +254,7 @@ inline void Map::_ScriptProcessDoor(Object* source, Object* target, const Script
 
 inline GameObject* Map::_FindGameObject(WorldObject* pSearchObject, uint32 guid) const
 {
-    GameObject *pGameObject = NULL;
+    GameObject* pGameObject = NULL;
 
     CellPair p(BlizzLike::ComputeCellPair(pSearchObject->GetPositionX(), pSearchObject->GetPositionY()));
     Cell cell(p);
@@ -382,7 +370,7 @@ void Map::ScriptsProcess()
                 }
                 if (step.script->Talk.Flags & SF_TALK_USE_PLAYER)
                 {
-                    if (Player *pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
+                    if (Player* pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
                     {
                         uint64 targetGUID = target ? target->GetGUID() : 0;
                         uint32 loc_idx = pSource->GetSession()->GetSessionDbLocaleIndex();
@@ -417,7 +405,7 @@ void Map::ScriptsProcess()
                 else
                 {
                     // Source or target must be Creature.
-                    if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                    if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                     {
                         uint64 targetGUID = target ? target->GetGUID() : 0;
                         switch (step.script->Talk.ChatType)
@@ -459,7 +447,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_EMOTE:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     if (step.script->Emote.Flags & SF_EMOTE_USE_STATE)
                         cSource->SetUInt32Value(UNIT_NPC_EMOTESTATE, step.script->Emote.EmoteID);
@@ -470,7 +458,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_FIELD_SET:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     // Validate field number.
                     if (step.script->FieldSet.FieldID <= OBJECT_FIELD_ENTRY || step.script->FieldSet.FieldID >= cSource->GetValuesCount())
@@ -484,7 +472,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_MOVE_TO:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     cSource->SendMonsterMoveWithSpeed(step.script->MoveTo.DestX, step.script->MoveTo.DestY, step.script->MoveTo.DestZ, step.script->MoveTo.TravelTime);
                     cSource->GetMap()->CreatureRelocation(cSource, step.script->MoveTo.DestX, step.script->MoveTo.DestY, step.script->MoveTo.DestZ, 0);
@@ -493,7 +481,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_FLAG_SET:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     // Validate field number.
                     if (step.script->FlagToggle.FieldID <= OBJECT_FIELD_ENTRY || step.script->FlagToggle.FieldID >= cSource->GetValuesCount())
@@ -507,7 +495,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_FLAG_REMOVE:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     // Validate field number.
                     if (step.script->FlagToggle.FieldID <= OBJECT_FIELD_ENTRY || step.script->FlagToggle.FieldID >= cSource->GetValuesCount())
@@ -523,13 +511,13 @@ void Map::ScriptsProcess()
                 if  (step.script->TeleportTo.Flags & SF_TELEPORT_USE_CREATURE)
                 {
                     // Source or target must be Creature.
-                    if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script, true))
+                    if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script, true))
                         cSource->NearTeleportTo(step.script->TeleportTo.DestX, step.script->TeleportTo.DestY, step.script->TeleportTo.DestZ, step.script->TeleportTo.Orientation);
                 }
                 else
                 {
                     // Source or target must be Player.
-                    if (Player *pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
+                    if (Player* pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
                         pSource->TeleportTo(step.script->TeleportTo.MapID, step.script->TeleportTo.DestX, step.script->TeleportTo.DestY, step.script->TeleportTo.DestZ, step.script->TeleportTo.Orientation);
                 }
                 break;
@@ -595,7 +583,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_KILL_CREDIT:
                 // Source or target must be Player.
-                if (Player *pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
+                if (Player* pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
                 {
                     if (step.script->KillCredit.Flags & SF_KILLCREDIT_REWARD_GROUP)
                         pSource->RewardPlayerAndGroupAtEvent(step.script->KillCredit.CreatureEntry, pSource);
@@ -614,7 +602,7 @@ void Map::ScriptsProcess()
                 // Source or target must be WorldObject.
                 if (WorldObject* pSummoner = _GetScriptWorldObject(source, true, step.script))
                 {
-                    GameObject *pGO = _FindGameObject(pSummoner, step.script->RespawnGameobject.GOGuid);
+                    GameObject* pGO = _FindGameObject(pSummoner, step.script->RespawnGameobject.GOGuid);
                     if (!pGO)
                     {
                         sLog.outError("%s gameobject was not found (guid: %u).", step.script->GetDebugInfo().c_str(), step.script->RespawnGameobject.GOGuid);
@@ -687,7 +675,7 @@ void Map::ScriptsProcess()
                         break;
                     }
 
-                    if (GameObject *pGO = dynamic_cast<GameObject*>(target))
+                    if (GameObject* pGO = dynamic_cast<GameObject*>(target))
                         pGO->Use(pSource);
                 }
                 break;
@@ -867,7 +855,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_KILL:
                 // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (Creature* cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
                 {
                     if (cSource->isDead())
                         sLog.outError("%s creature is already dead (Entry: %u, GUID: %u)",
@@ -903,19 +891,19 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_EQUIP:
                 // Source must be Creature.
-                if (Creature *cSource = _GetScriptCreature(source, true, step.script))
+                if (Creature* cSource = _GetScriptCreature(source, true, step.script))
                     cSource->LoadEquipment(step.script->Equip.EquipmentID);
                 break;
 
             case SCRIPT_COMMAND_MODEL:
                 // Source must be Creature.
-                if (Creature *cSource = _GetScriptCreature(source, true, step.script))
+                if (Creature* cSource = _GetScriptCreature(source, true, step.script))
                     cSource->SetDisplayId(step.script->Model.ModelID);
                 break;
 
             case SCRIPT_COMMAND_CLOSE_GOSSIP:
                 // Source must be Player.
-                if (Player *pSource = _GetScriptPlayer(source, true, step.script))
+                if (Player* pSource = _GetScriptPlayer(source, true, step.script))
                     pSource->PlayerTalkClass->CloseGossip();
                 break;
 

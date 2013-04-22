@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef _OBJECTMGR_H
@@ -37,6 +25,7 @@
 #include "ObjectGuid.h"
 #include "Policies/Singleton.h"
 #include "Database/SQLStorage.h"
+#include "Path.h"
 
 #include <string>
 #include <map>
@@ -55,7 +44,6 @@ extern SQLStorage sInstanceTemplate;
 class Group;
 class Guild;
 class ArenaTeam;
-class Path;
 class TransportPath;
 class Item;
 
@@ -633,8 +621,6 @@ class ObjectMgr
         uint32 GetNearestTaxiNode(float x, float y, float z, uint32 mapid);
         void GetTaxiPath(uint32 source, uint32 destination, uint32 &path, uint32 &cost);
         uint16 GetTaxiMount(uint32 id, uint32 team);
-        void GetTaxiPathNodes(uint32 path, Path &pathnodes, std::vector<uint32>& mapIds);
-        void GetTransportPathNodes(uint32 path, TransportPath &pathnodes);
 
         Quest const* GetQuestTemplate(uint32 quest_id) const
         {

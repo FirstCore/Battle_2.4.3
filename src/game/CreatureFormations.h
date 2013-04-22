@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef _FORMATIONS_H
@@ -51,8 +39,8 @@ class CreatureFormationManager
 {
     friend class ACE_Singleton<CreatureFormationManager, ACE_Null_Mutex>;
     public:
-        void AddCreatureToFormation(uint32 formation_id, Creature *creature);
-        void RemoveCreatureFromFormation(CreatureFormation *formation, Creature *creature);
+        void AddCreatureToFormation(uint32 formation_id, Creature* creature);
+        void RemoveCreatureFromFormation(CreatureFormation *formation, Creature* creature);
         void LoadCreatureFormations();
 };
 
@@ -71,7 +59,7 @@ extern CreatureFormationDataType    CreatureFormationDataMap;
 class CreatureFormation
 {
     private:
-        Creature *m_leader;
+        Creature* m_leader;
         typedef std::map<Creature*, Formation*>  CreatureFormationMemberType;
         CreatureFormationMemberType m_members;
 
@@ -88,8 +76,8 @@ class CreatureFormation
         bool isEmpty() const { return m_members.empty(); }
         bool isFormed() const { return m_Formed; }
 
-        void AddMember(Creature *member);
-        void RemoveMember(Creature *member);
+        void AddMember(Creature* member);
+        void RemoveMember(Creature* member);
         void Reset(bool dismiss);
 
         void LeaderMoveTo(float x, float y, float z);

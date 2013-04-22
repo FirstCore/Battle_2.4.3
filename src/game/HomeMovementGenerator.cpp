@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "HomeMovementGenerator.h"
@@ -50,8 +38,16 @@ HomeMovementGenerator<Creature>::_setTargetLocation(Creature & owner)
 
     CreatureTraveller traveller(owner);
 
-    uint32 travel_time = i_destinationHolder.SetDestination(traveller, x, y, z);
-    modifyTravelTime(travel_time);
+    i_destinationHolder.SetDestination(traveller, x, y, z, false);
+
+    PathInfo path(&owner, x, y, z, true);
+    PointPath pointPath = path.getFullPath();
+
+    float speed = traveller.Speed() * 0.001f; // in ms
+    uint32 traveltime = uint32(pointPath.GetTotalLength() / speed);
+    modifyTravelTime(traveltime);
+    owner.SendMonsterMoveByPath(pointPath, 1, pointPath.size(), traveltime);
+
     owner.clearUnitState(UNIT_STAT_ALL_STATE);
 }
 
@@ -61,7 +57,7 @@ HomeMovementGenerator<Creature>::Update(Creature &owner, const uint32& time_diff
     CreatureTraveller traveller(owner);
     i_destinationHolder.UpdateTraveller(traveller, time_diff);
 
-    if (time_diff > i_travel_timer)
+    if (time_diff > i_travel_time)
     {
         owner.AddUnitMovementFlag(MOVEFLAG_WALK_MODE);
 
@@ -78,7 +74,7 @@ HomeMovementGenerator<Creature>::Update(Creature &owner, const uint32& time_diff
         return false;
     }
 
-    i_travel_timer -= time_diff;
+    i_travel_time -= time_diff;
 
     return true;
 }

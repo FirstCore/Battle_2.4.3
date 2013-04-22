@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "OutdoorPvPNA.h"
@@ -28,7 +16,7 @@ OutdoorPvPNA::OutdoorPvPNA()
     m_TypeId = OUTDOOR_PVP_NA;
 }
 
-void OutdoorPvPNA::HandleKillImpl(Player *plr, Unit* killed)
+void OutdoorPvPNA::HandleKillImpl(Player* plr, Unit* killed)
 {
     if (killed->GetTypeId() == TYPEID_PLAYER && plr->GetTeam() != killed->ToPlayer()->GetTeam())
     {
@@ -63,7 +51,7 @@ uint32 OPvPCapturePointNA::GetAliveGuardsCount()
         case NA_NPC_GUARD_14:
         case NA_NPC_GUARD_15:
             {
-                if (Creature * cr = HashMapHolder<Creature>::Find(itr->second))
+                if (Creature* cr = HashMapHolder<Creature>::Find(itr->second))
                 {
                     if (cr->isAlive())
                         ++cnt;
@@ -182,7 +170,7 @@ void OPvPCapturePointNA::FactionTakeOver(uint32 team)
     UpdateWyvernRoostWorldState(NA_ROOST_E);
 }
 
-bool OPvPCapturePointNA::HandlePlayerEnter(Player *plr)
+bool OPvPCapturePointNA::HandlePlayerEnter(Player* plr)
 {
     if (OPvPCapturePoint::HandlePlayerEnter(plr))
     {
@@ -195,7 +183,7 @@ bool OPvPCapturePointNA::HandlePlayerEnter(Player *plr)
     return false;
 }
 
-void OPvPCapturePointNA::HandlePlayerLeave(Player *plr)
+void OPvPCapturePointNA::HandlePlayerLeave(Player* plr)
 {
     plr->SendUpdateWorldState(NA_UI_TOWER_SLIDER_DISPLAY, 0);
     OPvPCapturePoint::HandlePlayerLeave(plr);
@@ -224,7 +212,7 @@ bool OutdoorPvPNA::SetupOutdoorPvP()
     return true;
 }
 
-void OutdoorPvPNA::HandlePlayerEnterZone(Player * plr, uint32 zone)
+void OutdoorPvPNA::HandlePlayerEnterZone(Player* plr, uint32 zone)
 {
     // add buffs
     if (plr->GetTeam() == m_obj->m_ControllingFaction)
@@ -232,7 +220,7 @@ void OutdoorPvPNA::HandlePlayerEnterZone(Player * plr, uint32 zone)
     OutdoorPvP::HandlePlayerEnterZone(plr,zone);
 }
 
-void OutdoorPvPNA::HandlePlayerLeaveZone(Player * plr, uint32 zone)
+void OutdoorPvPNA::HandlePlayerLeaveZone(Player* plr, uint32 zone)
 {
     // remove buffs
     plr->RemoveAurasDueToSpell(NA_CAPTURE_BUFF);
@@ -296,7 +284,7 @@ void OPvPCapturePointNA::FillInitialWorldStates(WorldPacket &data)
     data << NA_MAP_HALAA_ALLIANCE << uint32(bool(m_HalaaState & HALAA_A));
 }
 
-void OutdoorPvPNA::SendRemoveWorldStates(Player *plr)
+void OutdoorPvPNA::SendRemoveWorldStates(Player* plr)
 {
     plr->SendUpdateWorldState(NA_UI_HORDE_GUARDS_SHOW,0);
     plr->SendUpdateWorldState(NA_UI_ALLIANCE_GUARDS_SHOW,0);
@@ -333,7 +321,7 @@ bool OutdoorPvPNA::Update(uint32 diff)
     return m_obj->Update(diff);
 }
 
-bool OPvPCapturePointNA::HandleCustomSpell(Player * plr, uint32 spellId, GameObject * /*go*/)
+bool OPvPCapturePointNA::HandleCustomSpell(Player* plr, uint32 spellId, GameObject* /*go*/)
 {
     std::vector<uint32> nodes;
     nodes.resize(2);
@@ -408,7 +396,7 @@ bool OPvPCapturePointNA::HandleCustomSpell(Player * plr, uint32 spellId, GameObj
     return false;
 }
 
-int32 OPvPCapturePointNA::HandleOpenGo(Player *plr, uint64 guid)
+int32 OPvPCapturePointNA::HandleOpenGo(Player* plr, uint64 guid)
 {
     int32 retval = OPvPCapturePoint::HandleOpenGo(plr, guid);
     if (retval >= 0)

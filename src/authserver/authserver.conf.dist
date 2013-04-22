@@ -1,6 +1,6 @@
-#################################################
-# BLIZZLIKE CORE AUTH SERVER CONFIGURATION FILE #
-#################################################
+################################################
+# BLIZZLIKECORE AUTH SERVER CONFIGURATION FILE #
+################################################
 
 [authserver]
 ConfVersion=20130210

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -105,7 +93,7 @@ enum EventFelmyst
 
 struct boss_felmystAI : public ScriptedAI
 {
-    boss_felmystAI(Creature *c) : ScriptedAI(c)
+    boss_felmystAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
 
@@ -216,7 +204,7 @@ struct boss_felmystAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature *summon)
+    void JustSummoned(Creature* summon)
     {
         if (summon->GetEntry() == MOB_DEAD)
         {
@@ -465,7 +453,7 @@ struct boss_felmystAI : public ScriptedAI
                     float x, y, z;
                     me->GetPosition(x, y, z);
                     me->UpdateGroundPositionZ(x, y, z);
-                    if (Creature *Fog = me->SummonCreature(MOB_VAPOR_TRAIL, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+                    if (Creature* Fog = me->SummonCreature(MOB_VAPOR_TRAIL, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 10000))
                     {
                         Fog->RemoveAurasDueToSpell(SPELL_TRAIL_TRIGGER);
                         Fog->CastSpell(Fog, SPELL_FOG_TRIGGER, true);
@@ -510,7 +498,7 @@ struct boss_felmystAI : public ScriptedAI
 
 struct mob_felmyst_vaporAI : public ScriptedAI
 {
-    mob_felmyst_vaporAI(Creature *c) : ScriptedAI(c)
+    mob_felmyst_vaporAI(Creature* c) : ScriptedAI(c)
     {
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         me->SetSpeed(MOVE_RUN, 0.8f);
@@ -531,7 +519,7 @@ struct mob_felmyst_vaporAI : public ScriptedAI
 
 struct mob_felmyst_trailAI : public ScriptedAI
 {
-    mob_felmyst_trailAI(Creature *c) : ScriptedAI(c)
+    mob_felmyst_trailAI(Creature* c) : ScriptedAI(c)
     {
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         DoCast(me, SPELL_TRAIL_TRIGGER, true);

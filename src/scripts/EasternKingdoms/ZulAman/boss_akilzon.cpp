@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -60,7 +48,7 @@ EndScriptData */
 
 struct boss_akilzonAI : public ScriptedAI
 {
-    boss_akilzonAI(Creature *c) : ScriptedAI(c)
+    boss_akilzonAI(Creature* c) : ScriptedAI(c)
     {
         SpellEntry *TempSpell = GET_SPELL(SPELL_ELECTRICAL_DAMAGE);
         if (TempSpell)
@@ -357,7 +345,7 @@ struct boss_akilzonAI : public ScriptedAI
                         if (z > 95)
                             z = 95 - urand(0,5);
                     }
-                    Creature *pCreature = me->SummonCreature(MOB_SOARING_EAGLE, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    Creature* pCreature = me->SummonCreature(MOB_SOARING_EAGLE, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                     if (pCreature)
                     {
                         pCreature->AddThreat(me->getVictim(), 1.0f);
@@ -375,7 +363,7 @@ struct boss_akilzonAI : public ScriptedAI
 
 struct mob_soaring_eagleAI : public ScriptedAI
 {
-    mob_soaring_eagleAI(Creature *c) : ScriptedAI(c) {}
+    mob_soaring_eagleAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 EagleSwoop_Timer;
     bool arrived;

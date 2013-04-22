@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -99,7 +87,7 @@ static InfernalPoint InfernalPoints[] =
 //---------Infernal code first
 struct netherspite_infernalAI : public ScriptedAI
 {
-    netherspite_infernalAI(Creature *c) : ScriptedAI(c) ,
+    netherspite_infernalAI(Creature* c) : ScriptedAI(c) ,
         malchezaar(0), HellfireTimer(0), CleanupTimer(0), point(NULL) {}
 
     uint32 malchezaar;
@@ -161,7 +149,7 @@ struct netherspite_infernalAI : public ScriptedAI
 
 struct boss_malchezaarAI : public ScriptedAI
 {
-    boss_malchezaarAI(Creature *c) : ScriptedAI(c)
+    boss_malchezaarAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -347,7 +335,7 @@ struct boss_malchezaarAI : public ScriptedAI
             pos.Relocate(point->x, point->y, INFERNAL_Z);
         }
 
-        Creature *Infernal = me->SummonCreature(NETHERSPITE_INFERNAL, pos, TEMPSUMMON_TIMED_DESPAWN, 180000);
+        Creature* Infernal = me->SummonCreature(NETHERSPITE_INFERNAL, pos, TEMPSUMMON_TIMED_DESPAWN, 180000);
 
         if (Infernal)
         {
@@ -438,7 +426,7 @@ struct boss_malchezaarAI : public ScriptedAI
                 Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
                 for (uint8 i = 0; i < 2; ++i)
                 {
-                    Creature *axe = me->SummonCreature(MALCHEZARS_AXE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
+                    Creature* axe = me->SummonCreature(MALCHEZARS_AXE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
                     if (axe)
                     {
                         axe->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, AXE_EQUIP_MODEL);
@@ -574,7 +562,7 @@ struct boss_malchezaarAI : public ScriptedAI
         }
     }
 
-    void Cleanup(Creature *infernal, InfernalPoint *point)
+    void Cleanup(Creature* infernal, InfernalPoint *point)
     {
         for (std::vector<uint64>::iterator itr = infernals.begin(); itr != infernals.end(); ++itr)
             if (*itr == infernal->GetGUID())

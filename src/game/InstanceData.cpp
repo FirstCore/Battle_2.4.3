@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "InstanceData.h"
@@ -31,7 +19,7 @@ void InstanceData::SaveToDB()
     CharacterDatabase.PExecute("UPDATE instance SET data = '%s' WHERE id = '%d'", data.c_str(), instance->GetInstanceId());
 }
 
-void InstanceData::HandleGameObject(uint64 GUID, bool open, GameObject *go)
+void InstanceData::HandleGameObject(uint64 GUID, bool open, GameObject* go)
 {
     if (!go)
         go = instance->GetGameObject(GUID);
@@ -74,7 +62,7 @@ void InstanceData::LoadDoorData(const DoorData *data)
     sLog.outDebug("InstanceData::LoadDoorData: %u doors loaded.", doors.size());
 }
 
-void InstanceData::UpdateMinionState(Creature *minion, EncounterState state)
+void InstanceData::UpdateMinionState(Creature* minion, EncounterState state)
 {
     switch (state)
     {
@@ -94,7 +82,7 @@ void InstanceData::UpdateMinionState(Creature *minion, EncounterState state)
     }
 }
 
-void InstanceData::UpdateDoorState(GameObject *door)
+void InstanceData::UpdateDoorState(GameObject* door)
 {
     DoorInfoMap::iterator lower = doors.lower_bound(door->GetEntry());
     DoorInfoMap::iterator upper = doors.upper_bound(door->GetEntry());
@@ -125,7 +113,7 @@ void InstanceData::UpdateDoorState(GameObject *door)
     door->SetGoState(open ? GO_STATE_ACTIVE : GO_STATE_READY);
 }
 
-void InstanceData::AddDoor(GameObject *door, bool add)
+void InstanceData::AddDoor(GameObject* door, bool add)
 {
     DoorInfoMap::iterator lower = doors.lower_bound(door->GetEntry());
     DoorInfoMap::iterator upper = doors.upper_bound(door->GetEntry());
@@ -144,7 +132,7 @@ void InstanceData::AddDoor(GameObject *door, bool add)
         UpdateDoorState(door);
 }
 
-void InstanceData::AddMinion(Creature *minion, bool add)
+void InstanceData::AddMinion(Creature* minion, bool add)
 {
     MinionInfoMap::iterator itr = minions.find(minion->GetEntry());
     if (itr == minions.end())

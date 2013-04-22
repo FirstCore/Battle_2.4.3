@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Opcodes.h"
@@ -194,7 +182,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x0AA*/ { "SMSG_DESTROY_OBJECT",              STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x0AB*/ { "CMSG_USE_ITEM",                    STATUS_LOGGEDIN, &WorldSession::HandleUseItemOpcode             },
     /*0x0AC*/ { "CMSG_OPEN_ITEM",                   STATUS_LOGGEDIN, &WorldSession::HandleOpenItemOpcode            },
-    /*0x0AD*/ { "CMSG_READ_ITEM",                   STATUS_LOGGEDIN, &WorldSession::HandleReadItem                  },
+    /*0x0AD*/ { "CMSG_READ_ITEM",                   STATUS_LOGGEDIN, &WorldSession::HandleReadItemOpcode            },
     /*0x0AE*/ { "SMSG_READ_ITEM_OK",                STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x0AF*/ { "SMSG_READ_ITEM_FAILED",            STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x0B0*/ { "SMSG_ITEM_COOLDOWN",               STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
@@ -273,7 +261,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x0F9*/ { "CMSG_OPENING_CINEMATIC",           STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x0FA*/ { "SMSG_TRIGGER_CINEMATIC",           STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x0FB*/ { "CMSG_NEXT_CINEMATIC_CAMERA",       STATUS_LOGGEDIN, &WorldSession::HandleNextCinematicCamera       },
-    /*0x0FC*/ { "CMSG_COMPLETE_CINEMATIC",          STATUS_LOGGEDIN, &WorldSession::HandleCompleteCinema            },
+    /*0x0FC*/ { "CMSG_COMPLETE_CINEMATIC",          STATUS_LOGGEDIN, &WorldSession::HandleCompleteCinematic         },
     /*0x0FD*/ { "SMSG_TUTORIAL_FLAGS",              STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x0FE*/ { "CMSG_TUTORIAL_FLAG",               STATUS_LOGGEDIN, &WorldSession::HandleTutorialFlag              },
     /*0x0FF*/ { "CMSG_TUTORIAL_CLEAR",              STATUS_LOGGEDIN, &WorldSession::HandleTutorialClear             },
@@ -289,7 +277,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x109*/ { "CMSG_STORE_LOOT_IN_SLOT",          STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x10A*/ { "CMSG_AUTOEQUIP_ITEM",              STATUS_LOGGEDIN, &WorldSession::HandleAutoEquipItemOpcode       },
     /*0x10B*/ { "CMSG_AUTOSTORE_BAG_ITEM",          STATUS_LOGGEDIN, &WorldSession::HandleAutoStoreBagItemOpcode    },
-    /*0x10C*/ { "CMSG_SWAP_ITEM",                   STATUS_LOGGEDIN, &WorldSession::HandleSwapItem                  },
+    /*0x10C*/ { "CMSG_SWAP_ITEM",                   STATUS_LOGGEDIN, &WorldSession::HandleSwapItemOpcode            },
     /*0x10D*/ { "CMSG_SWAP_INV_ITEM",               STATUS_LOGGEDIN, &WorldSession::HandleSwapInvItemOpcode         },
     /*0x10E*/ { "CMSG_SPLIT_ITEM",                  STATUS_LOGGEDIN, &WorldSession::HandleSplitItemOpcode           },
     /*0x10F*/ { "CMSG_AUTOEQUIP_ITEM_SLOT",         STATUS_LOGGEDIN, &WorldSession::HandleAutoEquipItemSlotOpcode   },
@@ -415,7 +403,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x187*/ { "CMSG_QUESTGIVER_QUEST_AUTOLAUNCH", STATUS_LOGGEDIN, &WorldSession::HandleQuestAutoLaunch           },
     /*0x188*/ { "SMSG_QUESTGIVER_QUEST_DETAILS",    STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x189*/ { "CMSG_QUESTGIVER_ACCEPT_QUEST",     STATUS_LOGGEDIN, &WorldSession::HandleQuestgiverAcceptQuestOpcode},
-    /*0x18A*/ { "CMSG_QUESTGIVER_COMPLETE_QUEST",   STATUS_LOGGEDIN, &WorldSession::HandleQuestComplete             },
+    /*0x18A*/ { "CMSG_QUESTGIVER_COMPLETE_QUEST",   STATUS_LOGGEDIN, &WorldSession::HandleQuestgiverCompleteQuest   },
     /*0x18B*/ { "SMSG_QUESTGIVER_REQUEST_ITEMS",    STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x18C*/ { "CMSG_QUESTGIVER_REQUEST_REWARD",   STATUS_LOGGEDIN, &WorldSession::HandleQuestgiverRequestRewardOpcode},
     /*0x18D*/ { "SMSG_QUESTGIVER_OFFER_REWARD",     STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
@@ -858,7 +846,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x342*/ { "MSG_MOVE_STOP_SWIM_CHEAT",         STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x343*/ { "SMSG_MOVE_SET_CAN_FLY",            STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x344*/ { "SMSG_MOVE_UNSET_CAN_FLY",          STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
-    /*0x345*/ { "CMSG_MOVE_SET_CAN_FLY_ACK",        STATUS_LOGGEDIN, &WorldSession::HandleMoveFlyModeChangeAckOpcode},
+    /*0x345*/ { "CMSG_MOVE_SET_CAN_FLY_ACK",        STATUS_LOGGEDIN, &WorldSession::HandleMoveSetCanFlyAckOpcode    },
     /*0x346*/ { "CMSG_MOVE_SET_FLY",                STATUS_LOGGEDIN, &WorldSession::HandleMovementOpcodes           },
     /*0x347*/ { "CMSG_SOCKET_GEMS",                 STATUS_LOGGEDIN, &WorldSession::HandleSocketOpcode              },
     /*0x348*/ { "CMSG_ARENA_TEAM_CREATE",           STATUS_NEVER,    &WorldSession::Handle_NULL                     },
@@ -1064,12 +1052,12 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
     /*0x410*/ { "CMSG_GROUPACTION_THROTTLED",       STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x411*/ { "SMSG_OVERRIDE_LIGHT",              STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
     /*0x412*/ { "SMSG_TOTEM_CREATED",               STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
-    /*0x413*/ { "CMSG_TOTEM_DESTROYED",             STATUS_LOGGEDIN, &WorldSession::HandleTotemDestroy              },
+    /*0x413*/ { "CMSG_TOTEM_DESTROYED",             STATUS_LOGGEDIN, &WorldSession::HandleTotemDestroyed            },
     /*0x414*/ { "CMSG_EXPIRE_RAID_INSTANCE",        STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x415*/ { "CMSG_NO_SPELL_VARIANCE",           STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x416*/ { "CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY",STATUS_LOGGEDIN,&WorldSession::HandleQuestgiverStatusQueryMultipleOpcode},
     /*0x417*/ { "SMSG_QUESTGIVER_STATUS_MULTIPLE",  STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
-    /*0x418*/ { "CMSG_SET_PLAYER_DECLINED_NAMES",   STATUS_AUTHED,   &WorldSession::HandleDeclinedPlayerNameOpcode  },
+    /*0x418*/ { "CMSG_SET_PLAYER_DECLINED_NAMES",   STATUS_AUTHED,   &WorldSession::HandleSetPlayerDeclinedNamesOpcode},
     /*0x419*/ { "SMSG_SET_PLAYER_DECLINED_NAMES_RESULT",STATUS_NEVER,&WorldSession::Handle_ServerSide               },
     /*0x41A*/ { "CMSG_QUERY_SERVER_BUCK_DATA",      STATUS_NEVER,    &WorldSession::Handle_NULL                     },
     /*0x41B*/ { "CMSG_CLEAR_SERVER_BUCK_DATA",      STATUS_NEVER,    &WorldSession::Handle_NULL                     },

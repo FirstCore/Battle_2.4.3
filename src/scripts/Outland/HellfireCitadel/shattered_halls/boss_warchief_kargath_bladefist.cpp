@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -52,7 +40,7 @@ float AddsEntrance[3] = {306.036f,-84.29f,1.93f};
 
 struct boss_warchief_kargath_bladefistAI : public ScriptedAI
 {
-    boss_warchief_kargath_bladefistAI(Creature *c) : ScriptedAI(c)
+    boss_warchief_kargath_bladefistAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
@@ -108,14 +96,14 @@ struct boss_warchief_kargath_bladefistAI : public ScriptedAI
 
             if (pInstance->GetData64(DATA_WARBRINGER))
             {
-                Creature *pWar = Unit::GetCreature(*me,pInstance->GetData64(DATA_WARBRINGER));
+                Creature* pWar = Unit::GetCreature(*me,pInstance->GetData64(DATA_WARBRINGER));
                 if (pWar && pWar->isAlive())
                     pWar->AI()->AttackStart(me->getVictim());
             }
         }
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* summoned)
     {
         switch(summoned->GetEntry())
         {

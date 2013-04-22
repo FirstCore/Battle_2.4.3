@@ -264,6 +264,6 @@ if (!empty($_POST)) {
         echo($page);
 };
 
-echo '<center><a href="http://blizzlike.servegame.com"> Powered by BlizzLikeCore</a></center>';
+echo '<center><a href="http://blizzlike.servegame.com"> Powered by BlizzLikeGroup</a></center>';
 
 ?>

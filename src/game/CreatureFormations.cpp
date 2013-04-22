@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Creature.h"
@@ -27,7 +15,7 @@
 CreatureFormationInfoType   CreatureFormationMap;
 CreatureFormationDataType   CreatureFormationDataMap;
 
-void CreatureFormationManager::AddCreatureToFormation(uint32 formationId, Creature *member)
+void CreatureFormationManager::AddCreatureToFormation(uint32 formationId, Creature* member)
 {
     Map *map = member->FindMap();
     if (!map)
@@ -51,7 +39,7 @@ void CreatureFormationManager::AddCreatureToFormation(uint32 formationId, Creatu
     }
 }
 
-void CreatureFormationManager::RemoveCreatureFromFormation(CreatureFormation *formation, Creature *member)
+void CreatureFormationManager::RemoveCreatureFromFormation(CreatureFormation *formation, Creature* member)
 {
     sLog.outDebug("Deleting member pointer to GUID: %u from formation %u", formation->GetId(), member->GetDBTableGUIDLow());
     formation->RemoveMember(member);
@@ -226,7 +214,7 @@ void CreatureFormationManager::LoadCreatureFormations()
     sLog.outString();
 }
 
-void CreatureFormation::AddMember(Creature *member)
+void CreatureFormation::AddMember(Creature* member)
 {
     if (!member)
         return;
@@ -259,7 +247,7 @@ void CreatureFormation::AddMember(Creature *member)
     member->SetFormation(this);
 }
 
-void CreatureFormation::RemoveMember(Creature *member)
+void CreatureFormation::RemoveMember(Creature* member)
 {
     if (!member)
         return;
@@ -271,7 +259,7 @@ void CreatureFormation::RemoveMember(Creature *member)
     member->SetFormation(NULL);
 }
 
-void CreatureFormation::MemberAttackStart(Creature *member, Unit* target)
+void CreatureFormation::MemberAttackStart(Creature* member, Unit* target)
 {
     uint8 formationAI = CreatureFormationMap[m_formationID]->formationAI;
 
@@ -331,7 +319,7 @@ void CreatureFormation::LeaderMoveTo(float x, float y, float z)
 
     for (CreatureFormationMemberType::iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        Creature *pCreature = itr->first;
+        Creature* pCreature = itr->first;
         if (pCreature == m_leader || !pCreature->isAlive() || pCreature->getVictim())
             continue;
 

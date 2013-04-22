@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -157,7 +145,7 @@ struct instance_uldaman : public ScriptedInstance
 
     void BlockGO(uint64 guid)
     {
-        GameObject *go = instance->GetGameObject(guid);
+        GameObject* go = instance->GetGameObject(guid);
         if (!go)
             return;
         go->SetUInt32Value(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
@@ -168,7 +156,7 @@ struct instance_uldaman : public ScriptedInstance
     {
         for (std::vector<uint64>::const_iterator i = stoneKeeper.begin(); i != stoneKeeper.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (!pTarget || !pTarget->isAlive() || pTarget->getFaction() == 14)
                 continue;
             pTarget->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_DISABLE_MOVE);
@@ -183,13 +171,13 @@ struct instance_uldaman : public ScriptedInstance
 
     void ActivateWallMinions()
     {
-        Creature *archaedas = instance->GetCreature(archaedasGUID);
+        Creature* archaedas = instance->GetCreature(archaedasGUID);
         if (!archaedas)
             return;
 
         for (std::vector<uint64>::const_iterator i = archaedasWallMinions.begin(); i != archaedasWallMinions.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (!pTarget || !pTarget->isAlive() || pTarget->getFaction() == 14)
                 continue;
             archaedas->CastSpell(pTarget, SPELL_AWAKEN_VAULT_WALKER, true);
@@ -204,7 +192,7 @@ struct instance_uldaman : public ScriptedInstance
         // first despawn any aggroed wall minions
         for (std::vector<uint64>::const_iterator i = archaedasWallMinions.begin(); i != archaedasWallMinions.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (!pTarget || pTarget->isDead() || pTarget->getFaction() != 14)
                 continue;
             pTarget->setDeathState(JUST_DIED);
@@ -214,7 +202,7 @@ struct instance_uldaman : public ScriptedInstance
         // Vault Walkers
         for (std::vector<uint64>::const_iterator i = vaultWalker.begin(); i != vaultWalker.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (!pTarget || pTarget->isDead() || pTarget->getFaction() != 14)
                 continue;
             pTarget->setDeathState(JUST_DIED);
@@ -224,7 +212,7 @@ struct instance_uldaman : public ScriptedInstance
         // Earthen Guardians
         for (std::vector<uint64>::const_iterator i = earthenGuardian.begin(); i != earthenGuardian.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (!pTarget || pTarget->isDead() || pTarget->getFaction() != 14)
                 continue;
             pTarget->setDeathState(JUST_DIED);
@@ -234,7 +222,7 @@ struct instance_uldaman : public ScriptedInstance
 
     void ActivateArchaedas(uint64 target)
     {
-        Creature *archaedas = instance->GetCreature(archaedasGUID);
+        Creature* archaedas = instance->GetCreature(archaedasGUID);
         if (!archaedas)
             return;
 
@@ -247,7 +235,7 @@ struct instance_uldaman : public ScriptedInstance
 
     void ActivateIronaya()
     {
-        Creature *ironaya = instance->GetCreature(ironayaGUID);
+        Creature* ironaya = instance->GetCreature(ironayaGUID);
         if (!ironaya)
             return;
 
@@ -261,7 +249,7 @@ struct instance_uldaman : public ScriptedInstance
         // first respawn any aggroed wall minions
         for (std::vector<uint64>::const_iterator i = archaedasWallMinions.begin(); i != archaedasWallMinions.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (pTarget && pTarget->isDead())
             {
                 pTarget->Respawn();
@@ -273,7 +261,7 @@ struct instance_uldaman : public ScriptedInstance
         // Vault Walkers
         for (std::vector<uint64>::const_iterator i = vaultWalker.begin(); i != vaultWalker.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (pTarget && pTarget->isDead())
             {
                 pTarget->Respawn();
@@ -285,7 +273,7 @@ struct instance_uldaman : public ScriptedInstance
         // Earthen Guardians
         for (std::vector<uint64>::const_iterator i = earthenGuardian.begin(); i != earthenGuardian.end(); ++i)
         {
-            Creature *pTarget = instance->GetCreature(*i);
+            Creature* pTarget = instance->GetCreature(*i);
             if (pTarget && pTarget->isDead())
             {
                 pTarget->Respawn();

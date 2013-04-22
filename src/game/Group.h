@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef BLIZZLIKECORE_GROUP_H
@@ -156,10 +144,10 @@ class Group
         bool   Create(const uint64 &guid, const char * name);
         bool   LoadGroupFromDB(const uint64 &leaderGuid, QueryResult_AutoPtr result = QueryResult_AutoPtr(NULL), bool loadMembers = true);
         bool   LoadMemberFromDB(uint32 guidLow, uint8 subgroup, bool assistant);
-        bool   AddInvite(Player *player);
-        uint32 RemoveInvite(Player *player);
+        bool   AddInvite(Player* player);
+        uint32 RemoveInvite(Player* player);
         void   RemoveAllInvites();
-        bool   AddLeaderInvite(Player *player);
+        bool   AddLeaderInvite(Player* player);
         bool   AddMember(const uint64 &guid, const char* name);
                                                             // method: 0=just remove, 1=kick
         uint32 RemoveMember(const uint64 &guid, const uint8 &method);
@@ -247,11 +235,11 @@ class Group
         // some additional raid methods
         void ConvertToRaid();
 
-        void SetBattlegroundGroup(BattleGround *bg) { m_bgGroup = bg; }
+        void SetBattlegroundGroup(BattleGround* bg) { m_bgGroup = bg; }
         uint32 CanJoinBattleGroundQueue(uint32 bgTypeId, uint32 bgQueueType, uint32 MinPlayerCount, uint32 MaxPlayerCount, bool isRated, uint32 arenaSlot);
 
         void ChangeMembersGroup(const uint64 &guid, const uint8 &group);
-        void ChangeMembersGroup(Player *player, const uint8 &group);
+        void ChangeMembersGroup(Player* player, const uint8 &group);
 
         void SetAssistant(uint64 guid, const bool &state)
         {
@@ -290,8 +278,8 @@ class Group
         void SendUpdate();
         void UpdatePlayerOutOfRange(Player* pPlayer);
                                                             // ignore: GUID of player that will be ignored
-        void BroadcastPacket(WorldPacket *packet, bool ignorePlayersInBGRaid, int group=-1, uint64 ignore=0);
-        void BroadcastReadyCheck(WorldPacket *packet);
+        void BroadcastPacket(WorldPacket* packet, bool ignorePlayersInBGRaid, int group=-1, uint64 ignore=0);
+        void BroadcastReadyCheck(WorldPacket* packet);
         void OfflineReadyCheck();
 
         /*********************************************************/
@@ -346,7 +334,7 @@ class Group
         bool _setMainTank(const uint64 &guid);
         bool _setMainAssistant(const uint64 &guid);
 
-        void _homebindIfInstance(Player *player);
+        void _homebindIfInstance(Player* player);
 
         void _initRaidSubGroupsCounter()
         {

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef __SPELL_H
@@ -146,8 +134,8 @@ class SpellCastTargets
         void setDst(Position *pos);
 
         uint64 getGOTargetGUID() const { return m_GOTargetGUID.GetRawValue(); }
-        GameObject *getGOTarget() const { return m_GOTarget; }
-        void setGOTarget(GameObject *target);
+        GameObject* getGOTarget() const { return m_GOTarget; }
+        void setGOTarget(GameObject* target);
 
         uint64 getCorpseTargetGUID() const { return m_CorpseTargetGUID.GetRawValue(); }
         void setCorpseTarget(Corpse* corpse);
@@ -178,7 +166,7 @@ class SpellCastTargets
     private:
         // objects (can be used at spell creating and after Update at casting
         Unit* m_unitTarget;
-        GameObject *m_GOTarget;
+        GameObject* m_GOTarget;
         Item *m_itemTarget;
 
         // object GUID/etc, can be used always
@@ -372,6 +360,7 @@ class Spell
         uint8 CheckRange(bool strict);
         uint8 CheckPower();
         uint8 CheckCasterAuras() const;
+        bool CheckCharge();
 
         int32 CalculateDamage(uint8 i, Unit* target) { return m_caster->CalculateSpellDamage(m_spellInfo,i,m_currentBasePoints[i],target); }
 
@@ -383,8 +372,8 @@ class Spell
 
         void DoCreateItem(uint32 i, uint32 itemtype);
 
-        void WriteSpellGoTargets(WorldPacket * data);
-        void WriteAmmoToPacket(WorldPacket * data);
+        void WriteSpellGoTargets(WorldPacket* data);
+        void WriteAmmoToPacket(WorldPacket* data);
         void FillTargetMap();
 
         void SetTargetMap(uint32 i, uint32 cur);
@@ -406,7 +395,7 @@ class Spell
         void SendChannelStart(uint32 duration);
         void SendResurrectRequest(Player* target);
 
-        void HandleEffects(Unit* pUnitTarget,Item *pItemTarget,GameObject *pGOTarget,uint32 i, float DamageMultiplier = 1.0);
+        void HandleEffects(Unit* pUnitTarget,Item *pItemTarget,GameObject* pGOTarget,uint32 i, float DamageMultiplier = 1.0);
         void HandleThreatSpells(uint32 spellId);
         //void HandleAddAura(Unit* Target);
 

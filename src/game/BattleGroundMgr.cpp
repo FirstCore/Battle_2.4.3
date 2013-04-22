@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -132,7 +120,7 @@ void BattleGroundQueue::SelectionPool::AddGroup(GroupQueueInfo * ginfo)
 }
 
 // add group to bg queue with the given leader and bg specifications
-GroupQueueInfo * BattleGroundQueue::AddGroup(Player *leader, uint32 BgTypeId, uint8 ArenaType, bool isRated, uint32 arenaRating, uint32 arenateamid)
+GroupQueueInfo * BattleGroundQueue::AddGroup(Player* leader, uint32 BgTypeId, uint8 ArenaType, bool isRated, uint32 arenaRating, uint32 arenateamid)
 {
     uint32 queue_id = leader->GetBattleGroundQueueIdFromLevel();
 
@@ -158,7 +146,7 @@ GroupQueueInfo * BattleGroundQueue::AddGroup(Player *leader, uint32 BgTypeId, ui
     return ginfo;
 }
 
-void BattleGroundQueue::AddPlayer(Player *plr, GroupQueueInfo *ginfo)
+void BattleGroundQueue::AddPlayer(Player* plr, GroupQueueInfo *ginfo)
 {
     uint32 queue_id = plr->GetBattleGroundQueueIdFromLevel();
 
@@ -176,7 +164,7 @@ void BattleGroundQueue::AddPlayer(Player *plr, GroupQueueInfo *ginfo)
     {
         //announce only once in a time
         if (!sWorld.getConfig(CONFIG_BATTLEGROUND_QUEUE_ANNOUNCER_PLAYERONLY) && m_QueuedPlayers[queue_id].size() % 5 != 0) return;
-        BattleGround * bg = sBattleGroundMgr.GetBattleGroundTemplate(ginfo->BgTypeId);
+        BattleGround* bg = sBattleGroundMgr.GetBattleGroundTemplate(ginfo->BgTypeId);
         if (!bg) return;
 
         char const* bgName = bg->GetName();
@@ -196,7 +184,7 @@ void BattleGroundQueue::AddPlayer(Player *plr, GroupQueueInfo *ginfo)
 
         for(std::map<uint64, PlayerQueueInfo>::iterator itr = m_QueuedPlayers[queue_id].begin(); itr != m_QueuedPlayers[queue_id].end(); ++itr)
         {
-            Player *_player = ObjectAccessor::FindPlayer((uint64)itr->first);
+            Player* _player = ObjectAccessor::FindPlayer((uint64)itr->first);
             if (_player)
             {
                 if (_player->GetTeam() == ALLIANCE)
@@ -225,7 +213,7 @@ void BattleGroundQueue::AddPlayer(Player *plr, GroupQueueInfo *ginfo)
 
 void BattleGroundQueue::RemovePlayer(uint64 guid, bool decreaseInvitedCount)
 {
-    Player *plr = ObjectAccessor::FindPlayer(guid);
+    Player* plr = ObjectAccessor::FindPlayer(guid);
 
     int32 queue_id = 0;                                     // signed for proper for-loop finish
     QueuedPlayersMap::iterator itr;
@@ -310,7 +298,7 @@ void BattleGroundQueue::RemovePlayer(uint64 guid, bool decreaseInvitedCount)
             if (at)
             {
                 sLog.outDebug("UPDATING memberLost's personal arena rating for %u by opponents rating: %u", GUID_LOPART(guid), group->OpponentsTeamRating);
-                Player *plr = ObjectAccessor::FindPlayer(guid);
+                Player* plr = ObjectAccessor::FindPlayer(guid);
                 if (plr)
                     at->MemberLost(plr, group->OpponentsTeamRating);
                 else
@@ -333,9 +321,9 @@ void BattleGroundQueue::RemovePlayer(uint64 guid, bool decreaseInvitedCount)
         {
             // remove next player, this is recursive
             // first send removal information
-            if (Player *plr2 = ObjectAccessor::FindPlayer(group->Players.begin()->first))
+            if (Player* plr2 = ObjectAccessor::FindPlayer(group->Players.begin()->first))
             {
-                BattleGround * bg = sBattleGroundMgr.GetBattleGroundTemplate(group->BgTypeId);
+                BattleGround* bg = sBattleGroundMgr.GetBattleGroundTemplate(group->BgTypeId);
                 uint32 bgQueueTypeId = sBattleGroundMgr.BGQueueTypeId(group->BgTypeId,group->ArenaType);
                 uint32 queueSlot = plr2->GetBattleGroundQueueIndex(bgQueueTypeId);
                 plr2->RemoveBattleGroundQueueId(bgQueueTypeId); // must be called this way, because if you move this call to queue->removeplayer, it causes bugs
@@ -349,7 +337,7 @@ void BattleGroundQueue::RemovePlayer(uint64 guid, bool decreaseInvitedCount)
     }
 }
 
-bool BattleGroundQueue::InviteGroupToBG(GroupQueueInfo * ginfo, BattleGround * bg, uint32 side)
+bool BattleGroundQueue::InviteGroupToBG(GroupQueueInfo * ginfo, BattleGround* bg, uint32 side)
 {
     // set side if needed
     if (side)
@@ -471,7 +459,7 @@ bool BattleGroundQueue::BuildSelectionPool(uint32 bgTypeId, uint32 queue_id, uin
 
 // used to remove the Enter Battle window if the battle has already, but someone still has it
 // (this can happen in arenas mainly, since the preparation is shorter than the timer for the bgqueueremove event
-void BattleGroundQueue::BGEndedRemoveInvites(BattleGround *bg)
+void BattleGroundQueue::BGEndedRemoveInvites(BattleGround* bg)
 {
     uint32 queue_id = bg->GetQueueType();
     uint32 bgInstanceId = bg->GetInstanceID();
@@ -500,7 +488,7 @@ void BattleGroundQueue::BGEndedRemoveInvites(BattleGround *bg)
                 }
 
                 // get the player
-                Player * plr = ObjectAccessor::FindPlayer(itr2->first);
+                Player* plr = ObjectAccessor::FindPlayer(itr2->first);
                 if (!plr)
                 {
                     sLog.outError("Player offline when trying to remove from GroupQueueInfo, this should never happen.");
@@ -582,7 +570,7 @@ void BattleGroundQueue::Update(uint32 bgTypeId, uint32 queue_id, uint8 arenatype
 
     // finished iterating through the bgs with free slots, maybe we need to create a new bg
 
-    BattleGround * bg_template = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
+    BattleGround* bg_template = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
     if (!bg_template)
     {
         sLog.outError("Battleground: Update: bg template not found for %u", bgTypeId);
@@ -652,7 +640,7 @@ void BattleGroundQueue::Update(uint32 bgTypeId, uint32 queue_id, uint8 arenatype
     // if selection pools are ready, create the new bg
     if ((bAllyOK && bHordeOK) || (sBattleGroundMgr.isTesting() && (bAllyOK || bHordeOK)))
     {
-        BattleGround * bg2 = 0;
+        BattleGround* bg2 = 0;
         // special handling for arenas
         if (bg_template->isArena())
         {
@@ -1005,7 +993,7 @@ void BattleGroundMgr::DeleteAlllBattleGrounds()
 {
     for (BattleGroundSet::iterator itr = m_BattleGrounds.begin(); itr != m_BattleGrounds.end();)
     {
-        BattleGround * bg = itr->second;
+        BattleGround* bg = itr->second;
         m_BattleGrounds.erase(itr++);
         delete bg;
     }
@@ -1032,7 +1020,7 @@ void BattleGroundMgr::Update(time_t diff)
         // direct deletion caused crashes
         if (itr->second->m_SetDeleteThis)
         {
-            BattleGround * bg = itr->second;
+            BattleGround* bg = itr->second;
             m_BattleGrounds.erase(itr);
             delete bg;
         }
@@ -1069,7 +1057,7 @@ void BattleGroundMgr::Update(time_t diff)
     }
 }
 
-void BattleGroundMgr::BuildBattleGroundStatusPacket(WorldPacket *data, BattleGround *bg, uint32 /*team*/, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint32 arenatype, uint8 israted)
+void BattleGroundMgr::BuildBattleGroundStatusPacket(WorldPacket* data, BattleGround* bg, uint32 /*team*/, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint32 arenatype, uint8 israted)
 {
     // we can be in 3 queues in same time...
     if (StatusID == 0)
@@ -1160,7 +1148,7 @@ void BattleGroundMgr::BuildBattleGroundStatusPacket(WorldPacket *data, BattleGro
     }
 }
 
-void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket *data, BattleGround *bg)
+void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket* data, BattleGround* bg)
 {
     uint8 type = (bg->isArena() ? 1 : 0);
                                                             // last check on 2.4.1
@@ -1221,7 +1209,7 @@ void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket *data, BattleGround *bg)
         }
         else
         {
-            Player *plr = ObjectAccessor::FindPlayer(itr2->first);
+            Player* plr = ObjectAccessor::FindPlayer(itr2->first);
             uint32 team = bg->GetPlayerTeam(itr2->first);
             if (!team && plr)
                 team = plr->GetBGTeam();
@@ -1275,7 +1263,7 @@ void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket *data, BattleGround *bg)
     data->put(wpos, scoreCount);
 }
 
-void BattleGroundMgr::BuildGroupJoinedBattlegroundPacket(WorldPacket *data, uint32 bgTypeId)
+void BattleGroundMgr::BuildGroupJoinedBattlegroundPacket(WorldPacket* data, uint32 bgTypeId)
 {
     /*bgTypeId is:
     0 - Your group has joined a battleground queue, but you are not eligible
@@ -1290,26 +1278,26 @@ void BattleGroundMgr::BuildGroupJoinedBattlegroundPacket(WorldPacket *data, uint
     *data << uint32(bgTypeId);
 }
 
-void BattleGroundMgr::BuildUpdateWorldStatePacket(WorldPacket *data, uint32 field, uint32 value)
+void BattleGroundMgr::BuildUpdateWorldStatePacket(WorldPacket* data, uint32 field, uint32 value)
 {
     data->Initialize(SMSG_UPDATE_WORLD_STATE, 4+4);
     *data << uint32(field);
     *data << uint32(value);
 }
 
-void BattleGroundMgr::BuildPlaySoundPacket(WorldPacket *data, uint32 soundid)
+void BattleGroundMgr::BuildPlaySoundPacket(WorldPacket* data, uint32 soundid)
 {
     data->Initialize(SMSG_PLAY_SOUND, 4);
     *data << uint32(soundid);
 }
 
-void BattleGroundMgr::BuildPlayerLeftBattleGroundPacket(WorldPacket *data, const uint64& guid)
+void BattleGroundMgr::BuildPlayerLeftBattleGroundPacket(WorldPacket* data, const uint64& guid)
 {
     data->Initialize(SMSG_BATTLEGROUND_PLAYER_LEFT, 8);
     *data << uint64(guid);
 }
 
-void BattleGroundMgr::BuildPlayerJoinedBattleGroundPacket(WorldPacket *data, Player *plr)
+void BattleGroundMgr::BuildPlayerJoinedBattleGroundPacket(WorldPacket* data, Player* plr)
 {
     data->Initialize(SMSG_BATTLEGROUND_PLAYER_JOINED, 8);
     *data << uint64(plr->GetGUID());
@@ -1361,7 +1349,7 @@ BattleGround * BattleGroundMgr::GetBattleGroundTemplate(uint32 bgTypeId)
 BattleGround * BattleGroundMgr::CreateNewBattleGround(uint32 bgTypeId, uint8 arenaType, bool isRated)
 {
     // get the template BG
-    BattleGround *bg_template = GetBattleGroundTemplate(bgTypeId);
+    BattleGround* bg_template = GetBattleGroundTemplate(bgTypeId);
 
     if (!bg_template)
     {
@@ -1369,7 +1357,7 @@ BattleGround * BattleGroundMgr::CreateNewBattleGround(uint32 bgTypeId, uint8 are
         return 0;
     }
 
-    BattleGround *bg = NULL;
+    BattleGround* bg = NULL;
 
     // create a copy of the BG template
     switch(bgTypeId)
@@ -1437,7 +1425,7 @@ BattleGround * BattleGroundMgr::CreateNewBattleGround(uint32 bgTypeId, uint8 are
 uint32 BattleGroundMgr::CreateBattleGround(uint32 bgTypeId, uint32 MinPlayersPerTeam, uint32 MaxPlayersPerTeam, uint32 LevelMin, uint32 LevelMax, char* BattleGroundName, uint32 MapID, float Team1StartLocX, float Team1StartLocY, float Team1StartLocZ, float Team1StartLocO, float Team2StartLocX, float Team2StartLocY, float Team2StartLocZ, float Team2StartLocO, float StartMaxDist)
 {
     // Create the BG
-    BattleGround *bg = NULL;
+    BattleGround* bg = NULL;
 
     switch(bgTypeId)
     {
@@ -1671,7 +1659,7 @@ void BattleGroundMgr::DistributeArenaPoints()
     sWorld.SendGlobalText("Done flushing Arena points.", NULL);
 }
 
-void BattleGroundMgr::BuildBattleGroundListPacket(WorldPacket *data, uint64 guid, Player* plr, uint32 bgTypeId)
+void BattleGroundMgr::BuildBattleGroundListPacket(WorldPacket* data, uint64 guid, Player* plr, uint32 bgTypeId)
 {
     uint32 PlayerLevel = 10;
 
@@ -1706,9 +1694,9 @@ void BattleGroundMgr::BuildBattleGroundListPacket(WorldPacket *data, uint64 guid
     }
 }
 
-void BattleGroundMgr::SendToBattleGround(Player *pl, uint32 instanceId)
+void BattleGroundMgr::SendToBattleGround(Player* pl, uint32 instanceId)
 {
-    BattleGround *bg = GetBattleGround(instanceId);
+    BattleGround* bg = GetBattleGround(instanceId);
     if (bg)
     {
         uint32 mapid = bg->GetMapId();
@@ -1727,7 +1715,7 @@ void BattleGroundMgr::SendToBattleGround(Player *pl, uint32 instanceId)
     }
 }
 
-void BattleGroundMgr::SendAreaSpiritHealerQueryOpcode(Player *pl, BattleGround *bg, uint64 guid)
+void BattleGroundMgr::SendAreaSpiritHealerQueryOpcode(Player* pl, BattleGround* bg, uint64 guid)
 {
     WorldPacket data(SMSG_AREA_SPIRIT_HEALER_TIME, 12);
     uint32 time_ = 30000 - bg->GetLastResurrectTime();      // resurrect every 30 seconds
@@ -1847,7 +1835,7 @@ void BattleGroundMgr::SetHolidayWeekends(uint32 mask)
 {
     for (uint32 bgtype = 1; bgtype <= 8; ++bgtype)
     {
-        if (BattleGround * bg = GetBattleGroundTemplate(bgtype))
+        if (BattleGround* bg = GetBattleGroundTemplate(bgtype))
         {
             bg->SetHoliday(mask & (1 << bgtype));
         }

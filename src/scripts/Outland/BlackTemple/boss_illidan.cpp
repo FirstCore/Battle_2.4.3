@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -892,7 +880,7 @@ struct boss_illidan_stormrageAI : public ScriptedAI
 
 struct flame_of_azzinothAI : public ScriptedAI
 {
-    flame_of_azzinothAI(Creature *c) : ScriptedAI(c) {}
+    flame_of_azzinothAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 FlameBlastTimer;
     uint32 CheckTimer;
@@ -1405,7 +1393,7 @@ struct npc_akama_illidanAI : public ScriptedAI
 
 struct boss_maievAI : public ScriptedAI
 {
-    boss_maievAI(Creature *c) : ScriptedAI(c) {};
+    boss_maievAI(Creature* c) : ScriptedAI(c) {};
 
     uint64 IllidanGUID;
 
@@ -1632,7 +1620,7 @@ bool GossipHello_npc_akama_at_illidan(Player* pPlayer, Creature* pCreature)
 
 struct cage_trap_triggerAI : public ScriptedAI
 {
-    cage_trap_triggerAI(Creature *c) : ScriptedAI(c) {}
+    cage_trap_triggerAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 IllidanGUID;
     uint32 DespawnTimer;
@@ -1710,7 +1698,7 @@ bool GOHello_cage_trap(Player* pPlayer, GameObject* pGo)
 
 struct shadow_demonAI : public ScriptedAI
 {
-    shadow_demonAI(Creature *c) : ScriptedAI(c) {}
+    shadow_demonAI(Creature* c) : ScriptedAI(c) {}
 
     uint64 TargetGUID;
 

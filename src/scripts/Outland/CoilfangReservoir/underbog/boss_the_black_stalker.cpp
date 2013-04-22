@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -36,7 +24,7 @@ EndScriptData */
 
 struct boss_the_black_stalkerAI : public ScriptedAI
 {
-    boss_the_black_stalkerAI(Creature *c) : ScriptedAI(c)
+    boss_the_black_stalkerAI(Creature* c) : ScriptedAI(c)
     {
         HeroicMode = me->GetMap()->IsHeroic();
     }
@@ -66,7 +54,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
 
     void EnterCombat(Unit* /*who*/) {}
 
-    void JustSummoned(Creature *summon)
+    void JustSummoned(Creature* summon)
     {
         if (summon && summon->GetEntry() == ENTRY_SPORE_STRIDER)
         {
@@ -82,7 +70,7 @@ struct boss_the_black_stalkerAI : public ScriptedAI
     void JustDied(Unit* /*who*/)
     {
         for (std::list<uint64>::iterator i = Striders.begin(); i != Striders.end(); ++i)
-            if (Creature *strider = Unit::GetCreature(*me, *i))
+            if (Creature* strider = Unit::GetCreature(*me, *i))
             {
                 strider->SetLootRecipient(NULL);
                 strider->DealDamage(strider,strider->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);

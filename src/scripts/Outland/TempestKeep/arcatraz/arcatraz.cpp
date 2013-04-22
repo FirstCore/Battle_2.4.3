@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -62,7 +50,7 @@ EndContentData */
 
 struct npc_millhouse_manastormAI : public ScriptedAI
 {
-    npc_millhouse_manastormAI(Creature *c) : ScriptedAI(c)
+    npc_millhouse_manastormAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -253,7 +241,7 @@ CreatureAI* GetAI_npc_millhouse_manastorm(Creature* pCreature)
 
 struct npc_warden_mellicharAI : public ScriptedAI
 {
-    npc_warden_mellicharAI(Creature *c) : ScriptedAI(c)
+    npc_warden_mellicharAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -350,7 +338,7 @@ struct npc_warden_mellicharAI : public ScriptedAI
                 case 2:
                     DoCast(me,SPELL_TARGET_ALPHA);
                     pInstance->SetData(TYPE_WARDEN_1,IN_PROGRESS);
-                    if (GameObject *Sphere = GameObject::GetGameObject(*me,pInstance->GetData64(DATA_SPHERE_SHIELD)))
+                    if (GameObject* Sphere = GameObject::GetGameObject(*me,pInstance->GetData64(DATA_SPHERE_SHIELD)))
                         Sphere->SetGoState(GO_STATE_READY);
                     break;
                 case 3:
@@ -484,7 +472,7 @@ CreatureAI* GetAI_npc_warden_mellichar(Creature* pCreature)
 
 struct mob_zerekethvoidzoneAI : public ScriptedAI
 {
-    mob_zerekethvoidzoneAI(Creature *c) : ScriptedAI(c) {}
+    mob_zerekethvoidzoneAI(Creature* c) : ScriptedAI(c) {}
 
     void Reset()
     {

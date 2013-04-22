@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -113,7 +101,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction)
     uint32 bidder_accId = 0;
     uint32 bidder_security = 0;
     uint64 bidder_guid = MAKE_NEW_GUID(auction->bidder, 0, HIGHGUID_PLAYER);
-    Player *bidder = ObjectAccessor::FindPlayer(bidder_guid);
+    Player* bidder = ObjectAccessor::FindPlayer(bidder_guid);
     // data for gm.log
     if (sWorld.getConfig(CONFIG_GM_LOG_TRADE))
     {
@@ -179,7 +167,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction)
 void AuctionHouseMgr::SendAuctionSalePendingMail(AuctionEntry * auction)
 {
     uint64 owner_guid = MAKE_NEW_GUID(auction->owner, 0, HIGHGUID_PLAYER);
-    Player *owner = ObjectAccessor::FindPlayer(owner_guid);
+    Player* owner = ObjectAccessor::FindPlayer(owner_guid);
     uint32 owner_accId = objmgr.GetPlayerAccountIdByGUID(owner_guid);
     // owner exist (online or offline)
     if (owner || owner_accId)
@@ -211,7 +199,7 @@ void AuctionHouseMgr::SendAuctionSalePendingMail(AuctionEntry * auction)
 void AuctionHouseMgr::SendAuctionSuccessfulMail(AuctionEntry * auction)
 {
     uint64 owner_guid = MAKE_NEW_GUID(auction->owner, 0, HIGHGUID_PLAYER);
-    Player *owner = ObjectAccessor::FindPlayer(owner_guid);
+    Player* owner = ObjectAccessor::FindPlayer(owner_guid);
     uint32 owner_accId = objmgr.GetPlayerAccountIdByGUID(owner_guid);
     // owner exist
     if (owner || owner_accId)
@@ -253,7 +241,7 @@ void AuctionHouseMgr::SendAuctionExpiredMail(AuctionEntry * auction)
         return;
 
     uint64 owner_guid = MAKE_NEW_GUID(auction->owner, 0, HIGHGUID_PLAYER);
-    Player *owner = ObjectAccessor::FindPlayer(owner_guid);
+    Player* owner = ObjectAccessor::FindPlayer(owner_guid);
     uint32 owner_accId = objmgr.GetPlayerAccountIdByGUID(owner_guid);
     // owner exist
     if (owner || owner_accId)

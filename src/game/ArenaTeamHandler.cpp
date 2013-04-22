@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Player.h"
@@ -34,7 +22,7 @@ void WorldSession::HandleInspectArenaStatsOpcode(WorldPacket& recv_data)
     recv_data >> guid;
     sLog.outDebug("Inspect Arena stats (GUID: %u TypeId: %u)", GUID_LOPART(guid),GuidHigh2TypeId(GUID_HIPART(guid)));
 
-    if (Player *plr = ObjectAccessor::FindPlayer(guid))
+    if (Player* plr = ObjectAccessor::FindPlayer(guid))
     {
         for (uint8 i = 0; i < MAX_ARENA_SLOT; ++i)
         {
@@ -79,7 +67,7 @@ void WorldSession::HandleArenaTeamAddMemberOpcode(WorldPacket& recv_data)
     uint32 ArenaTeamId;                                     // arena team id
     std::string Invitedname;
 
-    Player * player = NULL;
+    Player* player = NULL;
 
     recv_data >> ArenaTeamId >> Invitedname;
 
@@ -284,7 +272,7 @@ void WorldSession::HandleArenaTeamRemoveFromTeamOpcode(WorldPacket& recv_data)
         return;
     }
 
-    Player *player = ObjectAccessor::FindPlayer(member->guid);
+    Player* player = ObjectAccessor::FindPlayer(member->guid);
     if (player && player->InArena())
         return;
 

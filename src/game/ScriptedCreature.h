@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef SC_CREATURE_H
@@ -39,14 +27,14 @@ class SummonList : public std::list<uint64>
 {
     public:
         explicit SummonList(Creature* creature) : me(creature) {}
-        void Summon(Creature *summon) { push_back(summon->GetGUID()); }
-        void Despawn(Creature *summon) { remove(summon->GetGUID()); }
+        void Summon(Creature* summon) { push_back(summon->GetGUID()); }
+        void Despawn(Creature* summon) { remove(summon->GetGUID()); }
         void DespawnEntry(uint32 entry);
         void DespawnAll();
         void DoAction(uint32 entry, uint32 info);
         void DoZoneInCombat(uint32 entry = 0);
     private:
-        Creature *me;
+        Creature* me;
 };
 
 struct ScriptedAI : public CreatureAI
@@ -195,7 +183,7 @@ struct Scripted_NoMovementAI : public ScriptedAI
 
 struct BossAI : public ScriptedAI
 {
-    BossAI(Creature *c, uint32 id);
+    BossAI(Creature* c, uint32 id);
     virtual ~BossAI() {}
 
     const uint32 bossId;
@@ -203,8 +191,8 @@ struct BossAI : public ScriptedAI
     SummonList summons;
     InstanceData * const instance;
 
-    void JustSummoned(Creature *summon);
-    void SummonedCreatureDespawn(Creature *summon);
+    void JustSummoned(Creature* summon);
+    void SummonedCreatureDespawn(Creature* summon);
 
     void UpdateAI(const uint32 diff) = 0;
 
@@ -221,8 +209,8 @@ struct BossAI : public ScriptedAI
 };
 
 // BSCR grid searchers.
-Creature *GetClosestCreatureWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange, bool bAlive = true);
-GameObject *GetClosestGameObjectWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange);
+Creature* GetClosestCreatureWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange, bool bAlive = true);
+GameObject* GetClosestGameObjectWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange);
 void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange);
 void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange);
 

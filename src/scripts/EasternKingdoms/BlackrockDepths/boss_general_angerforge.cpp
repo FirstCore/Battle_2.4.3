@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -33,7 +21,7 @@ enum Spells
 
 struct boss_general_angerforgeAI : public ScriptedAI
 {
-    boss_general_angerforgeAI(Creature *c) : ScriptedAI(c) {}
+    boss_general_angerforgeAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 MightyBlow_Timer;
     uint32 HamString_Timer;
@@ -56,13 +44,13 @@ struct boss_general_angerforgeAI : public ScriptedAI
 
     void SummonAdds(Unit* victim)
     {
-        if (Creature *SummonedAdd = DoSpawnCreature(8901, irand(-14,14), irand(-14,14), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
+        if (Creature* SummonedAdd = DoSpawnCreature(8901, irand(-14,14), irand(-14,14), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
             SummonedAdd->AI()->AttackStart(victim);
     }
 
     void SummonMedics(Unit* victim)
     {
-        if (Creature *SummonedMedic = DoSpawnCreature(8894, irand(-9,9), irand(-9,9), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
+        if (Creature* SummonedMedic = DoSpawnCreature(8894, irand(-9,9), irand(-9,9), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
             SummonedMedic->AI()->AttackStart(victim);
     }
 

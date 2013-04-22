@@ -1699,7 +1699,7 @@ method_backup () {
 
 	echo "======================================================================"
 	echo "AutoMySQLBackup version ${version}"
-	echo "http://blizzlike.servegame.com"
+	echo "BlizzLikeCore"
 	echo 
 	echo "Backup of Database Server - ${CONFIG_mysql_dump_host_friendly:-$CONFIG_mysql_dump_host}"
 	( IFS=,; echo "Databases - ${CONFIG_db_names[*]}" )

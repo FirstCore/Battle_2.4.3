@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #define _CRT_SECURE_NO_DEPRECATE
@@ -39,15 +27,19 @@
 
 #include <map>
 
-// From Extractor
+//From Extractor
 #include "adtfile.h"
 #include "wdtfile.h"
 #include "dbcfile.h"
 #include "wmo.h"
 #include "mpq_libmpq04.h"
 
+//------------------------------------------------------------------------------
 // Defines
+
 #define MPQ_BLOCK_SIZE 0x1000
+
+//-----------------------------------------------------------------------------
 
 extern ArchiveSet gOpenArchives;
 
@@ -65,24 +57,12 @@ bool hasInputPathParam = false;
 bool preciseVectorData = false;
 
 // Constants
+
 //static const char * szWorkDirMaps = ".\\Maps";
 const char * szWorkDirWmo = "./Buildings";
+const char * szRawVMAPMagic = "VMAPs03";
 
 // Local testing functions
-
-static void clreol()
-{
-    printf("\r                                                                              \r");
-}
-
-void strToLower(char* str)
-{
-    while(*str)
-    {
-        *str=tolower(*str);
-        ++str;
-    }
-}
 
 static const char * GetPlainName(const char * szFileName)
 {
@@ -124,7 +104,7 @@ int ExtractWmo()
                     {
                         char cpy[4];
                         strncpy((char*)cpy,rchr,4);
-                        for (int i = 0; i < 4; ++i)
+                        for (int i=0;i<4; ++i)
                         {
                             int m = cpy[i];
                             if (isdigit(m))
@@ -152,7 +132,7 @@ int ExtractWmo()
                         //printf("root has %d groups\n", froot->nGroups);
                         if (froot->nGroups !=0)
                         {
-                            for (uint32 i = 0; i < froot->nGroups; ++i)
+                            for (uint32 i=0; i<froot->nGroups; ++i)
                             {
                                 char temp[1024];
                                 strcpy(temp, fname->c_str());
@@ -196,16 +176,12 @@ int ExtractWmo()
     return success;
 }
 
-void ExtractMapsFromMpq()
-{
-}
-
 void ParsMapFiles()
 {
     char fn[512];
     //char id_filename[64];
     char id[10];
-    for (unsigned int i = 0; i < map_count; ++i)
+    for (unsigned int i=0; i<map_count; ++i)
     {
         sprintf(id,"%03u",map_ids[i].id);
         sprintf(fn,"World\\Maps\\%s\\%s.wdt", map_ids[i].name, map_ids[i].name);
@@ -213,9 +189,9 @@ void ParsMapFiles()
         if (WDT.init(id, map_ids[i].id))
         {
             printf("Processing Map %u\n[", map_ids[i].id);
-            for (int x = 0; x < 64; ++x)
+            for (int x=0; x<64; ++x)
             {
-                for (int y = 0; y < 64; ++y)
+                for (int y=0; y<64; ++y)
                 {
                     if (ADTFile *ADT = WDT.GetMap(x,y))
                     {
@@ -355,13 +331,13 @@ bool processArgv(int argc, char ** argv, const char *versionString)
     hasInputPathParam = false;
     bool preciseVectorData = false;
 
-    for (int i = 1; i < argc; ++i)
+    for (int i=1; i< argc; ++i)
     {
         if (strcmp("-s",argv[i]) == 0)
         {
             preciseVectorData = false;
         }
-        else if (strcmp("-d",argv[i]) == 0)
+        else if(strcmp("-d",argv[i]) == 0)
         {
             if ((i+1)<argc)
             {
@@ -402,12 +378,14 @@ bool processArgv(int argc, char ** argv, const char *versionString)
     return result;
 }
 
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // Main
 //
 // The program must be run with two command line arguments
 //
 // Arg1 - The source MPQ name (for testing reading and file find)
 // Arg2 - Listfile name
+//
 
 int main(int argc, char ** argv)
 {
@@ -429,16 +407,15 @@ int main(int argc, char ** argv)
             printf("Your output directory seems to be polluted, please use an empty directory!\n");
             printf("<press return to exit>");
             char garbage[2];
-            scanf("%c", garbage);
-            return 1;
+            return scanf("%c", garbage);
         }
     }
 
     printf("Extract %s. Beginning work ....\n",versionString);
-
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // Create the working directory
     if (mkdir(szWorkDirWmo
-#ifdef _XOPEN_UNIX
+#ifdef __linux__
                     , 0711
 #endif
                     ))
@@ -464,6 +441,7 @@ int main(int argc, char ** argv)
     if (success)
         success = ExtractWmo();
 
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     //map.dbc
     if (success)
     {
@@ -490,7 +468,7 @@ int main(int argc, char ** argv)
         //nError = ERROR_SUCCESS;
     }
 
-    clreol();
+    printf("\n");
     if (!success)
     {
         printf("ERROR: Extract %s. Work NOT complete.\n   Precise vector data=%d.\nPress any key.\n",versionString, preciseVectorData);
@@ -500,4 +478,3 @@ int main(int argc, char ** argv)
     printf("Extract %s. Work complete. No errors.\n",versionString);
     return 0;
 }
-

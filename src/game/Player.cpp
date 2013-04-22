@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -1385,7 +1373,7 @@ void Player::setDeathState(DeathState s)
     }
 }
 
-bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket * p_data)
+bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket* p_data)
 {
     Field *fields = result->Fetch();
     uint32 guid = fields[0].GetUInt32();
@@ -1495,7 +1483,7 @@ bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket * p_data)
             if (!enchantId)
                 continue;
 
-            if ((enchant = sSpellItemEnchantmentStore.LookupEntry(enchantId)))
+            if (enchant = sSpellItemEnchantmentStore.LookupEntry(enchantId))
                 break;
         }
 
@@ -2090,7 +2078,7 @@ Creature* Player::GetNPCIfCanInteractWith(uint64 guid, uint32 npcflagmask)
         return NULL;
 
     // exist
-    Creature *unit = GetMap()->GetCreature(guid);
+    Creature* unit = GetMap()->GetCreature(guid);
     if (!unit)
         return NULL;
 
@@ -2130,7 +2118,7 @@ Creature* Player::GetNPCIfCanInteractWith(uint64 guid, uint32 npcflagmask)
 
 GameObject* Player::GetGameObjectIfCanInteractWith(uint64 guid, GameobjectTypes type) const
 {
-    if (GameObject *go = GetMap()->GetGameObject(guid))
+    if (GameObject* go = GetMap()->GetGameObject(guid))
     {
         if (go->GetGoType() == type)
         {
@@ -3600,7 +3588,7 @@ void Player::InitVisibleBits()
     updateVisualBits.SetBit(PLAYER_CHOSEN_TITLE);
 }
 
-void Player::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const
+void Player::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player* target) const
 {
     for (int i = 0; i < EQUIPMENT_SLOT_END; i++)
     {
@@ -3632,7 +3620,7 @@ void Player::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) c
     Unit::BuildCreateUpdateBlockForPlayer(data, target);
 }
 
-void Player::DestroyForPlayer(Player *target) const
+void Player::DestroyForPlayer(Player* target) const
 {
     Unit::DestroyForPlayer(target);
 
@@ -4015,7 +4003,7 @@ void Player::BuildPlayerRepop()
 
     // create a corpse and place it at the player's location
     CreateCorpse();
-    Corpse *corpse = GetCorpse();
+    Corpse* corpse = GetCorpse();
     if (!corpse)
     {
         sLog.outError("Error creating corpse for Player %s [%u]", GetName(), GetGUIDLow());
@@ -4156,7 +4144,7 @@ void Player::CreateCorpse()
 
     uint32 _uf, _pb, _pb2, _cfb1, _cfb2;
 
-    Corpse *corpse = new Corpse((m_ExtraFlags & PLAYER_EXTRA_PVP_DEATH) ? CORPSE_RESURRECTABLE_PVP : CORPSE_RESURRECTABLE_PVE);
+    Corpse* corpse = new Corpse((m_ExtraFlags & PLAYER_EXTRA_PVP_DEATH) ? CORPSE_RESURRECTABLE_PVP : CORPSE_RESURRECTABLE_PVE);
     SetPvPDeath(false);
 
     if (!corpse->Create(objmgr.GenerateLowGuid(HIGHGUID_CORPSE), this, GetMapId(), GetPositionX(),
@@ -4462,7 +4450,7 @@ void Player::RepopAtGraveyard()
     WorldSafeLocsEntry const *ClosestGrave = NULL;
 
     // Special handle for battleground maps
-    if (BattleGround *bg = GetBattleGround())
+    if (BattleGround* bg = GetBattleGround())
         ClosestGrave = bg->GetClosestGraveYard(this);
     else
         ClosestGrave = objmgr.GetClosestGraveYard(GetPositionX(), GetPositionY(), GetPositionZ(), GetMapId(), GetTeam());
@@ -5623,7 +5611,7 @@ void Player::SaveRecallPosition()
     m_recallO = GetOrientation();
 }
 
-void Player::SendMessageToSet(WorldPacket *data, bool self)
+void Player::SendMessageToSet(WorldPacket* data, bool self)
 {
     if (self)
         GetSession()->SendPacket(data);
@@ -5634,7 +5622,7 @@ void Player::SendMessageToSet(WorldPacket *data, bool self)
     VisitNearbyWorldObject(GetMap()->GetVisibilityDistance(), notifier);
 }
 
-void Player::SendMessageToSetInRange(WorldPacket *data, float dist, bool self)
+void Player::SendMessageToSetInRange(WorldPacket* data, float dist, bool self)
 {
     if (self)
         GetSession()->SendPacket(data);
@@ -5643,7 +5631,7 @@ void Player::SendMessageToSetInRange(WorldPacket *data, float dist, bool self)
     VisitNearbyWorldObject(dist, notifier);
 }
 
-void Player::SendMessageToSetInRange(WorldPacket *data, float dist, bool self, bool own_team_only)
+void Player::SendMessageToSetInRange(WorldPacket* data, float dist, bool self, bool own_team_only)
 {
     if (self)
         GetSession()->SendPacket(data);
@@ -5652,7 +5640,7 @@ void Player::SendMessageToSetInRange(WorldPacket *data, float dist, bool self, b
     VisitNearbyWorldObject(dist, notifier);
 }
 
-void Player::SendDirectMessage(WorldPacket *data)
+void Player::SendDirectMessage(WorldPacket* data)
 {
     if (m_session)
         m_session->SendPacket(data);
@@ -6361,7 +6349,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, float honor, bool pvpt
 
         if (uVictim->GetTypeId() == TYPEID_PLAYER)
         {
-            Player *pVictim = uVictim->ToPlayer();
+            Player* pVictim = uVictim->ToPlayer();
 
             if (GetTeam() == pVictim->GetTeam() && !sWorld.IsFFAPvPRealm())
                 return false;
@@ -7656,13 +7644,13 @@ void Player::RemovedInsignia(Player* looterPlr)
         RepopAtGraveyard();
     }
 
-    Corpse *corpse = GetCorpse();
+    Corpse* corpse = GetCorpse();
     if (!corpse)
         return;
 
     // We have to convert player corpse to bones, not to be able to resurrect there
     // SpawnCorpseBones isn't handy, 'cos it saves player while he in BG
-    Corpse *bones = ObjectAccessor::Instance().ConvertCorpseForPlayer(GetGUID(),true);
+    Corpse* bones = ObjectAccessor::Instance().ConvertCorpseForPlayer(GetGUID(),true);
     if (!bones)
         return;
 
@@ -7706,7 +7694,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     if (IS_GAMEOBJECT_GUID(guid))
     {
         DEBUG_LOG("       IS_GAMEOBJECT_GUID(guid)");
-        GameObject *go = GetMap()->GetGameObject(guid);
+        GameObject* go = GetMap()->GetGameObject(guid);
 
         // not check distance for GO in case owned GO (fishing bobber case, for example)
         // And permit out of range GO with no owner in case fishing hole
@@ -7724,7 +7712,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
 
             //TODO: fix this big hack
             if ((go->GetEntry() == BG_AV_OBJECTID_MINE_N || go->GetEntry() == BG_AV_OBJECTID_MINE_S))
-                if (BattleGround *bg = GetBattleGround())
+                if (BattleGround* bg = GetBattleGround())
                     if (bg->GetTypeID() == BATTLEGROUND_AV)
                         if (!(((BattleGroundAV*)bg)->PlayerCanDoMineQuest(go->GetEntry(),GetTeam())))
                         {
@@ -7818,7 +7806,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     }
     else if (IS_CORPSE_GUID(guid))                          // remove insignia
     {
-        Corpse *bones = ObjectAccessor::GetCorpse(*this, guid);
+        Corpse* bones = ObjectAccessor::GetCorpse(*this, guid);
 
         if (!bones || !(loot_type == LOOT_CORPSE || loot_type == LOOT_INSIGNIA) || bones->GetType() != CORPSE_BONES)
         {
@@ -7833,7 +7821,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             bones->lootForBody = true;
             uint32 pLevel = bones->loot.gold;
             bones->loot.clear();
-            if (BattleGround *bg = GetBattleGround())
+            if (BattleGround* bg = GetBattleGround())
                 if (bg->GetTypeID() == BATTLEGROUND_AV)
                     loot->FillLoot(1, LootTemplates_Creature, this);
             // It may need a better formula
@@ -7846,7 +7834,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     }
     else
     {
-        Creature *creature = GetMap()->GetCreature(guid);
+        Creature* creature = GetMap()->GetCreature(guid);
 
         // must be in range and creature must be alive for pickpocket and must be dead for another loot
         if (!creature || creature->isAlive() != (loot_type == LOOT_PICKPOCKETING) || !creature->IsWithinDistInMap(this,INTERACTION_DISTANCE))
@@ -7882,7 +7870,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
         else
         {
             // the player whose group may loot the corpse
-            Player *recipient = creature->GetLootRecipient();
+            Player* recipient = creature->GetLootRecipient();
             if (!recipient)
             {
                 creature->SetLootRecipient(this);
@@ -12535,7 +12523,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
 
         if (pSource->GetTypeId() == TYPEID_UNIT)
         {
-            Creature *pCreature = pSource->ToCreature();
+            Creature* pCreature = pSource->ToCreature();
             uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
 
             if (!(itr->second.npc_option_npcflag & npcflags))
@@ -12610,7 +12598,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
         }
         else if (pSource->GetTypeId() == TYPEID_GAMEOBJECT)
         {
-            GameObject *pGo = (GameObject*)pSource;
+            GameObject* pGo = (GameObject*)pSource;
 
             switch(itr->second.option_id)
             {
@@ -12892,7 +12880,7 @@ void Player::PrepareQuestMenu(uint64 guid)
     QuestRelations* pObjectQR;
     QuestRelations* pObjectQIR;
 
-    if (Creature *pCreature = GetMap()->GetCreature(guid))
+    if (Creature* pCreature = GetMap()->GetCreature(guid))
     {
         pObject = (Object*)pCreature;
         pObjectQR  = &objmgr.mCreatureQuestRelations;
@@ -12904,7 +12892,7 @@ void Player::PrepareQuestMenu(uint64 guid)
         //only for quests which cast teleport spells on player
         Map * _map = IsInWorld() ? GetMap() : MapManager::Instance().FindMap(GetMapId(), GetInstanceId());
         ASSERT(_map);
-        GameObject *pGameObject = _map->GetGameObject(guid);
+        GameObject* pGameObject = _map->GetGameObject(guid);
         if (pGameObject)
         {
             pObject = (Object*)pGameObject;
@@ -12981,7 +12969,7 @@ void Player::SendPreparedQuest(uint64 guid)
         qe._Emote = 0;
         std::string title = "";
 
-        if (Creature *pCreature = GetMap()->GetCreature(guid))
+        if (Creature* pCreature = GetMap()->GetCreature(guid))
         {
             uint32 textid = GetGossipTextId(pCreature);
 
@@ -13045,7 +13033,7 @@ Quest const * Player::GetNextQuest(uint64 guid, Quest const *pQuest)
     QuestRelations* pObjectQR;
   //QuestRelations* pObjectQIR;
 
-    if (Creature *pCreature = GetMap()->GetCreature(guid))
+    if (Creature* pCreature = GetMap()->GetCreature(guid))
     {
         pObject = (Object*)pCreature;
         pObjectQR  = &objmgr.mCreatureQuestRelations;
@@ -13057,7 +13045,7 @@ Quest const * Player::GetNextQuest(uint64 guid, Quest const *pQuest)
         //only for quests which cast teleport spells on player
         Map * _map = IsInWorld() ? GetMap() : MapManager::Instance().FindMap(GetMapId(), GetInstanceId());
         ASSERT(_map);
-        GameObject *pGameObject = _map->GetGameObject(guid);
+        GameObject* pGameObject = _map->GetGameObject(guid);
         if (pGameObject)
         {
             pObject = (Object*)pGameObject;
@@ -14030,7 +14018,7 @@ void Player::GroupEventHappens(uint32 questId, WorldObject const* pEventObject)
     {
         for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
         {
-            Player *pGroupGuy = itr->getSource();
+            Player* pGroupGuy = itr->getSource();
 
             // for any leave or dead (with not released body) group member at appropriate distance
             if (pGroupGuy && pGroupGuy->IsAtGroupRewardDistance(pEventObject) && !pGroupGuy->GetCorpse())
@@ -14416,7 +14404,7 @@ void Player::SendQuestReward(Quest const *pQuest, uint32 XP, Object * questGiver
 {
     uint32 questid = pQuest->GetQuestId();
     DEBUG_LOG("WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid);
-    gameeventmgr.HandleQuestComplete(questid);
+    gameeventmgr.HandleQuestgiverCompleteQuest(questid);
     WorldPacket data(SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4+4+pQuest->GetRewItemsCount()*8));
     data << questid;
     data << uint32(0x03);
@@ -14504,7 +14492,7 @@ void Player::SendQuestConfirmAccept(const Quest* pQuest, Player* pReceiver)
     }
 }
 
-void Player::SendPushToPartyResponse(Player *pPlayer, uint32 msg)
+void Player::SendPushToPartyResponse(Player* pPlayer, uint32 msg)
 {
     if (pPlayer)
     {
@@ -15404,7 +15392,7 @@ void Player::LoadCorpse()
         ObjectAccessor::Instance().ConvertCorpseForPlayer(GetGUID());
     else
     {
-        if (Corpse *corpse = GetCorpse())
+        if (Corpse* corpse = GetCorpse())
             ApplyModFlag(PLAYER_FIELD_BYTES, PLAYER_FIELD_BYTE_RELEASE_TIMER, corpse && !sMapStore.LookupEntry(corpse->GetMapId())->Instanceable());
         else
             //Prevent Dead Player login without corpse
@@ -15965,6 +15953,8 @@ void Player::_LoadSpells(QueryResult_AutoPtr result)
     for (PlayerSpellMap::iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
         delete itr->second;
 
+    m_spells.clear();
+
     //QueryResult_AutoPtr result = CharacterDatabase.PQuery("SELECT spell,active,disabled FROM character_spell WHERE guid = '%u'",GetGUIDLow());
 
     if (result)
@@ -16210,7 +16200,7 @@ void Player::SendSavedInstances()
 }
 
 // convert the player's binds to the group
-void Player::ConvertInstancesToGroup(Player *player, Group* group, uint64 player_guid)
+void Player::ConvertInstancesToGroup(Player* player, Group* group, uint64 player_guid)
 {
     bool has_binds = false;
     bool has_solo = false;
@@ -17370,7 +17360,7 @@ void Player::StopCastingCharm()
     }
 }
 
-void Player::BuildPlayerChat(WorldPacket *data, uint8 msgtype, const std::string& text, uint32 language) const
+void Player::BuildPlayerChat(WorldPacket* data, uint8 msgtype, const std::string& text, uint32 language) const
 {
     *data << (uint8)msgtype;
     *data << (uint32)language;
@@ -17473,7 +17463,7 @@ void Player::Whisper(const std::string& text, uint32 language,uint64 receiver)
     if (language != LANG_ADDON)                             // if not addon data
         language = LANG_UNIVERSAL;                          // whispers should always be readable
 
-    Player *rPlayer = ObjectAccessor::FindPlayer(receiver);
+    Player* rPlayer = ObjectAccessor::FindPlayer(receiver);
 
     if (sWorld.getConfig(CONFIG_CHATLOG_WHISPER))
         sLog.outChat("[WHISPER] Player %s tells %s: %s",
@@ -17517,7 +17507,7 @@ void Player::HandleChatSpyMessage(const std::string& msg, uint8 type, uint32 lan
         return;
     }
 
-    Player *plr = ObjectAccessor::FindPlayer(m_chatSpyGuid);
+    Player* plr = ObjectAccessor::FindPlayer(m_chatSpyGuid);
 
     if(!plr || !plr->IsInWorld())
         return;
@@ -18154,8 +18144,8 @@ void Player::ContinueTaxiFlight()
 
     for (uint32 i = 1; i < nodeList.size(); ++i)
     {
-        TaxiPathNode const& node = nodeList[i];
-        TaxiPathNode const& prevNode = nodeList[i-1];
+        TaxiPathNodeEntry const& node = nodeList[i];
+        TaxiPathNodeEntry const& prevNode = nodeList[i-1];
 
         // skip nodes at another map
         if (node.mapid != GetMapId())
@@ -18283,7 +18273,7 @@ bool Player::BuyItemFromVendor(uint64 vendorguid, uint32 item, uint8 count, uint
         return false;
     }
 
-    Creature *pCreature = GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
+    Creature* pCreature = GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
     if (!pCreature)
     {
         DEBUG_LOG("WORLD: BuyItemFromVendor - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(vendorguid)));
@@ -18830,7 +18820,7 @@ void Player::SetBattleGroundEntryPoint()
 
 void Player::LeaveBattleground(bool teleportToEntryPoint)
 {
-    if (BattleGround *bg = GetBattleGround())
+    if (BattleGround* bg = GetBattleGround())
     {
         bg->RemovePlayerAtLeave(GetGUID(), teleportToEntryPoint, true);
 
@@ -18873,7 +18863,7 @@ bool Player::CanReportAfkDueToLimit()
 // This player has been blamed to be inactive in a battleground
 void Player::ReportedAfkBy(Player* reporter)
 {
-    BattleGround *bg = GetBattleGround();
+    BattleGround* bg = GetBattleGround();
     if (!bg || bg != reporter->GetBattleGround() || GetTeam() != reporter->GetTeam())
         return;
 
@@ -19053,7 +19043,7 @@ bool Player::IsVisibleInGridForPlayer(Player const * pl) const
     // Dead player see live players near own corpse
     if (isAlive())
     {
-        Corpse *corpse = pl->GetCorpse();
+        Corpse* corpse = pl->GetCorpse();
         if (corpse)
         {
             // 20 - aggro distance for same level, 25 - max additional distance if player level less that creature level
@@ -19717,7 +19707,7 @@ BattleGround* Player::GetBattleGround() const
 
 bool Player::InArena() const
 {
-    BattleGround *bg = GetBattleGround();
+    BattleGround* bg = GetBattleGround();
     if (!bg || !bg->isArena())
         return false;
 
@@ -19727,7 +19717,7 @@ bool Player::InArena() const
 bool Player::GetBGAccessByLevel(uint32 bgTypeId) const
 {
     // get a template bg instead of running one
-    BattleGround *bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
+    BattleGround* bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
     if (!bg)
         return false;
 
@@ -19768,7 +19758,7 @@ uint32 Player::GetBattleGroundQueueIdFromLevel() const
         return level/10 - 1;                                // 20..29 -> 1, 30-39 -> 2, ...
     /*
     ASSERT(bgTypeId < MAX_BATTLEGROUND_TYPES);
-    BattleGround *bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
+    BattleGround* bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
     ASSERT(bg);
     return (getLevel() - bg->GetMinLevel()) / 10;*/
 }
@@ -19845,7 +19835,7 @@ void Player::UpdateForQuestsGO()
     {
         if (IS_GAMEOBJECT_GUID(*itr))
         {
-            if (GameObject *obj = HashMapHolder<GameObject>::Find(*itr))
+            if (GameObject* obj = HashMapHolder<GameObject>::Find(*itr))
                 obj->BuildValuesUpdateBlockForPlayer(&udata,this);
         }
     }
@@ -19873,7 +19863,7 @@ void Player::SummonIfPossible(bool agree)
     }
 
     // drop flag at summon
-    if (BattleGround *bg = GetBattleGround())
+    if (BattleGround* bg = GetBattleGround())
         bg->EventPlayerDroppedFlag(this);
 
     m_summon_expire = 0;
@@ -20784,7 +20774,7 @@ bool Player::isTotalImmunity()
 void Player::UpdateCharmedAI()
 {
     //This should only called in Player::Update
-    Creature *charmer = GetCharmer()->ToCreature();
+    Creature* charmer = GetCharmer()->ToCreature();
 
     //kill self if charm aura has infinite duration
     if (charmer->IsInEvadeMode())
@@ -20848,7 +20838,7 @@ void Player::RemoveGlobalCooldown(SpellEntry const *spellInfo)
     m_globalCooldowns[spellInfo->StartRecoveryCategory] = 0;
 }
 
-void Player::BuildTeleportAckMsg(WorldPacket *data, float x, float y, float z, float ang) const
+void Player::BuildTeleportAckMsg(WorldPacket* data, float x, float y, float z, float ang) const
 {
     MovementInfo mi = m_movementInfo;
     mi.ChangePosition(x, y, z, ang);

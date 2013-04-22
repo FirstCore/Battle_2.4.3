@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -103,7 +91,7 @@ float hatcherway[2][5][3] =
 
 struct boss_janalaiAI : public ScriptedAI
 {
-    boss_janalaiAI(Creature *c) : ScriptedAI(c)
+    boss_janalaiAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =c->GetInstanceData();
 
@@ -446,7 +434,7 @@ CreatureAI* GetAI_boss_janalaiAI(Creature* pCreature)
 
 struct mob_janalai_firebombAI : public ScriptedAI
 {
-    mob_janalai_firebombAI(Creature *c) : ScriptedAI(c){}
+    mob_janalai_firebombAI(Creature* c) : ScriptedAI(c){}
 
     void Reset() {}
 
@@ -472,7 +460,7 @@ CreatureAI* GetAI_mob_janalai_firebombAI(Creature* pCreature)
 
 struct mob_amanishi_hatcherAI : public ScriptedAI
 {
-    mob_amanishi_hatcherAI(Creature *c) : ScriptedAI(c)
+    mob_amanishi_hatcherAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =c->GetInstanceData();
     }
@@ -592,7 +580,7 @@ CreatureAI* GetAI_mob_amanishi_hatcherAI(Creature* pCreature)
 
 struct mob_hatchlingAI : public ScriptedAI
 {
-    mob_hatchlingAI(Creature *c) : ScriptedAI(c)
+    mob_hatchlingAI(Creature* c) : ScriptedAI(c)
     {
         pInstance =c->GetInstanceData();
     }
@@ -641,7 +629,7 @@ CreatureAI* GetAI_mob_hatchlingAI(Creature* pCreature)
 
 struct mob_eggAI : public ScriptedAI
 {
-    mob_eggAI(Creature *c) : ScriptedAI(c){}
+    mob_eggAI(Creature* c) : ScriptedAI(c){}
     void Reset() {}
     void EnterCombat(Unit* /*who*/) {}
     void AttackStart(Unit* /*who*/) {}

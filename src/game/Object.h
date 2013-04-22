@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef _OBJECT_H
@@ -31,8 +19,9 @@
 #include <string>
 
 #define CONTACT_DISTANCE            0.5f
-#define INTERACTION_DISTANCE        5.0f
+#define INTERACTION_DISTANCE        7.0f
 #define ATTACK_DISTANCE             5.0f
+#define SIGHT_RANGE_UNIT            50.0f
 #define MAX_VISIBILITY_DISTANCE     333.0f      // max distance for visible object show, limited in 333 yards
 #define DEFAULT_VISIBILITY_DISTANCE 90.0f       // default visible distance, 90 yards on continents
 #define DEFAULT_VISIBILITY_INSTANCE 120.0f      // default visible distance in instances, 120 yards
@@ -169,14 +158,14 @@ class Object
         uint8 GetTypeId() const { return m_objectTypeId; }
         bool isType(uint16 mask) const { return (mask & m_objectType); }
 
-        virtual void BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const;
+        virtual void BuildCreateUpdateBlockForPlayer(UpdateData *data, Player* target) const;
         void SendUpdateToPlayer(Player* player);
 
-        void BuildValuesUpdateBlockForPlayer(UpdateData *data, Player *target) const;
+        void BuildValuesUpdateBlockForPlayer(UpdateData *data, Player* target) const;
         void BuildOutOfRangeUpdateBlock(UpdateData *data) const;
         void BuildMovementUpdateBlock(UpdateData * data, uint32 flags = 0) const;
 
-        virtual void DestroyForPlayer(Player *target) const;
+        virtual void DestroyForPlayer(Player* target) const;
 
         const int32& GetInt32Value(uint16 index) const
         {
@@ -323,7 +312,7 @@ class Object
         virtual bool hasQuest(uint32 /* quest_id */) const { return false; }
         virtual bool hasInvolvedQuest(uint32 /* quest_id */) const { return false; }
         virtual void BuildUpdate(UpdateDataMapType&) {}
-        void BuildFieldsUpdate(Player *, UpdateDataMapType &) const;
+        void BuildFieldsUpdate(Player*, UpdateDataMapType &) const;
 
         // FG: some hacky helpers
         void ForceValuesUpdateAtIndex(uint32);
@@ -332,6 +321,8 @@ class Object
         const Player* ToPlayer() const { if (GetTypeId() == TYPEID_PLAYER)  return (const Player*)((Player*)this); else return NULL;  }
         Creature* ToCreature(){ if (GetTypeId() == TYPEID_UNIT) return reinterpret_cast<Creature*>(this); else return NULL; }
         const Creature* ToCreature() const {if (GetTypeId() == TYPEID_UNIT) return (const Creature*)((Creature*)this); else return NULL; }
+        Unit* ToUnit(){ if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER) return reinterpret_cast<Unit*>(this); else return NULL; }
+        const Unit* ToUnit() const {if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER) return (const Unit*)((Unit*)this); else return NULL; }
 
     protected:
 
@@ -341,11 +332,11 @@ class Object
         void _Create (uint32 guidlow, uint32 entry, HighGuid guidhigh);
         void _LoadIntoDataField(const char* data, uint32 startOffset, uint32 count);
 
-        virtual void _SetUpdateBits(UpdateMask *updateMask, Player *target) const;
+        virtual void _SetUpdateBits(UpdateMask *updateMask, Player* target) const;
 
-        virtual void _SetCreateBits(UpdateMask *updateMask, Player *target) const;
+        virtual void _SetCreateBits(UpdateMask *updateMask, Player* target) const;
         void _BuildMovementUpdate(ByteBuffer * data, uint8 updateFlags) const;
-        void _BuildValuesUpdate(uint8 updatetype, ByteBuffer *data, UpdateMask *updateMask, Player *target) const;
+        void _BuildValuesUpdate(uint8 updatetype, ByteBuffer *data, UpdateMask *updateMask, Player* target) const;
 
         uint16 m_objectType;
 
@@ -571,8 +562,8 @@ class WorldObject : public Object, public WorldLocation
             GetPosition(&pos);
             MovePosition(pos, dist, angle);
         }
-       void MovePositionToFirstCollision(Position &pos, float dist, float angle);
-       void GetFirstCollisionPosition(Position &pos, float dist, float angle)
+        void MovePositionToFirstCollision(Position &pos, float dist, float angle);
+        void GetFirstCollisionPosition(Position &pos, float dist, float angle)
         {
                 GetPosition(&pos);
                 MovePositionToFirstCollision(pos, dist, angle);
@@ -602,6 +593,10 @@ class WorldObject : public Object, public WorldLocation
             GetRandomPoint(srcPos, distance, x, y, z);
             pos.Relocate(x, y, z, GetOrientation());
         }
+
+        float GetDistanceSqr(float x, float y, float z) const;
+        bool HasInArc(float arcangle, const Position *pos) const;
+        bool HasInArc(const float arcangle, const float x, const float y) const;
 
         uint32 GetInstanceId() const { return m_InstanceId; }
 
@@ -676,8 +671,8 @@ class WorldObject : public Object, public WorldLocation
 
         virtual void CleanupsBeforeDelete();                // used in destructor or explicitly before mass creature delete to remove cross-references to already deleted units
 
-        virtual void SendMessageToSet(WorldPacket *data, bool self);
-        virtual void SendMessageToSetInRange(WorldPacket *data, float dist, bool self);
+        virtual void SendMessageToSet(WorldPacket* data, bool self);
+        virtual void SendMessageToSetInRange(WorldPacket* data, float dist, bool self);
 
         void MonsterSay(const char* text, uint32 language, uint64 TargetGuid);
         void MonsterYell(const char* text, uint32 language, uint64 TargetGuid);
@@ -688,7 +683,7 @@ class WorldObject : public Object, public WorldLocation
         void MonsterTextEmote(int32 textId, uint64 TargetGuid, bool IsBossEmote = false);
         void MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisper = false);
         void MonsterYellToZone(int32 textId, uint32 language, uint64 TargetGuid);
-        void BuildMonsterChat(WorldPacket *data, uint8 msgtype, char const* text, uint32 language, char const* name, uint64 TargetGuid) const;
+        void BuildMonsterChat(WorldPacket* data, uint8 msgtype, char const* text, uint32 language, char const* name, uint64 TargetGuid) const;
 
         void PlayDistanceSound(uint32 sound_id, Player* target = NULL);
         void PlayDirectSound(uint32 sound_id, Player* target = NULL);
@@ -704,6 +699,11 @@ class WorldObject : public Object, public WorldLocation
 
         // low level function for visibility change code, must be define in all main world object subclasses
         virtual bool isVisibleForInState(Player const* u, bool inVisibleList) const = 0;
+
+        float GetGridActivationRange() const;
+        float GetVisibilityRange() const;
+        float GetSightRange(const WorldObject* target = NULL) const;
+        bool canSeeOrDetect(WorldObject const* obj, bool ignoreStealth = false, bool distanceCheck = false) const;
 
         // Low Level Packets
         void SendPlaySound(uint32 Sound, bool OnlySelf);

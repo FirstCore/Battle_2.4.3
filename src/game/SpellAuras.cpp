@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -765,7 +753,7 @@ void PersistentAreaAura::Update(uint32 diff)
     Unit* caster = GetCaster();
     if (caster)
     {
-        DynamicObject *dynObj = caster->GetDynObject(GetId(), GetEffIndex());
+        DynamicObject* dynObj = caster->GetDynObject(GetId(), GetEffIndex());
         if (dynObj)
         {
             if (!m_target->IsWithinDistInMap(dynObj, dynObj->GetRadius()))
@@ -985,7 +973,7 @@ void Aura::_RemoveAura()
 
     if (caster && IsPersistent())
     {
-        DynamicObject *dynObj = caster->GetDynObject(GetId(), GetEffIndex());
+        DynamicObject* dynObj = caster->GetDynObject(GetId(), GetEffIndex());
         if (dynObj)
             dynObj->RemoveAffected(m_target);
     }
@@ -2199,7 +2187,7 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
             {
                 // Waiting to resurrect spell cancel, we must remove player from resurrect queue
                 if (m_target->GetTypeId() == TYPEID_PLAYER)
-                    if (BattleGround *bg = m_target->ToPlayer()->GetBattleGround())
+                    if (BattleGround* bg = m_target->ToPlayer()->GetBattleGround())
                         bg->RemovePlayerFromResurrectQueue(m_target->GetGUID());
                 return;
             }
@@ -3830,7 +3818,7 @@ void Aura::HandleAuraModEffectImmunity(bool apply, bool Real)
         {
             if (m_target->ToPlayer()->InBattleGround())
             {
-                BattleGround *bg = m_target->ToPlayer()->GetBattleGround();
+                BattleGround* bg = m_target->ToPlayer()->GetBattleGround();
                 if (bg)
                 {
                     switch(bg->GetTypeID())
@@ -5524,7 +5512,7 @@ void Aura::HandleAuraRetainComboPoints(bool apply, bool Real)
     if (m_target->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    Player *target = m_target->ToPlayer();
+    Player* target = m_target->ToPlayer();
 
     // combo points was added in SPELL_EFFECT_ADD_COMBO_POINTS handler
     // remove only if aura expire by time (in case combo points amount change aura removed without combo points lost)
@@ -5942,7 +5930,7 @@ void Aura::PeriodicTick()
                         if (spell->m_spellInfo->Id == spellProto->Id)
                             spell->cancel();
 
-            if (Player *modOwner = pCaster->GetSpellModOwner())
+            if (Player* modOwner = pCaster->GetSpellModOwner())
                 modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_MULTIPLE_VALUE, multiplier);
 
             uint32 heal = pCaster->SpellHealingBonus(spellProto, uint32(new_damage * multiplier), DOT, pCaster);
@@ -5994,7 +5982,7 @@ void Aura::PeriodicTick()
 
             // add HoTs to amount healed in bgs
             if (pCaster->GetTypeId() == TYPEID_PLAYER)
-                if (BattleGround *bg = pCaster->ToPlayer()->GetBattleGround())
+                if (BattleGround* bg = pCaster->ToPlayer()->GetBattleGround())
                     bg->UpdatePlayerScore(pCaster->ToPlayer(), SCORE_HEALING_DONE, gain);
 
             //Do check before because m_modifier.auraName can be invalidate by DealDamage.
@@ -6081,7 +6069,7 @@ void Aura::PeriodicTick()
             {
                 gain_multiplier = GetSpellProto()->EffectMultipleValue[GetEffIndex()];
 
-                if (Player *modOwner = pCaster->GetSpellModOwner())
+                if (Player* modOwner = pCaster->GetSpellModOwner())
                     modOwner->ApplySpellMod(GetId(), SPELLMOD_MULTIPLE_VALUE, gain_multiplier);
             }
 
@@ -6283,7 +6271,7 @@ void Aura::PeriodicDummyTick()
             {
                 if ((*i)->GetId() == GetId())
                 {
-                    BattleGround *bg = m_target->ToPlayer()->GetBattleGround();
+                    BattleGround* bg = m_target->ToPlayer()->GetBattleGround();
                     if (!bg || !bg->isArena())
                     {
                         // default case - not in arena
@@ -6583,13 +6571,13 @@ void Aura::HandleArenaPreparation(bool apply, bool Real)
     if (apply)
     {
         m_target->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION);
-        m_target->SetFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
+     // m_target->SetFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);                    // apply glow vision
         m_target->SetVisibility(UnitVisibility(m_target->GetVisibility() | VISIBILITY_GROUP_STEALTH));
     }
     else
     {
         m_target->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION);
-        m_target->RemoveFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
+     // m_target->RemoveFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);                // remove glow vision
         m_target->SetVisibility(UnitVisibility(m_target->GetVisibility() & ~VISIBILITY_GROUP_STEALTH));
     }
 }
@@ -6599,7 +6587,7 @@ void Aura::HandleAuraReflectSpellSchool(bool apply, bool real)
     if (!real || !apply)
         return;
 
-    if (Player *pTarget = m_target->ToPlayer())
+    if (Player* pTarget = m_target->ToPlayer())
     {
         if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_MAGE)
         {

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -36,89 +24,12 @@ EndScriptData */
 
 #define YELL_HURRY  "Hurry, we don't have much time"
 
-Wave AllianceWaves[18]=                                // Waves that will be summoned in the Alliance Base
-{   // Rage Winterchill Wave 1-8
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, 0, 0, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, ABOMINATION, ABOMINATION, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    // All 8 Waves are summoned, summon Rage Winterchill, next few waves are for Anetheron
-    {{RAGE_WINTERCHILL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, true},
-    // Anetheron Wave 1-8
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, 0, 0, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, BANSHEE, BANSHEE, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, NECROMANCER, NECROMANCER, BANSHEE, BANSHEE, BANSHEE, BANSHEE, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 120000, false},
-    {{CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, BANSHEE, BANSHEE, BANSHEE, BANSHEE, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, GHOUL, GHOUL, 0, 0, 0, 0}, 120000, false},
-    {{GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, BANSHEE, BANSHEE, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    // All 8 Waves are summoned, summon Anatheron
-    {{ANETHERON, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, true}
-};
-
-Wave HordeWaves[18]=                                   // Waves that are summoned in the Horde base
-{   // Kaz'Rogal Wave 1-8
-    {{GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, BANSHEE, BANSHEE, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    {{CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    {{GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, FROST_WYRM, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, FROST_WYRM, 0, 0, 0, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, BANSHEE, BANSHEE, NECROMANCER, NECROMANCER, 0, 0}, 240000, false},
-    // All 8 Waves are summoned, summon Kaz'Rogal, next few waves are for Azgalor
-    {{KAZROGAL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, true},
-    // Azgalor Wave 1-8
-    {{ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, FROST_WYRM, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, GARGOYLE, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GHOUL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, 0, 0, 0, 0}, 180000, false},
-    {{GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, 0, 0, 0, 0}, 180000, false},
-    {{FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, FEL_STALKER, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, 0, 0, 0, 0}, 180000, false},
-    {{NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, NECROMANCER, BANSHEE, BANSHEE, BANSHEE, BANSHEE, BANSHEE, BANSHEE, 0, 0, 0, 0, 0, 0}, 180000, false},
-    {{GHOUL, GHOUL, CRYPT_FIEND, CRYPT_FIEND, FEL_STALKER, FEL_STALKER, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, GIANT_INFERNAL, 0, 0, 0, 0}, 180000, false},
-    {{CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, CRYPT_FIEND, FEL_STALKER, FEL_STALKER, ABOMINATION, ABOMINATION, ABOMINATION, ABOMINATION, BANSHEE, BANSHEE, BANSHEE, BANSHEE, NECROMANCER, NECROMANCER, 0, 0}, 240000, false},
-    // All 8 Waves are summoned, summon Azgalor
-    {{AZGALOR, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, true}
-};
-
-Yells JainaQuotes[9]=
-{
-    {ATTACKED, -1534000},
-    {ATTACKED, -1534001},
-    {INCOMING, -1534002},
-    {BEGIN, -1534003},
-    {RALLY, -1534004},
-    {RALLY, -1534005},
-    {FAILURE, -1534006},
-    {SUCCESS, -1534007},
-    {DEATH, -1534008},
-};
-
-Yells ThrallQuotes[9]=
-{
-    {ATTACKED, -1534009},
-    {ATTACKED, -1534010},
-    {INCOMING, -1534011},
-    {BEGIN, -1534012},
-    {RALLY, -1534013},
-    {RALLY, -1534014},
-    {FAILURE, -1534015},
-    {SUCCESS, -1534016},
-    {DEATH, -1534017},
-};
-
-
 // Locations for summoning gargoyls and frost wyrms in special cases
 float SpawnPointSpecial[3][3]=
 {
     {5497.08f,    -2493.23f,    1535.72f}, //spawn point for the gargoyles near the horde gate
     {5624.53f,    -2548.12f,    1551.54f}, //spawn point for the frost wyrm near the horde gate
-    {5604.41f,   -2811.98f,   1547.77f}  //spawn point for the gargoyles and wyrms near the horde tower
+    {5604.41f,    -2811.98f,    1547.77f}  //spawn point for the gargoyles and wyrms near the horde tower
 };
 
 // Locations for summoning waves in Alliance base
@@ -386,7 +297,7 @@ float HordeFirePos[65][8]=//spawn points for the fire visuals (GO) in the horde 
     {5545.43f,    -2647.82f,    1483.05f,    5.38848f,    0,    0,    0.432578f,    -0.901596f}
 };
 
-hyjalAI::hyjalAI(Creature *c) : npc_escortAI(c), Summons(me)
+hyjalAI::hyjalAI(Creature* c) : npc_escortAI(c), Summons(me)
 {
     pInstance = c->GetInstanceData();
     VeinsSpawned[0] = false;
@@ -408,7 +319,7 @@ hyjalAI::hyjalAI(Creature *c) : npc_escortAI(c), Summons(me)
     DoMassTeleport = false;
 }
 
-void hyjalAI::JustSummoned(Creature *summoned)
+void hyjalAI::JustSummoned(Creature* summoned)
 {
     Summons.Summon(summoned);
 }
@@ -602,7 +513,7 @@ void hyjalAI::SummonCreature(uint32 entry, float Base[4][3])
     }
 }
 
-void hyjalAI::SummonNextWave(Wave wave[18], uint32 Count, float Base[4][3])
+void hyjalAI::SummonNextWave(const Wave wave[18], uint32 Count, float Base[4][3])
 {
     // 1 in 4 chance we give a rally yell. Not sure if the chance is offilike.
     if (rand()%4 == 0)
@@ -996,6 +907,7 @@ void hyjalAI::UpdateAI(const uint32 diff)
 
     DoMeleeAttackIfReady();
 }
+
 void hyjalAI::JustDied(Unit* /*killer*/)
 {
     if (IsDummy)return;
@@ -1018,6 +930,7 @@ void hyjalAI::JustDied(Unit* /*killer*/)
         pInstance->SetData(DATA_RESET_RAIDDAMAGE, 0);//reset damage on die
     }
 }
+
 void hyjalAI::HideNearPos(float x, float y)
 {
     CellPair pair(BlizzLike::ComputeCellPair(x, y));
@@ -1045,6 +958,7 @@ void hyjalAI::HideNearPos(float x, float y)
         }
     }
 }
+
 void hyjalAI::RespawnNearPos(float x, float y)
 {
     CellPair p(BlizzLike::ComputeCellPair(x, y));
@@ -1057,6 +971,7 @@ void hyjalAI::RespawnNearPos(float x, float y)
     TypeContainerVisitor<BlizzLike::WorldObjectWorker<BlizzLike::RespawnDo>, GridTypeMapContainer > obj_worker(worker);
     cell.Visit(p, obj_worker, *me->GetMap());
 }
+
 void hyjalAI::WaypointReached(uint32 i)
 {
     if (i == 1 || (i == 0 && me->GetEntry() == THRALL))
@@ -1113,6 +1028,7 @@ void hyjalAI::WaypointReached(uint32 i)
         }
     }
 }
+
 void hyjalAI::DoOverrun(uint32 faction, const uint32 diff)
 {
     npc_escortAI::UpdateAI(diff);

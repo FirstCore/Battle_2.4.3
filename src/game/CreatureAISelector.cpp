@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Creature.h"
@@ -30,7 +18,7 @@ INSTANTIATE_SINGLETON_1(MovementGeneratorRegistry);
 
 namespace FactorySelector
 {
-    CreatureAI* selectAI(Creature *creature)
+    CreatureAI* selectAI(Creature* creature)
     {
         const CreatureAICreator *ai_factory = NULL;
         CreatureAIRegistry &ai_registry(CreatureAIRepository::Instance());
@@ -99,7 +87,7 @@ namespace FactorySelector
         return (ai_factory == NULL ? new NullCreatureAI(creature) : ai_factory->Create(creature));
     }
 
-    MovementGenerator* selectMovementGenerator(Creature *creature)
+    MovementGenerator* selectMovementGenerator(Creature* creature)
     {
         MovementGeneratorRegistry &mv_registry(MovementGeneratorRepository::Instance());
         ASSERT(creature->GetCreatureInfo() != NULL);

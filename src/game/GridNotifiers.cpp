@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "GridNotifiers.h"
@@ -145,7 +133,7 @@ void PlayerRelocationNotifier::Visit(CreatureMapType &m)
 
     for (CreatureMapType::iterator iter=m.begin(); iter != m.end(); ++iter)
     {
-        Creature * c = iter->getSource();
+        Creature* c = iter->getSource();
 
         vis_guids.erase(c->GetGUID());
 
@@ -160,7 +148,7 @@ void CreatureRelocationNotifier::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator iter=m.begin(); iter != m.end(); ++iter)
     {
-        Player * pl = iter->getSource();
+        Player* pl = iter->getSource();
 
         if (!pl->m_seer->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
             pl->UpdateVisibilityOf(&i_creature);
@@ -188,7 +176,7 @@ void DelayedUnitRelocation::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
-        Creature * unit = iter->getSource();
+        Creature* unit = iter->getSource();
         if (!unit->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
             continue;
 
@@ -206,7 +194,7 @@ void DelayedUnitRelocation::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
-        Player * player = iter->getSource();
+        Player* player = iter->getSource();
         WorldObject const *viewPoint = player->m_seer;
 
         if (!viewPoint->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
@@ -234,7 +222,7 @@ void AIRelocationNotifier::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
-        Creature *c = iter->getSource();
+        Creature* c = iter->getSource();
         CreatureUnitRelocationWorker(c, &i_unit);
         if (isCreature)
             CreatureUnitRelocationWorker((Creature*)&i_unit, c);
@@ -319,7 +307,7 @@ MessageDistDeliverer::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
-        Player *target = iter->getSource();
+        Player* target = iter->getSource();
 
         if (target->GetExactDistSq(i_source) > i_distSq)
             continue;

@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -141,7 +129,7 @@ void Object::BuildMovementUpdateBlock(UpdateData * data, uint32 flags) const
     data->AddUpdateBlock(buf);
 }
 
-void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const
+void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player* target) const
 {
     if (!target)
         return;
@@ -211,7 +199,7 @@ void Object::SendUpdateToPlayer(Player* player)
     player->GetSession()->SendPacket(&packet);
 }
 
-void Object::BuildValuesUpdateBlockForPlayer(UpdateData *data, Player *target) const
+void Object::BuildValuesUpdateBlockForPlayer(UpdateData *data, Player* target) const
 {
     ByteBuffer buf(500);
 
@@ -234,7 +222,7 @@ void Object::BuildOutOfRangeUpdateBlock(UpdateData * data) const
     data->AddOutOfRangeGUID(GetGUID());
 }
 
-void Object::DestroyForPlayer(Player *target) const
+void Object::DestroyForPlayer(Player* target) const
 {
     ASSERT(target);
 
@@ -416,7 +404,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint8 updateFlags) const
                 *data << (float)0;
             }
 
-            Path &path = fmg->GetPath();
+            TaxiPathNodeList& path = const_cast<TaxiPathNodeList&>(fmg->GetPath());
 
             float x, y, z;
             ToPlayer()->GetPosition(x, y, z);
@@ -428,19 +416,19 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint8 updateFlags) const
             *data << uint32(traveltime);                    // full move time?
             *data << uint32(0);                             // ticks count?
 
-            uint32 poscount = uint32(path.Size());
+            uint32 poscount = uint32(path.size());
             *data << uint32(poscount);                      // points count
 
             for (uint32 i = 0; i < poscount; ++i)
             {
-                *data << float(path.GetNodes()[i].x);
-                *data << float(path.GetNodes()[i].y);
-                *data << float(path.GetNodes()[i].z);
+                *data << path[i].x;
+                *data << path[i].y;
+                *data << path[i].z;
             }
 
-            *data << float(path.GetNodes()[poscount-1].x);
-            *data << float(path.GetNodes()[poscount-1].y);
-            *data << float(path.GetNodes()[poscount-1].z);
+            *data << path[poscount-1].x;
+            *data << path[poscount-1].y;
+            *data << path[poscount-1].z;
         }
     }
 
@@ -504,7 +492,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint8 updateFlags) const
     }
 }
 
-void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *updateMask, Player *target) const
+void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *updateMask, Player* target) const
 {
     if (!target)
         return;
@@ -698,7 +686,7 @@ void Object::ClearUpdateMask(bool remove)
     }
 }
 
-void Object::BuildFieldsUpdate(Player *pl, UpdateDataMapType &data_map) const
+void Object::BuildFieldsUpdate(Player* pl, UpdateDataMapType &data_map) const
 {
     UpdateDataMapType::iterator iter = data_map.find(pl);
 
@@ -1186,6 +1174,16 @@ float WorldObject::GetDistanceZ(const WorldObject* obj) const
     return (dist > 0 ? dist : 0);
 }
 
+float WorldObject::GetDistanceSqr(float x, float y, float z) const
+{
+    float dx = GetPositionX() - x;
+    float dy = GetPositionY() - y;
+    float dz = GetPositionZ() - z;
+    float sizefactor = GetObjectSize();
+    float dist = dx*dx+dy*dy+dz*dz-sizefactor;
+    return (dist > 0 ? dist : 0);
+}
+
 bool WorldObject::_IsWithinDist(WorldObject const* obj, float dist2compare, bool is3D) const
 {
     float dx = GetPositionX() - obj->GetPositionX();
@@ -1324,6 +1322,39 @@ float Position::GetAngle(const float x, const float y) const
     return ang;
 }
 
+bool WorldObject::HasInArc(const float arcangle, const float x, const float y) const
+{
+    // always have self in arc
+    if(x == m_positionX && y == m_positionY)
+        return true;
+
+    float arc = arcangle;
+
+    // move arc to range 0.. 2*pi
+    while( arc >= 2.0f * M_PI )
+        arc -=  2.0f * M_PI;
+    while( arc < 0 )
+        arc +=  2.0f * M_PI;
+
+    float angle = GetAngle( x, y );
+    angle -= m_orientation;
+
+    // move angle to range -pi ... +pi
+    while( angle > M_PI)
+        angle -= 2.0f * M_PI;
+    while(angle < -M_PI)
+        angle += 2.0f * M_PI;
+
+    float lborder =  -1 * (arc/2.0f);                       // in range -pi..0
+    float rborder = (arc/2.0f);                             // in range 0..pi
+    return (( angle >= lborder ) && ( angle <= rborder ));
+}
+
+bool WorldObject::HasInArc(float arc, const Position *obj) const
+{
+    return this->HasInArc(arc, obj->GetPositionX(), obj->GetPositionY());
+}
+
 bool Position::HasInArc(float arc, const Position *obj) const
 {
     // always have self in arc
@@ -1402,7 +1433,7 @@ void WorldObject::MonsterTextEmote(const char* text, uint64 TargetGuid, bool IsB
 
 void WorldObject::MonsterWhisper(const char* text, uint64 receiver, bool IsBossWhisper)
 {
-    Player *player = ObjectAccessor::FindPlayer(receiver);
+    Player* player = ObjectAccessor::FindPlayer(receiver);
     if (!player || !player->GetSession())
         return;
 
@@ -1410,6 +1441,100 @@ void WorldObject::MonsterWhisper(const char* text, uint64 receiver, bool IsBossW
     BuildMonsterChat(&data,IsBossWhisper ? CHAT_MSG_RAID_BOSS_WHISPER : CHAT_MSG_MONSTER_WHISPER,text,LANG_UNIVERSAL,GetName(),receiver);
 
     player->GetSession()->SendPacket(&data);
+}
+
+float WorldObject::GetGridActivationRange() const
+{
+    if (ToPlayer())
+        return GetMap()->GetVisibilityRange();
+    else if (ToCreature())
+        return ToCreature()->m_SightDistance;
+    else
+        return 0.0f;
+}
+
+float WorldObject::GetVisibilityRange() const
+{
+    if (isActiveObject() && !ToPlayer())
+        return MAX_VISIBILITY_DISTANCE;
+    else
+        return GetMap()->GetVisibilityRange();
+}
+
+float WorldObject::GetSightRange(const WorldObject* target) const
+{
+    if (ToUnit())
+    {
+        if (ToPlayer())
+        {
+            if (target && target->isActiveObject() && !target->ToPlayer())
+                return MAX_VISIBILITY_DISTANCE;
+            else
+                return GetMap()->GetVisibilityRange();
+        }
+        else if (ToCreature())
+            return ToCreature()->m_SightDistance;
+        else
+            return SIGHT_RANGE_UNIT;
+    }
+
+    return 0.0f;
+}
+
+bool WorldObject::canSeeOrDetect(WorldObject const* obj, bool ignoreStealth, bool distanceCheck) const
+{
+    if (this == obj)
+        return true;
+
+    if (!obj->IsInWorld())
+        return false;
+
+    if (GetMap() != obj->GetMap())
+        return false;
+
+    bool corpseCheck = false;
+    bool corpseVisibility = false;
+    if (distanceCheck)
+    {
+        if (const Player* thisPlayer = ToPlayer())
+        {
+            if (thisPlayer->GetVisibility() == 0) // Stop checking other things for GMs
+                return true;
+            if (thisPlayer->isDead() && thisPlayer->GetHealth() > 0) // Cheap way to check for ghost state
+            {
+                if (Corpse* corpse = thisPlayer->GetCorpse())
+                {
+                    corpseCheck = true;
+                    if (corpse->IsWithinDist(thisPlayer, GetSightRange(obj), false))
+                        if (corpse->IsWithinDist(obj, GetSightRange(obj), false))
+                            corpseVisibility = true;
+                }
+            }
+        }
+
+        if (!corpseCheck && !IsWithinDist(obj, GetSightRange(obj), false))
+            return false;
+    }
+
+    // Ghost players, Spirit Healers, and some other NPCs
+    if (!corpseVisibility)
+    {
+        // Alive players can see dead players in some cases, but other objects can't do that
+        if (const Player* thisPlayer = ToPlayer())
+        {
+            if (const Player* objPlayer = obj->ToPlayer())
+            {
+                if (thisPlayer->GetTeam() != objPlayer->GetTeam())
+                    return false;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    return true;
 }
 
 void WorldObject::SendPlaySound(uint32 Sound, bool OnlySelf)
@@ -1519,7 +1644,7 @@ void WorldObject::MonsterTextEmote(int32 textId, uint64 TargetGuid, bool IsBossE
 
 void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisper)
 {
-    Player *player = ObjectAccessor::FindPlayer(receiver);
+    Player* player = ObjectAccessor::FindPlayer(receiver);
     if (!player || !player->GetSession())
         return;
 
@@ -1532,7 +1657,7 @@ void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisp
     player->GetSession()->SendPacket(&data);
 }
 
-void WorldObject::BuildMonsterChat(WorldPacket *data, uint8 msgtype, char const* text, uint32 language, char const* name, uint64 targetGuid) const
+void WorldObject::BuildMonsterChat(WorldPacket* data, uint8 msgtype, char const* text, uint32 language, char const* name, uint64 targetGuid) const
 {
     bool pre = (msgtype == CHAT_MSG_MONSTER_EMOTE || msgtype == CHAT_MSG_RAID_BOSS_EMOTE);
 
@@ -1555,13 +1680,13 @@ void WorldObject::BuildMonsterChat(WorldPacket *data, uint8 msgtype, char const*
     *data << (uint8)0;                                      // ChatTag
 }
 
-void WorldObject::SendMessageToSet(WorldPacket *data, bool /*fake*/)
+void WorldObject::SendMessageToSet(WorldPacket* data, bool /*fake*/)
 {
     BlizzLike::MessageDistDeliverer notifier(this, data, GetMap()->GetVisibilityDistance());
     VisitNearbyWorldObject(GetMap()->GetVisibilityDistance(), notifier);
 }
 
-void WorldObject::SendMessageToSetInRange(WorldPacket *data, float dist, bool /*bToSelf*/)
+void WorldObject::SendMessageToSetInRange(WorldPacket* data, float dist, bool /*bToSelf*/)
 {
     BlizzLike::MessageDistDeliverer notifier(this, data, dist);
     VisitNearbyWorldObject(dist, notifier);
@@ -1707,7 +1832,7 @@ TempSummon *Map::SummonCreature(uint32 entry, const Position &pos, SummonPropert
 
     if (mask == SUMMON_MASK_TOTEM && spellInfo)
     {
-        if (Player *pPlayer = summoner->ToPlayer())
+        if (Player* pPlayer = summoner->ToPlayer())
         {
             if (properties->Slot >= SUMMON_SLOT_TOTEM && properties->Slot < MAX_TOTEM_SLOT)
             {
@@ -1876,7 +2001,7 @@ GameObject* WorldObject::SummonGameObject(uint32 entry, float x, float y, float 
         return NULL;
     }
     Map *map = GetMap();
-    GameObject *go = new GameObject();
+    GameObject* go = new GameObject();
     if (!go->Create(objmgr.GenerateLowGuid(HIGHGUID_GAMEOBJECT),entry,map,x,y,z,ang,rotation0,rotation1,rotation2,rotation3,100,GO_STATE_READY))
     {
         delete go;
@@ -1913,7 +2038,7 @@ Creature* WorldObject::SummonTrigger(float x, float y, float z, float ang, uint3
 
 Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive)
 {
-    Creature *creature = NULL;
+    Creature* creature = NULL;
     BlizzLike::NearestCreatureEntryWithLiveStateInObjectRangeCheck checker(*this, entry, alive, range);
     BlizzLike::CreatureLastSearcher<BlizzLike::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(creature, checker);
     VisitNearbyObject(range, searcher);
@@ -1922,7 +2047,7 @@ Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive
 
 GameObject* WorldObject::FindNearestGameObject(uint32 entry, float range)
 {
-    GameObject *go = NULL;
+    GameObject* go = NULL;
     BlizzLike::NearestGameObjectEntryInObjectRangeCheck checker(*this, entry, range);
     BlizzLike::GameObjectLastSearcher<BlizzLike::NearestGameObjectEntryInObjectRangeCheck> searcher(go, checker);
     VisitNearbyGridObject(range, searcher);
@@ -1986,53 +2111,51 @@ void WorldObject::MovePosition(Position &pos, float dist, float angle)
 
 void WorldObject::MovePositionToFirstCollision(Position &pos, float dist, float angle)
 {
-        angle += m_orientation;
-        float destx, desty, destz, ground, floor;
- 
+    angle += m_orientation;
+    float destx, desty, destz, ground, floor;
+    destx = pos.m_positionX + dist * cos(angle);
+    desty = pos.m_positionY + dist * sin(angle);
+    ground = GetMap()->GetHeight(destx, desty, MAX_HEIGHT, true);
+    floor = GetMap()->GetHeight(destx, desty, pos.m_positionZ, true);
+    destz = fabs(ground - pos.m_positionZ) <= fabs(floor - pos.m_positionZ) ? ground : floor;
 
-        destx = pos.m_positionX + dist * cos(angle);
-        desty = pos.m_positionY + dist * sin(angle);
-        ground = GetMap()->GetHeight(destx, desty, MAX_HEIGHT, true);
-        floor = GetMap()->GetHeight(destx, desty, pos.m_positionZ, true);
-        destz = fabs(ground - pos.m_positionZ) <= fabs(floor - pos.m_positionZ) ? ground : floor;
+    bool col = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(GetMapId(),pos.m_positionX,pos.m_positionY,pos.m_positionZ+0.5f,destx,desty,destz+0.5f,destx,desty,destz,-0.5f);
 
-        bool col = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(GetMapId(),pos.m_positionX,pos.m_positionY,pos.m_positionZ+0.5f,destx,desty,destz+0.5f,destx,desty,destz,-0.5f);
-
-        // collision occured
-        if (col)
-        {
+    // collision occured
+    if (col)
+    {
         // move back a bit
         destx -= CONTACT_DISTANCE * cos(angle);
         desty -= CONTACT_DISTANCE * sin(angle);
         dist = sqrt((pos.m_positionX - destx)*(pos.m_positionX - destx) + (pos.m_positionY - desty)*(pos.m_positionY - desty));
-        }
+    }
 
-        float step = dist/10.0f;
+    float step = dist/10.0f;
 
-        int j = 0;
-        for (j; j < 10; j++)
-        {
+    int j = 0;
+    for (j; j < 10; j++)
+    {
         // do not allow too big z changes
         if (fabs(pos.m_positionZ - destz) > 6)
         {
-                destx -= step * cos(angle);
-                desty -= step * sin(angle);
-                ground = GetMap()->GetHeight(destx, desty, MAX_HEIGHT, true);
-                floor = GetMap()->GetHeight(destx, desty, pos.m_positionZ, true);
-                destz = fabs(ground - pos.m_positionZ) <= fabs(floor - pos.m_positionZ) ? ground : floor;
+            destx -= step * cos(angle);
+            desty -= step * sin(angle);
+            ground = GetMap()->GetHeight(destx, desty, MAX_HEIGHT, true);
+            floor = GetMap()->GetHeight(destx, desty, pos.m_positionZ, true);
+            destz = fabs(ground - pos.m_positionZ) <= fabs(floor - pos.m_positionZ) ? ground : floor;
         }
         // we have correct destz now
         else
         {
-                pos.Relocate(destx, desty, destz);
-                break;
+            pos.Relocate(destx, desty, destz);
+            break;
         }
-        }
+    }
 
-        BlizzLike::NormalizeMapCoord(pos.m_positionX);
-        BlizzLike::NormalizeMapCoord(pos.m_positionY);
-        UpdateGroundPositionZ(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
-        pos.m_orientation = m_orientation;
+    BlizzLike::NormalizeMapCoord(pos.m_positionX);
+    BlizzLike::NormalizeMapCoord(pos.m_positionY);
+    UpdateGroundPositionZ(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
+    pos.m_orientation = m_orientation;
 }
 
 void WorldObject::PlayDistanceSound(uint32 sound_id, Player* target /*= NULL*/)
@@ -2067,7 +2190,7 @@ void WorldObject::DestroyForNearbyPlayers()
     VisitNearbyWorldObject(GetMap()->GetVisibilityDistance(), searcher);
     for (std::list<Player*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
     {
-        Player *plr = (*iter);
+        Player* plr = (*iter);
 
         if (plr == this)
             continue;
@@ -2130,7 +2253,7 @@ struct WorldObjectChangeAccumulator
             if (IS_PLAYER_GUID(guid))
             {
                 //Caster may be NULL if DynObj is in removelist
-                if (Player *caster = ObjectAccessor::FindPlayer(guid))
+                if (Player* caster = ObjectAccessor::FindPlayer(guid))
                     if (caster->GetUInt64Value(PLAYER_FARSIGHT) == iter->getSource()->GetGUID())
                         BuildPacket(caster);
             }

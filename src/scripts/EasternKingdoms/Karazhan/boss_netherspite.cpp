@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -130,7 +118,7 @@ struct boss_netherspiteAI : public ScriptedAI
         pos[BLUE_PORTAL] = (r>1 ? 1: 2); // Blue Portal not on the left side (0)
 
         for (int i=0; i<3; ++i)
-            if (Creature *portal = me->SummonCreature(PortalID[i],PortalCoord[pos[i]][0],PortalCoord[pos[i]][1],PortalCoord[pos[i]][2],0,TEMPSUMMON_TIMED_DESPAWN,60000))
+            if (Creature* portal = me->SummonCreature(PortalID[i],PortalCoord[pos[i]][0],PortalCoord[pos[i]][1],PortalCoord[pos[i]][2],0,TEMPSUMMON_TIMED_DESPAWN,60000))
             {
                 PortalGUID[i] = portal->GetGUID();
                 portal->AddAura(PortalVisual[i], portal);
@@ -141,9 +129,9 @@ struct boss_netherspiteAI : public ScriptedAI
     {
         for (int i=0; i<3; ++i)
         {
-            if (Creature *portal = Unit::GetCreature(*me, PortalGUID[i]))
+            if (Creature* portal = Unit::GetCreature(*me, PortalGUID[i]))
                 portal->DisappearAndDie();
-            if (Creature *portal = Unit::GetCreature(*me, BeamerGUID[i]))
+            if (Creature* portal = Unit::GetCreature(*me, BeamerGUID[i]))
                 portal->DisappearAndDie();
             PortalGUID[i] = 0;
             BeamTarget[i] = 0;
@@ -153,7 +141,7 @@ struct boss_netherspiteAI : public ScriptedAI
     void UpdatePortals() // Here we handle the beams' behavior
     {
         for (int j=0; j<3; ++j) // j = color
-            if (Creature *portal = Unit::GetCreature(*me, PortalGUID[j]))
+            if (Creature* portal = Unit::GetCreature(*me, PortalGUID[j]))
             {
                 // the one who's been casted upon before
                 Unit* current = Unit::GetUnit(*portal, BeamTarget[j]);
@@ -188,14 +176,14 @@ struct boss_netherspiteAI : public ScriptedAI
                 {
                     BeamTarget[j] = pTarget->GetGUID();
                     // remove currently beaming portal
-                    if (Creature *beamer = Unit::GetCreature(*portal, BeamerGUID[j]))
+                    if (Creature* beamer = Unit::GetCreature(*portal, BeamerGUID[j]))
                     {
                         beamer->CastSpell(pTarget, PortalBeam[j], false);
                         beamer->DisappearAndDie();
                         BeamerGUID[j] = 0;
                     }
                     // create new one and start beaming on the target
-                    if (Creature *beamer = portal->SummonCreature(PortalID[j],portal->GetPositionX(),portal->GetPositionY(),portal->GetPositionZ(),portal->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,60000))
+                    if (Creature* beamer = portal->SummonCreature(PortalID[j],portal->GetPositionX(),portal->GetPositionY(),portal->GetPositionZ(),portal->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,60000))
                     {
                         beamer->CastSpell(pTarget, PortalBeam[j], false);
                         BeamerGUID[j] = beamer->GetGUID();
@@ -236,7 +224,7 @@ struct boss_netherspiteAI : public ScriptedAI
 
     void HandleDoors(bool open) // Massive Door switcher
     {
-        if (GameObject *Door = GameObject::GetGameObject(*me, pInstance ? pInstance->GetData64(DATA_GO_MASSIVE_DOOR) : 0))
+        if (GameObject* Door = GameObject::GetGameObject(*me, pInstance ? pInstance->GetData64(DATA_GO_MASSIVE_DOOR) : 0))
             Door->SetGoState(open ? GO_STATE_ACTIVE : GO_STATE_READY);
     }
 
@@ -322,7 +310,7 @@ struct boss_netherspiteAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_boss_netherspite(Creature *pCreature)
+CreatureAI* GetAI_boss_netherspite(Creature* pCreature)
 {
     return new boss_netherspiteAI(pCreature);
 }

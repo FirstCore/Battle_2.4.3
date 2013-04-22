@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #ifndef BLIZZLIKECORE_ARENATEAM_H
@@ -175,7 +163,7 @@ class ArenaTeam
 
         void SaveToDB();
 
-        void BroadcastPacket(WorldPacket *packet);
+        void BroadcastPacket(WorldPacket* packet);
 
         void BroadcastEvent(ArenaTeamEvents event, uint64 guid, char const* str1 = NULL, char const* str2 = NULL, char const* str3 = NULL);
         void BroadcastEvent(ArenaTeamEvents event, char const* str1 = NULL, char const* str2 = NULL, char const* str3 = NULL)
@@ -191,9 +179,9 @@ class ArenaTeam
         uint32 GetPoints(uint32 MemberRating);
         float GetChanceAgainst(uint32 own_rating, uint32 enemy_rating);
         int32 WonAgainst(uint32 againstRating);
-        void MemberWon(Player * plr, uint32 againstRating);
+        void MemberWon(Player* plr, uint32 againstRating);
         int32 LostAgainst(uint32 againstRating);
-        void MemberLost(Player * plr, uint32 againstRating);
+        void MemberLost(Player* plr, uint32 againstRating);
         void OfflineMemberLost(uint64 guid, uint32 againstRating);
 
         void UpdateArenaPointsHelper(std::map<uint32, uint32> & PlayerPoints);

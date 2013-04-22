@@ -4,7 +4,7 @@ index 0000000..285dc0f
 --- /dev/null
 +++ b/sql/telenpc/remove_telenpc.sql
 @@ -0,0 +1,9 @@
-+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- BlizzLikeCore TeleNPC
 +--
 +-- Remove TeleNPC
 +--
@@ -20,7 +20,7 @@ index 0000000..fb80caa
 --- /dev/null
 +++ b/sql/telenpc/spawn_telenpc.sql
 @@ -0,0 +1,47 @@
-+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- BlizzLikeCore TeleNPC
 +--
 +-- Remove TeleNPC
 +--
@@ -74,7 +74,7 @@ index 0000000..5fc5aeb
 --- /dev/null
 +++ b/sql/telenpc/world_telenpc.sql
 @@ -0,0 +1,446 @@
-+-- Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
++-- BlizzLikeCore TeleNPC
 +--
 +-- Dumping data for table `creature_template`
 +--
@@ -522,10 +522,10 @@ index 0000000..5fc5aeb
 +(242, 'Warsong Gulch', 930.851, 1431.57, 345.537, 489, 0.015704, 18, 95000, 'See you soon!', 28750);
 \ No newline at end of file
 diff --git a/src/game/ScriptLoader.cpp b/src/game/ScriptLoader.cpp
-index ea9b286..15911c3 100644
+index 3d89b05..a0bafa3 100644
 --- a/src/game/ScriptLoader.cpp
 +++ b/src/game/ScriptLoader.cpp
-@@ -19,6 +19,11 @@
+@@ -7,6 +7,11 @@
  
  #ifdef SCRIPTS
  
@@ -537,7 +537,7 @@ index ea9b286..15911c3 100644
  //examples
  //void AddSC_custom_example();
  //void AddSC_custom_gossip_codebox();
-@@ -392,6 +397,11 @@ void AddScripts()
+@@ -380,6 +385,11 @@ void AddScripts()
  {
  #ifdef SCRIPTS
  
@@ -616,7 +616,7 @@ index 0000000..fdbd561
 +    }
 +
 +    // Teleport Player
-+    void Teleport(Creature * const creature, Player * const player, 
++    void Teleport(Creature* const creature, Player* const player, 
 +                  const uint16 &map, const float &X, const float &Y,
 +                  const float &Z, const float &orient, 
 +                  const uint32 &cast_on_arrival)
@@ -628,7 +628,7 @@ index 0000000..fdbd561
 +    }
 +
 +    // Display categories
-+    void AffichCat(Player * const player, Creature * const creature)
++    void AffichCat(Player* const player, Creature* const creature)
 +    {
 +        if (PageC[player] > 0)
 +            player->ADD_GOSSIP_ITEM(7, PREV_PAGE, GOSSIP_PREV_PAGEC, 0);
@@ -647,7 +647,7 @@ index 0000000..fdbd561
 +    }
 +
 +    // Display destination categories
-+    void AffichDest(Player * const player, Creature * const creature)
++    void AffichDest(Player* const player, Creature* const creature)
 +    {
 +        if (PageD[player] > 0)
 +            player->ADD_GOSSIP_ITEM(7, PREV_PAGE, GOSSIP_PREV_PAGED, 0);
@@ -668,7 +668,7 @@ index 0000000..fdbd561
 +    }
 +
 +    // Verification before teleportation
-+    void ActionTeleport(Player * const player, Creature * const creature, const uint32 &id)
++    void ActionTeleport(Player* const player, Creature* const creature, const uint32 &id)
 +    {
 +        Dest dest (TabCatDest[Cat[player]].GetDest(id));
 +
@@ -696,7 +696,7 @@ index 0000000..fdbd561
 +    }
 +}
 +
-+bool GossipHello_npc_teleport(Player *player, Creature *creature)
++bool GossipHello_npc_teleport(Player* player, Creature* creature)
 +{
 +    PageC(player) = PageD(player) = Cat(player) = 0;
 +
@@ -710,7 +710,7 @@ index 0000000..fdbd561
 +    return true;
 +}
 +
-+bool GossipSelect_npc_teleport(Player *player, Creature *creature, uint32 sender, uint32 param)
++bool GossipSelect_npc_teleport(Player* player, Creature* creature, uint32 sender, uint32 param)
 +{
 +    switch(sender) 
 +    {
@@ -798,7 +798,7 @@ index 0000000..bdeb2c4
 +nsNpcTel::VCatDest nsNpcTel::TabCatDest;
 +
 +
-+const uint32 PAGE::operator [] (Player * const player) const
++const uint32 PAGE::operator [] (Player* const player) const
 +{
 +    for (VInst_t i(0); i < m_TabInstance.size(); ++i)
 +    {
@@ -808,7 +808,7 @@ index 0000000..bdeb2c4
 +    return 0;
 +}
 +
-+PAGE::Instance & PAGE::operator () (Player * const player)
++PAGE::Instance & PAGE::operator () (Player* const player)
 +{
 +    for (VInst_t i(0); i < m_TabInstance.size(); ++i)
 +    {
@@ -871,7 +871,7 @@ index 0000000..bdeb2c4
 +    return m_name;
 +}
 +
-+bool TELE::IsAllowedToTeleport(Player * const player) const
++bool TELE::IsAllowedToTeleport(Player* const player) const
 +{
 +    if (player->isGameMaster())
 +    {
@@ -933,7 +933,7 @@ index 0000000..bdeb2c4
 +    return false;
 +}
 +
-+uint32 TELE::CountOfCategoryAllowedBy(Player * const player)
++uint32 TELE::CountOfCategoryAllowedBy(Player* const player)
 +{
 +    uint32 count (0);
 +    for (VCatDest_t i(0); i < TabCatDest.size(); ++i)
@@ -1222,9 +1222,9 @@ index 0000000..6dee856
 +        uint32 size     (void)             const { return m_TabDest.size(); }
 +
 +        std::string GetName(const bool IsGM = false)    const;
-+        bool IsAllowedToTeleport(Player * const player) const;
++        bool IsAllowedToTeleport(Player* const player) const;
 +
-+        static uint32 CountOfCategoryAllowedBy(Player * const player);
++        static uint32 CountOfCategoryAllowedBy(Player* const player);
 +
 +      private:
 +
@@ -1246,7 +1246,7 @@ index 0000000..6dee856
 +        {
 +          public:
 +
-+            Instance(Player * const player, const uint32 &PageId = 0)
++            Instance(Player* const player, const uint32 &PageId = 0)
 +                : m_player(player), m_PageId(PageId) {}
 +
 +            Instance & operator =  (const uint32 &id);
@@ -1256,11 +1256,11 @@ index 0000000..6dee856
 +            Instance   operator -- (int32);
 +
 +            uint32   GetPageId(void) const { return m_PageId; }
-+            Player * GetPlayer(void) const { return m_player; }
++            Player* GetPlayer(void) const { return m_player; }
 +        
 +          private:
 +
-+            Player *m_player;
++            Player* m_player;
 +            uint32  m_PageId;
 +        };
 +
@@ -1272,8 +1272,8 @@ index 0000000..6dee856
 +
 +        Page(void) { m_TabInstance.clear(); }
 +
-+        Instance &   operator () (Player * const player);
-+        const uint32 operator [] (Player * const player) const;
++        Instance &   operator () (Player* const player);
++        const uint32 operator [] (Player* const player) const;
 +
 +
 +      private:

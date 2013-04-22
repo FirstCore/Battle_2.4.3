@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -32,7 +20,7 @@ EndScriptData */
 
 struct boss_jandicebarovAI : public ScriptedAI
 {
-    boss_jandicebarovAI(Creature *c) : ScriptedAI(c) {}
+    boss_jandicebarovAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 CurseOfBlood_Timer;
     uint32 Illusion_Timer;
@@ -54,7 +42,7 @@ struct boss_jandicebarovAI : public ScriptedAI
 
     void SummonIllusions(Unit* victim)
     {
-        if (Creature *Illusion = DoSpawnCreature(11439, irand(-9,9), irand(-9,9), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000))
+        if (Creature* Illusion = DoSpawnCreature(11439, irand(-9,9), irand(-9,9), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000))
             Illusion->AI()->AttackStart(victim);
     }
 
@@ -142,7 +130,7 @@ struct boss_jandicebarovAI : public ScriptedAI
 
 struct mob_illusionofjandicebarovAI : public ScriptedAI
 {
-    mob_illusionofjandicebarovAI(Creature *c) : ScriptedAI(c) {}
+    mob_illusionofjandicebarovAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Cleave_Timer;
 

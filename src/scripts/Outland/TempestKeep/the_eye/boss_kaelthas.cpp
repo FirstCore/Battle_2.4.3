@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -158,7 +146,7 @@ struct advisorbase_ai : public ScriptedAI
     uint32 DelayRes_Timer;
     uint64 DelayRes_Target;
 
-    advisorbase_ai(Creature *c) : ScriptedAI(c)
+    advisorbase_ai(Creature* c) : ScriptedAI(c)
     {
         pInstance = c->GetInstanceData();
     }
@@ -193,7 +181,7 @@ struct advisorbase_ai : public ScriptedAI
         //reset encounter
         if (pInstance && (pInstance->GetData(DATA_KAELTHASEVENT) == 1 || pInstance->GetData(DATA_KAELTHASEVENT) == 3))
         {
-            Creature *Kaelthas = NULL;
+            Creature* Kaelthas = NULL;
             Kaelthas = (Creature*)(Unit::GetUnit((*me), pInstance->GetData64(DATA_KAELTHAS)));
 
             if (Kaelthas)
@@ -273,7 +261,7 @@ struct advisorbase_ai : public ScriptedAI
 //Kael'thas AI
 struct boss_kaelthasAI : public ScriptedAI
 {
-    boss_kaelthasAI(Creature *c) : ScriptedAI(c), summons(me)
+    boss_kaelthasAI(Creature* c) : ScriptedAI(c), summons(me)
     {
         pInstance = c->GetInstanceData();
         AdvisorGuid[0] = 0;
@@ -366,7 +354,7 @@ struct boss_kaelthasAI : public ScriptedAI
 
     void PrepareAdvisors()
     {
-        Creature *pCreature;
+        Creature* pCreature;
         for (uint8 i = 0; i < 4; ++i)
         {
             pCreature = (Creature*)(Unit::GetUnit((*me), AdvisorGuid[i]));
@@ -442,7 +430,7 @@ struct boss_kaelthasAI : public ScriptedAI
         summons.Summon(summoned);
     }
 
-    void SummonedCreatureDespawn(Creature *summon) {summons.Despawn(summon);}
+    void SummonedCreatureDespawn(Creature* summon) {summons.Despawn(summon);}
 
     void JustDied(Unit* /*Killer*/)
     {
@@ -457,7 +445,7 @@ struct boss_kaelthasAI : public ScriptedAI
         if (pInstance)
             pInstance->SetData(DATA_KAELTHASEVENT, DONE);
 
-        Creature *pCreature;
+        Creature* pCreature;
         for (uint8 i = 0; i < 4; ++i)
         {
             pCreature = (Unit::GetCreature((*me), AdvisorGuid[i]));
@@ -1033,7 +1021,7 @@ struct boss_kaelthasAI : public ScriptedAI
 //Thaladred the Darkener AI
 struct boss_thaladred_the_darkenerAI : public advisorbase_ai
 {
-    boss_thaladred_the_darkenerAI(Creature *c) : advisorbase_ai(c) {}
+    boss_thaladred_the_darkenerAI(Creature* c) : advisorbase_ai(c) {}
 
     uint32 Gaze_Timer;
     uint32 Silence_Timer;
@@ -1113,7 +1101,7 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
 //Lord Sanguinar AI
 struct boss_lord_sanguinarAI : public advisorbase_ai
 {
-    boss_lord_sanguinarAI(Creature *c) : advisorbase_ai(c){}
+    boss_lord_sanguinarAI(Creature* c) : advisorbase_ai(c){}
 
     uint32 Fear_Timer;
 
@@ -1165,7 +1153,7 @@ struct boss_lord_sanguinarAI : public advisorbase_ai
 //Grand Astromancer Capernian AI
 struct boss_grand_astromancer_capernianAI : public advisorbase_ai
 {
-    boss_grand_astromancer_capernianAI(Creature *c) : advisorbase_ai(c){}
+    boss_grand_astromancer_capernianAI(Creature* c) : advisorbase_ai(c){}
 
     uint32 Fireball_Timer;
     uint32 Conflagration_Timer;
@@ -1288,7 +1276,7 @@ struct boss_grand_astromancer_capernianAI : public advisorbase_ai
 //Master Engineer Telonicus AI
 struct boss_master_engineer_telonicusAI : public advisorbase_ai
 {
-    boss_master_engineer_telonicusAI(Creature *c) : advisorbase_ai(c){}
+    boss_master_engineer_telonicusAI(Creature* c) : advisorbase_ai(c){}
 
     uint32 Bomb_Timer;
     uint32 RemoteToy_Timer;
@@ -1352,7 +1340,7 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
 //Flame Strike AI
 struct mob_kael_flamestrikeAI : public ScriptedAI
 {
-    mob_kael_flamestrikeAI(Creature *c) : ScriptedAI(c) {}
+    mob_kael_flamestrikeAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Timer;
     bool Casting;
@@ -1402,7 +1390,7 @@ struct mob_kael_flamestrikeAI : public ScriptedAI
 //Phoenix AI
 struct mob_phoenix_tkAI : public ScriptedAI
 {
-    mob_phoenix_tkAI(Creature *c) : ScriptedAI(c)
+    mob_phoenix_tkAI(Creature* c) : ScriptedAI(c)
     {
        pInstance = c->GetInstanceData();
     }
@@ -1474,7 +1462,7 @@ struct mob_phoenix_tkAI : public ScriptedAI
 //Phoenix Egg AI
 struct mob_phoenix_egg_tkAI : public ScriptedAI
 {
-    mob_phoenix_egg_tkAI(Creature *c) : ScriptedAI(c) {}
+    mob_phoenix_egg_tkAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Rebirth_Timer;
     bool summoned;

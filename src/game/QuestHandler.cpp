@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -84,7 +72,7 @@ void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket& recv_data)
 
     sLog.outDebug ("WORLD: Received CMSG_QUESTGIVER_HELLO npc = %u", GUID_LOPART(guid));
 
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid,UNIT_NPC_FLAG_NONE);
+    Creature* pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid,UNIT_NPC_FLAG_NONE);
     if (!pCreature)
     {
         sLog.outDebug ("WORLD: HandleQuestgiverHelloOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(guid));
@@ -141,7 +129,7 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket& recv_data)
 
         if (_player->GetDivider() != 0)
         {
-            Player *pPlayer = ObjectAccessor::FindPlayer(_player->GetDivider());
+            Player* pPlayer = ObjectAccessor::FindPlayer(_player->GetDivider());
             if (pPlayer)
             {
                 pPlayer->SendPushToPartyResponse(_player, QUEST_PARTY_MSG_ACCEPT_QUEST);
@@ -418,7 +406,7 @@ void WorldSession::HandleQuestConfirmAccept(WorldPacket& recv_data)
     }
 }
 
-void WorldSession::HandleQuestComplete(WorldPacket& recv_data)
+void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
 {
     uint32 quest;
     uint64 guid;
@@ -435,7 +423,7 @@ void WorldSession::HandleQuestComplete(WorldPacket& recv_data)
         if (GetPlayer()->InBattleGround())
             if (BattleGround* bg = GetPlayer()->GetBattleGround())
                 if (bg->GetTypeID() == BATTLEGROUND_AV)
-                    ((BattleGroundAV*)bg)->HandleQuestComplete(quest, GetPlayer());
+                    ((BattleGroundAV*)bg)->HandleQuestgiverCompleteQuest(quest, GetPlayer());
 
         if (_player->GetQuestStatus(quest) != QUEST_STATUS_COMPLETE)
         {
@@ -467,7 +455,7 @@ void WorldSession::HandleQuestPushToParty(WorldPacket& recvPacket)
         {
             for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
             {
-                Player *pPlayer = itr->getSource();
+                Player* pPlayer = itr->getSource();
 
                 if (!pPlayer || pPlayer == _player)         // skip self
                     continue;
@@ -532,7 +520,7 @@ void WorldSession::HandleQuestPushResult(WorldPacket& recvPacket)
 
     if (_player->GetDivider() != 0)
     {
-        Player *pPlayer = ObjectAccessor::FindPlayer(_player->GetDivider());
+        Player* pPlayer = ObjectAccessor::FindPlayer(_player->GetDivider());
         if (pPlayer)
         {
             WorldPacket data(MSG_QUEST_PUSH_RESULT, (8+1));
@@ -544,7 +532,7 @@ void WorldSession::HandleQuestPushResult(WorldPacket& recvPacket)
     }
 }
 
-uint32 WorldSession::getDialogStatus(Player *pPlayer, Object* questgiver, uint32 defstatus)
+uint32 WorldSession::getDialogStatus(Player* pPlayer, Object* questgiver, uint32 defstatus)
 {
     uint32 result = defstatus;
 
@@ -649,7 +637,7 @@ void WorldSession::HandleQuestgiverStatusQueryMultipleOpcode(WorldPacket& /*recv
 
         if (IS_CREATURE_GUID(*itr))
         {
-            Creature *questgiver = GetPlayer()->GetMap()->GetCreature(*itr);
+            Creature* questgiver = GetPlayer()->GetMap()->GetCreature(*itr);
             if (!questgiver || questgiver->IsHostileTo(_player))
                 continue;
             if (!questgiver->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
@@ -664,7 +652,7 @@ void WorldSession::HandleQuestgiverStatusQueryMultipleOpcode(WorldPacket& /*recv
         }
         else if (IS_GAMEOBJECT_GUID(*itr))
         {
-            GameObject *questgiver = GetPlayer()->GetMap()->GetGameObject(*itr);
+            GameObject* questgiver = GetPlayer()->GetMap()->GetGameObject(*itr);
             if (!questgiver)
                 continue;
             if (questgiver->GetGoType() != GAMEOBJECT_TYPE_QUESTGIVER)

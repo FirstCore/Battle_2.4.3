@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 #include "Common.h"
@@ -105,7 +93,7 @@ void MapManager::LoadTransports()
         //If we someday decide to use the grid to track transports, here:
         t->SetMap(MapManager::Instance().CreateMap(mapid, t, 0));
 
-        //t->GetMap()->Add<GameObject>((GameObject *)t);
+        //t->GetMap()->Add<GameObject>((GameObject* )t);
 
         ++count;
     } while (result->NextRow());
@@ -202,16 +190,18 @@ struct keyFrame
 
 bool Transport::GenerateWaypoints(uint32 pathid, std::set<uint32> &mapids)
 {
-    TransportPath path;
-    objmgr.GetTransportPathNodes(pathid, path);
+    if (pathid >= sTaxiPathNodesByPath.size())
+        return false;
 
-    if (path.Empty())
+    TaxiPathNodeList const& path = sTaxiPathNodesByPath[pathid];
+
+    if (path.empty())
         return false;
 
     std::vector<keyFrame> keyFrames;
     int mapChange = 0;
     mapids.clear();
-    for (size_t i = 1; i < path.Size() - 1; ++i)
+    for (size_t i = 1; i < path.size() - 1; ++i)
     {
         if (mapChange == 0)
         {
@@ -409,6 +399,7 @@ bool Transport::GenerateWaypoints(uint32 pathid, std::set<uint32> &mapids)
 
     m_curr = m_WayPoints.begin();
     m_curr = GetNextWayPoint();
+    //if problems comment the next line
     m_next = GetNextWayPoint();
     m_pathTime = timer;
 
@@ -436,7 +427,7 @@ void Transport::TeleportTransport(uint32 newMapid, float x, float y, float z)
         PlayerSet::iterator it2 = itr;
         ++itr;
 
-        Player *plr = *it2;
+        Player* plr = *it2;
         if (!plr)
         {
             m_passengers.erase(it2);

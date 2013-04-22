@@ -1,18 +1,6 @@
 /*
- * Copyright (C) 2011-2013 BlizzLikeCore <http://blizzlike.servegame.com/>
- * Please, read the credits file.
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2013  BlizzLikeGroup
+ * BlizzLikeCore integrates as part of this file: CREDITS.md and LICENSE.md
  */
 
 /* ScriptData
@@ -38,7 +26,7 @@ EndScriptData */
 
 struct boss_sulfuronAI : public ScriptedAI
 {
-    boss_sulfuronAI(Creature *c) : ScriptedAI(c) {}
+    boss_sulfuronAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Darkstrike_Timer;
     uint32 DemoralizingShout_Timer;
@@ -74,7 +62,7 @@ struct boss_sulfuronAI : public ScriptedAI
         //Inspire_Timer
         if (Inspire_Timer <= diff)
         {
-            Creature *pTarget = NULL;
+            Creature* pTarget = NULL;
             std::list<Creature*> pList = DoFindFriendlyMissingBuff(45.0f,SPELL_INSPIRE);
             if (!pList.empty())
             {
@@ -121,7 +109,7 @@ struct boss_sulfuronAI : public ScriptedAI
 
 struct mob_flamewaker_priestAI : public ScriptedAI
 {
-    mob_flamewaker_priestAI(Creature *c) : ScriptedAI(c) {}
+    mob_flamewaker_priestAI(Creature* c) : ScriptedAI(c) {}
 
     uint32 Heal_Timer;
     uint32 ShadowWordPain_Timer;
