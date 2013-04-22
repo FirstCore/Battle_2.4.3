@@ -1149,11 +1149,19 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
 
     for (int i = 0; i < 3; ++i)                              //check for hack maybe
     {
-        // tried to put gem in socket where no socket exists / tried to put normal gem in meta socket
+        if (!GemProps[i])
+            continue;
+
+        // tried to put gem in socket where no socket exists
+        if (!itemTarget->GetProto()->Socket[i].Color)
+            return;
+
+        // tried to put normal gem in meta socket
+        if (itemTarget->GetProto()->Socket[i].Color == SOCKET_COLOR_META && GemProps[i]->color != SOCKET_COLOR_META)
+            return;
+
         // tried to put meta gem in normal socket
-        if (GemProps[i] && (!itemTarget->GetProto()->Socket[i].Color ||
-            itemTarget->GetProto()->Socket[i].Color == SOCKET_COLOR_META && GemProps[i]->color != SOCKET_COLOR_META ||
-            itemTarget->GetProto()->Socket[i].Color != SOCKET_COLOR_META && GemProps[i]->color == SOCKET_COLOR_META))
+        if (itemTarget->GetProto()->Socket[i].Color != SOCKET_COLOR_META && GemProps[i]->color == SOCKET_COLOR_META)
             return;
     }
 
